@@ -1,0 +1,51 @@
+﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Responses.Usuarios;
+using Ihc.CrackSports.Core.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ihc.CrackSports.Core.Services
+{
+    public class UsuarioService : IUsuarioService
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly IUsuarioCommand _usuarioCommand;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuarioCommand"></param>
+        public UsuarioService(IUsuarioCommand usuarioCommand)
+        {
+            _usuarioCommand = usuarioCommand;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<CadastroUsuarioResponse> InsertOrUpdate(CadastroRequest request)
+        {
+           return await _usuarioCommand.InsertOrUpdate(request);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idAluno"></param>
+        /// <returns></returns>
+        public async Task<CadastroUsuarioResponse> Excluir(long idAluno)
+        {
+            return await _usuarioCommand.ExcluirUsuario(idAluno);
+        }        
+    }
+}

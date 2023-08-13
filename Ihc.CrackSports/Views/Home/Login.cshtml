@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br" class="fundo-login">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ihc.CrackSports</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Ihc.CrackSports.styles.css" asp-append-version="true" />
+
+    <style>
+        .fundo-login {
+            background-color: #D9740D;
+            color: ghostwhite;
+        }
+
+            .fundo-login a {
+                color: ghostwhite;
+            }
+
+            .fundo-login label {
+                color: ghostwhite;
+            }
+
+        .top-form-login {
+            margin-top: 180px !important;
+        }
+
+        .link-redirection-simple {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body class="fundo-login">
+    <header class="">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Krak Sports</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class=" container-fluid" style="padding-left: 10%;">
+        <h3 class="mt-5 text-semi-bold-light top-form-login">Acesse sua conta</h3>
+        <form class="col-9 col-sm-4 col-lg-4 mt-5 ">
+            <!-- Email input -->
+            <div class="form-outline mb-4 ag-field-content ">
+                
+                <input type="text" id="form2Example1" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                <label class="form-label ag-field-label" for="form2Example1">Usuário ou e-mail</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4 ag-field-content ">
+                
+                <input type="password" id="form2Example2" class="form-control ag-field-input ag-input-color-orange-full" required />
+                <label class="form-label ag-field-label" for="form2Example2">Senha</label>
+            </div>
+
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+                <div class="col d-flex ">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <label class="form-check-label" for="form2Example31"> Lembrar-me </label>
+                        <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="form2Example31" checked />
+
+                    </div>
+                </div>
+
+                <div class="col">
+                    <!-- Simple link -->
+                    <a href="#!" class="link-redirect-orange link-redirection-simple">Esqueceu sua senha ?</a>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <button type="button" class="btn  btn-block btn-confirm-radius mb-4">Acessar</button>
+
+
+            <!-- Register buttons -->
+            <div class="text-center">
+                <p>Não tem uma conta ? <a href="#!" id="lblCriarConta" class="link-redirect-orange link-redirection-simple" onclick="redirectCadastro()">Crie agora</a></p>
+            </div>
+        </form>
+    </div>
+    <script src="~/js/Usuario/Usuario.js" asp-append-version="true"></script>
+</body>
+</html>

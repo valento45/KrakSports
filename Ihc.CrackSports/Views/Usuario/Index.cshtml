@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+
+<div class="mt-5 ">
+
+    <h3 class="text-semi-bold-orange">Cadastro de conta</h3>
+    <hr />
+
+    <div class=" col-9 d-inline-flex mt-5 w-100">
+        <div class="mt-5">
+            <h4 class="text-semi-bold-orange">Treine com quem realmente entende do negócio.</h4>
+            <span class="span-content">Crie sua conta, escolha seu clube e participe dos treinos, campeonatos e eventos e compartilhe experiência com outros atletas !</span>
+        </div>
+        <form class="form-group form-control ms-5 layout-orange-full radius-form">
+
+            <div class="text-center ">
+                <h4 class="mt-5 text-white">Comece sua jornada como atleta </h4>
+                <small class="text-white">junto com a Krak Sport !</small>
+            </div>
+
+            <div class="form-outline mb-4 mt-5 ag-field-content">
+                
+                <input type="text" id="txtNomeCompleto" class="form-control ag-field-input ag-input-color-orange-full " autocomplete="off" required />
+                <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Nome completo</label>
+            </div>
+
+            <div class="form-outline mb-4 ag-field-content">
+               
+                <input type="text" id="txtCpfCnpj" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">CPF</label>
+            </div>
+
+
+            <div class="form-outline mb-4 ag-field-content">              
+                <input type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">E-mail</label>
+            </div>
+
+            <button id="btnContinuar" type="button" class="btn  btn-block btn-confirm-radius mb-4 ms-5 mx-4" onclick="continuarCadastro()">Continuar</button>
+
+
+        </form>
+    </div>
+</div>

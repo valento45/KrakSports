@@ -1,0 +1,186 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Usuarios;
+@model UsuarioViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="mt-5 ">
+
+    <h3 class="text-semi-bold-orange">Olá, @Model.Nome,</h3>
+    <br />
+    <h5 class="text-semi-bold-orange"> Preencha os dados para finalizar seu cadastro</h5>
+    <hr />
+
+
+    <div class=" col-9 d-inline-flex mt-5 w-100">
+        <form class="form-group form-control layout-light-full radius-form" style="border-color: #D9740D; padding: 5%;">
+
+            <!--Dados do responsável-->
+            <div id="pnlDadosResponsavel">
+                <h5 class="text-semi-bold-orange mt-5">Dados do responsável</h5>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-10">
+
+                    <input type="text" id="txtNomeResponsavel" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Nome do responsável*</label>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+
+                        <input type="text" id="txtDocumentoResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">RG*</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtCpfResponsavel" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">CPF</label>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-10">
+
+                    
+                    <select id="cmbGrauParentesco" class="form-select ag-field-input ag-input-color-light-full" >
+                        <option selected>Selecionar</option>
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Avó/Avô">Avó/Avô</option>
+                        <option value="Tio/Tia">Tio/Tia</option>
+                        <option value="Irmão/Irmã">Irmão/Irmã</option>
+                    </select>
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Grau parentesco*</label>
+                </div>
+
+                <!--Contato responsavel-->
+                <h5 class="text-semi-bold-orange mt-5">Contato do responsável</h5>
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+
+                        <input type="text" id="txtTelefoneResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Telefone</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtCelularResponsavel" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Celular*</label>
+                    </div>
+                </div>
+                <!--FIM Contato responsavel-->
+
+            </div>
+            <!--FIM Dados do responsável-->
+
+            <!--Dados do aluno-->
+            <div id="pnlDadosAluno">
+                <h5 class="text-semi-bold-orange mt-5">Dados do aluno</h5>
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-10">
+
+                    <input type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" value="@Model.Nome" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Nome do aluno*</label>
+                </div>
+
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+
+                        <input type="text" id="txtDocumentoAluno" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">RG*</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">CPF</label>
+                    </div>                    
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-5">
+                    <input type="text" id="txtDataNascAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Data Nasc.*</label>
+                </div>
+
+            </div>
+            <!--FIM Dados do aluno-->
+
+            <!--Dados gerais-->
+            <div id="pnlDadosGerais">
+                <h5 class="text-semi-bold-orange mt-5">Dados gerais</h5>
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-7">
+
+                    <input type="text" id="txtCep" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">CEP*</label>
+                </div>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content">
+
+                    <input type="text" id="txtLogradouro" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Endereço</label>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-4">
+
+                        <input type="text" id="txtNumero" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Nº</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-10 ms-3">
+                        <input type="text" id="txtCidade" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Cidade</label>
+                    </div>
+
+                    <div class="form-outline mb-4 ag-field-content g-width-4 ms-3">
+                        <input type="text" id="txtUF" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">UF</label>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-7">
+
+                    <input type="text" id="txtComplemento" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example1">Complemento</label>
+                </div>
+
+                <h5 class="text-semi-bold-orange mt-5">Dados de login</h5>
+                <div class="form-outline mb-4 ag-field-content g-width-10 mt-5">
+                    <input type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Usuário*</label>
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-7">
+                    <input type="password" id="txtSenha" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Senha*</label>
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-10 ">
+                    <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7" autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="form2Example2">Confirmar Senha</label>
+                    
+                    <br />
+                    <span id="lblSenhaInvalida" class="validacao-senha mt-5 d-none"><img src="~/imgs/excluir.png" /> As senhas não conferem!</span>
+                </div>
+
+                <!-- Checkbox novidades e itens-->
+                <div class="form-check">
+                    <label class="form-check-label" for="form2Example31"> Gostaria de receber informações sobre novidades, eventos e itens do Club por e-mail. </label>
+                    <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="form2Example31" />
+                    
+                </div>
+            </div>
+            <!--FIM Dados gerais-->
+        </form>
+    </div>
+
+
+    <div class="mb-4 ms-5 mx-4 mt-5">
+        <button id="btnCriarConta" class="btn  btn-block btn-confirm-radius" type="button"onclick="criarConta()">Criar conta</button>
+        <a id="btnVoltar" class=" btn-voltar mx-5" asp-area="" asp-controller="Usuario" asp-action="Index">Voltar</a>
+    </div>
+
+</div>
