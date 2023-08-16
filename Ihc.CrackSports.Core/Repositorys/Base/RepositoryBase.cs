@@ -121,7 +121,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
                 return false;
             }
             finally { _dbConnection.Close(); }
-        } 
+        }
 
         protected async Task<object?> ExecuteScalarAsync(IDbCommand cmd)
         {
@@ -129,9 +129,9 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
             {
                 _dbConnection.Open();
 
-                cmd.Connection = _dbConnection;               
+                cmd.Connection = _dbConnection;
 
-                return await _dbConnection.ExecuteScalarAsync(cmd.CommandText, cmd.Parameters); ;
+                return cmd.ExecuteScalar();
 
             }
             catch (Exception ex)

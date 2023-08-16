@@ -8,6 +8,8 @@ CREATE DATABASE bd_sports
 	CREATE SCHEMA sys
     AUTHORIZATION postgres;
 	
+	select * from sys.usuario_tb
+	
 	
 	create table sys.usuario_tb
 	(

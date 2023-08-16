@@ -1,7 +1,25 @@
 ﻿$(document).ready(() => {
 
-
+    $(".valida-campos-obrigatorios").on("focusout", onFocusOutCamposObrigatorios);
+    
 });
+
+function onFocusOutCamposObrigatorios(e) {
+
+    var campo = $(`#${e.currentTarget.id}`);
+    var label = $(`#${e.currentTarget.id}Label`);
+
+    if (!campo.val()) {
+        label.addClass("campos-invalidos");
+        campo.addClass("campos-invalidos");
+    }
+    else {
+        label.removeClass("campos-invalidos");
+        campo.removeClass("campos-invalidos");
+    }
+}
+
+
 
 let nome, cpfCnpj, email;
 
@@ -38,7 +56,7 @@ function criarConta() {
 
         model.nomeResponsavel = $("#txtNomeResponsavel").val();
         model.documentoResponsavel = $("#txtDocumentoResponsavel").val();
-        model.cpfResponsavel =+ $("#txtCpfResponsavel").val();
+        model.cpfResponsavel = + $("#txtCpfResponsavel").val();
         model.grauParentesco = $('#cmbGrauParentesco').val();;
         model.telefoneResponsavel = $("#txtTelefoneResponsavel").val();
         model.celularResponsavel = $("#txtCelularResponsavel").val();
@@ -46,15 +64,16 @@ function criarConta() {
         /*Dados Aluno*/
         model.nomeAluno = $("#txtNomeAluno").val();
         model.documentoAluno = $("#txtDocumentoAluno").val();
-        model.cpfAluno =+ $("#txtCpfAluno").val();
-        model.dataNascimento = new Date();
+        model.cpfAluno = + apenasNumeros( $("#txtCpfAluno").val());
+        model.dataNascimento = $("#txtDataNascAluno").val();
 
+        var campo = $("#txtDataNascAluno");
         /*Dados Endereco*/
         model.endereco = new Object();
 
         model.endereco.cep = $("#txtCep").val();
         model.endereco.logradouro = $("#txtLogradouro").val();
-        model.endereco.numero = $("#txtNumero").val();
+        model.endereco.numero = + $("#txtNumero").val();
         model.endereco.cidade = $("#txtCidade").val();
         model.endereco.uf = $("#txtUF").val();
         model.endereco.complemento = $("#txtComplemento").val();
@@ -64,6 +83,7 @@ function criarConta() {
         model.senha = $("#txtSenha").val();
         model.email = email;
         model.tipo = 0;
+        model.autorizaEnvioNovidadesEmail = $('#chkAutorizaEmailNovidades').is(':checked');
 
 
         util.ajax.post("../Usuario/Cadastro", model, cadastroSuccess, cadastroError);
@@ -74,5 +94,15 @@ function criarConta() {
 
 }
 
-function cadastroSuccess(e) { }
-function cadastroError(error) { }
+function cadastroSuccess(e) {
+    alert("Usuario cadastrado !")
+}
+function cadastroError(error) {
+    alert("Erro ao cadastrar !")
+
+}
+
+function apenasNumeros(string) {
+    var numsStr = string.replace(/[^0-9]/g, '');
+    return parseInt(numsStr);
+}

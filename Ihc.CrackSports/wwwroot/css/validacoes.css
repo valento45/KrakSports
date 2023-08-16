@@ -1,0 +1,24 @@
+@font-face {
+    font-family: Poppins-Bold;
+    src: url('../Fonts/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Light;
+    src: url('../Fonts/Poppins-Light.ttf');
+}
+
+@font-face {
+    font-family: Poppins-SemiBold;
+    src: url('../Fonts/Poppins-SemiBold.ttf');
+}
+
+
+.valida-campos-obrigatorios{
+
+}
+
+    
+.campos-invalidos{
+    color: red !important;
+}

@@ -34,7 +34,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastro([FromBody] CadastroRequest model)
         {
-            return View(await _usuarioService.InsertOrUpdate(model));
+            var result = await _usuarioService.InsertOrUpdate(model);
+            return Json(result);
         }
     }
 }

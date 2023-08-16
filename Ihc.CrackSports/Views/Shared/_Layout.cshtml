@@ -6,7 +6,10 @@
     <title>@ViewData["Title"] - Ihc.CrackSports</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/validacoes.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Ihc.CrackSports.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+
 </head>
 <body id="bodyLayout">
     <header>
@@ -62,6 +65,8 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/UtilAjax.js" asp-append-version="true"></script>
     <script src="~/js/Usuario/Usuario.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.mask/jquery.mask.min.js" asp-append-version="true"></script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -23,7 +23,7 @@ namespace Ihc.CrackSports.Core.Requests
         public string NomeResponsavel { get; set; }
 
         [JsonProperty("documentoResponsavel")]
-        public string documentoResponsavel { get; set; }
+        public string DocumentoResponsavel { get; set; }
 
         [JsonProperty("cpfResponsavel")]
         public long CpfResponsavel { get; set; }
@@ -41,7 +41,7 @@ namespace Ihc.CrackSports.Core.Requests
         public string NomeAluno { get; set; }
 
         [JsonProperty("documentoAluno")]
-        public string documentoAluno { get; set; }
+        public string DocumentoAluno { get; set; }
 
         [JsonProperty("cpfAluno")]
         public long CpfAluno { get; set; }
@@ -64,6 +64,8 @@ namespace Ihc.CrackSports.Core.Requests
         [JsonProperty("tipo")]
         public TipoUsuario Tipo { get; set; }
 
+        [JsonProperty("autorizaEnvioNovidadesEmail")]
+        public bool AutorizaEnvioNovidadesEmail { get; set; }
         public CadastroRequest()
         {
             

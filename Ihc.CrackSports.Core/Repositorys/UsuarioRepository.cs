@@ -18,12 +18,12 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Incluir(CadastroRequest request)
         {
-            NpgsqlCommand cmd = new NpgsqlCommand("insert into sys.usuario_tb (login, senha, tipo, email) values (@login, @senha, @tipo, @email);");
+            NpgsqlCommand cmd = new NpgsqlCommand("insert into sys.usuario_tb (login, senha, tipo, email) values (@login, @senha, @tipo, @email) returning id_usuario;");
 
             cmd.Parameters.AddWithValue(@"login", request.Login);
             cmd.Parameters.AddWithValue(@"senha", request.Senha);
             cmd.Parameters.AddWithValue(@"tipo", (int)request.Tipo);
-            cmd.Parameters.AddWithValue(@"email", request.Email);
+            cmd.Parameters.AddWithValue(@"email", request.Email ?? "");
 
 
             var result = await base.ExecuteScalarAsync(cmd);
@@ -51,7 +51,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"id_usuario", request.IdUsuario);
 
 
-            var result = await base.ExecuteAsync(cmd.CommandText, cmd.Parameters);
+            var result = await base.ExecuteCommand(cmd);
 
             return result;
         }
