@@ -1,10 +1,24 @@
+using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.WebApp.Configurations.DependenciasInjection;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddInjecaoDependencias(builder.Configuration);
 
+
+#region Config Identity Core
+
+builder.Services.AddIdentityCore<Usuario>(options => { });
+builder.Services.AddScoped<IUserStore<Usuario>, UsuarioStore>();
+
+builder.Services.AddAuthentication("cookies")
+    .AddCookie("cookies", options =>
+    options.LoginPath = "/Home/Login"
+    );
+
+#endregion
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

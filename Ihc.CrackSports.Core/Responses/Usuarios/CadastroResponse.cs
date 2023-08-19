@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Ihc.CrackSports.Core.Responses.Usuarios
 {
-    public class CadastroUsuarioResponse : ResponseBase
+    public class CadastroResponse : ResponseBase
     {
-        public CadastroUsuarioResponse()
+
+        public string TipoCadastro { get; set; }
+
+        public CadastroResponse()
         {
             
         }

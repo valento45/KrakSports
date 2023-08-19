@@ -8,29 +8,50 @@ CREATE DATABASE bd_sports
 	CREATE SCHEMA sys
     AUTHORIZATION postgres;
 	
-	select * from sys.usuario_tb
 	
-	
+	drop table sys.usuario_tb	
+   select * from sys.usuario_tb
+
 	create table sys.usuario_tb
 	(
 		id_usuario serial not null primary key,
 		login varchar not null,
-		senha varchar not null,
-		tipo integer not null,
+		normalizedLogin varchar,
+		senha varchar not null,		
 		email varchar(300)		
 	);	
 	
+	create table sys.club_tb(
+		id_club serial not null primary key,
+		nome_fantasia varchar,
+		razao_social varchar,
+		cpf_cnpj bigint,
+		is_pj bit,
+		endereco varchar,
+		numero integer,
+		cidade varchar,
+		cep varchar(20),
+		uf varchar(2),
+		imagem_base64 varchar	
+	);
+	
+	select * from sys.aluno_tb
+		
+		drop table sys.aluno_tb
+		
 	create table sys.aluno_tb(
 		id_aluno serial not null primary key,
 		id_usuario bigint,
+		id_club bigint,
 		nome varchar not null,
 		documento varchar,
 		cpf_cnpj bigint,
+		foto_base64 varchar,
 		data_nascimento timestamp,
 		email varchar(300),
 		telefone varchar(50),
 		celular varchar(50),
-		is_pcd bit,
+		is_pcd BOOLEAN,
 		descricao_pcd varchar, 
 		posicao_jogador varchar(50),		
 		endereco varchar,
@@ -38,11 +59,15 @@ CREATE DATABASE bd_sports
 		cidade varchar,
 		uf varchar,
 		cep varchar,
+		camiseta_numero integer,
 		CONSTRAINT id_usuario_fk foreign key (id_usuario)
-		references sys.usuario_tb(id_usuario)	
+		references sys.usuario_tb(id_usuario)	,
+		CONSTRAINT id_club_fk foreign key (id_club)
+		references sys.club_tb(id_club)	
 	);
 	
-	create table responsavel_aluno_tb(
+drop table sys.responsavel_aluno_tb
+	create table sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
 		id_aluno bigint not null,
 		nome_responsavel varchar(300),

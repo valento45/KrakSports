@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Repositorys.Base;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests;
 using Npgsql;
@@ -8,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ihc.CrackSports.Core.Security;
 
 namespace Ihc.CrackSports.Core.Repositorys
 {
@@ -21,7 +23,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             NpgsqlCommand cmd = new NpgsqlCommand("insert into sys.usuario_tb (login, senha, tipo, email) values (@login, @senha, @tipo, @email) returning id_usuario;");
 
             cmd.Parameters.AddWithValue(@"login", request.Login);
-            cmd.Parameters.AddWithValue(@"senha", request.Senha);
+            cmd.Parameters.AddWithValue(@"senha", Security.Security.Encrypt(request.Senha));
             cmd.Parameters.AddWithValue(@"tipo", (int)request.Tipo);
             cmd.Parameters.AddWithValue(@"email", request.Email ?? "");
 
@@ -65,6 +67,18 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<string> GetMessage()
         {
             return base.GetMessage();
+        }
+
+        public async Task<Usuario?> ObterPorUserName(string userName)
+        {
+            string query = $"select id_usuario as Id, login as UserName, senha as PasswordHash, email as Email from sys.usuario_tb where UPPER(login) LIKE '{userName}'";
+
+            var obj = await base.QueryAsync<Usuario>(query);
+
+            if (obj != null)
+                return obj.FirstOrDefault();
+            else
+                return null;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests;
 using Ihc.CrackSports.Core.Responses.Usuarios;
@@ -14,38 +16,68 @@ namespace Ihc.CrackSports.Core.Commands
     public class UsuarioCommand : IUsuarioCommand
     {
         protected readonly IUsuarioRepository _usuarioRepository;
+      
 
 
         public UsuarioCommand(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
+            
         }
 
 
-        public async Task<CadastroUsuarioResponse> InsertOrUpdate(CadastroRequest request)
+       
+
+        private async Task<bool> InserirUsuarioAsync(CadastroRequest request)
         {
+            bool sucesso;
+
+            sucesso = await _usuarioRepository.Incluir(request);           
+
+            return sucesso;
+        }
+
+        private async Task<bool> AtualizarUsuarioAsync(CadastroRequest request)
+        {
+            bool sucesso;
+
+            sucesso = await _usuarioRepository.Atualizar(request);
+
+            return sucesso;
+        }
+
+        public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request)
+        {
+            var result = new CadastroResponse();
             bool sucesso = false;
 
             if (request.IdAluno > 0)
-                sucesso = await _usuarioRepository.Atualizar(request);
+                sucesso = await AtualizarUsuarioAsync(request);
+
             else
-                sucesso = await _usuarioRepository.Incluir(request);
+                sucesso = await InserirUsuarioAsync(request);
 
-            return sucesso ? 
-                new CadastroUsuarioResponse { Message = "", StatusCode = 200 }
-                :
-                new CadastroUsuarioResponse { Message = await _usuarioRepository.GetMessage(), StatusCode = 500 };
+
+            result = sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse
+            { Message = await _usuarioRepository.GetMessage() != string.Empty ? await _usuarioRepository.GetMessage() : "Erro ao inserir os dados do aluno !" + nameof(IAlunoRepository), StatusCode = 500 };
+
+            return result;
         }
 
-        public async Task<CadastroUsuarioResponse> ExcluirUsuario(long idAluno)
+        public async Task<CadastroResponse> ExcluirUsuario(long idUsuario)
         {
-            var result = await _usuarioRepository.Excluir(idAluno);
+            var result = await _usuarioRepository.Excluir(idUsuario);
 
-            if(result)
-                return new CadastroUsuarioResponse { StatusCode = 200 };
+            if (result)
+                return new CadastroResponse { StatusCode = 200 };
 
-            return new CadastroUsuarioResponse { Message = await _usuarioRepository.GetMessage(), StatusCode=500 };
+            return new CadastroResponse { Message = await _usuarioRepository.GetMessage(), StatusCode = 500 };
         }
 
+        public async Task<Usuario> ObterPorUserName(string userName)
+        {
+            return await _usuarioRepository.ObterPorUserName(userName);
+                
+        }
     }
 }

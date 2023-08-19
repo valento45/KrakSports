@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Requests;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> Incluir(CadastroRequest request);
         Task<bool> Atualizar(CadastroRequest request);
         Task<bool> Excluir(long idAluno);
+        Task<Usuario?> ObterPorUserName(string userName);
         Task<string> GetMessage();
     }
 }

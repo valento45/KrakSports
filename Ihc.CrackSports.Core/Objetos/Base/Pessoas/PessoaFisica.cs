@@ -16,6 +16,6 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
         public string Celular { get; set; }
         public bool IsPCD { get; set; }
         public string DescricaoPCD { get; set; }
-        public Endereco Endereco { get; set; }
+        
     }
 }

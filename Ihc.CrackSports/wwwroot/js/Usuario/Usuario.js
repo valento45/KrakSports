@@ -1,8 +1,13 @@
 ﻿$(document).ready(() => {
 
     $(".valida-campos-obrigatorios").on("focusout", onFocusOutCamposObrigatorios);
-    
+   
 });
+
+
+let nome, cpfCnpj, email;
+var model = new Object();
+
 
 function onFocusOutCamposObrigatorios(e) {
 
@@ -21,14 +26,6 @@ function onFocusOutCamposObrigatorios(e) {
 
 
 
-let nome, cpfCnpj, email;
-
-var model = new Object();
-
-function redirectCadastro() {
-
-    window.location.href = "../Usuario/Index";
-}
 
 function continuarCadastro() {
 
@@ -47,6 +44,8 @@ function validarCampos() {
         $("#txtCelularResponsavel").val() != '' && $("#txtNomeAluno").val() != '' && $("#txtDocumentoAluno").val() != '' && $("#txtDataNascAluno").val() != '' &&
         $("#txtCep").val() != '' && $("#txtUsuario").val() != '' && $("#txtSenha").val() != '';
 }
+
+
 function criarConta() {
 
     if (validarCampos()) {
@@ -95,7 +94,9 @@ function criarConta() {
 }
 
 function cadastroSuccess(e) {
-    alert("Usuario cadastrado !")
+    var newDoc = document.open("text/html", "replace");
+    newDoc.write(e);
+    newDoc.close();
 }
 function cadastroError(error) {
     alert("Erro ao cadastrar !")

@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Requests;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using Ihc.CrackSports.Core.Services.Interfaces;
@@ -33,7 +34,7 @@ namespace Ihc.CrackSports.Core.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CadastroUsuarioResponse> InsertOrUpdate(CadastroRequest request)
+        public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request)
         {
            return await _usuarioCommand.InsertOrUpdate(request);
         }
@@ -43,9 +44,14 @@ namespace Ihc.CrackSports.Core.Services
         /// </summary>
         /// <param name="idAluno"></param>
         /// <returns></returns>
-        public async Task<CadastroUsuarioResponse> Excluir(long idAluno)
+        public async Task<CadastroResponse> Excluir(long idAluno)
         {
             return await _usuarioCommand.ExcluirUsuario(idAluno);
-        }        
+        }
+
+        public async Task<Usuario> ObterPorUserName(string userName)
+        {
+          return await _usuarioCommand.ObterPorUserName(userName);  
+        }
     }
 }

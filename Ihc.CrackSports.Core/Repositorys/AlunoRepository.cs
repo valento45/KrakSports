@@ -1,0 +1,127 @@
+﻿using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Repositorys.Base;
+using Ihc.CrackSports.Core.Repositorys.Interfaces;
+using Npgsql;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Markup;
+
+namespace Ihc.CrackSports.Core.Repositorys
+{
+    public class AlunoRepository : RepositoryBase, IAlunoRepository
+    {
+       
+
+        public AlunoRepository(IDbConnection connection) : base(connection)
+        {
+           
+        }
+
+
+
+        public async Task<bool> Inserir(Aluno aluno)
+        {
+            string query = "INSERT INTO sys.aluno_tb (id_usuario, nome, documento, cpf_cnpj, data_nascimento, email, telefone, celular, is_pcd, descricao_pcd, posicao_jogador, " +
+                "camiseta_numero, foto_base64," +
+                "endereco, numero, cidade, uf, cep) VALUES (@id_usuario, @nome, @documento, @cpf_cnpj, @data_nascimento, @email, @telefone, @celular, @is_pcd, @descricao_pcd, " +
+                "@posicao_jogador, @camiseta_numero, @foto_base64, @endereco, @numero, @cidade, @uf, @cep) returning id_aluno;";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+            cmd.Parameters.AddWithValue(@"id_usuario", aluno?.IdUsuario ?? 0);
+            cmd.Parameters.AddWithValue(@"nome", aluno?.Nome ?? "");
+            cmd.Parameters.AddWithValue(@"documento", aluno?.Documento ?? "");
+            cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);
+            cmd.Parameters.AddWithValue(@"data_nascimento", aluno?.DataNascimento ?? new DateTime());
+            cmd.Parameters.AddWithValue(@"email", aluno?.Email ?? "");
+            cmd.Parameters.AddWithValue(@"telefone", aluno?.Telefone ?? "");
+            cmd.Parameters.AddWithValue(@"celular", aluno?.Celular ?? "");
+            cmd.Parameters.AddWithValue(@"is_pcd", aluno?.IsPCD ?? false);
+            cmd.Parameters.AddWithValue(@"descricao_pcd", aluno?.DescricaoPCD ?? "");
+            cmd.Parameters.AddWithValue(@"posicao_jogador", aluno?.PosicaoJogador ?? "");
+            cmd.Parameters.AddWithValue(@"camiseta_numero", aluno?.CamisetaNumero ?? -1);
+            cmd.Parameters.AddWithValue(@"foto_base64", aluno?.FotoAlunoBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"endereco", aluno?.Endereco?.Logradouro ?? "");
+            cmd.Parameters.AddWithValue(@"numero", aluno?.Endereco?.Numero ?? 0);
+            cmd.Parameters.AddWithValue(@"cidade", aluno?.Endereco?.Cidade ?? "");
+            cmd.Parameters.AddWithValue(@"uf", aluno?.Endereco?.UF ?? "");
+            cmd.Parameters.AddWithValue(@"cep", aluno?.Endereco?.CEP ??"");
+
+            var result = await base.ExecuteScalarAsync(cmd);
+            long codigo;
+            if (long.TryParse(result.ToString(), out codigo))
+            {
+                aluno.Id = codigo;              
+                return codigo > 0 ;
+            }
+            else
+                return false;
+        }
+
+        public async Task<bool> Atualizar(Aluno aluno)
+        {
+            string query = "update sys.aluno_tb set id_usuario = @id_usuario, nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +
+                "email = @email, telefone = @telefone, celular = @celular, is_pcd = @is_pcd, descricao_pcd = @descricao_pcd, posicao_jogador = @posicao_jogador, camiseta_numero = @camiseta_numero," +
+               "foto_base64 = @foto_base64, endereco = @endereco, numero = @numero, cidade = @cidade, uf = @uf, cep = @cep where id_aluno = @id_aluno;";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+            cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);
+            cmd.Parameters.AddWithValue(@"id_usuario", aluno?.IdUsuario ?? 0);
+            cmd.Parameters.AddWithValue(@"nome", aluno?.Nome ?? "");
+            cmd.Parameters.AddWithValue(@"documento", aluno?.Documento ?? "");
+            cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);
+            cmd.Parameters.AddWithValue(@"data_nascimento", aluno?.DataNascimento ?? new DateTime());
+            cmd.Parameters.AddWithValue(@"email", aluno?.Email ?? "");
+            cmd.Parameters.AddWithValue(@"telefone", aluno?.Telefone ?? "");
+            cmd.Parameters.AddWithValue(@"celular", aluno?.Celular ?? "");
+            cmd.Parameters.AddWithValue(@"is_pcd", aluno?.IsPCD ?? false);
+            cmd.Parameters.AddWithValue(@"descricao_pcd", aluno?.DescricaoPCD ?? "");
+            cmd.Parameters.AddWithValue(@"posicao_jogador", aluno?.PosicaoJogador ?? "");
+            cmd.Parameters.AddWithValue(@"camiseta_numero", aluno?.CamisetaNumero ?? -1);
+            cmd.Parameters.AddWithValue(@"foto_base64", aluno?.FotoAlunoBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"endereco", aluno?.Endereco?.Logradouro ?? "");
+            cmd.Parameters.AddWithValue(@"numero", aluno?.Endereco?.Numero ?? 0);
+            cmd.Parameters.AddWithValue(@"cidade", aluno?.Endereco?.Cidade ?? "");
+            cmd.Parameters.AddWithValue(@"uf", aluno?.Endereco?.UF ?? "");
+            cmd.Parameters.AddWithValue(@"cep", aluno?.Endereco?.CEP ?? "");
+
+
+            return await base.ExecuteCommand(cmd);
+        }
+
+        public async Task<bool> Excluir(long idAluno)
+        {
+            string query = "delete from sys.aluno_tb where id_aluno = " + idAluno;
+            return await base.ExecuteAsync(query);
+        }
+
+
+        public Task<List<Aluno>> ObterAlunoByCpf(long cpf)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Aluno>> ObterAlunoById(long idAluno)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Aluno>> ObterAlunoByNome(string nome)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Aluno>> ObterAlunosByIdClub(long idClub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Aluno>> ObterTodosAlunoById(int limite)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

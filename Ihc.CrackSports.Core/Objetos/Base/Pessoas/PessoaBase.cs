@@ -9,13 +9,13 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
     public abstract class PessoaBase
     {
         public long Id { get; set; }
+        /// <summary>
+        /// Nome pessoa fisica ou nome fantasia da pessoa juridica
+        /// </summary>
         public string Nome { get; set; }
         public bool IsPj { get; set; }
         public long CpfCnpj { get; set; }
-        public string Endereco { get; set; }
-        public int Numero { get; set; }
-        public string Cidade { get; set; }
-        public string UF { get; set; }
-        public string CEP { get; set; }
+        public Endereco Endereco { get; set; }
+
     }
 }

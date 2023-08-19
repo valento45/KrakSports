@@ -50,14 +50,14 @@
             <!-- Email input -->
             <div class="form-outline mb-4 ag-field-content ">
                 
-                <input type="text" id="form2Example1" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                <input type="text" id="txtUserNameLogin" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
                 <label class="form-label ag-field-label" for="form2Example1">Usuário ou e-mail</label>
             </div>
 
             <!-- Password input -->
             <div class="form-outline mb-4 ag-field-content ">
                 
-                <input type="password" id="form2Example2" class="form-control ag-field-input ag-input-color-orange-full" required />
+                <input type="password" id="txtSenhaLogin" class="form-control ag-field-input ag-input-color-orange-full" required />
                 <label class="form-label ag-field-label" for="form2Example2">Senha</label>
             </div>
 
@@ -67,7 +67,7 @@
                     <!-- Checkbox -->
                     <div class="form-check">
                         <label class="form-check-label" for="form2Example31"> Lembrar-me </label>
-                        <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="form2Example31" checked />
+                        <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="chkLembrarMe" checked />
 
                     </div>
                 </div>
@@ -79,7 +79,7 @@
             </div>
 
             <!-- Submit button -->
-            <button type="button" class="btn  btn-block btn-confirm-radius mb-4">Acessar</button>
+            <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-4">Acessar</button>
 
 
             <!-- Register buttons -->
@@ -88,6 +88,8 @@
             </div>
         </form>
     </div>
-    <script src="~/js/Usuario/Usuario.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/UtilAjax.js" asp-append-version="true"></script>
+    <script src="~/js/Usuario/login.js" asp-append-version="true"></script>   
 </body>
 </html>

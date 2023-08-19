@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Requests;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Requests;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,8 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
 {
     public interface IUsuarioCommand
     {
-
-        Task<CadastroUsuarioResponse> InsertOrUpdate(CadastroRequest request);
-        Task<CadastroUsuarioResponse> ExcluirUsuario(long idAluno);
+        Task<CadastroResponse> InsertOrUpdate(CadastroRequest request);
+        Task<CadastroResponse> ExcluirUsuario(long idAluno);
+        Task<Usuario> ObterPorUserName(string userName);
     }
 }

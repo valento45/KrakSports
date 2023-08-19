@@ -1,16 +1,25 @@
-﻿using Ihc.CrackSports.WebApp.Models;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Security;
+using Ihc.CrackSports.WebApp.Models;
+using Ihc.CrackSports.WebApp.Models.Usuarios;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
+using System.Text;
 
 namespace Ihc.CrackSports.WebApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<Usuario> _userManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -18,8 +27,36 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByNameAsync(model.UserName);
+
+                if (user != null)
+                {                    
+
+                    if (await _userManager.CheckPasswordAsync(user, Security.Encrypt( model.PasswordHash)))
+                    {
+                        var identity = new ClaimsIdentity("cookies");
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+                        identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
+
+                        await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));
+
+                        return RedirectToAction("About");
+                    }                
+                }
+            }
             return View();
         }
 
@@ -28,6 +65,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             return View();
         }
+
+        public IActionResult About()
+            => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

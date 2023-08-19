@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Requests;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Requests;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,8 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
     public interface IUsuarioService
     {
 
-        Task<CadastroUsuarioResponse> InsertOrUpdate(CadastroRequest request);      
-        Task<CadastroUsuarioResponse> Excluir(long idAluno);
+        Task<CadastroResponse> InsertOrUpdate(CadastroRequest request);      
+        Task<CadastroResponse> Excluir(long idAluno);
+        Task<Usuario> ObterPorUserName(string userName);
     }
 }
