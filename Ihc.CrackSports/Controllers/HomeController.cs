@@ -43,9 +43,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 var user = await _userManager.FindByNameAsync(model.UserName);
 
                 if (user != null)
-                {                    
+                {
 
-                    if (await _userManager.CheckPasswordAsync(user, Security.Encrypt( model.PasswordHash)))
+                    if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
                     {
                         var identity = new ClaimsIdentity("cookies");
                         identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
@@ -54,7 +54,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));
 
                         return RedirectToAction("About");
-                    }                
+                    }
                 }
             }
             return View();

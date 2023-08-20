@@ -67,6 +67,7 @@ CREATE DATABASE bd_sports
 	);
 	
 drop table sys.responsavel_aluno_tb
+
 	create table sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
 		id_aluno bigint not null,
