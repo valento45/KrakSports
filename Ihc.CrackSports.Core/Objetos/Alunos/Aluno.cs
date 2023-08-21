@@ -18,6 +18,10 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
         public string PosicaoJogador { get; set; }
         public int CamisetaNumero { get; set; }
         public string FotoAlunoBase64 { get; set; }
+        public byte[] GetBytesFotoAluno()
+        {
+            throw new NotImplementedException();
+        }
         public List<Responsavel> Responsaveis { get; set; }
 
         public Aluno()

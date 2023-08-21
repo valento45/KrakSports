@@ -281,6 +281,14 @@ body {
     border-radius: 50px;   
    
 }
+   
+    .ag-field-input:disabled ~ .ag-field-label {
+        font-family: Poppins;
+        font-size: 1.1rem;
+        letter-spacing: .1rem;
+        line-height: calc(18px + 2 * ((100vw - 320px) / 447));
+        transform: translate3d(0,-120%,0);
+    }
 
     .ag-field-input:focus {
         background-color: #D9740D;
@@ -368,4 +376,41 @@ body {
     min-width: 75% !important;
     width: 100%;
 }
+
+.icon-description {
+    background-color: #D9740D;
+    color: ghostwhite;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    text-align: center;    
+}
+
+.tooltip-inner {
+    background-color: #D9740D !important;
+    color: ghostwhite !important;    
+}
+
+.tooltip.bs-tooltip-right .arrow:before {
+    border-right-color: #D9740D !important;
+    
+}
+
+.tooltip.bs-tooltip-left .arrow:before {
+    border-right-color: #D9740D !important;
+    
+}
+
+.tooltip.bs-tooltip-bottom .arrow:before {
+    border-right-color: #D9740D !important;
+    
+}
+
+.tooltip.bs-tooltip-top .arrow:before {
+    border-right-color: #D9740D !important;
+    
+}
+
+
+
 

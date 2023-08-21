@@ -87,6 +87,11 @@
     <script src="~/js/UtilAjax.js" asp-append-version="true"></script>
     <script src="~/js/Usuario/Usuario.js" asp-append-version="true"></script>
     <script src="~/lib/jquery.mask/jquery.mask.min.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
     <script>
         let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
     </script>

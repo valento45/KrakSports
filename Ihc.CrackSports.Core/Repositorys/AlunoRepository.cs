@@ -114,9 +114,17 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result.Select(x => x.ToAluno());
         }
 
-        public Task<Aluno> ObterAlunoById(long idAluno)
+        public async Task<Aluno> ObterAlunoById(long idAluno)
         {
-            throw new NotImplementedException();
+            string query = "select  * from sys.aluno_tb where id_aluno = @idAluno";
+
+            var result = await base.QueryAsync<AlunoDto>(query,
+                new
+                {
+                    idAluno = idAluno
+                });
+
+            return result.Select(x => x.ToAluno())?.FirstOrDefault();
         }
 
         public Task<IEnumerable<Aluno>> ObterAlunoByNome(string nome)
