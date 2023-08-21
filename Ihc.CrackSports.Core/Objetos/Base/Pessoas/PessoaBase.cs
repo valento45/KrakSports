@@ -15,6 +15,7 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
         public string Nome { get; set; }
         public bool IsPj { get; set; }
         public long CpfCnpj { get; set; }
+        public string CpfCnpjString { get; set; }
         public Endereco Endereco { get; set; }
 
     }

@@ -3,14 +3,6 @@
 var frameId = "frameWebApp";
 
 
-
-window.addEventListener('load', function () {
-    util.frame.redimensionIframe();
-    util.frame.scrollTop(0);
-});
-
-
-
 util.storage = {
     setItem: function (name, object) {
         var json = JSON.stringify(object);

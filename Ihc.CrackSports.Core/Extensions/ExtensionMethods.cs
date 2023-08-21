@@ -19,5 +19,10 @@ namespace Ihc.CrackSports.Core.Extensions
         {
             return cnpj.ToString(@"00\.000\.000\/0000\-00");
         }
+
+        public static string SomenteNumeros(this string value)
+        {
+            return String.Join("", System.Text.RegularExpressions.Regex.Split(value, @"[^\d]"));
+        }
     }
 }

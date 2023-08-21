@@ -42,6 +42,12 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
         public static bool CanDelete(this ClaimsPrincipal User, string role)
         {
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.DELETE}-{role}")) ?? false;
+
+        }
+
+        public static bool CanRead(this ClaimsPrincipal User, string role)
+        {
+            return User?.Claims.Any(param => param.Value.Equals($"{Roles.DELETE}-{role}")) ?? false;
         }
 
         public static string GetIdentificador(this ClaimsPrincipal User)

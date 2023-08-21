@@ -36,12 +36,12 @@ html {
     }
 
     html header {
-        background-color: #FA8C05 !important;
+        background-color: brown !important;
         color: ghostwhite !important;
     }
 
     html nav {
-        background-color: #FA8C05 !important;
+        background-color: brown !important;
         font-family: Poppins-SemiBold;
         font-size: 14px;
         color: ghostwhite !important;
@@ -56,7 +56,7 @@ body {
 }
 
 .link-redirect-orange {
-    color: #FA8C05 !important;
+    color: ghostwhite ;
     font-weight: bold;
     font-family: Poppins-Bold;
     text-decoration: none;
@@ -84,7 +84,7 @@ body {
 .text-bold-orange {
     font-weight: bold;
     font-family: Poppins-Bold;
-    color: #FA8C05;
+    color: #FA8C05 !important;
 }
 
 .text-bold-orange-light {
@@ -96,13 +96,13 @@ body {
 .text-semi-bold-orange {
     font-weight: bold;
     font-family: Poppins-SemiBold;
-    color: #FA8C05;
+    color: #800000;
 }
 
 .text-regular-orange {
     font-weight: bold;
     font-family: Poppins-Light;
-    color: #FA8C05;
+    color: brown;
 }
 
 .btn-confirm-radius-escuro {
@@ -121,7 +121,7 @@ body {
 
 .btn-confirm-radius {
     border-radius: 20px;
-    background-color: #FA8C05;
+    background-color: brown;
     color: ghostwhite;
     min-width: 120px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
@@ -137,11 +137,10 @@ body {
 
 .btn-voltar {
     min-width: 120px;
-  
     border: none;
-    color: #D9740D;
+    color: brown;
     font-weight: bold;
-    text-decoration: none;   
+    text-decoration: none;
 }
 
     .btn-voltar:hover {
@@ -160,18 +159,18 @@ body {
     }
 
 .form-checkbox-input {
-    background-color: #FA8C05;
-    border-color: #FA8C05;
+    background-color: brown;
+    border-color: brown;
 }
 
     .form-checkbox-input:checked {
-        background-color: #FA8C05;
-        border-color: #FA8C05;
+        background-color: brown;
+        border-color: brown;
     }
 
 .span-content {
     line-height: 26px;
-    color: #D9740D;
+    color: brown;
 }
 
 
@@ -181,15 +180,16 @@ body {
 
     .layout-light-full input {
         background-color: ghostwhite;
-        color: #D9740D;
+        color: brown;
 
-    }.layout-light-full label {
+    }
+    .layout-light-full label {
         background-color: ghostwhite;
-        color: #D9740D;
+        color: brown;
     }
 
 .layout-orange-full {
-    background-color: #D9740D;
+    background-color: #800000;
 }
 
 .radius-form {
@@ -197,13 +197,13 @@ body {
 }
 
 .layout-orange-full h3, h4, h5, small {
-    color: #F9D19F;
+    color: white;
     font-family: Poppins-Bold;
 }
 
 .layout-orange-full b {
     font-family: Poppins-Bold;
-    color: #F9D19F;
+    color: white;
 }
 
 .layout-orange-full label, p {
@@ -212,11 +212,12 @@ body {
     text-decoration:none;
 }
 
+
 .layout-orange-full-btn {
     border-radius: 15px;
 }
     .layout-orange-full-btn:hover {
-        background-color: #F9D19F !important;
+        background-color: brown !important;
         border-radius: 15px;
     }
 
@@ -241,7 +242,8 @@ body {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap
+    white-space: nowrap;
+    margin-left: 10px;
 }
 
 .ag-field-input:focus ~ .ag-field-label {
@@ -291,8 +293,8 @@ body {
     }
 
     .ag-field-input:focus {
-        background-color: #D9740D;
-        color: ghostwhite;      
+        background-color: #800000;
+        color: ghostwhite;
     }
 
 .ag-field {
@@ -300,13 +302,13 @@ body {
 }
 
 .ag-input-color-orange-full {
-    background-color: #D9740D;
+    background-color: #800000;
     color: ghostwhite;
 }
 
 .ag-input-color-light-full {
     background-color: ghostwhite;
-    color: #D9740D;
+    color: brown;
 }
 
 
@@ -378,7 +380,7 @@ body {
 }
 
 .icon-description {
-    background-color: #D9740D;
+    background-color: brown;
     color: ghostwhite;
     width: 25px;
     height: 25px;
@@ -387,30 +389,34 @@ body {
 }
 
 .tooltip-inner {
-    background-color: #D9740D !important;
-    color: ghostwhite !important;    
+    background-color: brown !important;
+    color: ghostwhite !important;
 }
 
 .tooltip.bs-tooltip-right .arrow:before {
-    border-right-color: #D9740D !important;
-    
+    border-right-color: brown !important;
 }
 
 .tooltip.bs-tooltip-left .arrow:before {
-    border-right-color: #D9740D !important;
-    
+    border-right-color: brown !important;
 }
 
 .tooltip.bs-tooltip-bottom .arrow:before {
-    border-right-color: #D9740D !important;
-    
+    border-right-color: brown !important;
 }
 
 .tooltip.bs-tooltip-top .arrow:before {
-    border-right-color: #D9740D !important;
-    
+    border-right-color: brown !important;
+}
+.hr-light {
+    color: #F9D19F !important;
+    opacity: 1;
 }
 
+.hr-brown {
+    color: brown !important;
+    opacity: 1;
+}
 
 
 

@@ -1,0 +1,126 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@model DadosAlunoViewModel
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="mt-5 ">
+    <h3 class="text-semi-bold-orange mt-5 ms-5">Atualizar dados do aluno</h3>
+    
+    <div class=" col-9 d-inline-flex mt-5 w-100">
+        <form class="form-group form-control layout-light-full radius-form" asp-action="DadosAluno" asp-controller="Aluno" method="post" enctype="multipart/form-data"
+              style="border-color: #800000 ; padding: 5%;">
+
+            <input asp-for="DadosAluno.Id" class="d-none" value="@Model.DadosAluno.Id" />
+            <input asp-for="DadosAluno.FotoAlunoBase64" class="d-none" value="@Model.DadosAluno.FotoAlunoBase64" />
+
+            <input class="d-none" />
+            <input class="d-none" />
+            <div class="text-center">
+                @if (string.IsNullOrEmpty(Model.DadosAluno.FotoAlunoBase64))
+                {
+
+                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
+                }
+                else
+                {
+
+                    var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
+
+                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
+                }
+                <br>
+                
+                <input id="campoArquivo" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImage()" />
+                <button id="btnCarregarImagem" class="btn  btn-block btn-confirm-radius mt-2" type="button" onclick="onClickCarregarImagem()">Carregar imagem</button>
+
+            </div>
+
+            <!--Dados do aluno-->
+            <div id="pnlDadosAluno">
+                <div class="form-outline mt-5 ag-field-content g-width-10">
+
+                    <input asp-for="DadosAluno.Nome" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model.DadosAluno.Nome" required />
+                    <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Nome do aluno*</label>
+                </div>
+
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+
+                        <input asp-for="DadosAluno.Documento" type="text" id="txtDocumentoAluno" value="@Model.DadosAluno.Documento" class="form-control ag-field-input ag-input-color-light-full w-10 valida-campos-obrigatorios" minLenght="4" autocomplete="off" required />
+                        <label id="txtDocumentoAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDocumentoAluno">RG*</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input asp-for="DadosAluno.CpfCnpjString" type="text" id="txtCpfAluno" value="@Model.DadosAluno.CpfCnpj" class="form-control ag-field-input ag-input-color-light-full" data-mask="000.000.000-00" autocomplete="off" required />
+                        <label id="txtCpfAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfAluno">CPF</label>
+                    </div>
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-5">
+                    <input asp-for="DadosAluno.DataNascimento" id="txtDataNascAluno" type="date" value="@Model.DadosAluno.DataNascimento.ToString("yyyy-MM-dd")" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" required />
+                    <label id="txtDataNascAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Data de Nascimento*</label>
+                </div>
+            </div>
+            <!--FIM Dados do aluno-->
+            <!--Dados do CLUB-->
+            <div id="pnlDadosClub">
+                <h5 class="text-semi-bold-orange mt-5">Dados do Club</h5>
+                <div class="form-outline  mt-5 ag-field-content g-width-10">
+
+                    <select id="cmbClub" class="form-select ag-field-input ag-input-color-light-full">
+                        <option selected>Selecionar</option>
+                        <option value="1">Sport Corinthians</option>
+                        <option value="2">Barcelona FC</option>
+                    </select>
+                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Club</label><label id="cmbClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Club</label>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline  ag-field-content g-width-5">
+
+                        <input disabled value="0" type="text" id="txtDocumentoAluno" class="form-control ag-field-input ag-input-color-light-full w-10 " minLenght="4" autocomplete="off" required />
+                        <label id="txtDocumentoAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDocumentoAluno">
+                            Nº Camiseta
+                        </label>
+                        <div class="icon-description tooltip-arrow" data-toggle="tooltip" data-placement="right" title="O Nº da camiseta só pode ser alterado pelo Club."
+                             style="position: absolute; left: 140px; top: -30px;">
+                            <span class="tooltip-arrow">?</span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" />
+                        <label id="txtCpfAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfAluno">Posição jogador</label>
+                    </div>
+                </div>
+
+                <div class="form-outline  ag-field-content g-width-5">
+                    <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full " />
+                    <label id="txtDataNascAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Data ingresso</label>
+                </div>
+            </div>
+
+            <!--FIM Dados do CLUB-->
+
+            <div class="mb-4 ms-5 mx-4 mt-5">
+                <button id="btnSalvarDadosAluno" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
+                <a href="#" class=" btn-voltar mx-5" onclick="redirectMinhaConta()">Voltar</a>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+@section Scripts{
+
+
+    <script src="~/js/Aluno/aluno.js" type="text/javascript" asp-append-version="true"></script>
+   
+}

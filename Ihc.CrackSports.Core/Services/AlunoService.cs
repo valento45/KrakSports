@@ -26,17 +26,7 @@ namespace Ihc.CrackSports.Core.Services
 
         public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request, long idUsuario)
         {
-            List<Responsavel> responsavels = new List<Responsavel>()
-            {
-                new Responsavel
-                {
-                    Nome = request.NomeResponsavel,
-                    Documento = request.DocumentoResponsavel,
-                    CpfCnpj = request.CpfResponsavel,
-                    Endereco = request.Endereco,
-                    GrauParentesco = request.GrauParentesco
-                }
-            };
+
 
 
             var aluno = new Aluno
@@ -47,10 +37,24 @@ namespace Ihc.CrackSports.Core.Services
                 Endereco = request.Endereco,
                 IdUsuario = idUsuario,
                 DataNascimento = request.DataNascimento,
-                Responsaveis = responsavels
+                Responsavel = new Responsavel
+                {
+                    Nome = request.NomeResponsavel,
+                    Documento = request.DocumentoResponsavel,
+                    CpfCnpj = request.CpfResponsavel,
+                    Endereco = request.Endereco,
+                    GrauParentesco = request.GrauParentesco
+                }
             };
 
             return await _alunoCommand.InsertOrUpdate(aluno);
+        }
+
+
+        public async Task<CadastroResponse> UpdateDadosGerais(Aluno aluno)
+        {
+
+            return await _alunoCommand.UpdateDadosGerais(aluno);
         }
 
         public async Task<bool> ExcluirAluno(long idAluno)

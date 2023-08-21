@@ -10,5 +10,12 @@ namespace Ihc.CrackSports.Core.Responses.Base
     {
         public int StatusCode { get; set; }
         public string Message { get; set; }
+        public bool IsSuccessStatusCode
+        {
+            get
+            {
+                return StatusCode == 200;
+            }
+        }
     }
 }

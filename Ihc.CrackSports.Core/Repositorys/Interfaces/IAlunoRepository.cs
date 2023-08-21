@@ -20,5 +20,6 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<IEnumerable<Aluno>> ObterAlunoByCpf(long cpf);
         Task<IEnumerable<Aluno>> ObterAlunoByNome(string nome);
         Task<IEnumerable<Aluno>> ObterTodosAluno(int limite);
+        Task<bool> AtualizarDadosGerais(Aluno aluno);
     }
 }

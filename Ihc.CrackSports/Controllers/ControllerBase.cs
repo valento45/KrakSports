@@ -24,7 +24,23 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         protected bool CanDelete(ClaimsPrincipal User, string role)
         {
-            return User?.CanDelete(role) ?? false;  
+            return User?.CanDelete(role) ?? false;
+        }
+
+        protected bool CanRead(ClaimsPrincipal User, string role)
+        {
+            return User?.CanRead(role) ?? false;
+        }
+        protected long GetIdUsuarioLogado()
+        {
+            var claimUser = HttpContext.User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier);
+
+            if (claimUser != null)
+            {
+                return long.Parse(claimUser.Value.ToString());
+            }
+            else
+                return -1;
         }
     }
 }

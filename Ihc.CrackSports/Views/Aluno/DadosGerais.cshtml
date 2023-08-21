@@ -1,6 +1,7 @@
-﻿@using Ihc.CrackSports.Core.Objetos.Alunos;
-@model Aluno
+﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@using Ihc.CrackSports.Core.Objetos.Alunos;
 
+@model DadosAlunoViewModel
 
 @{
     Layout = "_Layout";
@@ -8,108 +9,149 @@
 
 
 <div class="mt-5 ">
-    <h5 class="text-semi-bold-orange mt-5"> Dados gerais</h5>
-    <hr />
+
+
+    <h3 class="text-semi-bold-orange ms-5"> Atualizar dados gerais</h3>
+
+
     <div class=" col-9 d-inline-flex mt-5 w-100">
-        <form class="form-group form-control layout-light-full radius-form" style="border-color: #D9740D; padding: 5%;">
+        <form class="form-group form-control layout-light-full radius-form" asp-action="DadosGerais" asp-controller="Aluno" method="post"
+              style="border-color: brown; padding: 5%;">
+            <!--Hidden Inputs-->
+            <input asp-for="DadosAluno.Responsavel.Id" type="text" class="d-none"/>
+            <input asp-for="DadosAluno.Usuario.Id" type="text" class="d-none"/>
+            <input asp-for="DadosAluno.Email" type="text" class="d-none"/>
 
+            <!--FIMHidden Inputs-->
 
-            <div class="text-center">
-                @if (string.IsNullOrEmpty(Model.FotoAlunoBase64))
-                {
-                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
-                }
-                else
-                {
-                    @*  @{
-                var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
-                } *@
-                    <img class="mt-4" src="~/imgs/aluno1.jpeg" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
-                }
-                <br>
-                <button id="btnCarregarImagem" class="btn  btn-block btn-confirm-radius mt-2" type="button" onclick="carregarImagem()">Carregar imagem</button>
-            </div>
+            <!--Dados do responsável-->
+            <div id="pnlDadosResponsavel">
+                <h5 class="text-semi-bold-orange mt-5">Dados do responsável</h5>
 
-            <!--Dados do aluno-->
-            <div id="pnlDadosAluno">
-                <div class="form-outline mt-5 ag-field-content g-width-10">
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-10">
 
-                    <input type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model.Nome" required />
-                    <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Nome do aluno*</label>
+                    <input asp-for="DadosAluno.Responsavel.Nome" type="text" id="txtNomeResponsavel" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" minLenght="4" required />
+                    <label id="txtNomeResponsavelLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeResponsavel">Nome do responsável*</label>
                 </div>
-
 
                 <div class="d-inline-flex g-width-10">
                     <div class="form-outline mb-4 ag-field-content g-width-5">
 
-                        <input type="text" id="txtDocumentoAluno" class="form-control ag-field-input ag-input-color-light-full w-10 valida-campos-obrigatorios" minLenght="4" autocomplete="off" required />
-                        <label id="txtDocumentoAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDocumentoAluno">RG*</label>
+                        <input asp-for="DadosAluno.Responsavel.Documento" type="text" id="txtDocumentoResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10 valida-campos-obrigatorios" minLenght="4" autocomplete="off" required />
+                        <label id="txtDocumentoResponsavelLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDocumentoResponsavel">RG*</label>
                     </div>
 
 
                     <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
-                        <input type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" data-mask="000.000.000-00" autocomplete="off" required />
-                        <label id="txtCpfAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfAluno">CPF</label>
+                        <input asp-for="DadosAluno.Responsavel.CpfCnpjString" type="text" id="txtCpfResponsavel" class="form-control ag-field-input ag-input-color-light-full" data-mask="000.000.000-00" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="txtCpfResponsavel">CPF</label>
                     </div>
                 </div>
 
-                <div class="form-outline mb-4 ag-field-content g-width-5">
-                    <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" />
-                    <label id="txtDataNascAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Data de Nascimento*</label>
-                </div>
-            </div>
-            <!--FIM Dados do aluno-->
-            <!--Dados do CLUB-->
-            <div id="pnlDadosClub">
-                <h5 class="text-semi-bold-orange mt-5">Dados do Club</h5>
-                <div class="form-outline  mt-5 ag-field-content g-width-10">
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-5">
 
-                    <select id="cmbClub" class="form-select ag-field-input ag-input-color-light-full">
-                        <option selected>Sport Corinthians</option>
+
+                    <select asp-for="DadosAluno.Responsavel.GrauParentesco" id="cmbGrauParentesco" class="form-select ag-field-input ag-input-color-light-full" value="@Model.DadosAluno.Responsavel.GrauParentesco">
+                        <option selected>Selecionar</option>
+                        <option value="Pai">Pai</option>
+                        <option value="Mãe">Mãe</option>
+                        <option value="Avó/Avô">Avó/Avô</option>
+                        <option value="Tio/Tia">Tio/Tia</option>
+                        <option value="Irmão/Irmã">Irmão/Irmã</option>
                     </select>
-                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Club</label><label id="cmbClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Club</label>
+                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Grau parentesco*</label>
+                </div>
+
+                <!--Contato responsavel-->
+                <h5 class="text-semi-bold-orange mt-5">Contato do responsável</h5>
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+                        <input asp-for="DadosAluno.Telefone" type="tel" id="txtTelefoneResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10" data-mask="(00)0000-0000" autocomplete="off" required />
+                        <label id="txtTelefoneResponsavelLabel" class="form-label text-semi-bold-light ag-field-label" for="txtTelefoneResponsavel">Telefone</label>
+                    </div>
+
+
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input asp-for="DadosAluno.Celular" type="text" id="txtCelularResponsavel" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="(00)00000-0000" minLenght="6" autocomplete="off" required />
+                        <label id="txtCelularResponsavelLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelularResponsavel">Celular*</label>
+                    </div>
+                </div>
+                <!--FIM Contato responsavel-->
+
+            </div>
+            <!--FIM Dados do responsável-->
+            <!--Dados gerais-->
+            <div id="pnlDadosGerais">
+                <h5 class="text-semi-bold-orange mt-5">Dados gerais</h5>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-7">
+                    <input asp-for="DadosAluno.Endereco.CEP" type="text" id="txtCep" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="00000-000" minLength="4" autocomplete="off" required />
+                    <label id="txtCepLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCep">CEP*</label>
+                </div>
+
+                <div class="form-outline mb-4 mt-5 ag-field-content">
+
+                    <input asp-for="DadosAluno.Endereco.Logradouro" type="text" id="txtLogradouro" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label id="txtLogradouroLabel" class="form-label text-semi-bold-light ag-field-label" for="txtLogradouro">Endereço</label>
                 </div>
 
                 <div class="d-inline-flex g-width-10">
-                    <div class="form-outline  ag-field-content g-width-5">
+                    <div class="form-outline mb-4 ag-field-content g-width-4">
 
-                        <input disabled value="0" type="text" id="txtDocumentoAluno" class="form-control ag-field-input ag-input-color-light-full w-10 " minLenght="4" autocomplete="off" required />
-                        <label id="txtDocumentoAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDocumentoAluno">
-                            Nº Camiseta
-                        </label>
-                        <div class="icon-description tooltip-arrow" data-toggle="tooltip" data-placement="right" title="O Nº da camiseta só pode ser alterado pelo Club."
-                             style="position: absolute; left: 140px; top: -30px;">
-                            <span class="tooltip-arrow">?</span>
-                        </div>
+                        <input asp-for="DadosAluno.Endereco.Numero" type="text" id="txtNumero" class="form-control ag-field-input ag-input-color-light-full w-10" data-mask="0000000" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="txtNumero">Nº</label>
                     </div>
 
 
-                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
-                        <input type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
-                        <label id="txtCpfAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfAluno">Posição jogador</label>
+                    <div class="form-outline mb-4 ag-field-content g-width-10 ms-3">
+                        <input asp-for="DadosAluno.Endereco.Cidade" type="text" id="txtCidade" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="txtCidade">Cidade</label>
+                    </div>
+
+                    <div class="form-outline mb-4 ag-field-content g-width-4 ms-3">
+                        <input asp-for="DadosAluno.Endereco.UF" type="text" id="txtUF" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label class="form-label text-semi-bold-light ag-field-label" for="txtUF">UF</label>
                     </div>
                 </div>
 
-                <div class="form-outline  ag-field-content g-width-5">
-                    <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full " />
-                    <label id="txtDataNascAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Data ingresso</label>
+                <div class="form-outline mb-4 mt-5 ag-field-content g-width-7">
+
+                    <input asp-for="DadosAluno.Endereco.Complemento" type="text" id="txtComplemento" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <label class="form-label text-semi-bold-light ag-field-label" for="txtComplemento">Complemento</label>
+                </div>
+
+                <h5 class="text-semi-bold-orange mt-5">Dados de login</h5>
+                <div class="form-outline mb-4 ag-field-content g-width-10 mt-5">
+                    <input asp-for="DadosAluno.Usuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                    <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-7">
+                    <input asp-for="DadosAluno.Usuario.PasswordHash" type="password" id="txtSenha" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                    <label id="txtSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha*</label>
+                </div>
+
+                <div class="form-outline mb-4 ag-field-content g-width-10 ">
+                    <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7 valida-campos-obrigatorios" autocomplete="off" required />
+                    <label id="txtConfirmaSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmaSenha">Confirmar Senha*</label>
+
+                    <br />
+                    <span id="lblSenhaInvalida" class="validacao-senha mt-5 d-none"><img src="~/imgs/excluir.png" /> As senhas não conferem!</span>
+                </div>
+
+                <!-- Checkbox novidades e itens-->
+                <div class="form-check">
+                    <label class="form-check-label" for="chkAutorizaEmailNovidades"> Gostaria de receber informações sobre novidades, eventos e itens do Club por e-mail. </label>
+                    <input class="form-check-input form-checkbox-input" type="checkbox" id="chkAutorizaEmailNovidades" />
+
                 </div>
             </div>
-
-            <!--FIM Dados do CLUB-->
+            <!--FIM Dados gerais-->
+            <div class="mb-4 ms-5 mx-4 mt-5">
+                <button id="btnCriarConta" class="btn  btn-block btn-confirm-radius" type="submit" >Salvar</button>
+                <a id="btnVoltar" class=" btn-voltar mx-5" asp-area="" asp-controller="Usuario" asp-action="Index">Voltar</a>
+            </div>
         </form>
-    </div>
-
-
-    <div class="mb-4 ms-5 mx-4 mt-5">
-        <button id="btnSalvarDadosGerais" class="btn  btn-block btn-confirm-radius" type="button" onclick="salvarDadosGerais()">Salvar</button>
-        <a href="#" class=" btn-voltar mx-5" onclick="redirectMinhaConta()">Voltar</a>
-    </div>
+    </div>   
 
 </div>
-
-@section Scripts{
-
-
-    <script src="~/js/Aluno/aluno.js" type="text/javascript" asp-append-version="true"></script>
-}

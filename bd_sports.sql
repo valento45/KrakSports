@@ -51,6 +51,7 @@ delete from sys.usuario_claim_tb
 	   select * from sys.aluno_tb	
 		delete from sys.aluno_tb
 		drop table sys.aluno_tb
+		
 	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
 		id_usuario bigint,
@@ -78,6 +79,8 @@ delete from sys.usuario_claim_tb
 		references sys.club_tb(id_club)	
 	);
 	
+	
+	select * from sys.responsavel_aluno_tb
 drop table sys.responsavel_aluno_tb
 
 	create table if not exists sys.responsavel_aluno_tb(

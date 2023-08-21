@@ -1,5 +1,5 @@
 ﻿$(document).ready(() => {
-    
+
 
 });
 
@@ -9,6 +9,19 @@ function apenasNumeros(string) {
     return parseInt(numsStr);
 }
 
-function redirectDadosGerais(idAluno) {
-    window.location.href = `../Aluno/DadosGerais?idAluno=${idAluno}`;
+function redirectDadosAluno(idAluno) {
+    window.location.href = `../Aluno/DadosAluno?idAluno=${idAluno}`;
+}
+
+function onClickCarregarImagem() {
+    document.getElementById('campoArquivo').click();
+}
+
+
+function onChangeImage(e) {
+    saveImage();
+}
+
+function saveImage() {  
+    document.getElementById('btnSalvarDadosAluno').click();
 }

@@ -34,6 +34,21 @@ namespace Ihc.CrackSports.Core.Commands
 
         }
 
+        public async Task<CadastroResponse> UpdateDadosGerais(Aluno Aluno)
+        {
+            bool sucesso;
+            if (Aluno.Id > 0)
+            {
+                sucesso = await _alunoRepository.AtualizarDadosGerais(Aluno);
+            }
+            else
+            {
+                throw new InvalidOperationException("Impossivel atualizar os dados gerais pois o aluno nao possui Id ");
+            }
+            return sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse { StatusCode = 500, Message = "Erro ao salvar os dados do aluno !" };
+
+        }
+
         public async Task<bool> ExcluirAluno(long idAluno)
         {
             return await _alunoRepository.Excluir(idAluno);

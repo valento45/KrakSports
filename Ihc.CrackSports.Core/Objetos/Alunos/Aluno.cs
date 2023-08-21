@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
+﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
 using Ihc.CrackSports.Core.Requests;
 using System;
 using System.Collections.Generic;
@@ -13,20 +14,34 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
 {
     public class Aluno : PessoaFisica
     {
+        private byte[] _fotoAlunoBytes { get; set; }
+
         public long IdClub { get; set; }
         public long IdUsuario { get; set; }
         public string PosicaoJogador { get; set; }
         public int CamisetaNumero { get; set; }
-        public string FotoAlunoBase64 { get; set; }
+        public string FotoAlunoBase64 { get; set; }       
+        public Responsavel Responsavel { get; set; }
+        public Usuario Usuario { get; set; }
         public byte[] GetBytesFotoAluno()
         {
-            throw new NotImplementedException();
+            if(_fotoAlunoBytes == null)
+            {
+                _fotoAlunoBytes = Convert.FromBase64String(this.FotoAlunoBase64);
+            }
+            return _fotoAlunoBytes;
         }
-        public List<Responsavel> Responsaveis { get; set; }
+
+        public void SetBytesFotoAluno(byte[] byts)
+        {
+            _fotoAlunoBytes = byts;
+        }
+
+   
 
         public Aluno()
         {
-            Responsaveis = new List<Responsavel>();
+            Responsavel = new Responsavel();
             Endereco = new Endereco();
         }
 
@@ -38,13 +53,12 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             Email = cadastro.Email;
             DataNascimento = cadastro.DataNascimento;
             Endereco = cadastro.Endereco;
-            Responsaveis = new List<Responsavel>();
-
+            Responsavel = new Responsavel();
 
             Responsavel responsavelCadastro = new Responsavel(cadastro.NomeResponsavel, cadastro.CpfResponsavel, cadastro.DocumentoResponsavel, cadastro.GrauParentesco,
                 cadastro.TelefoneResponsavel, cadastro.CelularResponsavel);
 
-            Responsaveis.Add(responsavelCadastro);
+            Responsavel = responsavelCadastro;
         }
 
         public Aluno(DataRow dr)
@@ -81,18 +95,7 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             CamisetaNumero = dr["camiseta_numero"] != DBNull.Value ? int.Parse(dr["camiseta_numero"].ToString()) : -1;
         }
 
-        public Responsavel GetResponsavel()
-        {
-            return Responsaveis.FirstOrDefault() ?? new Responsavel
-            {
-                Nome = "Aldarcir Nogueira Alves",
-                Celular = "(11)98844-7722",
-                Telefone = "(11)4655-4400",
-                CpfCnpj = 54658599974,
-                Documento = "62.555.998-8",
-                GrauParentesco = "Pai"
-            };
-        }
+        
 
     }
 }
