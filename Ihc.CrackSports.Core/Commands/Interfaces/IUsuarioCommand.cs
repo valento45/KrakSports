@@ -14,5 +14,6 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         Task<CadastroResponse> InsertOrUpdate(CadastroRequest request);
         Task<CadastroResponse> ExcluirUsuario(long idAluno);
         Task<Usuario> ObterPorUserName(string userName);
+        Task<Usuario> GetById(long id);
     }
 }

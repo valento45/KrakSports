@@ -1,10 +1,12 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Objetos.Alunos.Dto;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +16,11 @@ namespace Ihc.CrackSports.Core.Repositorys
 {
     public class AlunoRepository : RepositoryBase, IAlunoRepository
     {
-       
+
 
         public AlunoRepository(IDbConnection connection) : base(connection)
         {
-           
+
         }
 
 
@@ -48,14 +50,14 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"numero", aluno?.Endereco?.Numero ?? 0);
             cmd.Parameters.AddWithValue(@"cidade", aluno?.Endereco?.Cidade ?? "");
             cmd.Parameters.AddWithValue(@"uf", aluno?.Endereco?.UF ?? "");
-            cmd.Parameters.AddWithValue(@"cep", aluno?.Endereco?.CEP ??"");
+            cmd.Parameters.AddWithValue(@"cep", aluno?.Endereco?.CEP ?? "");
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
             if (long.TryParse(result.ToString(), out codigo))
             {
-                aluno.Id = codigo;              
-                return codigo > 0 ;
+                aluno.Id = codigo;
+                return codigo > 0;
             }
             else
                 return false;
@@ -99,29 +101,51 @@ namespace Ihc.CrackSports.Core.Repositorys
         }
 
 
-        public Task<List<Aluno>> ObterAlunoByCpf(long cpf)
+        public async Task<IEnumerable<Aluno>> ObterAlunoByCpf(long cpf)
+        {
+            string query = "select  * from sys.aluno_tb where cpf_cnpj = @cpf";
+
+            var result = await base.QueryAsync<AlunoDto>(query,
+                new
+                {
+                    cpf = cpf
+                });
+
+            return result.Select(x => x.ToAluno());
+        }
+
+        public Task<Aluno> ObterAlunoById(long idAluno)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Aluno>> ObterAlunoById(long idAluno)
+        public Task<IEnumerable<Aluno>> ObterAlunoByNome(string nome)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Aluno>> ObterAlunoByNome(string nome)
+        public Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Aluno>> ObterAlunosByIdClub(long idClub)
+        public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)
         {
-            throw new NotImplementedException();
+            var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb" + (limite > 0 ? $" limit {limite}" : ""));
+            return result.Select(x => x.ToAluno());
         }
 
-        public Task<List<Aluno>> ObterTodosAlunoById(int limite)
+        public async Task<Aluno?> ObterAlunoByIdUsuario(long idUser)
         {
-            throw new NotImplementedException();
+            string query = "select  * from sys.aluno_tb where id_usuario = @idUser";
+
+            var result = await base.QueryAsync<AlunoDto>(query,
+                new
+                {
+                    idUser = idUser
+                });
+
+            return result.Select(x => x.ToAluno())?.FirstOrDefault();
         }
     }
 }

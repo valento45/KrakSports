@@ -7,17 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ihc.CrackSports.Core.Commands.Interfaces
+namespace Ihc.CrackSports.Core.Services.Interfaces
 {
-    public interface IAlunoCommand
+    public interface IAlunoService
     {
-        Task<CadastroResponse> InsertOrUpdate(Aluno Aluno);
+        Task<CadastroResponse> InsertOrUpdate(CadastroRequest Aluno, long idUsuario);
         Task<bool> ExcluirAluno(long idAluno);
         Task<List<Aluno>> ObterAlunosPorClub(long idClub);
-        Task<List<Aluno>> ObterAlunoPorNome(string nome);       
+        Task<List<Aluno>> ObterAlunoPorNome(string nome);
         Task<List<Aluno>> ObterAlunoPorDocumento(string documento);
-        Task<Aluno> GetById(long  idAluno);
-        Task<Aluno?> GetByIdUsuario(long idUser);
+        Task<Aluno> GetById(long idAluno);
+        Task<Aluno> GetByIdUsuario(long idUser);
         Task<Aluno> ObterAlunoPorCpf(long cpf);
     }
 }

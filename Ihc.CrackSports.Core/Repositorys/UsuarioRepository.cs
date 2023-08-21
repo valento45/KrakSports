@@ -80,5 +80,17 @@ namespace Ihc.CrackSports.Core.Repositorys
             else
                 return null;
         }
+
+        public async Task<Usuario> GetById(long id)
+        {
+            string query = $"select id_usuario as Id, login as UserName, senha as PasswordHash, email as Email from sys.usuario_tb where id_usuario  = @id_usuario";
+
+            var obj = await base.QueryAsync<Usuario>(query, new { id_usuario = id });
+
+            if (obj != null)
+                return obj.FirstOrDefault();
+            else
+                return null;
+        }
     }
 }

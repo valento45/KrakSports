@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.WebApp.Models;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace Ihc.CrackSports.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<Usuario> _userManager;
@@ -29,7 +30,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         [HttpGet]
         public IActionResult Login()
-        {
+        {            
             return View();
         }
 
@@ -47,22 +48,39 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                     if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
                     {
+
                         var identity = new ClaimsIdentity("cookies");
-                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
+                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                         identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
+                        
 
-                        await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));
+                        identity.AddClaims(await _userManager.GetClaimsAsync(user));
 
+                        await HttpContext.SignInAsync("cookies", new ClaimsPrincipal(identity));                        
+                        
                         return RedirectToAction("About");
                     }
                 }
+               
             }
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("cookies");
+            return View("Login");
+        }
+
 
         public IActionResult Privacy()
+        
         {
+            if(!CanAccess(HttpContext.User, Roles.ALUNO))            
+                return View("Unauthorized");
+            
             return View();
         }
 

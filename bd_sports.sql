@@ -10,9 +10,12 @@ CREATE DATABASE bd_sports
 	
 	
 	drop table sys.usuario_tb	
+	
    select * from sys.usuario_tb
+   
+delete from sys.usuario_tb
 
-	create table sys.usuario_tb
+	create table if not exists sys.usuario_tb
 	(
 		id_usuario serial not null primary key,
 		login varchar not null,
@@ -21,7 +24,17 @@ CREATE DATABASE bd_sports
 		email varchar(300)		
 	);	
 	
-	create table sys.club_tb(
+	select * from sys.usuario_claim_tb
+delete from sys.usuario_claim_tb
+
+	create table if not exists sys.usuario_claim_tb(
+		id_usuario bigint not null,
+		claim varchar not null,
+		constraint id_usuario_fk foreign key(id_usuario)
+		references sys.usuario_tb(id_usuario)
+	);
+	
+	create table if not exists sys.club_tb(
 		id_club serial not null primary key,
 		nome_fantasia varchar,
 		razao_social varchar,
@@ -35,11 +48,10 @@ CREATE DATABASE bd_sports
 		imagem_base64 varchar	
 	);
 	
-	select * from sys.aluno_tb
-		
+	   select * from sys.aluno_tb	
+		delete from sys.aluno_tb
 		drop table sys.aluno_tb
-		
-	create table sys.aluno_tb(
+	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
 		id_usuario bigint,
 		id_club bigint,
@@ -68,7 +80,7 @@ CREATE DATABASE bd_sports
 	
 drop table sys.responsavel_aluno_tb
 
-	create table sys.responsavel_aluno_tb(
+	create table if not exists sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
 		id_aluno bigint not null,
 		nome_responsavel varchar(300),

@@ -9,10 +9,12 @@ using System.Data;
 using Ihc.CrackSports.Core.Objetos.Enums;
 using System.Reflection.Metadata.Ecma335;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using System.Security.Claims;
+using Ihc.CrackSports.Core.Authorization.Claims;
 
 namespace Ihc.CrackSports.Core.Authorization
 {
-    public class UsuarioStore : IUserStore<Usuario>, IUserPasswordStore<Usuario>
+    public class UsuarioStore : IUserStore<Usuario>, IUserPasswordStore<Usuario>, IUserClaimStore<Usuario>
     {
         protected readonly IDbConnection _connection;
         protected readonly IUsuarioService _usuarioService;
@@ -45,7 +47,7 @@ namespace Ihc.CrackSports.Core.Authorization
         public async Task<IdentityResult> UpdateAsync(Usuario user, CancellationToken cancellationToken)
         {
 
-            var inserted = await _connection.ExecuteAsync("update sys.usuario_tb set login = @login, senha = @senha, tipo = @tipo, email = @email " +
+            var inserted = await _connection.ExecuteAsync("update sys.usuario_tb set login = @login, normalizedLogin = @normalizedLogin, senha = @senha, email = @email " +
                 "where id_usuario = @id_usuario",
                 new
                 {
@@ -109,7 +111,7 @@ namespace Ihc.CrackSports.Core.Authorization
 
         public Task<string> GetUserIdAsync(Usuario user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Id);
+            return Task.FromResult(user.Id.ToString());
         }
 
         public Task<string> GetUserNameAsync(Usuario user, CancellationToken cancellationToken)
@@ -142,6 +144,60 @@ namespace Ihc.CrackSports.Core.Authorization
             return Task.CompletedTask;
         }
 
+        public async Task<IList<Claim>> GetClaimsAsync(Usuario user, CancellationToken cancellationToken)
+        {
+            var result = await _connection.QueryAsync<ClaimDto>("select * from sys.usuario_claim_tb where id_usuario = @id_usuario",
+                new
+                {
+                    id_usuario = user.Id
+                });
 
+            return result.Select(x => x.ToClaim()).ToList();
+        }
+
+        public async Task AddClaimsAsync(Usuario user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+        {
+
+            foreach (var claim in claims)
+            {
+                string query = "insert into sys.usuario_claim_tb (id_usuario, claim) values (@id_usuario, @claim)";
+
+                await _connection.ExecuteAsync(query,
+                    new
+                    {
+                        id_usuario = user.Id,
+                        claim = claim.Value
+                    });
+            }
+        }
+
+        public async Task ReplaceClaimAsync(Usuario user, Claim claim, Claim newClaim, CancellationToken cancellationToken)
+        {
+            var param = new List<Claim> { claim };
+            await this.RemoveClaimsAsync(user, param, cancellationToken);
+
+
+            param = new List<Claim> { newClaim };
+            await this.AddClaimsAsync(user, param, cancellationToken);
+        }
+
+        public async Task RemoveClaimsAsync(Usuario user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+        {
+            foreach (var claim in claims)
+            {
+                string query = "delete from sys.usuario_claim_tb where claim = @claim)";
+
+                await _connection.ExecuteAsync(query,
+                    new
+                    {
+                        claim = claim.Value
+                    });
+            }
+        }
+
+        public Task<IList<Usuario>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

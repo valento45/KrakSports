@@ -22,7 +22,7 @@ namespace Ihc.CrackSports.Core.Commands
         public async Task<CadastroResponse> InsertOrUpdate(Aluno Aluno)
         {
             bool sucesso;
-            if(Aluno.Id > 0)
+            if (Aluno.Id > 0)
             {
                 sucesso = await _alunoRepository.Atualizar(Aluno);
             }
@@ -31,7 +31,7 @@ namespace Ihc.CrackSports.Core.Commands
                 sucesso = await _alunoRepository.Inserir(Aluno);
             }
             return sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse { StatusCode = 500, Message = "Erro ao salvar os dados do aluno !" };
-           
+
         }
 
         public async Task<bool> ExcluirAluno(long idAluno)
@@ -39,29 +39,34 @@ namespace Ihc.CrackSports.Core.Commands
             return await _alunoRepository.Excluir(idAluno);
         }
 
-        public Task<Aluno> GetById(long idAluno)
+        public async Task<Aluno> GetById(long idAluno)
+        => await _alunoRepository.ObterAlunoById(idAluno);
+
+
+        public async Task<Aluno?> ObterAlunoPorCpf(long cpf)
         {
-            throw new NotImplementedException();
+            var result = await _alunoRepository.ObterAlunoByCpf(cpf);
+            return result.FirstOrDefault();
         }
 
-        public Task<Aluno> ObterAlunoPorCpf(long cpf)
+        public async Task<List<Aluno>> ObterAlunoPorDocumento(string documento) => throw new NotImplementedException();
+
+
+        public async Task<List<Aluno>> ObterAlunoPorNome(string nome)
         {
-            throw new NotImplementedException();
+            var result = await _alunoRepository.ObterAlunoByNome(nome);
+            return result?.ToList();
         }
 
-        public Task<List<Aluno>> ObterAlunoPorDocumento(string documento)
+        public async Task<List<Aluno>> ObterAlunosPorClub(long idClub)
         {
-            throw new NotImplementedException();
+            var result = await _alunoRepository.ObterAlunosByIdClub(idClub);
+            return result.ToList();
         }
 
-        public Task<List<Aluno>> ObterAlunoPorNome(string nome)
+        public async Task<Aluno?> GetByIdUsuario(long idUser)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<Aluno>> ObterAlunosPorClub(long idClub)
-        {
-            throw new NotImplementedException();
+            return await _alunoRepository.ObterAlunoByIdUsuario(idUser);
         }
     }
 }

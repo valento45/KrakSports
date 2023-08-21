@@ -1,7 +1,7 @@
 ﻿$(document).ready(() => {
 
     $(".valida-campos-obrigatorios").on("focusout", onFocusOutCamposObrigatorios);
-   
+
 });
 
 
@@ -55,7 +55,7 @@ function criarConta() {
 
         model.nomeResponsavel = $("#txtNomeResponsavel").val();
         model.documentoResponsavel = $("#txtDocumentoResponsavel").val();
-        model.cpfResponsavel = + $("#txtCpfResponsavel").val();
+        model.cpfResponsavel = apenasNumeros($("#txtCpfResponsavel").val());
         model.grauParentesco = $('#cmbGrauParentesco').val();;
         model.telefoneResponsavel = $("#txtTelefoneResponsavel").val();
         model.celularResponsavel = $("#txtCelularResponsavel").val();
@@ -63,7 +63,7 @@ function criarConta() {
         /*Dados Aluno*/
         model.nomeAluno = $("#txtNomeAluno").val();
         model.documentoAluno = $("#txtDocumentoAluno").val();
-        model.cpfAluno = + apenasNumeros( $("#txtCpfAluno").val());
+        model.cpfAluno = + apenasNumeros($("#txtCpfAluno").val());
         model.dataNascimento = $("#txtDataNascAluno").val();
 
         var campo = $("#txtDataNascAluno");
@@ -106,4 +106,10 @@ function cadastroError(error) {
 function apenasNumeros(string) {
     var numsStr = string.replace(/[^0-9]/g, '');
     return parseInt(numsStr);
+}
+
+function redirectMinhaConta() {
+    if (_userLogado) {
+        window.location.href = `../Usuario/MinhaConta?idUsuario=${_userLogado}`;
+    }
 }

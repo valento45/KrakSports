@@ -77,5 +77,18 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             CamisetaNumero = dr["camiseta_numero"] != DBNull.Value ? int.Parse(dr["camiseta_numero"].ToString()) : -1;
         }
 
+        public Responsavel GetResponsavel()
+        {
+            return Responsaveis.FirstOrDefault() ?? new Responsavel
+            {
+                Nome = "Aldarcir Nogueira Alves",
+                Celular = "(11)98844-7722",
+                Telefone = "(11)4655-4400",
+                CpfCnpj = 54658599974,
+                Documento = "62.555.998-8",
+                GrauParentesco = "Pai"
+            };
+        }
+
     }
 }

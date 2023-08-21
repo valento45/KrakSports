@@ -34,7 +34,7 @@ namespace Ihc.CrackSports.Core.Services
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request)
+        public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request, long idUsuario)
         {
            return await _usuarioCommand.InsertOrUpdate(request);
         }
@@ -52,6 +52,11 @@ namespace Ihc.CrackSports.Core.Services
         public async Task<Usuario> ObterPorUserName(string userName)
         {
           return await _usuarioCommand.ObterPorUserName(userName);  
+        }
+
+        public async Task<Usuario> GetById(long id)
+        {
+            return await _usuarioCommand.GetById(id);
         }
     }
 }

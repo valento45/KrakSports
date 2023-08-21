@@ -15,6 +15,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> Atualizar(CadastroRequest request);
         Task<bool> Excluir(long idAluno);
         Task<Usuario?> ObterPorUserName(string userName);
+        Task<Usuario> GetById(long id);
         Task<string> GetMessage();
     }
 }

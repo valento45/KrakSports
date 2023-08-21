@@ -79,5 +79,10 @@ namespace Ihc.CrackSports.Core.Commands
             return await _usuarioRepository.ObterPorUserName(userName);
                 
         }
+
+        public async Task<Usuario> GetById(long id)
+        {
+            return await _usuarioRepository.GetById(id);
+        }
     }
 }

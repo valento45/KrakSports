@@ -1,0 +1,92 @@
+﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
+using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Responses.Usuarios;
+using Ihc.CrackSports.Core.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Ihc.CrackSports.Core.Services
+{
+    public class AlunoService : IAlunoService
+    {
+        private readonly IAlunoCommand _alunoCommand;
+
+        public AlunoService(IAlunoCommand alunoCommand)
+        {
+            _alunoCommand = alunoCommand;
+        }
+
+
+
+
+        public async Task<CadastroResponse> InsertOrUpdate(CadastroRequest request, long idUsuario)
+        {
+            List<Responsavel> responsavels = new List<Responsavel>()
+            {
+                new Responsavel
+                {
+                    Nome = request.NomeResponsavel,
+                    Documento = request.DocumentoResponsavel,
+                    CpfCnpj = request.CpfResponsavel,
+                    Endereco = request.Endereco,
+                    GrauParentesco = request.GrauParentesco
+                }
+            };
+
+
+            var aluno = new Aluno
+            {
+                Nome = request.NomeAluno,
+                Documento = request.DocumentoAluno,
+                CpfCnpj = request.CpfAluno,
+                Endereco = request.Endereco,
+                IdUsuario = idUsuario,
+                DataNascimento = request.DataNascimento,
+                Responsaveis = responsavels
+            };
+
+            return await _alunoCommand.InsertOrUpdate(aluno);
+        }
+
+        public async Task<bool> ExcluirAluno(long idAluno)
+        {
+            return await _alunoCommand.ExcluirAluno(idAluno);
+        }
+
+        public async Task<Aluno> GetById(long idAluno)
+        {
+            return await _alunoCommand.GetById(idAluno);
+        }
+
+
+        public async Task<Aluno> ObterAlunoPorCpf(long cpf)
+        {
+            return await _alunoCommand.ObterAlunoPorCpf(cpf);
+        }
+
+        public async Task<List<Aluno>> ObterAlunoPorDocumento(string documento)
+        {
+            return await _alunoCommand.ObterAlunoPorDocumento(documento);
+        }
+
+        public async Task<List<Aluno>> ObterAlunoPorNome(string nome)
+        {
+            return await _alunoCommand.ObterAlunoPorNome(nome);
+        }
+
+        public async Task<List<Aluno>> ObterAlunosPorClub(long idClub)
+        {
+            return await _alunoCommand.ObterAlunosPorClub(idClub);
+        }
+
+        public async Task<Aluno?> GetByIdUsuario(long idUser)
+        {
+            return await _alunoCommand.GetByIdUsuario(idUser);
+        }
+    }
+}

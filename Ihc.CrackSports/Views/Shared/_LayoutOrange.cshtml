@@ -1,7 +1,7 @@
 ﻿@using Ihc.CrackSports.Core.Authorization.Claims;
 @using System.Security.Claims;
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class="fundo-login">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,8 +12,30 @@
     <link rel="stylesheet" href="~/Ihc.CrackSports.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
 
+    <style>
+        .fundo-login {
+            background-color: #D9740D !important;
+            color: ghostwhite;
+        }
+
+            .fundo-login a {
+                color: ghostwhite;
+            }
+
+            .fundo-login label {
+                color: ghostwhite;
+            }
+
+        .top-form-login {
+            margin-top: 180px !important;
+        }
+
+        .link-redirection-simple {
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body id="bodyLayout">
+<body class="fundo-login">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-lightbox-shadow mb-3">
             <div class="container-fluid">

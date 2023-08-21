@@ -14,10 +14,11 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> Atualizar(Aluno aluno);
         Task<bool> Excluir(long idAluno);
 
-        Task<List<Aluno>> ObterAlunosByIdClub(long idClub);
-        Task<List<Aluno>> ObterAlunoById(long idAluno);
-        Task<List<Aluno>> ObterAlunoByCpf(long cpf);
-        Task<List<Aluno>> ObterAlunoByNome(string nome);
-        Task<List<Aluno>> ObterTodosAlunoById(int limite);
+        Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub);
+        Task<Aluno> ObterAlunoById(long idAluno);
+        Task<Aluno?> ObterAlunoByIdUsuario(long idUser);
+        Task<IEnumerable<Aluno>> ObterAlunoByCpf(long cpf);
+        Task<IEnumerable<Aluno>> ObterAlunoByNome(string nome);
+        Task<IEnumerable<Aluno>> ObterTodosAluno(int limite);
     }
 }

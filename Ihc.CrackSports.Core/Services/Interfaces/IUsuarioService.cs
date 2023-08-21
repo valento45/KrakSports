@@ -12,8 +12,9 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
     public interface IUsuarioService
     {
 
-        Task<CadastroResponse> InsertOrUpdate(CadastroRequest request);      
+        Task<CadastroResponse> InsertOrUpdate(CadastroRequest request, long idUsuario);      
         Task<CadastroResponse> Excluir(long idAluno);
         Task<Usuario> ObterPorUserName(string userName);
+        Task<Usuario> GetById(long id);
     }
 }
