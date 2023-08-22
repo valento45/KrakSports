@@ -13,10 +13,10 @@ function redirectDadosAluno(idAluno) {
     window.location.href = `../Aluno/DadosAluno?idAluno=${idAluno}`;
 }
 
+
 function onClickCarregarImagem() {
     document.getElementById('campoArquivo').click();
 }
-
 
 function onChangeImage(e) {
     saveImage();
@@ -25,3 +25,8 @@ function onChangeImage(e) {
 function saveImage() {  
     document.getElementById('btnSalvarDadosAluno').click();
 }
+
+function redirectDadosGerais(idAluno) {
+    window.location.href = `../Aluno/DadosGerais?idAluno=${idAluno}`;
+}
+

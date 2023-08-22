@@ -65,8 +65,8 @@
                             <a><b>Documento:</b> &nbsp; @Model.DadosAluno.Responsavel.Documento</a>
                             <a><b>CPF:</b> &nbsp; @Model.DadosAluno.Responsavel.CpfCnpj.FormataCPF()</a>
                             <a><b>Grau de parentesco:</b> &nbsp; @Model.DadosAluno.Responsavel.GrauParentesco</a>
-                            <a><b>Telefone:</b> &nbsp; @Model.DadosAluno.Responsavel.Telefone</a>
-                            <a><b>Celular:</b> &nbsp; @Model.DadosAluno.Responsavel.Celular</a>
+                            <a><b>Telefone:</b> &nbsp; @Model.DadosAluno.Telefone</a>
+                            <a><b>Celular:</b> &nbsp; @Model.DadosAluno.Celular</a>
                             <!--FIM Dados responsavel-->
 
                             <!--Dados Endereço-->
@@ -80,7 +80,8 @@
                             <!--FIM Dados Endereço-->
                         </div>
                     </div>
-                    <a href="#" style="height: 50px; width: 50px; padding: 10px;" class="layout-orange-full-btn"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+                    <a href="#" class="layout-orange-full-btn" onclick="redirectDadosGerais(@Model.DadosAluno.Id)"
+                       style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
                 </div>
                 <!--FIM Dados gerais-->
             </div>

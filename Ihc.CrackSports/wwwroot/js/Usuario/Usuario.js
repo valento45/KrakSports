@@ -65,8 +65,9 @@ function criarConta() {
         model.documentoAluno = $("#txtDocumentoAluno").val();
         model.cpfAluno = + apenasNumeros($("#txtCpfAluno").val());
         model.dataNascimento = $("#txtDataNascAluno").val();
+        model.email = $("#txtEmailAluno").val();
 
-        var campo = $("#txtDataNascAluno");
+        
         /*Dados Endereco*/
         model.endereco = new Object();
 

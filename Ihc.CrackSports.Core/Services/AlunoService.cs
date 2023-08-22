@@ -37,13 +37,18 @@ namespace Ihc.CrackSports.Core.Services
                 Endereco = request.Endereco,
                 IdUsuario = idUsuario,
                 DataNascimento = request.DataNascimento,
+                Celular = request.CelularResponsavel,
+                Telefone = request.TelefoneResponsavel,
+                Email = request.Email,
                 Responsavel = new Responsavel
                 {
                     Nome = request.NomeResponsavel,
                     Documento = request.DocumentoResponsavel,
                     CpfCnpj = request.CpfResponsavel,
                     Endereco = request.Endereco,
-                    GrauParentesco = request.GrauParentesco
+                    GrauParentesco = request.GrauParentesco,
+                    Celular = request.CelularResponsavel,
+                    Telefone = request.TelefoneResponsavel
                 }
             };
 
