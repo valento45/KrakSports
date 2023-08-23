@@ -8,12 +8,6 @@ CREATE DATABASE bd_sports
 	CREATE SCHEMA sys
     AUTHORIZATION postgres;
 	
-	
-	drop table sys.usuario_tb	
-	
-   select * from sys.usuario_tb
-   
-delete from sys.usuario_tb
 
 	create table if not exists sys.usuario_tb
 	(
@@ -24,8 +18,7 @@ delete from sys.usuario_tb
 		email varchar(300)		
 	);	
 	
-	select * from sys.usuario_claim_tb
-delete from sys.usuario_claim_tb
+
 
 	create table if not exists sys.usuario_claim_tb(
 		id_usuario bigint not null,
@@ -48,9 +41,7 @@ delete from sys.usuario_claim_tb
 		imagem_base64 varchar	
 	);
 	
-	   select * from sys.aluno_tb	
-		delete from sys.aluno_tb
-		drop table sys.aluno_tb
+	
 		
 	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
@@ -80,8 +71,7 @@ delete from sys.usuario_claim_tb
 	);
 	
 	
-	select * from sys.responsavel_aluno_tb
-drop table sys.responsavel_aluno_tb
+
 
 	create table if not exists sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
