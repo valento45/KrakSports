@@ -75,11 +75,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
 
-        public IActionResult Privacy()
-        
-        {
-            if(!CanAccess(HttpContext.User, Roles.ALUNO))            
-                return View("Unauthorized");
+        public IActionResult Privacy()        
+        {    
             
             return View();
         }

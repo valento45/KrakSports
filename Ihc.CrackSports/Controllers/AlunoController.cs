@@ -27,16 +27,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         [HttpPost]
         public async Task<IActionResult> DadosAluno(DadosAlunoViewModel request)
-        {
-            request.DadosAluno.CpfCnpj = !string.IsNullOrEmpty(request.DadosAluno.CpfCnpjString.SomenteNumeros()) ?
-                long.Parse(request.DadosAluno.CpfCnpjString.SomenteNumeros()) : request.DadosAluno.CpfCnpj;
+        {            
 
             if (request.File != null)
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
                     await request.File.CopyToAsync(ms);
-
                     request.DadosAluno.FotoAlunoBase64 = Convert.ToBase64String(ms.ToArray());
                 }
 
@@ -61,6 +58,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 DadosAluno = await _alunoService.GetById(idAluno)
             };
 
+           
             return View(obj);
         }
     }

@@ -55,7 +55,7 @@ function criarConta() {
 
         model.nomeResponsavel = $("#txtNomeResponsavel").val();
         model.documentoResponsavel = $("#txtDocumentoResponsavel").val();
-        model.cpfResponsavel = apenasNumeros($("#txtCpfResponsavel").val());
+        model.cpfResponsavel = $("#txtCpfResponsavel").val() ? (+ apenasNumeros($("#txtCpfResponsavel").val())) : 0;
         model.grauParentesco = $('#cmbGrauParentesco').val();;
         model.telefoneResponsavel = $("#txtTelefoneResponsavel").val();
         model.celularResponsavel = $("#txtCelularResponsavel").val();
@@ -63,11 +63,11 @@ function criarConta() {
         /*Dados Aluno*/
         model.nomeAluno = $("#txtNomeAluno").val();
         model.documentoAluno = $("#txtDocumentoAluno").val();
-        model.cpfAluno = + apenasNumeros($("#txtCpfAluno").val());
+        model.cpfAluno = $("#txtCpfAluno").val() ? (+ apenasNumeros($("#txtCpfAluno").val())) : 0;
         model.dataNascimento = $("#txtDataNascAluno").val();
         model.email = $("#txtEmailAluno").val();
 
-        
+
         /*Dados Endereco*/
         model.endereco = new Object();
 

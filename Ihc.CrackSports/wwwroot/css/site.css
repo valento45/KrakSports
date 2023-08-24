@@ -183,9 +183,9 @@ body {
         color: brown;
 
     }
-    .layout-light-full label {
+    .layout-light-full label, .layout-light-full p {
         background-color: ghostwhite;
-        color: brown;
+        color: brown !important;
     }
 
 .layout-orange-full {
@@ -196,7 +196,7 @@ body {
     border-radius: 100px;
 }
 
-.layout-orange-full h3, h4, h5, small {
+.layout-orange-full h3, .layout-orange-full h4, .layout-orange-full h5, .layout-orange-full small {
     color: white;
     font-family: Poppins-Bold;
 }
@@ -206,10 +206,10 @@ body {
     color: white;
 }
 
-.layout-orange-full label, p {
+.layout-orange-full label, .layout-orange-full p {
     font-family: Poppins-Light;
-    color: ghostwhite !important;
-    text-decoration:none;
+    color: ghostwhite;
+    text-decoration: none;
 }
 
 

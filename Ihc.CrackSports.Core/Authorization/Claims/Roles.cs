@@ -55,6 +55,11 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
             return User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
         }
 
+        public static bool IsAuthenticated(this ClaimsPrincipal User)
+        {
+            return User.Claims.Any(p => p.Type == ClaimTypes.NameIdentifier);
+        }
+
 
     }
 }

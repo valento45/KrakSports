@@ -84,4 +84,9 @@ CREATE DATABASE bd_sports
 		references sys.aluno_tb(id_aluno)
 	);
 	
+	select * from sys.responsavel_aluno_tb
+	select* from sys.aluno_tb
+	select  * from sys.usuario_tb
 	
+	select id_responsavel as Id, id_aluno as IdAluno, nome_responsavel as Nome, documento_responsavel as Documento, cpf_responsavel as CpfCnpj, grau_parentesco as GrauParentesco 
+	from sys.responsavel_aluno_tb where id_aluno = 12

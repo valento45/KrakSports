@@ -15,6 +15,7 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
     public class Aluno : PessoaFisica
     {
         private byte[] _fotoAlunoBytes { get; set; }
+       
 
         public long IdClub { get; set; }
         public long IdUsuario { get; set; }
@@ -23,6 +24,8 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
         public string FotoAlunoBase64 { get; set; }       
         public Responsavel Responsavel { get; set; }
         public Usuario Usuario { get; set; }
+        public bool HasEditResponsavel { get; set; }
+
         public byte[] GetBytesFotoAluno()
         {
             if(_fotoAlunoBytes == null)
@@ -96,6 +99,14 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
         }
 
         
+        public void InformarResponsavel(Responsavel responsavel)
+        {
+            Responsavel = responsavel;
+        }
 
+        public void InformarResponsavel(List<Responsavel> responsavel)
+        {
+            Responsavel = responsavel?.FirstOrDefault() ?? new Responsavel();
+        }
     }
 }

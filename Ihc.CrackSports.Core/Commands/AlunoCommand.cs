@@ -13,10 +13,12 @@ namespace Ihc.CrackSports.Core.Commands
     public class AlunoCommand : IAlunoCommand
     {
         protected readonly IAlunoRepository _alunoRepository;
+        protected readonly IResponsavelRepository _responsavelRepository;
 
-        public AlunoCommand(IAlunoRepository alunoRepository)
+        public AlunoCommand(IAlunoRepository alunoRepository, IResponsavelRepository responsavelRepository)
         {
             _alunoRepository = alunoRepository;
+            _responsavelRepository = responsavelRepository;
         }
 
         public async Task<CadastroResponse> InsertOrUpdate(Aluno Aluno)
@@ -25,10 +27,14 @@ namespace Ihc.CrackSports.Core.Commands
             if (Aluno.Id > 0)
             {
                 sucesso = await _alunoRepository.Atualizar(Aluno);
+
+                if (Aluno.HasEditResponsavel)
+                    sucesso = await _responsavelRepository.Atualizar(Aluno.Responsavel);
             }
             else
             {
-                sucesso = await _alunoRepository.Inserir(Aluno);
+                await _alunoRepository.Inserir(Aluno);
+                sucesso = await _responsavelRepository.Inserir(Aluno.Responsavel);
             }
             return sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse { StatusCode = 500, Message = "Erro ao salvar os dados do aluno !" };
 
@@ -55,7 +61,13 @@ namespace Ihc.CrackSports.Core.Commands
         }
 
         public async Task<Aluno> GetById(long idAluno)
-        => await _alunoRepository.ObterAlunoById(idAluno);
+        {
+            var result = await _alunoRepository.ObterAlunoById(idAluno);
+
+            result.InformarResponsavel(await _responsavelRepository.ObterByIdAluno(idAluno));
+
+            return result;
+        }
 
 
         public async Task<Aluno?> ObterAlunoPorCpf(long cpf)
@@ -81,7 +93,11 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<Aluno?> GetByIdUsuario(long idUser)
         {
-            return await _alunoRepository.ObterAlunoByIdUsuario(idUser);
+            var aluno =  await _alunoRepository.ObterAlunoByIdUsuario(idUser);
+
+            aluno?.InformarResponsavel(await _responsavelRepository.ObterByIdAluno(aluno.Id));
+
+            return aluno;
         }
     }
 }

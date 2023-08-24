@@ -10,8 +10,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
 {
     public class RepositoryBase
     {
-        private readonly IDbConnection _dbConnection;
-
+        protected readonly IDbConnection _dbConnection;
         protected string Message { get; set; }
         protected bool OperationSuccess { get; set; }
 
