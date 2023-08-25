@@ -24,40 +24,64 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
         #endregion
 
 
+
+        private static bool IsAdm(this ClaimsPrincipal User)
+        {
+            return User.Claims.Any(param => param.Value == Roles.ADMINISTRADOR);
+        }
+
+
         public static bool CanAccess(this ClaimsPrincipal User, string role)
         {
+            if (User.IsAdm())
+                return true;
+
             return User?.Claims.Any(param => param.Value.Equals(role)) ?? false;
         }
 
         public static bool CanInsert(this ClaimsPrincipal User, string role)
+
         {
+            if (User.IsAdm())            
+                return true;
+            
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.INSERT}-{role}")) ?? false;
         }
 
         public static bool CanUpdate(this ClaimsPrincipal User, string role)
         {
+            if (User.IsAdm())
+                return true;
+
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.UPDATE}-{role}")) ?? false;
         }
 
         public static bool CanDelete(this ClaimsPrincipal User, string role)
         {
+            if (User.IsAdm())
+                return true;
+
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.DELETE}-{role}")) ?? false;
 
         }
 
         public static bool CanRead(this ClaimsPrincipal User, string role)
         {
+            if (User.IsAdm())
+                return true;
+
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.DELETE}-{role}")) ?? false;
         }
 
         public static string GetIdentificador(this ClaimsPrincipal User)
         {
-            return User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
+
+            return User?.Claims?.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value ?? "";
         }
 
         public static bool IsAuthenticated(this ClaimsPrincipal User)
         {
-            return User.Claims.Any(p => p.Type == ClaimTypes.NameIdentifier);
+            return User?.Claims?.Any(p => p.Type == ClaimTypes.NameIdentifier) ?? false;
         }
 
 

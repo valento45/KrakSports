@@ -15,12 +15,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
         protected readonly IUsuarioService _usuarioService;
         private readonly UserManager<Usuario> _userManager;
         private readonly IAlunoService _alunoService;
+        private readonly IClubService _clubService;
 
-        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService)
+        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService)
         {
             _usuarioService = usuarioService;
             _userManager = user;
             _alunoService = alunoService;
+            _clubService = clubService;
         }
 
 
@@ -91,8 +93,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     {
                         var user = await _usuarioService.GetById(id);
                         var aluno = await _alunoService.GetByIdUsuario(id);
+                        
 
                         var viewModel = new MinhaContaViewModel(aluno, user);
+                        viewModel.InformarClub(await _clubService.ObterById(aluno.IdClub) ?? new Core.Objetos.Clube.Club());
+
                         return View(viewModel);
                     }
                     else

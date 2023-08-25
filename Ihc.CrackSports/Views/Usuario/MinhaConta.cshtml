@@ -40,12 +40,14 @@
                     <div class="d-inline-flex ms-5 card-content-dados-aluno">
                         <div class="row g-width-10">
                             <h5 class="text-center mt-2" style="color: #F9D19F;">Dados do aluno</h5>
-                            <a class="mt-3"><b>Nome completo:</b> &nbsp; @Model.DadosAluno.Nome</a>
+                            <a class="mt-3"><b>ID Aluno:</b> &nbsp; @Model.DadosAluno.Id</a>
+                            <a><b>Nome completo:</b> &nbsp; @Model.DadosAluno.Nome</a>
                             <a><b>Documento:</b> &nbsp; @Model.DadosAluno.Documento</a>
                             <a><b>CPF:</b> &nbsp; @Model.DadosAluno.CpfCnpj.FormataCPF()</a>
-                            <a><b>Camiseta:</b> &nbsp; @Model.DadosAluno.CamisetaNumero</a>
-                            <a><b>Club:</b> &nbsp; @(Model.DadosAluno.IdClub > 0 ? "" : "N/a")</a>
-                            <a><b>Data de nascimento:</b> &nbsp; @Model.DadosAluno.DataNascimento.ToString("dd/MM/yyyy")</a>
+                            <a><b>Data de nascimento:</b> &nbsp; @Model.DadosAluno.DataNascimento.ToString("dd/MM/yyyy")</a>                            
+                            <a><b>Club:</b> &nbsp; @(Model.DadosAluno.IdClub > 0 ? Model.DadosClub.Nome.ToUpper() : "N/a")</a>
+                            <a><b>Camiseta:</b> &nbsp; @(Model.DadosAluno.CamisetaNumero > 0 ? Model.DadosAluno.CamisetaNumero.ToString() : "N/a")</a>
+                            <a><b>Posição jogador:</b> &nbsp; @Model.DadosAluno.PosicaoJogador</a>
                             <a class="mb-3"><b>Idade:</b> &nbsp; @(DateTime.Now.Year - Model.DadosAluno.DataNascimento.Year) Anos</a>
                         </div>
                     </div>

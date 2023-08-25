@@ -3,20 +3,20 @@
     $("#btnLogar").on("click", onClickLogar);
 });
 
-function onFocusOutCamposObrigatorios(e) {
+//function onFocusOutCamposObrigatorios(e) {
 
-    var campo = $(`#${e.currentTarget.id}`);
-    var label = $(`#${e.currentTarget.id}Label`);
+//    var campo = $(`#${e.currentTarget.id}`);
+//    var label = $(`#${e.currentTarget.id}Label`);
 
-    if (!campo.val()) {
-        label.addClass("campos-invalidos");
-        campo.addClass("campos-invalidos");
-    }
-    else {
-        label.removeClass("campos-invalidos");
-        campo.removeClass("campos-invalidos");
-    }
-}
+//    if (!campo.val()) {
+//        label.addClass("campos-invalidos");
+//        campo.addClass("campos-invalidos");
+//    }
+//    else {
+//        label.removeClass("campos-invalidos");
+//        campo.removeClass("campos-invalidos");
+//    }
+//}
 
 function onClickLogar() {
 

@@ -29,7 +29,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
             cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
             cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
-            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64);
+            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
@@ -66,7 +66,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<Club?> ObterById(long idClub)
         {
-            string query = "select * from sys.club_tb where id_club " + idClub;
+            string query = "select * from sys.club_tb where id_club =" + idClub;
 
             var result = await base.QueryAsync<ClubDto>(query);
 

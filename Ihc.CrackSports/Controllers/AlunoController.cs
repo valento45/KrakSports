@@ -8,10 +8,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
     public class AlunoController : ControllerBase
     {
         private readonly IAlunoService _alunoService;
+        private readonly IClubService _clubService;
 
-        public AlunoController(IAlunoService alunoService)
+        public AlunoController(IAlunoService alunoService, IClubService clubService)
         {
             _alunoService = alunoService;
+            _clubService = clubService;
         }
 
         [HttpGet]
@@ -19,7 +21,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             DadosAlunoViewModel obj = new DadosAlunoViewModel
             {
-                DadosAluno = await _alunoService.GetById(idAluno)
+                DadosAluno = await _alunoService.GetById(idAluno),
+                Clubs = await _clubService.ObterByNome(string.Empty, 0) ?? new List<Core.Objetos.Clube.Club>()
             };
 
             return View(obj);
@@ -27,7 +30,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         [HttpPost]
         public async Task<IActionResult> DadosAluno(DadosAlunoViewModel request)
-        {            
+        {
+            request.Clubs = await _clubService.ObterByNome(string.Empty, 0);
 
             if (request.File != null)
             {
@@ -41,10 +45,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             var response = await _alunoService.UpdateDadosGerais(request.DadosAluno);
 
-            if (response.IsSuccessStatusCode)
-            {
-                return View(request);
-            }
+            if (response.IsSuccessStatusCode)            
+                return View(request);            
             else
                 throw new HttpRequestException($"Status Code: {response.StatusCode}\r\nMensagem: {response.Message}");
 
@@ -58,7 +60,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 DadosAluno = await _alunoService.GetById(idAluno)
             };
 
-           
+
             return View(obj);
         }
 
@@ -67,8 +69,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> DadosGerais(DadosAlunoViewModel dadosAlunoViewModel)
         {
 
-            var sucesso = await _alunoService.UpdateResponsavelEndereco(dadosAlunoViewModel.DadosAluno);
-            return View(dadosAlunoViewModel);
+            var response = await _alunoService.UpdateResponsavelEndereco(dadosAlunoViewModel.DadosAluno);
+
+            if (response.IsSuccessStatusCode)
+                return View(dadosAlunoViewModel);
+            else
+                throw new Exception($"{response.StatusCode} - {response.Message}");
         }
     }
 }

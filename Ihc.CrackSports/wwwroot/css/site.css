@@ -185,7 +185,7 @@ body {
     }
     .layout-light-full label, .layout-light-full p {
         background-color: ghostwhite;
-        color: brown !important;
+        color: brown ;
     }
 
 .layout-orange-full {

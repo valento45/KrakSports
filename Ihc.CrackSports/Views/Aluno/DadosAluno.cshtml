@@ -16,6 +16,7 @@
 
             <input asp-for="DadosAluno.Id" class="d-none" value="@Model.DadosAluno.Id" />
             <input asp-for="DadosAluno.FotoAlunoBase64" class="d-none" value="@Model.DadosAluno.FotoAlunoBase64" />
+            <input asp-for="Clubs" class="d-none" value="@Model.Clubs"  type="text"/>
 
             <input class="d-none" />
             <input class="d-none" />
@@ -73,10 +74,12 @@
                 <h5 class="text-semi-bold-orange mt-5">Dados do Club</h5>
                 <div class="form-outline  mt-5 ag-field-content g-width-10">
 
-                    <select id="cmbClub" class="form-select ag-field-input ag-input-color-light-full">
+                    <select asp-for="DadosAluno.IdClub" id="cmbClub" class="form-select ag-field-input ag-input-color-light-full">
                         <option selected>Selecionar</option>
-                        <option value="1">Sport Corinthians</option>
-                        <option value="2">Barcelona FC</option>
+                        @foreach( var obj in Model.Clubs)
+                        {
+                            <option value="@obj?.Id">@obj?.Nome</option>
+                        }                        
                     </select>
                     <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Club</label><label id="cmbClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Club</label>
                 </div>
@@ -94,14 +97,13 @@
                         </div>
                     </div>
 
-
                     <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
-                        <input type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" />
+                        <input asp-for="DadosAluno.PosicaoJogador" type="text" id="txtCpfAluno" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off"  required/>
                         <label id="txtCpfAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfAluno">Posição jogador</label>
                     </div>
                 </div>
 
-                <div class="form-outline  ag-field-content g-width-5">
+                <div class="form-outline  ag-field-content g-width-5 d-none">
                     <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full " />
                     <label id="txtDataNascAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Data ingresso</label>
                 </div>
