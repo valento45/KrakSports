@@ -17,11 +17,12 @@
     <div class=" col-9 d-inline-flex mt-5 w-100">
         <form class="form-group form-control layout-light-full radius-form" asp-action="DadosGerais" asp-controller="Aluno" method="post"
               style="border-color: brown; padding: 5%;">
+
             <!--Hidden Inputs-->
             <input asp-for="DadosAluno.Responsavel.Id" type="text" class="d-none" />
+            <input asp-for="DadosAluno.Id" type="text" class="d-none" />
             <input asp-for="DadosAluno.Usuario.Id" type="text" class="d-none" />
             <input asp-for="DadosAluno.Email" type="text" class="d-none" />
-
             <!--FIMHidden Inputs-->
             <!--Dados do responsável-->
             <div id="pnlDadosResponsavel">
@@ -65,7 +66,7 @@
                 <h5 class="text-semi-bold-orange mt-5">Contato do responsável</h5>
                 <div class="d-inline-flex g-width-10">
                     <div class="form-outline  ag-field-content g-width-5">
-                        <input asp-for="DadosAluno.Telefone" type="tel" id="txtTelefoneResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10" data-mask="(00)0000-0000" autocomplete="off" required />
+                        <input asp-for="DadosAluno.Telefone" type="tel" id="txtTelefoneResponsavel" class="form-control ag-field-input ag-input-color-light-full w-10" data-mask="(00)0000-0000" autocomplete="off" />
                         <label id="txtTelefoneResponsavelLabel" class="form-label text-semi-bold-light ag-field-label" for="txtTelefoneResponsavel">Telefone</label>
                     </div>
 
@@ -114,14 +115,14 @@
 
                 <div class="form-outline mb-4 ag-field-content g-width-7">
 
-                    <input asp-for="DadosAluno.Endereco.Complemento" type="text" id="txtComplemento" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" required />
+                    <input asp-for="DadosAluno.Endereco.Complemento" type="text" id="txtComplemento" class="form-control ag-field-input ag-input-color-light-full " autocomplete="off" />
                     <label class="form-label text-semi-bold-light ag-field-label" for="txtComplemento">Complemento</label>
                 </div>
 
                 <!-- Checkbox novidades e itens-->
                 @* <div class="form-check">
-                    <label class="form-check-label" for="chkAutorizaEmailNovidades"> Gostaria de receber informações sobre novidades, eventos e itens do Club por e-mail. </label>
-                    <input class="form-check-input form-checkbox-input" type="checkbox" id="chkAutorizaEmailNovidades" />
+                <label class="form-check-label" for="chkAutorizaEmailNovidades"> Gostaria de receber informações sobre novidades, eventos e itens do Club por e-mail. </label>
+                <input class="form-check-input form-checkbox-input" type="checkbox" id="chkAutorizaEmailNovidades" />
 
                 </div> *@
             </div>

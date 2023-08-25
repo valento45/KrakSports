@@ -24,5 +24,22 @@ namespace Ihc.CrackSports.Core.Extensions
         {
             return String.Join("", System.Text.RegularExpressions.Regex.Split(value, @"[^\d]"));
         }
+
+        public static byte[]? GetBytesFromBase64(this string base64)
+        {
+            byte[]? result = null; 
+
+            try
+            {
+                if (!string.IsNullOrEmpty(base64))
+                {
+                    result = Convert.FromBase64String(base64);
+                }
+            }
+            catch
+            { }
+
+            return result;
+        }
     }
 }

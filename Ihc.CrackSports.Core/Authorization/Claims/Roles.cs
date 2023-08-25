@@ -17,10 +17,10 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
 
         #region PERMISSIONS
 
-        public const string INSERT = "ins";
-        public const string UPDATE = "upd";
-        public const string DELETE = "del";
-        public const string READ = "read";
+        private const string INSERT = "ins";
+        private const string UPDATE = "upd";
+        private const string DELETE = "del";
+        private const string READ = "read";
         #endregion
 
 

@@ -62,6 +62,11 @@ namespace Ihc.CrackSports.Core.Services
             return await _alunoCommand.UpdateDadosGerais(aluno);
         }
 
+        public async Task<CadastroResponse> UpdateResponsavelEndereco(Aluno aluno)
+        {
+            return await _alunoCommand.UpdateDadosResponsavel(aluno);
+        }
+
         public async Task<bool> ExcluirAluno(long idAluno)
         {
             return await _alunoCommand.ExcluirAluno(idAluno);

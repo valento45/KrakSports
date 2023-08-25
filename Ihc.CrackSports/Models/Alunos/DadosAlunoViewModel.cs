@@ -1,5 +1,4 @@
-﻿using Ihc.CrackSports.Core.Objetos.AlunoClub;
-using Ihc.CrackSports.Core.Objetos.Alunos;
+﻿using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Clube;
 
 namespace Ihc.CrackSports.WebApp.Models.Alunos

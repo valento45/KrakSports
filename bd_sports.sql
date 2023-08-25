@@ -32,14 +32,14 @@ CREATE DATABASE bd_sports
 		nome_fantasia varchar,
 		razao_social varchar,
 		cpf_cnpj bigint,
-		is_pj bit,
+		is_pj boolean,
 		endereco varchar,
 		numero integer,
 		cidade varchar,
 		cep varchar(20),
 		uf varchar(2),
 		imagem_base64 varchar	
-	);
+	);	
 	
 	
 		
@@ -63,6 +63,7 @@ CREATE DATABASE bd_sports
 		cidade varchar,
 		uf varchar,
 		cep varchar,
+		complemento varchar(200),
 		camiseta_numero integer,
 		CONSTRAINT id_usuario_fk foreign key (id_usuario)
 		references sys.usuario_tb(id_usuario)	,

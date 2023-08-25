@@ -61,5 +61,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
            
             return View(obj);
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DadosGerais(DadosAlunoViewModel dadosAlunoViewModel)
+        {
+
+            var sucesso = await _alunoService.UpdateResponsavelEndereco(dadosAlunoViewModel.DadosAluno);
+            return View(dadosAlunoViewModel);
+        }
     }
 }

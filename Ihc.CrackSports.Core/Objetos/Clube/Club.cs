@@ -10,8 +10,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
 {
     public class Club : PessoaJuridica
     {
-        public string ImagemBase64 { get; set; }
-        public List<Aluno> JogadoresAlunos { get; set; }
+        public string ImagemBase64 { get; set; }      
 
     }
 }

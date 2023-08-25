@@ -119,6 +119,23 @@ namespace Ihc.CrackSports.Core.Repositorys
             return await base.ExecuteCommand(cmd);
         }
 
+
+        public async Task<bool> AtualizarEndereco(Aluno aluno)
+        {
+            string query = "update sys.aluno_tb set endereco = @endereco, numero = @numero, cidade = @cidade, uf = @uf, cep = @cep, complemento = @complemento where id_aluno = @id_aluno";
+
+            return await base.ExecuteAsync(query, new
+            {
+                endereco = aluno.Endereco.Logradouro,
+                numero = aluno.Endereco.Numero,
+                cidade = aluno.Endereco.Cidade,
+                uf = aluno.Endereco.UF,
+                cep = aluno.Endereco.CEP,
+                complemento = aluno.Endereco.Complemento
+            });
+        }
+
+
         public async Task<bool> Excluir(long idAluno)
         {
             string query = "delete from sys.aluno_tb where id_aluno = " + idAluno;
@@ -180,5 +197,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             return result.Select(x => x.ToAluno())?.FirstOrDefault();
         }
+
+      
     }
 }

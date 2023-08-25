@@ -44,15 +44,15 @@ namespace Ihc.CrackSports.Core.Repositorys
         }
 
 
-        public async Task<bool> Atualizar(Responsavel responsavel)
+        public async Task<bool> Atualizar(Responsavel responsavel, long idAluno)
         {
             string query = "update sys.responsavel_aluno_tb set id_aluno = @id_aluno, nome_responsavel = @nome_responsavel, documento_responsavel = @documento_responsavel," +
-                " cpf_responsavel = @cpf_responsavel, grau_parentesco = @grau_parentesco) where id_responsavel = @id_responsavel";
+                " cpf_responsavel = @cpf_responsavel, grau_parentesco = @grau_parentesco where id_responsavel = @id_responsavel";
 
 
             var result = await base.ExecuteAsync(query, new
             {
-                id_aluno = responsavel.IdAluno, 
+                id_aluno = idAluno, 
                 nome_responsavel = responsavel.Nome,
                 documento_responsavel = responsavel.Documento,
                 cpf_responsavel = responsavel.CpfCnpj,

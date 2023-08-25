@@ -24,7 +24,7 @@ namespace Ihc.CrackSports.Core.Commands
             bool success;
 
             if (request.Id > 0)            
-                success = await _responsavelRepository.Atualizar(request);
+                success = await _responsavelRepository.Atualizar(request, request.IdAluno);
             
             else            
                 success = await _responsavelRepository.Inserir(request);            

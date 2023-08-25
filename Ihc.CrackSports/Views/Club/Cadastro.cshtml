@@ -1,0 +1,63 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Clube;
+@model ClubViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="mt-5">
+    <h3 class="text-semi-bold-orange">Cadastro de Club</h3>
+    <hr />
+
+    <div class="mt-5 w-100 ">
+        <form asp-action="Cadastro" asp-controller="Club" method="post" enctype="multipart/form-data"
+              class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 3%;">
+
+            <div class="d-inline-flex g-width-10">
+                <!--Panel Imagem Club-->
+                <div class="text-center mt-4">
+                    @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
+                    {
+                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 100px;  height: 100px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                    }
+                    else
+                    {
+                        var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
+                        <img class="mt-4" src="@imagem" style="width: 100px;  height: 100px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                    }
+                    <br>
+                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImage()" />
+                    <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagem()">Carregar</button>
+
+                </div>
+                <!--FIM Panel Imagem Club-->
+
+                <div id="pnlDadosClub" class="ms-3 g-width-8">
+
+                    <div class="form-outline mt-5 ag-field-content g-width-10">
+                        <input asp-for="DadosClub.Nome" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Nome" required />
+                        <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Nome do Club*</label>
+                    </div>
+
+                    <div class="d-inline-flex g-width-10">
+                        <div class="form-outline ag-field-content g-width-10">
+                            <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Endereco?.Cidade" required />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Cidade*</label>
+                        </div>
+
+                        <div class="form-outline ag-field-content g-width-4 ms-3">
+                            <input asp-for="DadosClub.Endereco.UF" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Endereco?.UF" required />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">UF*</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-5 " style="text-align: right; margin-right: 50px;">
+                <button id="btnSalvarDadodsClub" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
+                <a class=" btn-voltar mx-5" asp-controller="Home" asp-action="Index">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

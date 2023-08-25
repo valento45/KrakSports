@@ -29,7 +29,7 @@ namespace Ihc.CrackSports.Core.Commands
                 sucesso = await _alunoRepository.Atualizar(Aluno);
 
                 if (Aluno.HasEditResponsavel)
-                    sucesso = await _responsavelRepository.Atualizar(Aluno.Responsavel);
+                    sucesso = await _responsavelRepository.Atualizar(Aluno.Responsavel, Aluno.Id);
             }
             else
             {
@@ -54,6 +54,23 @@ namespace Ihc.CrackSports.Core.Commands
             return sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse { StatusCode = 500, Message = "Erro ao salvar os dados do aluno !" };
 
         }
+
+        public async Task<CadastroResponse> UpdateDadosResponsavel(Aluno Aluno)
+        {
+            bool sucesso = false;
+            if (Aluno.Id > 0)
+            {
+                sucesso = await _responsavelRepository.Atualizar(Aluno.Responsavel, Aluno.Id);
+                sucesso = await _alunoRepository.AtualizarEndereco(Aluno);
+            }
+            else
+            {
+                throw new InvalidOperationException("Impossivel atualizar os dados gerais pois o aluno nao possui Id ");
+            }
+            return sucesso ? new CadastroResponse { StatusCode = 200 } : new CadastroResponse { StatusCode = 500, Message = "Erro ao salvar os dados do aluno !" };
+
+        }
+
 
         public async Task<bool> ExcluirAluno(long idAluno)
         {
