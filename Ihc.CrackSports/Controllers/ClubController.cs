@@ -16,8 +16,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var obj = await _clubService.ObterByNome(string.Empty, 0);
+
             return View();
         }
 
@@ -30,21 +32,19 @@ namespace Ihc.CrackSports.WebApp.Controllers
             if (idClub == null || idClub <= 0)
                 return View(result);
 
-
-            
             var club = await _clubService.ObterById(idClub.Value);
 
-            if(club != null)
+            if (club != null)
             {
-                if(club.Id == GetIdUsuarioLogado() && base.CanAccess(User, Roles.CLUB))                
+                if (club.Id == GetIdUsuarioLogado() && base.CanAccess(User, Roles.CLUB))
                     return View(result);
-                
-                else if(base.CanAccess(User, Roles.ADMINISTRADOR))                 
+
+                else if (base.CanAccess(User, Roles.ADMINISTRADOR))
                     return View(result);
-                
-                else                
-                    return View("Unauthorized");                
-            }           
+
+                else
+                    return View("Unauthorized");
+            }
 
             return View(result);
         }
