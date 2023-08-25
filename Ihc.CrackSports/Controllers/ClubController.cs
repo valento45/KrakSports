@@ -9,7 +9,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
     {
         private readonly IClubService _clubService;
 
-        public ClubController(IClubService clubService)
+        public ClubController(IClubService clubService) : base(clubService)
         {
             _clubService = clubService;
         }

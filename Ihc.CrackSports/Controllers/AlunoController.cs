@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Extensions;
+﻿using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Extensions;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Alunos;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
 
-        public AlunoController(IAlunoService alunoService, IClubService clubService)
+        public AlunoController(IAlunoService alunoService, IClubService clubService) : base(alunoService)
         {
             _alunoService = alunoService;
             _clubService = clubService;
@@ -19,6 +20,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DadosAluno(long idAluno)
         {
+            if (User != null)
+            {
+                await base.RefreshImageUser(User);
+            }
+
             DadosAlunoViewModel obj = new DadosAlunoViewModel
             {
                 DadosAluno = await _alunoService.GetById(idAluno),
@@ -41,6 +47,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     request.DadosAluno.FotoAlunoBase64 = Convert.ToBase64String(ms.ToArray());
                 }
 
+                Roles.SetImage(request.DadosAluno.FotoAlunoBase64);
+
             }
 
             var response = await _alunoService.UpdateDadosGerais(request.DadosAluno);
@@ -55,6 +63,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> DadosGerais(long idAluno)
         {
+
+            if (User != null)
+            {
+                await base.RefreshImageUser(User);
+            }
+
             DadosAlunoViewModel obj = new DadosAlunoViewModel
             {
                 DadosAluno = await _alunoService.GetById(idAluno)

@@ -13,7 +13,7 @@
         <form asp-action="Cadastro" asp-controller="Club" method="post" enctype="multipart/form-data"
               class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 3%;">
 
-            <div class="d-inline-flex g-width-10">
+            <div class="d-block d-md-inline-flex g-width-10">
                 <!--Panel Imagem Club-->
                 <div class="text-center mt-4">
                     @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
@@ -35,7 +35,7 @@
                 </div>
                 <!--FIM Panel Imagem Club-->
 
-                <div id="pnlDadosClub" class="ms-3 g-width-8">
+                <div id="pnlDadosClub" class="ms-3 g-width-9">
 
                     <div class="form-outline mt-5 ag-field-content g-width-10">
                         <input asp-for="DadosClub.Nome" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Nome" required />
@@ -57,7 +57,7 @@
 
             </div>
 
-            <div class="mt-5 " style="text-align: right; margin-right: 50px;">
+            <div class="mt-5 mb-3" style="text-align: right; margin-right: 50px;">
                 <button id="btnSalvarDadodsClub" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
                 <a class=" btn-voltar mx-5" asp-controller="Home" asp-action="Index">Voltar</a>
             </div>

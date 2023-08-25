@@ -69,7 +69,15 @@
                                     <div class="d-inline-flex">
 
                                         <a class="nav-link " href="#" onclick="redirectMinhaConta()">
-                                            <img class="img-icon-nav mx-2" src="~/imgs/login-white.png" />
+                                            @if (!User.HasImage())
+                                            {
+                                                <img class="img-icon-nav mx-2" src="~/imgs/login-white.png" />
+                                            }
+                                            else
+                                            {
+                                                var imagem = String.Format("data:image/png;base64,{0}", User.GetImage());
+                                                <img class="img-icon-nav mx-2" src="@imagem" style="width: 30px; height: 30px; border-radius: 50px;" />
+                                            }
                                             Minha conta
                                         </a>
 

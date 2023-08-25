@@ -14,6 +14,7 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<CadastroResponse> Excluir(long idClub);
 
         Task<Club?> ObterById(long idClub);
+        Task<Club?> ObterByIdUsuario(long idUser);
         Task<List<Club>?> ObterByNome(string nome, int limite);
     }
 }

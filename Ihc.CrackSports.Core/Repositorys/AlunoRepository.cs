@@ -106,7 +106,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
             cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);
-            cmd.Parameters.AddWithValue(@"id_club", aluno.IdClub);
+            cmd.Parameters.AddWithValue(@"id_club", aluno?.IdClub ?? null);
             cmd.Parameters.AddWithValue(@"nome", aluno?.Nome ?? "");
             cmd.Parameters.AddWithValue(@"documento", aluno?.Documento ?? "");
             cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);

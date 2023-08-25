@@ -37,6 +37,10 @@ namespace Ihc.CrackSports.Core.Services
         {
             return await _clubCommand.ObterByNome(nome, limite);
         }
-       
-    }
+
+		public Task<Club?> ObterByIdUsuario(long idUser)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

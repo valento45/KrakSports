@@ -17,7 +17,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
 
-        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService)
+        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService) : base(alunoService)
         {
             _usuarioService = usuarioService;
             _userManager = user;
@@ -28,8 +28,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            if (User != null)
+            {
+                await base.RefreshImageUser(User);
+            }
+
             return View();
         }
 
@@ -80,6 +85,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> MinhaConta(long idUsuario)
         {
+            if (User != null)
+            {
+                await base.RefreshImageUser(User);
+            }
+
             var claim = HttpContext.User.Claims.FirstOrDefault(param => param.Type == ClaimTypes.NameIdentifier);
 
             if (claim == null)

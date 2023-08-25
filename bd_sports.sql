@@ -49,7 +49,7 @@ CREATE DATABASE bd_sports
 	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
 		id_usuario bigint,
-		id_club bigint,
+		id_club bigint null,
 		nome varchar not null,
 		documento varchar,
 		cpf_cnpj bigint,
@@ -68,7 +68,7 @@ CREATE DATABASE bd_sports
 		cep varchar,
 		complemento varchar(200),
 		camiseta_numero integer,
-		is_verificado boolean,
+		is_verificado boolean null,
 		CONSTRAINT id_usuario_fk foreign key (id_usuario)
 		references sys.usuario_tb(id_usuario)	,
 		CONSTRAINT id_club_fk foreign key (id_club)
@@ -106,17 +106,19 @@ select * from sys.club_tb where UPPER(nome_fantasia) like UPPER('%%')
 
 
 
+drop table sys.usuario_tb
+drop table sys.usuario_claim_tb
+drop table sys.club_tb
 
-
-
-
+drop table sys.aluno_tb
+drop table sys.responsavel_aluno_tb
 
 
 --Tornar usuario administrador
-insert into sys.usuario_claim_tb (id_usuario, claim) values (13, 'adm')
+insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
 --Criar Role usuario Club
-insert into sys.usuario_claim_tb(id_usuario, claim) values (23, 'club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (23, 'upd-club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (23, 'del-club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (23, 'read-club');
+insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
+insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
+insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
+insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
