@@ -44,8 +44,8 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between link-redirect-orange">
+                    <ul class="navbar-nav flex-grow-1 ">
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Início</a>
                         </li>
@@ -66,9 +66,9 @@
                             <div class="nav-right">
                                 @if (User?.CanAccess(Roles.ALUNO) ?? false)
                                 {
-                                    <div class="d-inline-flex">
+                                    <div class="d-inline-flex" style="height: 30px; align-items: center;">
 
-                                        <a class="nav-link " href="#" onclick="redirectMinhaConta()">
+                                        <a class="nav-link " href="#" onclick="redirectMinhaConta()" >
                                             @if (!User.HasImage())
                                             {
                                                 <img class="img-icon-nav mx-2" src="~/imgs/login-white.png" />
@@ -108,8 +108,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted" style="color: #F9D19F !important; border-top: 1px solid #F9D19F !important;">
+        <div class="container mb-5 mt-5">
             &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange">Políticas de privacidade</a>
         </div>
     </footer>

@@ -42,10 +42,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public  async Task<IActionResult> Login()
         {
 
-
             if (User != null)
             {
-               await base.RefreshImageUser(User);
+                return Redirect("Logout");
             }
             return View();
         }

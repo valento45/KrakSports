@@ -65,6 +65,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     return View("Unauthorized");
 
 
+                if (model.File != null)
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        await model.File.CopyToAsync(ms);
+                        model.DadosClub.ImagemBase64 = Convert.ToBase64String(ms.ToArray());
+                    }                   
+                }
+
                 var result = await _clubService.Salvar(model.DadosClub);
 
                 if (result.IsSuccessStatusCode)

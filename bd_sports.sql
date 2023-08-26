@@ -42,8 +42,7 @@ CREATE DATABASE bd_sports
 		uf varchar(2),
 		imagem_base64 varchar,
 		is_verificado boolean
-	);	
-	
+	);		
 	
 		
 	create table if not exists sys.aluno_tb(
@@ -75,8 +74,6 @@ CREATE DATABASE bd_sports
 		references sys.club_tb(id_club)	
 	);
 	
-	
-
 
 	create table if not exists sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
@@ -89,6 +86,11 @@ CREATE DATABASE bd_sports
 		references sys.aluno_tb(id_aluno)
 	);
 	
+	
+	
+	
+	
+	
 	select * from sys.responsavel_aluno_tb
 	select* from sys.aluno_tb where id_aluno = 12
 	select  * from sys.usuario_tb
@@ -100,9 +102,6 @@ select * from sys.usuario_claim_tb
 select * from sys.club_tb
 
 select * from sys.club_tb where UPPER(nome_fantasia) like UPPER('%%')
-
-
-
 
 
 

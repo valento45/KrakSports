@@ -51,12 +51,14 @@ html {
             color: ghostwhite !important;
         }
 
-body {
+
+
+.nav-link body {
     margin-bottom: 60px;
 }
 
 .link-redirect-orange {
-    color: ghostwhite ;
+    color: ghostwhite;
     font-weight: bold;
     font-family: Poppins-Bold;
     text-decoration: none;
@@ -65,6 +67,13 @@ body {
     .link-redirect-orange:hover {
         color: #F9D19F !important;
     }
+
+    .link-redirect-orange a:hover {
+        color: #F9D19F !important;
+        transform: scale(1.1);
+        transition: all 0.5s;
+    }
+
 
 .img-icon-nav {
     width: 20px;
@@ -181,11 +190,11 @@ body {
     .layout-light-full input {
         background-color: ghostwhite;
         color: brown;
-
     }
+
     .layout-light-full label, .layout-light-full p {
         background-color: ghostwhite;
-        color: brown ;
+        color: brown;
     }
 
 .layout-orange-full {
@@ -216,6 +225,7 @@ body {
 .layout-orange-full-btn {
     border-radius: 15px;
 }
+
     .layout-orange-full-btn:hover {
         background-color: brown !important;
         border-radius: 15px;
@@ -252,7 +262,6 @@ body {
     letter-spacing: .1rem;
     line-height: calc(18px + 2 * ((100vw - 320px) / 447));
     transform: translate3d(0,-120%,0);
-    
 }
 
 .ag-field-input:valid ~ .ag-field-label {
@@ -280,10 +289,9 @@ body {
     border-bottom: 1px solid;
     padding-bottom: .5rem;
     width: 100%;
-    border-radius: 50px;   
-   
+    border-radius: 50px;
 }
-   
+
     .ag-field-input:disabled ~ .ag-field-label {
         font-family: Poppins;
         font-size: 1.1rem;
@@ -325,6 +333,7 @@ body {
 .g-width-9 {
     width: 90%;
 }
+
 .g-width-8 {
     width: 80%;
 }
@@ -359,9 +368,9 @@ body {
 
 .validacao-senha {
     color: darkred;
-    font-weight: bold;   
+    font-weight: bold;
     align-self: center;
-    margin-top:5% !important;
+    margin-top: 5% !important;
 }
 
 
@@ -385,7 +394,7 @@ body {
     width: 25px;
     height: 25px;
     border-radius: 50px;
-    text-align: center;    
+    text-align: center;
 }
 
 .tooltip-inner {
@@ -408,6 +417,7 @@ body {
 .tooltip.bs-tooltip-top .arrow:before {
     border-right-color: brown !important;
 }
+
 .hr-light {
     color: #F9D19F !important;
     opacity: 1;
@@ -417,6 +427,3 @@ body {
     color: brown !important;
     opacity: 1;
 }
-
-
-

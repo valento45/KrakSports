@@ -81,5 +81,6 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		{
 			return User?.IsAluno() ?? false;
 		}
+		
 	}
 }

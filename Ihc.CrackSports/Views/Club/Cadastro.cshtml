@@ -18,17 +18,17 @@
                 <div class="text-center mt-4">
                     @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
                     {
-                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 100px;  height: 100px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     else
                     {
                         var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
-                        <img class="mt-4" src="@imagem" style="width: 100px;  height: 100px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     <br>
-                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImage()" />
-                    <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagem()"
-                    style="background-color: ghostwhite; color: brown;">
+                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImageClub()" />
+                    <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagemClub()"
+                            style="background-color: ghostwhite; color: brown;">
                         Carregar
                     </button>
 
@@ -44,14 +44,44 @@
 
                     <div class="d-inline-flex g-width-10">
                         <div class="form-outline ag-field-content g-width-10">
-                            <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Endereco?.Cidade" required />
-                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Cidade*</label>
+                            <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" value="@Model?.DadosClub?.Endereco?.Cidade" />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Cidade</label>
                         </div>
 
                         <div class="form-outline ag-field-content g-width-4 ms-3">
-                            <input asp-for="DadosClub.Endereco.UF" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Endereco?.UF" required />
-                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">UF*</label>
+                            <input asp-for="DadosClub.Endereco.UF" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" value="@Model?.DadosClub?.Endereco?.UF" />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">UF</label>
                         </div>
+                    </div>
+
+                    <div id="pnlDadosUsuarioClub" class="mt-5">
+                        <h5 class="text-semi-bold-orange ">Dados de login</h5>
+                        <div class="form-outline  ag-field-content g-width-10 mt-5">
+                            <input type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
+                        </div>
+                        <div class="form-outline  ag-field-content g-width-10 ">
+                            <input type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+                        </div>
+                        <div class="form-outline  ag-field-content g-width-7">
+                            <input type="password" id="txtSenha" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha*</label>
+                        </div>
+                        <div class="form-outline mb-4 ag-field-content g-width-10 ">
+                            <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7 valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtConfirmaSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmaSenha">Confirmar Senha*</label>
+
+                            <br />
+                            <span id="lblSenhaInvalida" class="validacao-senha mt-5 d-none"><img src="~/imgs/excluir.png" /> As senhas não conferem!</span>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox novidades e itens-->
+                    <div class="form-check">
+                        <label class="form-check-label" for="chkAutorizaEmailNovidades"> Desejo receber novidades, datas de eventos e itens dos Clubs por e-mail. </label>
+                        <input class="form-check-input form-checkbox-input" type="checkbox" id="chkAutorizaEmailNovidades" />
+
                     </div>
                 </div>
 
@@ -64,3 +94,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/club/club.js" asp-append-version="true"></script>
+}
