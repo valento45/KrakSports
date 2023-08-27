@@ -57,5 +57,14 @@ namespace Ihc.CrackSports.Core.Commands
         {
             return await _clubRepository.ObterByNome(nome, limite);
         }
+
+        public async Task<Club?> ObterByIdUsuario(long idUsuario)
+        {
+            var result = await _clubRepository.ObterByIdUsuario(idUsuario);
+            if(result != null)
+                result.IdUsuario = idUsuario;
+
+            return result;
+        }
     }
 }

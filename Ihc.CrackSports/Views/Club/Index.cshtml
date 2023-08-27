@@ -1,20 +1,43 @@
-﻿
+﻿@{
+    Layout = "_Layout";
+}
 
 <div class="mt-5">
-    <h3 class="text-semi-bold-orange">
-        Clubs
-    </h3>
+    <h3 class="text-semi-bold-orange">Associação de Club</h3>
     <hr />
 
-    <div id="pnlFiltros">
+    <div class=" col-9 d-inline-flex mt-5 w-100">
+        <div class="mt-5">            
+            <h4 class="text-semi-bold-orange mb-4">Torne seu Club um dos nossos associados e dê um UP !</h4>
+            <p class="span-content mb-3">Agende eventos, treinos e campeonatos de forma <b>intuitiva</b> e <b>fácil</b>. </p>
+            <p class="span-content mb-3">Além disso, <b>receba pedidos de compra</b> dos atletas, <b>gerencie agendas</b> e compartilhe experiências com outros clubs !</p>
+            <p class="span-content mt-3">Conte com um <b>Sistema de avaliação</b> para coletar feedback dos produtos, e um intuitivo <b>painel de vendas</b> para gerenciar as vendas dos artefatos do Club.  </p>
+            <p class="span-content mt-3">Está esperando <b>o quê ?</b> vem ser <b>feliz</b> com a gente !</p>
+        </div>
+        <form class="form-group form-control ms-5 layout-orange-full radius-form">
 
-    </div>
+            <div class="text-center ">
+                <h4 class="mt-5 text-white">Eleve para o próximo nível a jornada de seu Club</h4>
+                <small class="text-white">junto com a Krak Sports !</small>
+            </div>
 
-    <div id="pnlClubsPartial">
+            <div class="form-outline mb-4 mt-5 ag-field-content">
 
-    </div>
+                <input type="text" id="txtNomeClub" class="form-control ag-field-input ag-input-color-orange-full " autocomplete="off" required />
+                <label class="form-label text-semi-bold-light ag-field-label" for="txtNomeClub">Nome do Club</label>
+            </div>
 
-    <div id="msgNaoEncontrouRegistros" class="d-none">
 
+            <div class="form-outline mb-4 ag-field-content">
+                <input type="text" id="txtEmailClub" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                <label class="form-label text-semi-bold-light ag-field-label" for="txtEmailClub">E-mail</label>
+            </div>
+
+            <button id="btnContinuarCadastroClub" type="button" class="btn  btn-block btn-confirm-radius mb-4 ms-5 mx-4" onclick="continuarCadastroClub()">Continuar</button>
+        </form>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/club/club.js" asp-append-version="true"></script>
+}

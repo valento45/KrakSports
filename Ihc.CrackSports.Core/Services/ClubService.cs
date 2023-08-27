@@ -13,10 +13,13 @@ namespace Ihc.CrackSports.Core.Services
     public class ClubService : IClubService
     {
         private readonly IClubCommand _clubCommand;
+        private readonly IUsuarioCommand _usuarioCommand;
 
-        public ClubService(IClubCommand clubCommand)
+
+        public ClubService(IClubCommand clubCommand, IUsuarioCommand usuarioCommand)
         {
             _clubCommand = clubCommand;
+            _usuarioCommand = usuarioCommand;
         }
 
         public async Task<CadastroResponse> Salvar(Club club)
@@ -38,9 +41,9 @@ namespace Ihc.CrackSports.Core.Services
             return await _clubCommand.ObterByNome(nome, limite);
         }
 
-		public Task<Club?> ObterByIdUsuario(long idUser)
+		public async Task<Club?> ObterByIdUsuario(long idUser)
 		{
-			throw new NotImplementedException();
-		}
+			return await _clubCommand.ObterByIdUsuario(idUser);
+        }
 	}
 }

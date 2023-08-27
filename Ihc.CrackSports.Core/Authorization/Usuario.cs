@@ -12,7 +12,7 @@ namespace Ihc.CrackSports.Core.Authorization
     public class Usuario : IdentityUser<long>
     {
         public IEnumerable<Claim> Claims { get; set; }
-
+        public TipoUsuario TipoUsuario { get; set; }
         public Usuario() : base()
         {
             Claims = new List<Claim>();

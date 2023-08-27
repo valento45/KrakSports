@@ -29,13 +29,15 @@ namespace Ihc.CrackSports.Core.Authorization
         public async Task<IdentityResult> CreateAsync(Usuario user, CancellationToken cancellationToken)
         {
 
-            var inserted = await _connection.ExecuteAsync("insert into sys.usuario_tb (login, normalizedLogin, senha,  email) values (@login, @normalizedLogin, @senha,  @email)",
+            var inserted = await _connection.ExecuteAsync("insert into sys.usuario_tb (login, normalizedLogin, senha,  email, tipo_usuario)" +
+                " values (@login, @normalizedLogin, @senha,  @email, @tipo_usuario)",
                 new
                 {
                     login = user.UserName,
                     normalizedLogin = user.NormalizedUserName,
                     senha = user.PasswordHash,
-                    email = user.Email
+                    email = user.Email,
+                    tipo_usuario = (int)user.TipoUsuario
                 });
 
             if (inserted > 0)
@@ -47,16 +49,17 @@ namespace Ihc.CrackSports.Core.Authorization
         public async Task<IdentityResult> UpdateAsync(Usuario user, CancellationToken cancellationToken)
         {
 
-            var inserted = await _connection.ExecuteAsync("update sys.usuario_tb set login = @login, normalizedLogin = @normalizedLogin, senha = @senha, email = @email " +
-                "where id_usuario = @id_usuario",
+            var inserted = await _connection.ExecuteAsync("update sys.usuario_tb set login = @login, normalizedLogin = @normalizedLogin, senha = @senha, email = @email, " +
+                "tipo_usuario = @tipo_usuario  where id_usuario = @id_usuario ",
                 new
                 {
                     id_usuario = user.Id,
                     login = user.UserName,
                     normalizedLogin = user.NormalizedUserName,
                     senha = user.PasswordHash,
-                    email = user.Email
-                });
+                    email = user.Email,
+                    tipo_usuario = (int)user.TipoUsuario
+                }) ;
 
             if (inserted > 0)
                 return IdentityResult.Success;

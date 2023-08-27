@@ -15,7 +15,8 @@ CREATE DATABASE bd_sports
 		login varchar not null,
 		normalizedLogin varchar,
 		senha varchar not null,		
-		email varchar(300)		
+		email varchar(300)		,
+		tipo_usuario integer default 0
 	);	
 	
 
@@ -86,34 +87,7 @@ CREATE DATABASE bd_sports
 		references sys.aluno_tb(id_aluno)
 	);
 	
-	
-	
-	
-	
-	
-	select * from sys.responsavel_aluno_tb
-	select* from sys.aluno_tb where id_aluno = 12
-	select  * from sys.usuario_tb
-	
-	select id_responsavel as Id, id_aluno as IdAluno, nome_responsavel as Nome, documento_responsavel as Documento, cpf_responsavel as CpfCnpj, grau_parentesco as GrauParentesco 
-	from sys.responsavel_aluno_tb where id_aluno = 12
-
-select * from sys.usuario_claim_tb
-select * from sys.club_tb
-
-select * from sys.club_tb where UPPER(nome_fantasia) like UPPER('%%')
-
-
-
-drop table sys.usuario_tb
-drop table sys.usuario_claim_tb
-drop table sys.club_tb
-
-drop table sys.aluno_tb
-drop table sys.responsavel_aluno_tb
-
-
---Tornar usuario administrador
+	--Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
 --Criar Role usuario Club
@@ -121,3 +95,31 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
 insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
 insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
 insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
+	
+	
+	
+	
+--Querys testes
+delete from sys.usuario_tb
+delete from sys.usuario_claim_tb
+delete from sys.aluno_tb
+delete from sys.responsavel_aluno_tb
+
+
+select * from sys.responsavel_aluno_tb
+	select* from sys.aluno_tb where id_aluno = 12
+	select  * from sys.usuario_tb
+	
+	select id_responsavel as Id, id_aluno as IdAluno, nome_responsavel as Nome, documento_responsavel as Documento, cpf_responsavel as CpfCnpj, grau_parentesco as GrauParentesco 
+	from sys.responsavel_aluno_tb where id_aluno = 12
+	select * from sys.usuario_claim_tb
+	select * from sys.club_tb
+	select * from sys.club_tb where UPPER(nome_fantasia) like UPPER('%%')
+	
+	drop table sys.usuario_tb
+	drop table sys.usuario_claim_tb
+	drop table sys.club_tb
+	drop table sys.aluno_tb
+	drop table sys.responsavel_aluno_tb
+
+

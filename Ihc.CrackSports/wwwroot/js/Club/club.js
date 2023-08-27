@@ -14,3 +14,15 @@ function onChangeImageClub(e) {
 function saveImageClub() {
     document.getElementById('btnSalvarDadodsClub').click();
 }
+
+function continuarCadastroClub() {
+    nome = $("#txtNomeClub").val();    
+    email = $("#txtEmailClub").val();
+    cpfCnpj = 0;
+    tipoUsuario = 1;
+
+
+    var url = `../Usuario/Cadastro?nome=${nome}&cpfCnpj=${cpfCnpj}&email=${email}&tipoUsuario=${tipoUsuario}`;
+
+    window.location.href = url;
+}

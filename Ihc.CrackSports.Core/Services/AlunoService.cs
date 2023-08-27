@@ -15,10 +15,12 @@ namespace Ihc.CrackSports.Core.Services
     public class AlunoService : IAlunoService
     {
         private readonly IAlunoCommand _alunoCommand;
+        private readonly IClubCommand _clubCommand;
 
-        public AlunoService(IAlunoCommand alunoCommand)
+        public AlunoService(IAlunoCommand alunoCommand, IClubCommand clubCommand)
         {
             _alunoCommand = alunoCommand;
+            _clubCommand = clubCommand;
         }
 
 
@@ -102,5 +104,7 @@ namespace Ihc.CrackSports.Core.Services
         {
             return await _alunoCommand.GetByIdUsuario(idUser);
         }
+
+     
     }
 }

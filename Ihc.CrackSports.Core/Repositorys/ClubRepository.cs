@@ -23,13 +23,14 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Incluir(Club club)
         {
-            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64) values (@nome_fantasia, @cidade, @uf, @imagem_base64) returning id_club;;";
+            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario) values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario) returning id_club;;";
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
             cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
             cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
             cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
             cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
@@ -83,6 +84,15 @@ namespace Ihc.CrackSports.Core.Repositorys
             var result = await base.QueryAsync<ClubDto>(query);
 
             return result?.Select(x => x.ToClub()).ToList();
+        }
+
+        public async Task<Club?> ObterByIdUsuario(long idUsuario)
+        {
+            string query = "select * from sys.club_tb where id_usuario =" + idUsuario;
+
+            var result = await base.QueryAsync<ClubDto>(query);
+
+            return result?.Select(x => x.ToClub())?.FirstOrDefault() ?? null;
         }
     }
 }

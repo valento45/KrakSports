@@ -14,6 +14,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> Atualizar(Club club);
         Task<bool> Excluir(long idClub);
         Task<Club?> ObterById(long idClub);
+        Task<Club?> ObterByIdUsuario(long idUsuario);
         Task<List<Club>?> ObterByNome(string nome, int limite = 0);
     }
 }

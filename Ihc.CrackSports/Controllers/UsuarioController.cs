@@ -1,8 +1,11 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Enums;
 using Ihc.CrackSports.Core.Requests;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,16 +16,20 @@ namespace Ihc.CrackSports.WebApp.Controllers
     public class UsuarioController : ControllerBase
     {
         protected readonly IUsuarioService _usuarioService;
-        private readonly UserManager<Usuario> _userManager;
+
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
+        private readonly IAlunoApplication _alunoApplication;
+        private readonly IClubApplication _clubApplication;
 
-        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService) : base(alunoService)
+        public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService,
+            IAlunoApplication alunoApplication, IClubApplication clubApplication) : base(alunoService, user)
         {
             _usuarioService = usuarioService;
-            _userManager = user;
             _alunoService = alunoService;
             _clubService = clubService;
+            _alunoApplication = alunoApplication;
+            _clubApplication = clubApplication;
         }
 
 
@@ -30,19 +37,16 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            if (User != null)
-            {
-                await base.RefreshImageUser(User);
-            }
+            await base.RefreshImageUser(User);
 
             return View();
         }
 
 
         [HttpGet]
-        public IActionResult Cadastro(string nome, string cpfCnpj, string email)
+        public IActionResult Cadastro(string nome, string cpfCnpj, string email, TipoUsuario tipoUsuario)
         {
-            var obj = new UsuarioViewModel() { Nome = nome, Cpf = cpfCnpj, Email = email };
+            var obj = new UsuarioViewModel() { Nome = nome, Cpf = cpfCnpj, Email = email, Tipo = tipoUsuario };
             return View(obj);
         }
 
@@ -59,7 +63,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     UserName = model.Login,
                     PasswordHash = model.Senha,
                     Email = model.Email,
-                    NormalizedUserName = model.Login.ToUpper()
+                    NormalizedUserName = model.Login.ToUpper(),
+                    TipoUsuario = TipoUsuario.Aluno
                 };
 
                 var result = await _userManager.CreateAsync(user, Security.Encrypt(user.PasswordHash));
@@ -68,7 +73,6 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 {
                     user = await _userManager.FindByNameAsync(model.Login);
                     await _userManager.AddClaimsAsync(user, new List<Claim> { new Claim(ClaimTypes.Role, Roles.ALUNO) });
-
                     await _alunoService.InsertOrUpdate(model, user.Id);
 
                     return View("SuccessCadastro", user);
@@ -83,12 +87,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> MinhaConta(long idUsuario)
+        public async Task<IActionResult> MinhaConta(long idUsuario, TipoUsuario tipoUsuario)
         {
-            if (User != null)
-            {
-                await base.RefreshImageUser(User);
-            }
+            await base.RefreshImageUser(User);
 
             var claim = HttpContext.User.Claims.FirstOrDefault(param => param.Type == ClaimTypes.NameIdentifier);
 
@@ -101,12 +102,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 {
                     if (idUsuario == id || CanAccess(HttpContext.User, Roles.ADMINISTRADOR))
                     {
+                        MinhaContaViewModel viewModel = null;
                         var user = await _usuarioService.GetById(id);
-                        var aluno = await _alunoService.GetByIdUsuario(id);
-                        
 
-                        var viewModel = new MinhaContaViewModel(aluno, user);
-                        viewModel.InformarClub(await _clubService.ObterById(aluno.IdClub) ?? new Core.Objetos.Clube.Club());
+                        if (tipoUsuario == TipoUsuario.Aluno || User.IsAdm())                        
+                            viewModel = await _alunoApplication.GetAlunoViewModel(idUsuario);                                            
+
+                       else if (tipoUsuario == TipoUsuario.Club || User.IsAdm())
+                            viewModel = await _clubApplication.GetClubViewModel(idUsuario);
 
                         return View(viewModel);
                     }

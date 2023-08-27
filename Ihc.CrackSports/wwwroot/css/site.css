@@ -75,9 +75,10 @@ html {
     }
 
 
-.img-icon-nav {
-    width: 20px;
-    height: 20px;
+.img-icon-nav {  
+    width: 35px;
+    height: 35px;
+    border-radius: 50px;
 }
 
 .text-semi-bold-light {
@@ -378,6 +379,7 @@ html {
     border-radius: 50px;
     border: 1px solid #F9D19F;
     padding: 20px;
+    box-shadow: 1px 1px 50px 1px #00000066;
 }
 
 .card-content-dados-aluno {
@@ -426,4 +428,45 @@ html {
 .hr-brown {
     color: brown !important;
     opacity: 1;
+}
+/*
+    Tabela Head brown e corpo ghostwhite
+
+*/
+
+.table-brown table {
+    border: 10px solid ghostwhite;
+    color: black;
+    font-weight: bold;
+    box-shadow: 1px 1px 50px 1px #00000066;
+}
+
+.table-brown thead {
+    color: #F9D19F;
+    text-align-last: center;
+}
+
+.table-brown .t-start {
+    text-align-last: start !important;
+}
+
+.table-brown tbody {
+    background-color: ghostwhite;
+    font-weight: bold;
+    text-align-last: center;
+}
+
+.table-brown img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
+.table-brown .btn-table-acao{
+    display: inline-flex;
+    margin-left: 5px;
+}
+
+.table-brown tbody tr {
+    vertical-align: baseline;
 }

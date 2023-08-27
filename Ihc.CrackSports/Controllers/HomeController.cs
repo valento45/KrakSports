@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Models;
@@ -16,15 +17,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
     public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly UserManager<Usuario> _userManager;
-        private readonly IAlunoService alunoService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService) : base(alunoService)
+        private readonly IAlunoService _alunoService;
+        private readonly IClubService _clubService;
+
+        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService) : base(clubService, alunoService, userManager)
         {
             _logger = logger;
-            _userManager = userManager;
-            this.alunoService = alunoService;
-
+            _alunoService = alunoService;
+            _clubService = clubService;
         }
 
         [HttpGet]
@@ -39,7 +40,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpGet]
-        public  async Task<IActionResult> Login()
+        public async Task<IActionResult> Login()
         {
 
             if (User != null)
@@ -55,41 +56,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
 
             if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByNameAsync(model.UserName);
-
-                if (user != null)
-                {
-
-                    if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
-                    {
-
-                        var identity = new ClaimsIdentity("cookies");
-
-                        identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-                        identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
-                        identity.AddClaims(await _userManager.GetClaimsAsync(user));
-
-
-
-                        if (identity.HasClaim(x => x.Value == Roles.ALUNO))
-                        {
-                            var aluno = await this.alunoService.GetByIdUsuario(user.Id);
-
-                            if (!string.IsNullOrEmpty(aluno.FotoAlunoBase64))
-                            {
-                                identity.AddClaim(new Claim("Image", ""));
-                                Roles.SetImage(aluno.FotoAlunoBase64);
-                            }
-                        }
-
-                        var userClaim = new ClaimsPrincipal(identity);
-
-                        await HttpContext.SignInAsync("cookies", userClaim);                        
-
-                        return RedirectToAction("About");
-                    }
-                }
+            {             
+                if (await base.Autenticar(model))
+                    return RedirectToAction("About");
+                else
+                    return View();
 
             }
             return View();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Ihc.CrackSports.Core.Services.Interfaces
 {
     public interface IClubService
-    {
+    {        
         Task<CadastroResponse> Salvar(Club club);
         Task<CadastroResponse> Excluir(long idClub);
 

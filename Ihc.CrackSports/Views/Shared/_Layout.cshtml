@@ -17,7 +17,7 @@
 	<header>
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-lightbox-shadow mb-3">
 			<div class="container-fluid">
-				<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Krak Sports</a>
+				<a class="navbar-brand link-redirect-orange" asp-area="" asp-controller="Home" asp-action="Index">Krak Sports</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 						aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
 							<a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Início</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link " asp-area="" asp-controller="Club" asp-action="Cadastro">Clubes</a>
+							<a class="nav-link " asp-area="" asp-controller="Club" asp-action="Index">Clubes</a>
 						</li>
 
 						<li class="nav-item">
@@ -42,11 +42,11 @@
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<div class="nav-right">
-								@if (User?.CanAccess(Roles.ALUNO) ?? false)
+								@if (User?.IsAuthenticated() ?? false)
 								{
 									<div class="d-inline-flex" style="height: 30px; align-items: center;">
 
-										<a class="nav-link " href="#" onclick="redirectMinhaConta()" >
+										<a class="nav-link " href="#" onclick="redirectMinhaConta(@User.GetTipoUsuario())" >
 											@if (!User.HasImage())
 											{
 												<img class="img-icon-nav mx-2" src="~/imgs/login-white.png" />
@@ -54,7 +54,7 @@
 											else
 											{
 												var imagem = String.Format("data:image/png;base64,{0}", User.GetImage());
-												<img class="img-icon-nav mx-2" src="@imagem" style="width: 30px; height: 30px; border-radius: 50px;" />
+												<img class="img-icon-nav mx-2" src="@imagem" />
 											}											
 											Minha conta
 										</a>
@@ -103,7 +103,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
 	<script>
-		let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
+		let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;		
 	</script>
 
 	@await RenderSectionAsync("Scripts", required: false)

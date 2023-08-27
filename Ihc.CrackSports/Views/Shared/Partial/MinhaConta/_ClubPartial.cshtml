@@ -1,0 +1,69 @@
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.WebApp.Models.Usuarios;
+@model MinhaContaViewModel
+
+
+
+<h4 class="mt-5" style="font-weight: bold;">Perfil do Club</h4>
+<hr class="hr-light" />
+
+<div class="row g-width-10 layout-orange-full text-white-light mt-5" style="border-radius: 10%;
+      justify-content: start; display: contents;">
+
+    <div id="pnlDadosAluno" style="padding: 10px;    display: table;">
+
+        <div class="row">
+
+
+            <div class="text-center">
+                @if (string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
+                {
+                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 1px 1px 50px 1px #00000066;;" alt="imagem aluno" />
+                }
+                else
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
+                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 1px 1px 50px 1px #00000066;;" alt="imagem aluno" />
+                }
+                <h5 class="text-center mt-2" style="font-family: Poppins-Light;">
+                    @Model.DadosClub.Nome <a href="#" onclick="redirectDadosAluno(@Model.DadosClub.Id)" style="padding: 5px; position: absolute; display: inline-grid; margin-left: 10px; margin-top: -2px;" class="layout-orange-full-btn"> <img src="~/imgs/btEditarWhite.png" style="width: 15px; height: 15px;" /></a>
+                </h5>
+            </div>
+
+            <!--Dados gerais-->
+            <div class="row">
+                <div class="d-inline-flex mt-5 card-dados-aluno">
+                    <div class=" ms-5 card-content-dados-aluno">
+
+                        <!--Dados club-->
+                        <div class="row g-width-10">
+                            <h5 class="text-center mt-2" style="color: #F9D19F;">Dados do Club</h5>
+                            <a class="mt-3"><b>ID Club:</b> &nbsp; @Model.DadosClub.Id</a>
+                            <a><b>Nome Club:</b> &nbsp; @Model.DadosClub.Nome</a>
+                            <a><b>Data de fundação:</b> &nbsp; 01/01/2015</a>
+
+                        </div>
+                        <!--FIM Dados club-->
+
+                        <!--Dados atletas-->
+                        @await Html.PartialAsync("Partial/Club/_AtletasClubPartial")
+                        <!--FIM Dados atletas-->
+
+                    </div>
+                    <a href="#" class="layout-orange-full-btn" onclick="redirectDadosAluno()" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+                </div>
+
+            </div>
+            <!--FIM Dados gerais-->
+
+        </div>
+    </div>
+
+    @if (User.CanAccess(Roles.CLUB))
+    {
+        <div style="text-align-last: center;">
+            <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-5 mt-5 g-width-3">Imprimir</button>
+        </div>
+    }
+</div>

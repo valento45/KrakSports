@@ -37,7 +37,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
                 CEP = cep,
                 UF = uf
             };
-            imagem_base64 = imagem_base64;
+            club.ImagemBase64 = imagem_base64;
 
             return club;
         }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ihc.CrackSports.Core.Objetos.Enums;
+using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -26,11 +28,25 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
 
 		private static string _image_base64 { get; set; }
 
-		private static bool IsAdm(this ClaimsPrincipal User)
+		public static bool IsAdm(this ClaimsPrincipal User)
 		{
 			return User.Claims.Any(param => param.Value == Roles.ADMINISTRADOR);
 		}
 
+
+		public static int GetTipoUsuario(this ClaimsPrincipal User)
+		{
+			if (User.IsAdm())
+				return (int)TipoUsuario.Administrador;
+
+			else if (User.CanAccess(Roles.ALUNO))
+				return (int)TipoUsuario.Aluno;
+
+			else if (User.CanAccess(Roles.CLUB))
+				return (int)TipoUsuario.Club;
+
+			return -1;
+		}
 
 		public static bool CanAccess(this ClaimsPrincipal User, string role)
 		{
@@ -52,7 +68,7 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
 		public static bool HasImage(this ClaimsPrincipal User)
 		{
 			var hasImg = User?.Claims?.Any(param => param.Type.Equals("Image")) ?? false;
-			
+
 			return hasImg;
 		}
 

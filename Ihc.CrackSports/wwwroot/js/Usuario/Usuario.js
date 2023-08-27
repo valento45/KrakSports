@@ -17,9 +17,10 @@ function continuarCadastro() {
     nome = $("#txtNomeCompleto").val();
     cpfCnpj = $("#txtCpfCnpj").val();
     email = $("#txtEmail").val();
+    tipoUsuario = 0;
 
 
-    var url = `../Usuario/Cadastro?nome=${nome}&cpfCnpj=${cpfCnpj}&email=${email}`;
+    var url = `../Usuario/Cadastro?nome=${nome}&cpfCnpj=${cpfCnpj}&email=${email}&tipoUsuario=${tipoUsuario}`;
 
     window.location.href = url;
 }
@@ -94,8 +95,8 @@ function apenasNumeros(string) {
     return parseInt(numsStr);
 }
 
-function redirectMinhaConta() {
+function redirectMinhaConta(tipoUsuario) {
     if (_userLogado) {
-        window.location.href = `../Usuario/MinhaConta?idUsuario=${_userLogado}`;
+        window.location.href = `../Usuario/MinhaConta?idUsuario=${_userLogado}&tipoUsuario=${tipoUsuario}`;
     }
 }

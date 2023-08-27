@@ -1,0 +1,90 @@
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.WebApp.Models.Usuarios;
+@model MinhaContaViewModel
+
+
+
+<h4 class="mt-5" style="font-weight: bold;">Perfil do aluno</h4>
+<hr class="hr-light" />
+
+<div class="row g-width-10 layout-orange-full text-white-light mt-5" style="border-radius: 10%;
+      justify-content: start; display: contents;">
+
+    <div id="pnlDadosAluno" style="padding: 10px;    display: table;">
+
+        <div class="row">
+            <div class="text-center">
+                @if (string.IsNullOrEmpty(Model.DadosAluno.FotoAlunoBase64))
+                {
+                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
+                }
+                else
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
+                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 1px 1px 50px 1px #00000066;" alt="imagem aluno" />
+                }
+                <h5 class="text-center mt-2" style="font-family: Poppins-Light;">
+                    @Model.DadosAluno.Nome <a href="#" onclick="redirectDadosAluno(@Model.DadosAluno.Id)" style="padding: 5px; position: absolute; display: inline-grid; margin-left: 10px; margin-top: -2px;" class="layout-orange-full-btn"> <img src="~/imgs/btEditarWhite.png" style="width: 15px; height: 15px;" /></a>
+                </h5>
+            </div>
+
+            <!--Dados do aluno-->
+            <div class="d-inline-flex mt-5 card-dados-aluno">
+                <div class="d-inline-flex ms-5 card-content-dados-aluno">
+                    <div class="row g-width-10">
+                        <h5 class="text-center mt-2" style="color: #F9D19F;">Dados do aluno</h5>
+                        <a class="mt-3"><b>ID Aluno:</b> &nbsp; @Model.DadosAluno.Id</a>
+                        <a><b>Nome completo:</b> &nbsp; @Model.DadosAluno.Nome</a>
+                        <a><b>Documento:</b> &nbsp; @Model.DadosAluno.Documento</a>
+                        <a><b>CPF:</b> &nbsp; @Model.DadosAluno.CpfCnpj.FormataCPF()</a>
+                        <a><b>Data de nascimento:</b> &nbsp; @Model.DadosAluno.DataNascimento.ToString("dd/MM/yyyy")</a>
+                        <a><b>Club:</b> &nbsp; @(Model.DadosAluno.IdClub > 0 ? Model.DadosClub?.Nome?.ToUpper() : "N/a")</a>
+                        <a><b>Camiseta:</b> &nbsp; @(Model.DadosAluno.CamisetaNumero > 0 ? Model.DadosAluno.CamisetaNumero.ToString() : "N/a")</a>
+                        <a><b>Posição jogador:</b> &nbsp; @Model.DadosAluno.PosicaoJogador</a>
+                        <a class="mb-3"><b>Idade:</b> &nbsp; @(DateTime.Now.Year - Model.DadosAluno.DataNascimento.Year) Anos</a>
+                    </div>
+                </div>
+                <a href="#" class="layout-orange-full-btn" onclick="redirectDadosAluno(@Model.DadosAluno.Id)" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+            </div>
+            <!--FIMDados do aluno-->
+            <!--Dados gerais-->
+            <div class="d-inline-flex  mt-5 card-dados-aluno">
+                <div class="d-inline-flex ms-5 card-content-dados-aluno">
+                    <div class="row g-width-10">
+                        <h5 class="text-center mt-2" style="color: #F9D19F;">Dados gerais</h5>
+
+                        <!--Dados responsavel-->
+                        <h5 class=" mt-4" style="color: #F9D19F;">Responsável</h5>
+                        <a class="mt-3"><b>Nome responsável:</b> &nbsp; @Model.DadosAluno.Responsavel.Nome</a>
+                        <a><b>Documento:</b> &nbsp; @Model.DadosAluno.Responsavel.Documento</a>
+                        <a><b>CPF:</b> &nbsp; @Model.DadosAluno.Responsavel.CpfCnpj.FormataCPF()</a>
+                        <a><b>Grau de parentesco:</b> &nbsp; @Model.DadosAluno.Responsavel.GrauParentesco</a>
+                        <a><b>Telefone:</b> &nbsp; @Model.DadosAluno.Telefone</a>
+                        <a><b>Celular:</b> &nbsp; @Model.DadosAluno.Celular</a>
+                        <!--FIM Dados responsavel-->
+                        <!--Dados Endereço-->
+                        <h5 class=" mt-5" style="color: #F9D19F;">Endereço</h5>
+                        <a class="mt-3"><b>Logradouro (Endereço):</b> &nbsp; @Model.DadosAluno.Endereco.Logradouro</a>
+                        <a><b>Numero:</b> &nbsp; @Model.DadosAluno.Endereco.Numero</a>
+                        <a><b>Cidade:</b> &nbsp; @Model.DadosAluno.Endereco.Cidade</a>
+                        <a><b>UF:</b> &nbsp; @Model.DadosAluno.Endereco.UF</a>
+                        <a><b>CEP:</b> &nbsp; @Model.DadosAluno.Endereco.CEP</a>
+                        <a class="mb-3"><b>Complemento:</b> &nbsp; @Model.DadosAluno.Endereco.Complemento</a>
+                        <!--FIM Dados Endereço-->
+                    </div>
+                </div>
+                <a href="#" class="layout-orange-full-btn" onclick="redirectDadosGerais(@Model.DadosAluno.Id)"
+                   style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+            </div>
+            <!--FIM Dados gerais-->
+        </div>
+    </div>
+
+    @if (User.CanAccess(Roles.ALUNO))
+    {
+        <div style="text-align-last: center;">
+            <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-5 mt-5 g-width-3">Imprimir</button>
+        </div>
+    }
+</div>
