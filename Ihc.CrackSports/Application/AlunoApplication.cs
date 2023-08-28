@@ -25,7 +25,7 @@ namespace Ihc.CrackSports.WebApp.Application
 
             result.DadosAluno = await _alunoService.GetByIdUsuario(idUsuario);
             result.InformarClub(await _clubService.ObterById(result.DadosAluno.IdClub));
-
+            result.TipoUsuario = Core.Objetos.Enums.TipoUsuario.Aluno;
             return result;
         }
     }

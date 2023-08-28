@@ -164,14 +164,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
             if (user != null)
             {
                 if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
-                {
+                {					
                     var identity = new ClaimsIdentity("cookies");
 
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
                     identity.AddClaim(new Claim(ClaimTypes.Name, model.UserName));
                     identity.AddClaim(new Claim(ClaimTypes.Hash, user.PasswordHash));
                     identity.AddClaims(await _userManager.GetClaimsAsync(user));
-
 
 
                     if (identity.HasClaim(x => x.Value == Roles.ALUNO))                    

@@ -1,4 +1,7 @@
-﻿<div class="row g-width-10 table-brown mt-5">
+﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@model PaginacaoAlunoViewModel
+
+<div class="row g-width-10 table-brown mt-5">
     <h5 class="text-center mt-2" style="color: #F9D19F;">Atletas</h5>
     <table class="table mt-5">
         <thead>
@@ -7,47 +10,55 @@
                 <th class="t-start">Nome</th>
                 <th>Idade</th>
                 <th>Posição jogador</th>
+                <th>Nº camisa</th>
                 <th>Ação</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="width: 70px;">
-                    <img src="~/imgs/aluno1.jpeg" style="width: 35px; height: 35px;"/>
-                </td>
-                <td class="t-start">Leonidsa</td>
-                <td>22 Anos</td>
-                <td>Atacante</td>
-                <td class="d-inline-flex">
-                    <a href="#" class="layout-orange-full-btn"  style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
-                    <a href="#" class="layout-orange-full-btn"  style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 70px;">
-                    <img src="~/imgs/login-white.png" style="width: 35px; height: 35px;"/>
-                </td>
-                <td class="t-start">Itachi Uchiha</td>
-                <td>22 Anos</td>
-                <td>Atacante</td>
-                <td class="d-inline-flex">
-                    <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
-                    <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
-                    
-                </td>                
-            </tr>
-            <tr>
-                <td style="width: 70px;">
-                    <img src="~/imgs/Exit_house.png" style="width: 35px; height: 35px;"/>
-                </td>
-                <td class="t-start">Uzumaki Naruto</td>
-                <td>22 Anos</td>
-                <td>Atacante</td>
-                <td class="d-inline-flex">
-                    <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
-                    <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
-                </td>
-            </tr>
+            @if (!Model.ObterListaPaginada().Any())
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="t-start">Este club não possui atletas.</td>
+                    <td></td>
+                </tr>
+            }
+            @foreach (var obj in Model.ObterListaPaginada())
+            {
+                <tr>
+                    @if (string.IsNullOrEmpty(obj.FotoAlunoBase64))
+                    {
+                        <td style="width: 70px;">
+                            <img src="~/imgs/sem_imagem.png" style="width: 35px; height: 35px;" />
+                        </td>
+                    }
+                    else
+                    {
+                        var imagem = String.Format("data:image/png;base64,{0}", obj.FotoAlunoBase64);
+                        <td style="width: 70px;">
+                            <img src="@imagem" style="width: 35px; height: 35px;box-shadow: 1px 1px 50px 1px #00000066;" alt="imagem aluno" />
+                        </td>
+                    }
+
+                    <td class="t-start">@obj.Nome.ToUpper()</td>
+                    <td>@obj.Idade Anos</td>
+                    <td>@obj.PosicaoJogador</td>
+                    <td>@Random.Shared.NextInt64(0, 10)</td>
+                    <td class="d-inline-flex">
+                        <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Alterar Nº da camiseta do Atleta. "
+                             style="height: 40px; width: 40px; margin-right: 10px;">
+                            <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
+                        </div>
+                        <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Remover todas informações do atleta do Club."
+                             style="height: 40px; width: 40px; margin-right: 10px;">
+                            <a href="#" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

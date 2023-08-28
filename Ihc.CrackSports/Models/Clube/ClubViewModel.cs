@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.WebApp.Models.Alunos;
 
 namespace Ihc.CrackSports.WebApp.Models.Clube
 {
@@ -9,14 +10,14 @@ namespace Ihc.CrackSports.WebApp.Models.Clube
         public IFormFile File { get; set; }
         public Usuario DadosUsuario { get; set; }
         public bool isInsert() => DadosClub?.Id <= 0;
-
+        public PaginacaoAlunoViewModel Atletas { get; set; }
 
         public ClubViewModel()
         {
-
+            Atletas = new PaginacaoAlunoViewModel();
         }
 
-        public ClubViewModel(string nomeClub, string emailClub)
+        public ClubViewModel(string nomeClub, string emailClub) : base()
         {
             if (DadosClub == null)            
                 DadosClub = new Club();

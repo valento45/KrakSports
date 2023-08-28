@@ -10,6 +10,7 @@
 
         <input asp-for="DadosClub.Id" class="d-none" />
         <input asp-for="DadosUsuario.Id" class="d-none"  />        
+        <input asp-for="DadosClub.ImagemBase64" class="d-none"  />        
 
         <div class="d-block d-md-inline-flex g-width-10">
             <!--Panel Imagem Club-->
@@ -90,3 +91,6 @@
     </form>
 </div>
 
+@section Scripts{    
+    <script src="~/js/Club/club.js" type="text/javascript" asp-append-version="true"></script>
+}

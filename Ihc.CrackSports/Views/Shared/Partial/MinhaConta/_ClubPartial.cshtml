@@ -1,7 +1,8 @@
 ﻿@using Ihc.CrackSports.Core.Authorization.Claims;
 @using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.WebApp.Models.Clube;
 @using Ihc.CrackSports.WebApp.Models.Usuarios;
-@model MinhaContaViewModel
+@model ClubViewModel
 
 
 
@@ -24,10 +25,10 @@
                 else
                 {
                     var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
-                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 1px 1px 50px 1px #00000066;;" alt="imagem aluno" />
+                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 1px 1px 50px 1px #00000066;" alt="imagem aluno" />
                 }
                 <h5 class="text-center mt-2" style="font-family: Poppins-Light;">
-                    @Model.DadosClub.Nome <a href="#" onclick="redirectDadosAluno(@Model.DadosClub.Id)" style="padding: 5px; position: absolute; display: inline-grid; margin-left: 10px; margin-top: -2px;" class="layout-orange-full-btn"> <img src="~/imgs/btEditarWhite.png" style="width: 15px; height: 15px;" /></a>
+                    @Model.DadosClub.Nome <a href="#" onclick="redirectDadosClub(@Model.DadosClub.IdUsuario)" style="padding: 5px; position: absolute; display: inline-grid; margin-left: 10px; margin-top: -2px;" class="layout-orange-full-btn"> <img src="~/imgs/btEditarWhite.png" style="width: 15px; height: 15px;" /></a>
                 </h5>
             </div>
 
@@ -45,13 +46,15 @@
 
                         </div>
                         <!--FIM Dados club-->
-
                         <!--Dados atletas-->
-                        @await Html.PartialAsync("Partial/Club/_AtletasClubPartial")
+                        @await Html.PartialAsync("Partial/Club/_AtletasClubPartial", Model.Atletas)
                         <!--FIM Dados atletas-->
 
                     </div>
-                    <a href="#" class="layout-orange-full-btn" onclick="redirectDadosAluno()" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Alterar dados gerais do Club."
+                         style="height: 40px; width: 40px; margin-right: 10px;">
+                        <a href="#" class="layout-orange-full-btn tooltip-arrow" onclick="redirectDadosClub(@Model.DadosClub.IdUsuario)" style="height: 50px; width: 50px; padding: 10px;"> <img src="~/imgs/btEditarWhite.png" style="width: 30px; height: 30px;" /></a>
+                    </div>
                 </div>
 
             </div>
@@ -60,10 +63,9 @@
         </div>
     </div>
 
-    @if (User.CanAccess(Roles.CLUB))
-    {
-        <div style="text-align-last: center;">
-            <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-5 mt-5 g-width-3">Imprimir</button>
-        </div>
-    }
+
+    <div style="text-align-last: center;">
+        <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-5 mt-5 g-width-3">Imprimir</button>
+    </div>
+
 </div>

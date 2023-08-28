@@ -2,6 +2,7 @@
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Enums;
+using Ihc.CrackSports.WebApp.Models.Clube;
 
 namespace Ihc.CrackSports.WebApp.Models.Usuarios
 {
@@ -11,6 +12,7 @@ namespace Ihc.CrackSports.WebApp.Models.Usuarios
         public Usuario DadosUsuario { get; set; }
         public Club DadosClub { get; private set; }
         public TipoUsuario TipoUsuario { get; set; }
+        public ClubViewModel ClubViewModel { get; set; }
 
 
         public MinhaContaViewModel()

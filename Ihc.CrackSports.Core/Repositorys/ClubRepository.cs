@@ -50,7 +50,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             return await base.ExecuteAsync(query, new
             {
                 id_club = club.Id,
-                nome_fantasia = club.Nome,
+                nome = club.Nome,
                 cidade = club.Endereco.Cidade,
                 uf = club.Endereco.UF,
                 imagem_base64 = club.ImagemBase64

@@ -26,3 +26,7 @@ function continuarCadastroClub() {
 
     window.location.href = url;
 }
+
+function redirectDadosClub(idClub) {
+    window.location.href = `../Club/Cadastro?idUsuario=${idClub}`;
+}

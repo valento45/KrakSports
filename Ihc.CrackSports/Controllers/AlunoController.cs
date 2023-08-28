@@ -3,6 +3,7 @@ using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Extensions;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Alunos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,8 +22,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
 
-
-		[HttpGet]
+        [Authorize]
+        [HttpGet]
 		public async Task<IActionResult> DadosAluno(long idAluno)
 		{
 
@@ -38,6 +39,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 			return View(obj);
 		}
 
+		[Authorize]
 		[HttpPost]
 		public async Task<IActionResult> DadosAluno(DadosAlunoViewModel request)
 		{
@@ -65,7 +67,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 		}
 
-		[HttpGet]
+        [Authorize]
+        [HttpGet]
 		public async Task<IActionResult> DadosGerais(long idAluno)
 		{
 
@@ -83,8 +86,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 			return View(obj);
 		}
 
-
-		[HttpPost]
+        [Authorize]
+        [HttpPost]
 		public async Task<IActionResult> DadosGerais(DadosAlunoViewModel dadosAlunoViewModel)
 		{
 

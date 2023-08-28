@@ -12,13 +12,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
     public class ClubController : ControllerBase
     {
         private readonly IClubService _clubService;
-    
+
         private readonly IUsuarioService _usuarioService;
 
         public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService) : base(clubService, user)
         {
-            _clubService = clubService;          
-            _usuarioService =   usuarioService;
+            _clubService = clubService;
+            _usuarioService = usuarioService;
         }
 
 
@@ -54,8 +54,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (!model.isInsert())
                 {
-                    if (!base.CanUpdate(User, Roles.CLUB))
-                        return View("Unauthorized");
+                    if (model.DadosUsuario.Id != long.Parse(User.GetIdentificador()))
+                        if (!base.CanUpdate(User, Roles.CLUB))
+                            return View("Unauthorized");
                 }
 
                 else
@@ -93,9 +94,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         await model.File.CopyToAsync(ms);
                         model.DadosClub.ImagemBase64 = Convert.ToBase64String(ms.ToArray());
                         Roles.SetImage(model.DadosClub.ImagemBase64);
+                        
                     }
                 }
-                
+
                 var result = await _clubService.Salvar(model.DadosClub);
 
                 if (result.IsSuccessStatusCode)

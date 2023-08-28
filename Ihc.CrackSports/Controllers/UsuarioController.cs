@@ -7,6 +7,7 @@ using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -50,6 +51,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return View(obj);
         }
 
+        /// <summary>
+        /// Efetua o cadastro de Aluno
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpPost]
         public async Task<IActionResult> Cadastro([FromBody] CadastroRequest model)
         {
@@ -86,41 +93,45 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         }
 
+
+        /// <summary>
+        /// Acesso ao Minha conta para o usuario logado
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <param name="tipoUsuario"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> MinhaConta(long idUsuario, TipoUsuario tipoUsuario)
         {
             await base.RefreshImageUser(User);
-
-            var claim = HttpContext.User.Claims.FirstOrDefault(param => param.Type == ClaimTypes.NameIdentifier);
-
-            if (claim == null)
-                return View("Unauthorized");
-            else
+        
+            if (User.IsAuthenticated())
             {
                 long id;
-                if (long.TryParse(claim.Value, out id))
+                if (long.TryParse(User.GetIdentificador(), out id))
                 {
-                    if (idUsuario == id || CanAccess(HttpContext.User, Roles.ADMINISTRADOR))
+                    if (idUsuario == id || CanAccess(User, Roles.ADMINISTRADOR))
                     {
-                        MinhaContaViewModel viewModel = null;
-                        var user = await _usuarioService.GetById(id);
+                        MinhaContaViewModel viewModel = new MinhaContaViewModel();
 
-                        if (tipoUsuario == TipoUsuario.Aluno || User.IsAdm())                        
-                            viewModel = await _alunoApplication.GetAlunoViewModel(idUsuario);                                            
+                        if (tipoUsuario == TipoUsuario.Aluno || User.IsAdm())
+                            viewModel = await _alunoApplication.GetAlunoViewModel(idUsuario);
 
-                       else if (tipoUsuario == TipoUsuario.Club || User.IsAdm())
-                            viewModel = await _clubApplication.GetClubViewModel(idUsuario);
-
+                        else if (tipoUsuario == TipoUsuario.Club || User.IsAdm())
+                        {
+                            viewModel.TipoUsuario = TipoUsuario.Club;
+                            viewModel.ClubViewModel = await _clubApplication.GetClubViewModel(idUsuario);
+                        }
                         return View(viewModel);
                     }
                     else
                     {
                         return View("Unauthorized");
                     }
-                }
+                }                
             }
-
-            return View();
+            return View("Unauthorized");
         }
     }
 }

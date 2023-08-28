@@ -14,10 +14,11 @@
     }
     else if (Model.TipoUsuario == Ihc.CrackSports.Core.Objetos.Enums.TipoUsuario.Club)
     {
-        @await Html.PartialAsync("Partial/MinhaConta/_ClubPartial", Model)
+        @await Html.PartialAsync("Partial/MinhaConta/_ClubPartial", Model.ClubViewModel)
     }
 </div>
 
 @section Scripts{
     <script src="~/js/Aluno/aluno.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/Club/club.js" type="text/javascript" asp-append-version="true"></script>
 }

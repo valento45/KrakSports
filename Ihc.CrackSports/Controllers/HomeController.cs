@@ -56,7 +56,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
 
             if (ModelState.IsValid)
-            {             
+            {
                 if (await base.Autenticar(model))
                     return RedirectToAction("About");
                 else
@@ -83,11 +83,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         public async Task<IActionResult> About()
         {
-            if (User != null)
-            {
-                await base.RefreshImageUser(User);
-            }
-
+            await base.RefreshImageUser(User);
             return View();
         }
 

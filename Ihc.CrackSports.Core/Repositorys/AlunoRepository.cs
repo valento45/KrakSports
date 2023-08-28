@@ -5,6 +5,7 @@ using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
@@ -176,9 +177,10 @@ namespace Ihc.CrackSports.Core.Repositorys
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub)
+        public async Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub)
         {
-            throw new NotImplementedException();
+            var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb where id_club = {idClub}");
+            return result.Select(x => x.ToAluno());
         }
 
         public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)

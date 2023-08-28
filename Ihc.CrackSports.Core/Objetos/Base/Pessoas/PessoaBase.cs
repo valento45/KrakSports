@@ -24,10 +24,11 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
             {
 
                 CpfCnpj = !string.IsNullOrEmpty(value.SomenteNumeros()) ? long.Parse(value.SomenteNumeros()) : 0;
-              
+
             }
         }
         public Endereco Endereco { get; set; }
 
+        
     }
 }
