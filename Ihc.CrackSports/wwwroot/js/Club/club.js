@@ -30,3 +30,17 @@ function continuarCadastroClub() {
 function redirectDadosClub(idClub) {
     window.location.href = `../Club/Cadastro?idUsuario=${idClub}`;
 }
+
+function onClickAlterarCamisa(idAluno) {
+    $("#modal").load("../Club/AtualizarCamisa?idAluno=" + idAluno, function () {
+        $("#modal").modal();
+       
+        $("#modal").show();
+        
+    });
+}
+
+
+function closeModalAlterarCamisa() {
+    $("#modal").hide();
+}

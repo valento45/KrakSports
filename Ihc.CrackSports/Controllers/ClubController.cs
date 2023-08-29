@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Clube;
@@ -14,11 +15,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IClubService _clubService;
 
         private readonly IUsuarioService _usuarioService;
+        private readonly IAlunoService _alunoService;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService) : base(clubService, user)
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService) : base(clubService, user)
         {
             _clubService = clubService;
             _usuarioService = usuarioService;
+            _alunoService  = alunoService;
         }
 
 
@@ -108,6 +111,23 @@ namespace Ihc.CrackSports.WebApp.Controllers
             }
 
             return View("Partial/CadastroClubPartial", model);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> AtualizarCamisa(int idAluno)
+        {
+            var aluno = await _alunoService.GetById(idAluno);
+
+            return View("Partial/Club/_ModalAlterarCamisa", aluno);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AtualizarCamisa(Aluno aluno)
+        {
+           
+
+            return Ok();
         }
     }
 }

@@ -1,0 +1,34 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Alunos;
+@model Aluno
+
+@{
+    Layout = null;
+    ViewBag.Title = "Details";
+}
+
+
+
+<div class="modal-dialog">
+    <div class="modal-content layout-orange-full radius-form p-3">
+        <form class=" text-white-light radius-form" asp-action="AtualizarCamisa" asp-controller="Club" method="post">
+            <input class="d-none" asp-for="Id"/>
+            <div class="modal-header mb-3">
+                <h4 class="modal-title">Dados do atleta</h4>
+            </div>
+            <div class="modal-body border-none">
+                <p>Nome: @Model.Nome.ToUpper()</p>
+                <div class="form-outline mt-5 ag-field-content g-width-10">
+                    <input asp-for="CamisetaNumero" type="text" id="txtCamisa" class="form-control ag-field-input ag-input-color-orange-full valida-campos-obrigatorios" autocomplete="off" value="@Model?.CamisetaNumero" required />
+                    <label id="txtCamisaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCamisa">Nº Camisa</label>
+                </div>
+
+            </div>
+            <div class="modal-footer border-none">
+                <div class=" mt-2">
+                    <button id="btnSalvarCamiseta" class="btn  btn-block btn-confirm-radius" type="button">Salvar</button>
+                    <a class=" btn-voltar mx-5" href="#" onclick="closeModalAlterarCamisa()">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

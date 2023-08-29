@@ -75,7 +75,7 @@ html {
     }
 
 
-.img-icon-nav {  
+.img-icon-nav {
     width: 35px;
     height: 35px;
     border-radius: 50px;
@@ -435,7 +435,7 @@ html {
 */
 
 .table-brown table {
-    border: 10px solid ghostwhite;
+    border: 5px solid ghostwhite;
     color: black;
     font-weight: bold;
     box-shadow: 1px 1px 50px 1px #00000066;
@@ -444,6 +444,7 @@ html {
 .table-brown thead {
     color: #F9D19F;
     text-align-last: center;
+    background-color: brown !important;
 }
 
 .table-brown .t-start {
@@ -462,7 +463,7 @@ html {
     border-radius: 50px;
 }
 
-.table-brown .btn-table-acao{
+.table-brown .btn-table-acao {
     display: inline-flex;
     margin-left: 5px;
 }
@@ -470,3 +471,12 @@ html {
 .table-brown tbody tr {
     vertical-align: baseline;
 }
+
+    .table-brown tbody tr td {
+        padding: 0.4rem;
+    }
+
+
+    .border-none{
+        border: 0px !important;
+    }
