@@ -22,5 +22,6 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<IEnumerable<Aluno>> ObterTodosAluno(int limite);
         Task<bool> AtualizarDadosGerais(Aluno aluno);
         Task<bool> AtualizarEndereco(Aluno aluno);
+        Task<bool> AtualizarCamisa(Aluno aluno);
     }
 }

@@ -105,15 +105,18 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> MinhaConta(long idUsuario, TipoUsuario tipoUsuario)
         {
             await base.RefreshImageUser(User);
-        
+
             if (User.IsAuthenticated())
             {
                 long id;
+                MinhaContaViewModel viewModel = new MinhaContaViewModel();
                 if (long.TryParse(User.GetIdentificador(), out id))
                 {
-                    if (idUsuario == id || CanAccess(User, Roles.ADMINISTRADOR))
+
+
+                    if (idUsuario > 0 && (idUsuario == id || CanAccess(User, Roles.ADMINISTRADOR)))
                     {
-                        MinhaContaViewModel viewModel = new MinhaContaViewModel();
+
 
                         if (tipoUsuario == TipoUsuario.Aluno || User.IsAdm())
                             viewModel = await _alunoApplication.GetAlunoViewModel(idUsuario);
@@ -125,11 +128,24 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         }
                         return View(viewModel);
                     }
+                    else if (idUsuario <= 0)
+                    {
+                        if (User.IsAluno())
+                        {
+                            viewModel = await _alunoApplication.GetAlunoViewModel(id);
+                        }
+                        else if (User.IsClub())
+                        {
+                            viewModel.TipoUsuario = TipoUsuario.Club;
+                            viewModel.ClubViewModel = await _clubApplication.GetClubViewModel(id);
+                        }
+                        return View(viewModel);
+                    }
                     else
                     {
                         return View("Unauthorized");
                     }
-                }                
+                }
             }
             return View("Unauthorized");
         }

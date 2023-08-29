@@ -21,7 +21,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             _clubService = clubService;
             _usuarioService = usuarioService;
-            _alunoService  = alunoService;
+            _alunoService = alunoService;
         }
 
 
@@ -97,7 +97,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         await model.File.CopyToAsync(ms);
                         model.DadosClub.ImagemBase64 = Convert.ToBase64String(ms.ToArray());
                         Roles.SetImage(model.DadosClub.ImagemBase64);
-                        
+
                     }
                 }
 
@@ -125,9 +125,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AtualizarCamisa(Aluno aluno)
         {
-           
 
-            return Ok();
+            var result = await _alunoService.AtualizarCamisa(aluno);
+            if (result)
+                return RedirectToAction("MinhaConta", "Usuario");
+            else
+                throw new Exception("Falha ao atualizar o número da camiseta.");
         }
     }
 }

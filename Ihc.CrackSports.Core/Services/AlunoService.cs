@@ -105,6 +105,9 @@ namespace Ihc.CrackSports.Core.Services
             return await _alunoCommand.GetByIdUsuario(idUser);
         }
 
-     
+        public async Task<bool> AtualizarCamisa(Aluno aluno)
+        {
+            return await _alunoCommand.AtualizarCamisa(aluno);
+        }
     }
 }

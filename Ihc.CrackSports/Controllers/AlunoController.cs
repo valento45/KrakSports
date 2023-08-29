@@ -1,6 +1,7 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Extensions;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Alunos;
 using Microsoft.AspNetCore.Authorization;
@@ -59,8 +60,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
 			var response = await _alunoService.UpdateDadosGerais(request.DadosAluno);
 
 			if (response.IsSuccessStatusCode)
-			{			
-				return View(request);
+            {
+				request.DadosAluno = await _alunoService.GetById(request.DadosAluno.Id);
+
+                return View(request);
 			}
 			else
 				throw new HttpRequestException($"Status Code: {response.StatusCode}\r\nMensagem: {response.Message}");

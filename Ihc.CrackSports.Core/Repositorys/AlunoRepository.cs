@@ -71,7 +71,7 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<bool> Atualizar(Aluno aluno)
         {
             string query = "update sys.aluno_tb set id_usuario = @id_usuario, nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +
-                "email = @email, telefone = @telefone, celular = @celular, is_pcd = @is_pcd, descricao_pcd = @descricao_pcd, posicao_jogador = @posicao_jogador, camiseta_numero = @camiseta_numero," +
+                "email = @email, telefone = @telefone, celular = @celular, is_pcd = @is_pcd, descricao_pcd = @descricao_pcd, posicao_jogador = @posicao_jogador," +
                "foto_base64 = @foto_base64, endereco = @endereco, numero = @numero, cidade = @cidade, uf = @uf, cep = @cep where id_aluno = @id_aluno;";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
@@ -87,7 +87,6 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"is_pcd", aluno?.IsPCD ?? false);
             cmd.Parameters.AddWithValue(@"descricao_pcd", aluno?.DescricaoPCD ?? "");
             cmd.Parameters.AddWithValue(@"posicao_jogador", aluno?.PosicaoJogador ?? "");
-            cmd.Parameters.AddWithValue(@"camiseta_numero", aluno?.CamisetaNumero ?? -1);
             cmd.Parameters.AddWithValue(@"foto_base64", aluno?.FotoAlunoBase64 ?? "");
             cmd.Parameters.AddWithValue(@"endereco", aluno?.Endereco?.Logradouro ?? "");
             cmd.Parameters.AddWithValue(@"numero", aluno?.Endereco?.Numero ?? 0);
@@ -102,7 +101,7 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<bool> AtualizarDadosGerais(Aluno aluno)
         {
             string query = "update sys.aluno_tb set id_club = @id_club, nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +
-                "email = @email, camiseta_numero = @camiseta_numero," +
+                "email = @email," +
                "foto_base64 = @foto_base64, posicao_jogador = @posicao_jogador where id_aluno = @id_aluno;";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
@@ -113,7 +112,6 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);
             cmd.Parameters.AddWithValue(@"data_nascimento", aluno?.DataNascimento ?? new DateTime());
             cmd.Parameters.AddWithValue(@"email", aluno?.Email ?? "");
-            cmd.Parameters.AddWithValue(@"camiseta_numero", aluno?.CamisetaNumero ?? -1);
             cmd.Parameters.AddWithValue(@"posicao_jogador", aluno?.PosicaoJogador ?? "");
             cmd.Parameters.AddWithValue(@"foto_base64", aluno?.FotoAlunoBase64 ?? "");
 
@@ -202,6 +200,15 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result.Select(x => x.ToAluno())?.FirstOrDefault();
         }
 
-      
+        public async Task<bool> AtualizarCamisa(Aluno aluno)
+        {
+            string query = "update sys.aluno_tb set camiseta_numero = @camiseta_numero where id_aluno = @id_aluno";
+
+            return await base.ExecuteAsync(query, new
+            {
+                id_aluno = aluno.Id,
+                camiseta_numero = aluno.CamisetaNumero
+            });
+        }
     }
 }

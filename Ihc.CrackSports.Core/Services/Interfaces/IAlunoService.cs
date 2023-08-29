@@ -21,5 +21,6 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<Aluno> ObterAlunoPorCpf(long cpf);
         Task<CadastroResponse> UpdateDadosGerais(Aluno aluno);
         Task<CadastroResponse> UpdateResponsavelEndereco(Aluno aluno);
+        Task<bool> AtualizarCamisa(Aluno aluno);
     }
 }
