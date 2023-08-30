@@ -8,12 +8,13 @@
 
 
 
-<div class="modal-dialog">
+<div class="modal-dialog" style="margin-top: 200px;">
     <div class="modal-content layout-orange-full radius-form p-3">
         <form class=" text-white-light radius-form" asp-action="AtualizarCamisa" asp-controller="Club" method="post">
             <input class="d-none" asp-for="Id"/>
             <div class="modal-header mb-3">
                 <h4 class="modal-title">Dados do atleta</h4>
+                <a class="link-redirect-orange" style="cursor: pointer;font-weight: bold; font-size: 25px; margin-right: 10px;" onclick="closeModalAlterarCamisa()">X</a>
             </div>
             <div class="modal-body border-none">
                 <p>Nome: @Model.Nome.ToUpper()</p>
@@ -26,7 +27,7 @@
             <div class="modal-footer border-none">
                 <div class=" mt-2">
                     <button id="btnSalvarCamiseta" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
-                    <a class=" btn-voltar mx-5" href="#" onclick="closeModalAlterarCamisa()">Voltar</a>
+                    <a class=" btn-voltar mx-5"  onclick="closeModalAlterarCamisa()" style="cursor: pointer;">Voltar</a>
                 </div>
             </div>
         </form>

@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Objetos.Clube;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> AtualizarDadosGerais(Aluno aluno);
         Task<bool> AtualizarEndereco(Aluno aluno);
         Task<bool> AtualizarCamisa(Aluno aluno);
+        Task<bool> PossuiClub(Aluno aluno);
+        Task<Club> ObterClub(long IdAluno);
     }
 }

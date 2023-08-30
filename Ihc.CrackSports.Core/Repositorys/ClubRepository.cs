@@ -94,5 +94,25 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             return result?.Select(x => x.ToClub())?.FirstOrDefault() ?? null;
         }
+
+        public async Task<bool> IncluirAlunoClub(SolicitacaoAlunoClub solicitacao)
+        {
+            //string query = "insert into sys.aluno_club_tb (id_aluno, id_club, data_ingresso) values (@id_aluno, @id_club, @data_ingresso)";
+
+            //var result = await ExecuteAsync(query, new
+            //{
+            //    id_aluno = solicitacao.IdAluno,
+            //    id_club = solicitacao.IdClub,
+            //    data_ingresso = DateTime.Now
+            //});
+            string query = "update sys.aluno_tb set id_club = @id_club where id_aluno = @id_aluno";
+            var result = await ExecuteAsync(query, new
+            {
+                id_aluno = solicitacao.IdAluno,
+                id_club = solicitacao.IdClub
+            });
+
+            return result;
+        }
     }
 }

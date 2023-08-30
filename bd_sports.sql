@@ -87,6 +87,25 @@ CREATE DATABASE bd_sports
 		references sys.aluno_tb(id_aluno)
 	);
 	
+	create table if not exists sys.solicitacao_aluno_club_tb(
+		id_solicitacao serial not null primary key,
+		id_aluno bigint not null,
+		id_club bigint not null,
+		data_solicitacao timestamp not null,
+		is_aceito boolean null,
+		constraint id_aluno_fk foreign key(id_aluno)
+		references sys.aluno_tb(id_aluno),
+		constraint id_club_gk foreign key(id_club)
+		references sys.club_tb(id_club)
+	);
+	
+	create table if not exists sys.aluno_club_tb(
+		id_aluno bigint not null,
+		id_club bigint not null,
+		data_ingresso timestamp null,
+		gols_marcados integer null
+	);
+	
 	--Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 

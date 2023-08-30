@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Objetos.Clube;
+﻿using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<Club?> ObterById(long idClub);
         Task<Club?> ObterByIdUsuario(long idUsuario);
         Task<List<Club>?> ObterByNome(string nome, int limite = 0);
+        Task<bool> IncluirAlunoClub(SolicitacaoAlunoClub solicitacao);
     }
 }

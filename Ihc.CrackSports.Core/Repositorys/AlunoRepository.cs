@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Alunos.Dto;
+using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Npgsql;
@@ -209,6 +210,16 @@ namespace Ihc.CrackSports.Core.Repositorys
                 id_aluno = aluno.Id,
                 camiseta_numero = aluno.CamisetaNumero
             });
+        }
+
+        public Task<bool> PossuiClub(Aluno aluno)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Club> ObterClub(long IdAluno)
+        {
+            throw new NotImplementedException();
         }
     }
 }
