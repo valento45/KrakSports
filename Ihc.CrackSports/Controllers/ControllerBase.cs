@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services;
 using Ihc.CrackSports.Core.Services.Interfaces;
@@ -7,6 +8,7 @@ using Ihc.CrackSports.WebApp.Models.Usuarios;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Data;
 using System.Reflection;
 using System.Security.Claims;
@@ -19,10 +21,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		private IAlunoService alunoService;
 		private IClubService clubService;
 		protected readonly UserManager<Usuario> _userManager;
+		protected readonly IHubContext<NotificationHub> _hubContext;
 
+        #region Construtores
+        public ControllerBase()
+        {
+            
+        }
 
-		#region Construtores
-		public ControllerBase(IAlunoService alunoService, UserManager<Usuario> userManager)
+        public ControllerBase(IAlunoService alunoService, UserManager<Usuario> userManager)
 		{
 			this.alunoService = alunoService;
 			_userManager = userManager;
