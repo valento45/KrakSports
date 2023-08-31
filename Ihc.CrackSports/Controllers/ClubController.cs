@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
@@ -131,6 +132,19 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 return RedirectToAction("MinhaConta", "Usuario");
             else
                 throw new Exception("Falha ao atualizar o número da camiseta.");
+        }
+
+        [HttpGet]
+        public async Task<PartialViewResult> VerClubs()
+        {
+            return PartialView("Partial/VerClubs");
+        }
+
+
+        [HttpPost]
+        public async Task<PartialViewResult> VerClubs(string x)
+        {
+            return PartialView("Partial/VerClubs");
         }
     }
 }

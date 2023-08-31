@@ -109,5 +109,10 @@ namespace Ihc.CrackSports.Core.Services
         {
             return await _alunoCommand.AtualizarCamisa(aluno);
         }
+
+        public Task<bool> EnviarSolicitacaoClub(long idAluno, long idClub)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

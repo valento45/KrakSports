@@ -105,6 +105,10 @@
 		let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;		
 	</script>
 
+	<!--Scripts Notifications-->
+	<script src="~/js/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
+	<script src="~/js/notifications/notification.js" asp-append-version="true"></script>
+
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

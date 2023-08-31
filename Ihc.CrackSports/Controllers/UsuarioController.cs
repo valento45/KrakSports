@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Enums;
 using Ihc.CrackSports.Core.Requests;
@@ -24,7 +25,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IClubApplication _clubApplication;
 
         public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService,
-            IAlunoApplication alunoApplication, IClubApplication clubApplication) : base(alunoService, user)
+            IAlunoApplication alunoApplication, IClubApplication clubApplication ) : base(alunoService, user)
         {
             _usuarioService = usuarioService;
             _alunoService = alunoService;

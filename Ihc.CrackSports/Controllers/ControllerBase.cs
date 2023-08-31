@@ -21,28 +21,26 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		private IAlunoService alunoService;
 		private IClubService clubService;
 		protected readonly UserManager<Usuario> _userManager;
-		protected readonly IHubContext<NotificationHub> _hubContext;
+		protected readonly NotificationHub _notificationHub;
 
         #region Construtores
-        public ControllerBase()
-        {
-            
-        }
+       
 
-        public ControllerBase(IAlunoService alunoService, UserManager<Usuario> userManager)
+        public ControllerBase(IAlunoService alunoService, UserManager<Usuario> userManager) 
 		{
 			this.alunoService = alunoService;
 			_userManager = userManager;
+		
 		}
 
-		public ControllerBase(IClubService clubService, UserManager<Usuario> userManager)
-		{
+		public ControllerBase(IClubService clubService, UserManager<Usuario> userManager) 
+        {
 			this.clubService = clubService;
 			_userManager = userManager;
 		}
 
-		public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager)
-		{
+		public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager) 
+        {
 			this.clubService = clubService;
 			this.alunoService = alunoService;
 			_userManager = userManager;
@@ -197,5 +195,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
 			return false;
         }
 
+
+		public async Task EnviarNotificacao(string user, string title, string message, string link)
+		{
+			await _notificationHub.SendNotification(user, title, message, link);			
+		}
 	}
 }

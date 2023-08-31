@@ -1,6 +1,8 @@
 using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.WebApp.Configurations.DependenciasInjection;
 using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,13 @@ builder.Services.AddAuthentication("cookies")
     .AddCookie("cookies", options =>
     options.LoginPath = "/Home/Login"
     );
+#endregion
+
+#region Config SignalR
+builder.Services.AddSignalR();
 
 #endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +42,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.MapControllerRoute(
     name: "default",
