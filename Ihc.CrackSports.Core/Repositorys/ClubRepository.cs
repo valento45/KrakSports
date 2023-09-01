@@ -95,7 +95,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result?.Select(x => x.ToClub())?.FirstOrDefault() ?? null;
         }
 
-        public async Task<bool> IncluirAlunoClub(SolicitacaoAlunoClub solicitacao)
+        public async Task<bool> AceitarAlunoClub(SolicitacaoAlunoClub solicitacao)
         {
             //string query = "insert into sys.aluno_club_tb (id_aluno, id_club, data_ingresso) values (@id_aluno, @id_club, @data_ingresso)";
 
@@ -113,6 +113,17 @@ namespace Ihc.CrackSports.Core.Repositorys
             });
 
             return result;
+        }
+
+        public async Task<IEnumerable<Club>> ObterTodos(int limite)
+        {
+            string query = "select * from sys.club_tb";
+            if (limite > 0)
+                query += " limit " + limite;
+
+            var result = await QueryAsync<ClubDto>(query);
+
+            return result?.Select(p => p.ToClub()) ?? new List<Club>();
         }
     }
 }

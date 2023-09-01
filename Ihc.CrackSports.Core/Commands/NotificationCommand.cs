@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace Ihc.CrackSports.Core.Commands
 {
     public class NotificationCommand : INotificationCommand
     {
-        public NotificationCommand()
+        private readonly ISolicitacaoClubAlunoRepository _solicitacaoClubAlunoRepository;
+
+        public NotificationCommand(ISolicitacaoClubAlunoRepository solicitacaoClubAlunoRepository)
         {
-            
+            _solicitacaoClubAlunoRepository = solicitacaoClubAlunoRepository;
         }
 
         public async Task TrataEnvioSolicitacaoAlunoToClub(long idAluno, long idClub)

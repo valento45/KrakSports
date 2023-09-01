@@ -2,8 +2,10 @@
 using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.Core.Utils.Paginacoes;
 using Ihc.CrackSports.WebApp.Models.Clube;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -135,16 +137,17 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<PartialViewResult> VerClubs()
+        public async Task<IActionResult> VerClubs()
         {
-            return PartialView("Partial/VerClubs");
+            return View();
         }
 
 
         [HttpPost]
-        public async Task<PartialViewResult> VerClubs(string x)
+        public async Task<PartialViewResult> RefreshPaginacaoClub(PaginacaoClubViewModel paginacaoClubs)
         {
-            return PartialView("Partial/VerClubs");
+            paginacaoClubs.Refresh();
+            return PartialView("Partial/_PartialClubs", paginacaoClubs);
         }
     }
 }

@@ -33,8 +33,5 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
 
     }
 
-    public static class NotificationTypes
-    {
-        public static string
-    }
+    
 }

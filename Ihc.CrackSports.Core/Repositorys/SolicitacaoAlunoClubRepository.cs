@@ -2,6 +2,7 @@
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests.Clube.Solicitacoes;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,9 +24,30 @@ namespace Ihc.CrackSports.Core.Repositorys
             throw new NotImplementedException();
         }
 
-        public Task<SolicitacaoAlunoClub> EnviarSolicitacao(SolicitacaoAlunoClubRequest solicitacao)
+        public async Task<SolicitacaoAlunoClub> EnviarSolicitacao(SolicitacaoAlunoClubRequest solicitacao)
         {
-            throw new NotImplementedException();
+            string query = "insert into sys.solicitacao_aluno_club_tb (id_aluno, id_club, data_solicitacao, is_aceito)" +
+                 " values (@id_aluno, @id_club, @data_solicitacao, @is_aceito) returning id_solicitacao";
+
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+            cmd.Parameters.AddWithValue(@"id_aluno", solicitacao.Solicitacao.IdAluno);
+            cmd.Parameters.AddWithValue(@"id_club", solicitacao.Solicitacao.IdClub);
+            cmd.Parameters.AddWithValue(@"data_solicitacao", solicitacao.Solicitacao.DataSolicitacao);
+            cmd.Parameters.AddWithValue(@"is_aceito", solicitacao.Solicitacao.IsAceito);
+
+
+
+            var result = await base.ExecuteScalarAsync(cmd);
+
+            if (result != null)
+            {
+                long id;
+                long.TryParse(result.ToString(), out id);
+                solicitacao.Solicitacao.IdSolicitacao = id;
+                return solicitacao.Solicitacao;
+            }
+            else
+                throw new Exception("Erro ao enviar solicitação ao club." + nameof(SolicitacaoAlunoClubRepository));
         }        
 
         public Task<bool> RemoverSolicitacao(long idSolicitacao)
