@@ -1,9 +1,38 @@
-﻿@using Ihc.CrackSports.WebApp.Models.Clube;
+﻿@using Ihc.CrackSports.Core.Objetos.Clube;
+@using Ihc.CrackSports.WebApp.Models.Clube;
 @model PaginacaoClubViewModel
 
 
 <div class="mt-5">
+    <div class="row-card" style=" display: flex;  flex-wrap: wrap;">
+       @{
+            var clubs = ViewBag.paginacao.ClubsPaginacao.ObterListaPaginada();
+       }
+        @foreach (var club in clubs)
+        {
+            <div class="card-club ">
+                @if (!string.IsNullOrEmpty(club.ImagemBase64))
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);
+                    <img class="image-club" src="@imagem" alt="club" />
+                }
+                else
+                {
+                    <img class="image-club" src="~/imgs/sem_imagem.png" alt="club" />
+                }
+                <h5 style="word-wrap: break-word;"><b>@club.Nome</b></h5>
+            </div>
+        }
 
+    </div>
 
+    <div class="text-center mt-5">
+        <a onclick="voltarPagina()">
+            <img class="paginacao-icon" src="~/imgs/seta-esquerda-icon.jpg" />
+        </a>
 
+        <a class="ms-5 " onclick="proximaPagina()">
+            <img class="paginacao-icon" src="~/imgs/seta-icon.jpg" />
+        </a>
+    </div>
 </div>

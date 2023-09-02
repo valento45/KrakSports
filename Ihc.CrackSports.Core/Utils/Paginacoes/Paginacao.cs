@@ -22,14 +22,13 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         public void ProximaPagina()
         {          
             if (this.Superset != null && base.TotalItemCount > 0)
-            {
+            {             
+                Subset.AddRange(Superset.Skip(PageNumber * PageSize).Take(PageSize).ToList());
+
                 if (PageNumber < base.PageCount)
                     PageNumber += 1;
                 else
                     PageNumber = base.PageCount;
-
-
-                Subset.AddRange(Superset.Skip(PageNumber * PageSize).Take(PageSize).ToList());
             }
         }
         public void VoltarPagina()
@@ -37,10 +36,15 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
            
             if (this.Superset != null && base.TotalItemCount > 0)
             {
+
+
                 if (PageNumber <= 1)
                     Subset.AddRange(Superset.Skip(0).Take(PageSize).ToList());
                 else
+                {
+                    PageNumber -= 1;
                     Subset.AddRange(Superset.Skip(PageNumber * PageSize).Take(PageSize).ToList());
+                }
             }
         }
 
@@ -62,6 +66,8 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         {
             return this.Subset;
         }
+
+        public IQueryable<T> ObterListaCompleta() => this.Superset;
 
 
         public void Refresh()

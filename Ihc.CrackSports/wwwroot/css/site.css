@@ -480,3 +480,69 @@ html {
     .border-none{
         border: 0px !important;
     }
+
+.row-i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-i {
+    border-radius: 50px;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    padding: 30px;
+    margin: 20px;
+    width: 400px;
+    transition: all 0.3s ease-out;
+    background-color: white;
+}
+
+.card-i:hover {
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+
+.image-i {
+    float: right;
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.row-card {
+    place-content: center;
+}
+
+.card-club {
+    border-radius: 100px;
+    box-shadow: 7px 7px 13px 0px rgba(50, 50, 50, 0.22);
+    padding: 30px;
+    margin: 20px;
+    width: 200px;
+    transition: all 0.3s ease-out;
+    text-align-last: center;
+    min-height: 200px;
+    background-color: white;
+}
+
+    .card-club:hover {
+        transform: translateY(-5px);
+        cursor: pointer;
+    }
+
+.image-club {
+    margin-top: 30px;
+    max-width: 64px;
+    max-height: 64px;
+}
+
+.paginacao-icon {
+    max-width: 50px;
+    max-height: 50px;
+    transition: all 0.3s ease-out;
+}
+
+    .paginacao-icon:hover {
+        cursor: pointer;
+        transform: translateY(-5px);
+    }

@@ -8,4 +8,20 @@
 <div class="mt-5">
     <h3 class="text-semi-bold-orange mt-5 ms-5">Clubes</h3>
     <hr />
+    
+    <div id="pnlPartialClubs">
+        @await Html.PartialAsync("Partial/_PartialClubs", Model)
+    </div>
+
+    <div class="mb-4 ms-5 mx-4 mt-3" style="text-align: right;">
+        <a asp-action="Index" asp-controller="Club" id="btnVenhaFazerParte" class="btn  btn-block btn-confirm-radius" type="button">Inscreva seu Clube</a>        
+    </div>
 </div>
+
+@section Scripts{
+    <script>
+        let _paginacaoClub = @Json.Serialize(Model);
+        let urlRefreshPaginacao = '@Url.Action("RefreshPaginacaoClub", "Club")';
+    </script>
+    <script type="text/javascript" asp-append-version="true" src="~/js/Club/paginacaoClub.js"></script>
+}

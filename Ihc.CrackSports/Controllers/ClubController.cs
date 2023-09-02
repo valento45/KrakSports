@@ -137,17 +137,25 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> VerClubs()
+        public async Task<IActionResult> VerClubs(int limite)
         {
-            return View();
+            var clubes = await _clubService.ObterTodos(limite);
+            var result = new PaginacaoClubViewModel(new Paginacao<Club>(clubes?.AsQueryable(), 1, 10));
+
+            ViewBag.paginacao = result;
+
+            return View(result);
         }
 
 
         [HttpPost]
-        public async Task<PartialViewResult> RefreshPaginacaoClub(PaginacaoClubViewModel paginacaoClubs)
+        public async Task<PartialViewResult> RefreshPaginacaoClub([FromBody] PaginacaoClubViewModelRequest paginacaoClubs)
         {
-            paginacaoClubs.Refresh();
-            return PartialView("Partial/_PartialClubs", paginacaoClubs);
+            var result = new PaginacaoClubViewModel(paginacaoClubs);
+            await result.Refresh();
+
+            ViewBag.paginacao = result;
+            return PartialView("Partial/_PartialClubs", result);
         }
     }
 }

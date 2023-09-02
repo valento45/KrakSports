@@ -22,7 +22,7 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<CadastroResponse> Salvar(Club club)
         {
-            var response = new CadastroResponse();  
+            var response = new CadastroResponse();
 
             if (club.Id > 0)
             {
@@ -31,7 +31,7 @@ namespace Ihc.CrackSports.Core.Commands
             }
             else
             {
-               if( await _clubRepository.Incluir(club))
+                if (await _clubRepository.Incluir(club))
                     response.StatusCode = 200;
             }
 
@@ -50,7 +50,7 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<Club?> ObterById(long idClub)
         {
-           return await _clubRepository.ObterById(idClub);
+            return await _clubRepository.ObterById(idClub);
         }
 
         public async Task<List<Club>?> ObterByNome(string nome, int limite)
@@ -61,10 +61,16 @@ namespace Ihc.CrackSports.Core.Commands
         public async Task<Club?> ObterByIdUsuario(long idUsuario)
         {
             var result = await _clubRepository.ObterByIdUsuario(idUsuario);
-            if(result != null)
+            if (result != null)
                 result.IdUsuario = idUsuario;
 
             return result;
+        }
+
+        public async Task<List<Club>?> ObterTodos(int limite)
+        {
+            var result = await _clubRepository.ObterTodos(limite);
+            return result.ToList();
         }
     }
 }
