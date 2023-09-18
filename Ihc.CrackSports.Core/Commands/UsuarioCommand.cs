@@ -2,7 +2,7 @@
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using System;

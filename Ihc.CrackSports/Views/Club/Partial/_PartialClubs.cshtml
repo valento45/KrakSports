@@ -3,14 +3,14 @@
 @model PaginacaoClubViewModel
 
 
-<div class="mt-5">
+<div class="mt-5 ">
     <div class="row-card" style=" display: flex;  flex-wrap: wrap;">
        @{
             var clubs = ViewBag.paginacao.ClubsPaginacao.ObterListaPaginada();
        }
         @foreach (var club in clubs)
         {
-            <div class="card-club ">
+            <div class="card-club " onclick="redirectApresentacaoClube(@club.Id)">
                 @if (!string.IsNullOrEmpty(club.ImagemBase64))
                 {
                     var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);

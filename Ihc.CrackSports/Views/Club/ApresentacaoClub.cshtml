@@ -1,0 +1,48 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Clube;
+@model ClubViewModel
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+
+    <h4 class="mt-5 text-semi-bold-orange">Sobre o Clube</h4>
+    <hr class="hr-brown" />
+
+
+    <div class="g-width-10 d-inline-flex club-apresentacao">
+        <div id="pnlDadosGeraisClube" class="g-width-2 " style="border: 1px solid brown; border-radius: 40px;">
+            <div class="text-center">
+
+                @if (string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
+                {
+                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                }
+                else
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
+                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                }
+                <p class="mt-3 text-bold-light">@Model.DadosClub.Nome.ToUpper()</p>
+                <p><b>Data fundação:</b> @Model.DadosClub.DataFundacao.ToString("dd/MM/yyyy")</p>
+                <p><b>Presidente:</b> @Model.DadosClub.NomePresidente?.ToUpper()</p>
+            </div>
+        </div>
+
+        <div id="pnlOpcoes" class="g-width-8 ms-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Sobre o clube</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Atletas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contatos</a>
+                </li>
+               
+            </ul>
+        </div>
+    </div>
+</div>

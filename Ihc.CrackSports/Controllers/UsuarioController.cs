@@ -3,7 +3,7 @@ using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Enums;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;

@@ -155,7 +155,7 @@ namespace Ihc.CrackSports.Core.Repositorys
                     cpf = cpf
                 });
 
-            return result.Select(x => x.ToAluno());
+            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome);
         }
 
         public async Task<Aluno> ObterAlunoById(long idAluno)
@@ -179,13 +179,13 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub)
         {
             var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb where id_club = {idClub}");
-            return result.Select(x => x.ToAluno());
+            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome); 
         }
 
         public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)
         {
             var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb" + (limite > 0 ? $" limit {limite}" : ""));
-            return result.Select(x => x.ToAluno());
+            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome); 
         }
 
         public async Task<Aluno?> ObterAlunoByIdUsuario(long idUser)

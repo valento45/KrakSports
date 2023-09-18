@@ -1,5 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Commands.Interfaces;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using System;
 using System.Collections.Generic;
 using System.Linq;

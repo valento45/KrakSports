@@ -19,6 +19,8 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public string cep { get; set; }
         public string uf { get; set; }
         public string imagem_base64 { get; set; }
+        public DateTime data_fundacao { get; set; }
+        public string nome_presidente { get; set; }
 
         public Club ToClub()
         {
@@ -38,6 +40,8 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
                 UF = uf
             };
             club.ImagemBase64 = imagem_base64;
+            club.DataFundacao = data_fundacao;
+            club.NomePresidente = nome_presidente;
 
             return club;
         }

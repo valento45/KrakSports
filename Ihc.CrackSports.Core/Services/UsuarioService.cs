@@ -1,6 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Commands.Interfaces;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using System;

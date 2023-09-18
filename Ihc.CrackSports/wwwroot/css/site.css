@@ -477,9 +477,9 @@ html {
     }
 
 
-    .border-none{
-        border: 0px !important;
-    }
+.border-none {
+    border: 0px !important;
+}
 
 .row-i {
     display: flex;
@@ -497,10 +497,10 @@ html {
     background-color: white;
 }
 
-.card-i:hover {
-    transform: translateY(-5px);
-    cursor: pointer;
-}
+    .card-i:hover {
+        transform: translateY(-5px);
+        cursor: pointer;
+    }
 
 
 .image-i {
@@ -545,4 +545,26 @@ html {
     .paginacao-icon:hover {
         cursor: pointer;
         transform: translateY(-5px);
+    }
+
+
+
+.club-apresentacao {
+}
+
+    .club-apresentacao b {
+        color: #FA8C05;
+    }
+
+    .club-apresentacao li a {
+        color: brown;
+        font-weight: bold;
+    }
+
+    .club-apresentacao .nav-link.active {
+        color: #FA8C05;
+    }
+
+    .club-apresentacao .nav-link:hover, .club-apresentacao .nav-link:focus {
+        color: #FA8C05;
     }

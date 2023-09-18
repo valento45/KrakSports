@@ -17,8 +17,7 @@ function proximaPagina(e) {
 }
 
 function refreshPaginacao() {
-    if (_paginacaoClub.pageNumber == 0)
-        _paginacaoClub.pageNumber = 1;
+    
 
     util.ajax.post(urlRefreshPaginacao, _paginacaoClub, successRefreshPaginacao, erroRefreshPaginacao);
 }
@@ -40,7 +39,7 @@ function successRefreshPaginacao(data) {
                 _paginacaoClub.pageNumber += 1;
         }
 
-        else if (_paginacaoClub.previousPage) {
+        if (_paginacaoClub.previousPage) {
             _paginacaoClub.previousPage = false;
 
             if (_paginacaoClub.pageNumber > 0)
@@ -50,4 +49,8 @@ function successRefreshPaginacao(data) {
 }
 function erroRefreshPaginacao(e) {
     alert("Erro");
+}
+
+function redirectApresentacaoClube(idClub) {
+    window.location.href = `../Club/ApresentacaoClub?idClub=${idClub}`;
 }

@@ -36,7 +36,7 @@ namespace Ihc.CrackSports.WebApp.Models.Clube
 
         public PaginacaoClubViewModel(PaginacaoClubViewModelRequest request)
         {           
-            ClubsPaginacao = new Paginacao<Club>(request.TodosClubs.AsQueryable(), request.PageNumber, 10);
+            ClubsPaginacao = new Paginacao<Club>(request.TodosClubs.AsQueryable(), request.PageNumber > 0 ? request.PageNumber : 1, 10);
 
             NextPage = request.NextPage;
             PreviousPage = request.PreviousPage;
@@ -48,7 +48,7 @@ namespace Ihc.CrackSports.WebApp.Models.Clube
 
         public async Task Refresh()
         {
-            ClubsPaginacao.Refresh();
+            ClubsPaginacao.Clear();
 
             if (NextPage)
                 ClubsPaginacao.ProximaPagina();

@@ -1,5 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using Ihc.CrackSports.Core.Responses.Usuarios;
 using System;
 using System.Collections.Generic;

@@ -19,7 +19,7 @@ namespace Ihc.CrackSports.WebApp.Models.Alunos
 
         public void Refresh()
         {
-            AlunosPaginado.Refresh();
+            AlunosPaginado.Clear();
 
             if (NextPage)
                 AlunosPaginado.ProximaPagina();

@@ -23,7 +23,8 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Incluir(Club club)
         {
-            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario) values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario) returning id_club;;";
+            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario, data_fundacao, nome_presidente)" +
+                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente) returning id_club;;";
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
             cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
@@ -31,6 +32,8 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
             cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
             cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
+            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
+            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? null);
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
@@ -45,7 +48,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Atualizar(Club club)
         {
-            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64 where id_club = @id_club";
+            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64, data_fundacao = @data_fundacao, nome_presidente = @nome_presidente where id_club = @id_club";
 
             return await base.ExecuteAsync(query, new
             {
@@ -53,7 +56,9 @@ namespace Ihc.CrackSports.Core.Repositorys
                 nome = club.Nome,
                 cidade = club.Endereco.Cidade,
                 uf = club.Endereco.UF,
-                imagem_base64 = club.ImagemBase64
+                imagem_base64 = club.ImagemBase64,
+                data_fundacao = club.DataFundacao,
+                nome_presidente = club.NomePresidente
             });
         }
 

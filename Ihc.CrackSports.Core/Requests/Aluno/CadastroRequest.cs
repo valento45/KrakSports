@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;   
+using System.Threading.Tasks;
 
-namespace Ihc.CrackSports.Core.Requests
+namespace Ihc.CrackSports.Core.Requests.Aluno
 {
     public class CadastroRequest
     {
@@ -68,7 +68,7 @@ namespace Ihc.CrackSports.Core.Requests
         public bool AutorizaEnvioNovidadesEmail { get; set; }
         public CadastroRequest()
         {
-            
+
         }
     }
 }

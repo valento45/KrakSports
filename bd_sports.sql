@@ -42,10 +42,12 @@ CREATE DATABASE bd_sports
 		cep varchar(20),
 		uf varchar(2),
 		imagem_base64 varchar,
-		is_verificado boolean
+		is_verificado boolean,
+		data_fundacao timestamp null,
+		nome_presidente varchar null
 	);		
 	
-		
+
 	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
 		id_usuario bigint,
@@ -106,6 +108,22 @@ CREATE DATABASE bd_sports
 		gols_marcados integer null
 	);
 	
+	
+	create table if not exists sys.agenda_evento_tb(
+		id_evento serial not null primary key,
+		data_hora_evento timestamp not null,
+		tipo_evento integer not null,
+		id_club1 bigint not null,
+		id_club2 bigint null,
+		endereco_resumido varchar,
+		imagem_base64 varchar,
+		observacoes varchar(300),
+		constraint id_club1_fk foreign key(id_club1)
+		references sys.club_tb(id_club),
+		constraint id_club2_fk foreign key(id_club2)
+		references sys.club_tb(id_club)
+	);
+	
 	--Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
@@ -133,7 +151,7 @@ select * from sys.responsavel_aluno_tb
 	from sys.responsavel_aluno_tb where id_aluno = 12
 	select * from sys.usuario_claim_tb
 	select * from sys.club_tb
-	select * from sys.club_tb where UPPER(nome_fantasia) like UPPER('%%')
+	select * from sys.club_tb where id_club = 23
 	
 	drop table sys.usuario_tb
 	drop table sys.usuario_claim_tb

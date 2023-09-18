@@ -7,15 +7,15 @@
     Layout = "_Layout";
 }
 
-<div class="mt-5 ">
+<div class="mt-5 container">
 
     @if (Model.Tipo == TipoUsuario.Aluno)
     {
-        @await Html.PartialAsync("Partial/CadastroAlunoPartial", Model)     
+        @await Html.PartialAsync("Partial/Aluno/CadastroAlunoPartial", Model)     
     }
     else if (Model.Tipo == TipoUsuario.Club)
     {
-        @await Html.PartialAsync("Partial/CadastroClubPartial", new ClubViewModel(Model?.Nome ?? "", Model?.Email ?? ""))
+        @await Html.PartialAsync("Partial/Club/CadastroClubPartial", new ClubViewModel(Model?.Nome ?? "", Model?.Email ?? ""))
     }
 
 </div>

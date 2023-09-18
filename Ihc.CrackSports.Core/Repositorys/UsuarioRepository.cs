@@ -1,7 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
-using Ihc.CrackSports.Core.Requests;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ihc.CrackSports.Core.Security;
+using Ihc.CrackSports.Core.Requests.Aluno;
 
 namespace Ihc.CrackSports.Core.Repositorys
 {

@@ -1,0 +1,110 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Clube;
+@model ClubViewModel
+
+<div class="container">
+
+    <h3 class="text-semi-bold-orange mt-5">Cadastro de Club</h3>
+    <hr />
+
+    <div class="mt-5 w-100 ">
+        <form asp-action="Cadastro" asp-controller="Club" method="post" enctype="multipart/form-data"
+              class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 3%;">
+
+            <input asp-for="DadosClub.Id" class="d-none" />
+            <input asp-for="DadosUsuario.Id" class="d-none" />
+            <input asp-for="DadosClub.ImagemBase64" class="d-none" />
+
+            <div class="d-block d-md-inline-flex g-width-10">
+                <!--Panel Imagem Club-->
+                <div class="text-center mt-4">
+                    @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
+                    {
+                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                    }
+                    else
+                    {
+                        var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
+                        <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                    }
+                    <br>
+                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImageClub()" />
+                    <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagemClub()"
+                            style="background-color: ghostwhite; color: brown;">
+                        Carregar
+                    </button>
+
+                </div>
+                <!--FIM Panel Imagem Club-->
+
+                <div id="pnlDadosClub" class="ms-3 g-width-9">
+
+                    <div class="form-outline mt-5 ag-field-content g-width-10">
+                        <input asp-for="DadosClub.Nome" type="text" id="txtNomeClube" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.Nome" required />
+                        <label id="txtNomeClubeLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeClube">Nome do Club*</label>
+                    </div>
+
+                    <div class="form-outline mt-5 ag-field-content g-width-5">
+                        <input asp-for="DadosClub.DataFundacao" type="date" id="txtDataFundacao" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.DataFundacao.ToString("yyyy-MM-dd")" required />
+                        <label id="txtDataFundacaoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataFundacao">Data de fundação*</label>
+                    </div>
+
+                    <div class="form-outline mt-5 ag-field-content g-width-10">
+                        <input asp-for="DadosClub.NomePresidente" type="text" id="txtNomePresidente" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" minLenght="4" autocomplete="off" value="@Model?.DadosClub?.NomePresidente" required />
+                        <label id="txtNomePresidenteLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomePresidente">Presidente do clube*</label>
+                    </div>
+
+                    <div class="d-inline-flex g-width-10">
+                        <div class="form-outline ag-field-content g-width-10">
+                            <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">Cidade</label>
+                        </div>
+
+                        <div class="form-outline ag-field-content g-width-4 ms-3">
+                            <input asp-for="DadosClub.Endereco.UF" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtNomeAlunoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeAluno">UF</label>
+                        </div>
+                    </div>
+
+                    <div id="pnlDadosUsuarioClub" class="mt-5">
+                        <h5 class="text-semi-bold-orange ">Dados de login</h5>
+                        <div class="form-outline  ag-field-content g-width-10 mt-5">
+                            <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
+                        </div>
+                        <div class="form-outline  ag-field-content g-width-10 ">
+                            <input asp-for="DadosUsuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+                        </div>
+                        <div class="form-outline  ag-field-content g-width-7">
+                            <input asp-for="DadosUsuario.PasswordHash" type="password" id="txtSenhaClub" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtSenhaClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha*</label>
+                        </div>
+                        <div class="form-outline mb-1 ag-field-content g-width-10 ">
+                            <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7 valida-campos-obrigatorios" autocomplete="off" required />
+                            <label id="txtConfirmaSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmaSenha">Confirmar Senha*</label>
+
+                            <br />
+                            <span id="lblSenhaInvalida" class="validacao-senha mt-5 d-none"><img src="~/imgs/excluir.png" /> As senhas não conferem!</span>
+                        </div>
+                    </div>
+
+                    <!-- Checkbox novidades e itens-->
+                    <div class="form-check">
+                        <label class="form-check-label" for="chkAutorizaEmailNovidades"> Desejo receber novidades, datas de eventos e itens dos Clubs por e-mail. </label>
+                        <input class="form-check-input form-checkbox-input" type="checkbox" id="chkAutorizaEmailNovidades" />
+                    </div>
+
+                    <div class="mt-5 mb-4" style="text-align: left; ">
+                        <button id="btnSalvarDadodsClub" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
+                        <a class=" btn-voltar mx-5" asp-controller="Home" asp-action="Index">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/Club/club.js" type="text/javascript" asp-append-version="true"></script>
+}

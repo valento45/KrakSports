@@ -28,7 +28,7 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
             }
         }
         public Endereco Endereco { get; set; }
+        public bool IsVerificado { get; set; }
 
-        
     }
 }

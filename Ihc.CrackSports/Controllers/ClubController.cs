@@ -6,6 +6,7 @@ using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.Core.Utils.Paginacoes;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Clube;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +20,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         private readonly IUsuarioService _usuarioService;
         private readonly IAlunoService _alunoService;
+        private readonly IClubApplication _clubApplication;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService) : base(clubService, user)
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication) : base(clubService, user)
         {
             _clubService = clubService;
             _usuarioService = usuarioService;
             _alunoService = alunoService;
+            _clubApplication = clubApplication;
         }
 
 
@@ -49,7 +52,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
             model.DadosUsuario = await _usuarioService.GetById(idUsuario);
 
-            return View("Partial/CadastroClubPartial", model);
+            return View("Partial/Club/CadastroClubPartial", model);
         }
 
         [HttpPost]
@@ -107,13 +110,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 var result = await _clubService.Salvar(model.DadosClub);
 
                 if (result.IsSuccessStatusCode)
-                    return View("Partial/CadastroClubPartial", model);
+                    return View("Partial/Club/CadastroClubPartial", model);
                 else
                     throw new Exception($"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}");
 
             }
 
-            return View("Partial/CadastroClubPartial", model);
+            return View("Partial/Club/CadastroClubPartial", model);
         }
 
 
@@ -156,6 +159,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             ViewBag.paginacao = result;
             return PartialView("Partial/_PartialClubs", result);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ApresentacaoClub(long idClub)
+        {
+            ClubViewModel result = await _clubApplication.GetClubViewModelByIdClube(idClub);
+
+            return View(result);
         }
     }
 }

@@ -2,31 +2,43 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4 mt-5">Seja bem vindo</h1>
-    <p class="mt-5">Para mais detalhes sobre as inscrições de atletas, clique em <a asp-action="Index" asp-controller="Usuario" class=" link-redirect-orange" style="color: #FA8C05 ;">Saiba mais</a>.</p>
+<div class="" style="height: 100vh; width: 100%; background-color: #800000; opacity: 75%;">
+    <img src="~/imgs/kraksports index.png" style="height: 90%; width: 100%;" />
 </div>
 
-<div class="mt-5">
+<div class="container" style="height: 100%;">
 
-    <div class="row-i">
-        <div class="card-i " style="height: 234px;">
-            <h2>Comunicação</h2>
-            <p>Converse e compartilhe experiências com outros atletas que estiverem online na página através de um mini chat.</p>
-            <img class="image-i" src="~/imgs/imgUsuarios.jpg" alt="money" />
+    <div class="text-center">
+        <h1 class="display-4 mt-5 text-semi-bold-orange ">Krak Sports</h1>
+        <p class="mt-5">Para mais detalhes sobre as inscrições de atletas, clique em <a asp-action="Index" asp-controller="Usuario" class=" link-redirect-orange" style="color: #FA8C05 ;">Saiba mais</a>.</p>
+    </div>
+
+    <div style="margin-top:5rem;">
+
+        <div class="row-i">
+            <div class="card-i " style="height: 234px;">
+                <h2>Comunicação</h2>
+                <p>Converse e compartilhe experiências com outros atletas que estiverem online na página através de um mini chat.</p>
+                <img class="image-i" src="~/imgs/imgUsuarios.jpg" alt="money" />
+            </div>
+
+            <div class="card-i " style="height: 234px;">
+                <h2>Personalização</h2>
+                <p>Configure dados de seu Clube, e personalize a camiseta de seu atleta.</p>
+                <img class="image-i" src="~/imgs/imgUsuario2.png" alt="settings" />
+            </div>
+
+            <div class="card-i" style="height: 234px;">
+                <h2>Artigos</h2>
+                <p>Crie e venda artigos de seu Clube para os atletas.</p>
+                <img class="image-i" src="~/imgs/imgFinanceiro.png" alt="article" />
+            </div>
+
         </div>
 
-        <div class="card-i " style="height: 234px;">
-            <h2>Personalização</h2>
-            <p>Configure dados de seu Clube, e personalize a camiseta de seu atleta.</p>
-            <img class="image-i" src="~/imgs/imgUsuario2.png" alt="settings" />
+        <div class="mt-5" style="text-align-last: center;">
+            <button id="btnJogarJunto" type="button" class="btn  btn-block btn-confirm-radius mb-4" 
+            style="width: 150px; margin-top: 4rem;">#Jogar junto </button>
         </div>
-
-        <div class="card-i" style="height: 234px;">
-            <h2>Artigos</h2>
-            <p>Crie e venda artigos de seu Clube para os atletas.</p>
-            <img class="image-i" src="~/imgs/imgFinanceiro.png" alt="article" />
-        </div>
-
     </div>
 </div>

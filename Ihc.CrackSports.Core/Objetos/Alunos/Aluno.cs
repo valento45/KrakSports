@@ -1,6 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
-using Ihc.CrackSports.Core.Requests;
+using Ihc.CrackSports.Core.Requests.Aluno;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -31,6 +31,11 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
         }
 
 
+        public async Task SendMessage(long idAluno, string message)
+        {
+
+        }
+
     }
 
     
