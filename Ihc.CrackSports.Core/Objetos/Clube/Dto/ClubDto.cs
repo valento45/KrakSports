@@ -21,6 +21,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public string imagem_base64 { get; set; }
         public DateTime data_fundacao { get; set; }
         public string nome_presidente { get; set; }
+        public long id_usuario { get; set; }
 
         public Club ToClub()
         {
@@ -42,6 +43,8 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
             club.ImagemBase64 = imagem_base64;
             club.DataFundacao = data_fundacao;
             club.NomePresidente = nome_presidente;
+            club.IdUsuario = id_usuario;
+            club.TipoUsuario = Enums.TipoUsuario.Club;
 
             return club;
         }

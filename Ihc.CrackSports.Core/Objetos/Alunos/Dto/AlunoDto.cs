@@ -58,7 +58,8 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos.Dto
                     CEP = cep,
                     Complemento = ""
                 },
-                CamisetaNumero = camiseta_numero
+                CamisetaNumero = camiseta_numero,
+                TipoUsuario = Enums.TipoUsuario.Aluno
             };
         }
     }

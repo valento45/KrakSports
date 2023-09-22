@@ -1,5 +1,14 @@
 ﻿@using Ihc.CrackSports.Core.Authorization.Claims;
 @using System.Security.Claims;
+@using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+@using Ihc.CrackSports.Core.Commands.Interfaces;
+@using Ihc.CrackSports.Core.Requests.Notifications;
+@inject IUsuarioContext _usuarioContext
+@inject INotificationCommand _notificationCommand
+@{
+    var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
+    _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -42,29 +51,60 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav">
+
+                        @if (User?.IsAuthenticated() ?? false)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-right tooltip-bottom">
+                                    <!--Sino de notificacoes-->
+                                    <a class="nav-link notifications p-0" href="#" onclick="openCloseNotificacoes()">
+                                        <div id="pnlNotificationsNaoVistas">
+                                            @if (_usuarioContext.CountNotificationsNaoVistas() > 0)
+                                            {
+
+                                                <div style="background-color: red;color: ghostwhite; border-radius: 50px; width: 15px; height: 15px; display: initial;
+position: absolute; margin-left: 20px;" class="text-center">
+                                                    <span id="txtNotificationsNVistas" style="font-size: 10px; display: block;">@_usuarioContext.CountNotificationsNaoVistas()</span>
+                                                </div>
+
+                                            }
+                                        </div>
+                                        <img class="img-icon-nav " src="~/imgs/sino-icon.png" />
+                                    </a>
+                                    <!--FIM Sino de notificacoes-->
+                                    <span class="tooltiptext">Notificações</span>
+                                </div>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <div class="nav-right">
+
                                 @if (User?.IsAuthenticated() ?? false)
                                 {
                                     <div class="d-inline-flex" style="height: 30px; align-items: center;">
 
-                                        <a class="nav-link " href="#" onclick="redirectMinhaConta(@User.GetTipoUsuario())">
-                                            @if (!User.HasImage())
-                                            {
-                                                <img class="img-icon-nav mx-2" src="~/imgs/login-white.png" />
-                                            }
-                                            else
-                                            {
-                                                var imagem = String.Format("data:image/png;base64,{0}", User.GetImage());
-                                                <img class="img-icon-nav mx-2" src="@imagem" />
-                                            }
-                                            Minha conta
-                                        </a>
+                                        <div class="tooltip-bottom">
+                                            <a class="nav-link " href="#" onclick="redirectMinhaConta(@User.GetTipoUsuario())">
+                                                @if (!_usuarioContext.HasImage())
+                                                {
+                                                    <img class="img-icon-nav ms-2" src="~/imgs/login-white.png" />
+                                                }
+                                                else
+                                                {
+                                                    var imagem = String.Format("data:image/png;base64,{0}", _usuarioContext.GetImage());
+                                                    <img class="img-icon-nav ms-2" src="@imagem" />
+                                                }
+                                            </a>
+                                            <span class="tooltiptext">Conta</span>
+                                        </div>
 
-                                        <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Logout">
-                                            <img class="img-icon-nav mx-2" src="~/imgs/Exit_house.png" />
-                                            Sair
-                                        </a>
+                                        <div class="tooltip-bottom">
+                                            <a class="nav-link tooltip-bottom " asp-area="" asp-controller="Home" asp-action="Logout">
+                                                <img class="img-icon-nav mx-2" src="~/imgs/Exit_house.png" />
+                                            </a>
+                                            <span class="tooltiptext" style="width: 100%;margin-left: -30px; ">Sair</span>
+                                        </div>
                                     </div>
                                 }
                                 else
@@ -83,6 +123,12 @@
         </nav>
     </header>
 
+    @if (User?.IsAuthenticated() ?? false)
+    {
+        <div id="pnlNotificacoes" class="bar-notifications mt-5 d-none g-width-5 modal scroll-brown">
+            @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial",_usuarioContext.GetNotificacoes())
+        </div>
+    }
     <main role="main" class="pb-3">
         @RenderBody()
     </main>

@@ -10,20 +10,114 @@ connection.start().then(function () {
 });
 
 connection.on("refreshNotification", (user, title, message, link) => {
-    
+    alert("Solicitacao recebida");
+
+
     $("#notifications").html("ADDED by <b>" + user + "</b>");
     window.setTimeout(function () {
         $("#notifications").html("NOTIFICATIONS");
     }, 10000);
+
+    atualizaNotificacoes();
 });
+
+function atualizaNotificacoes() {
+    var txtNotificacoesNaoVistas = document.getElementById("txtNotificationsNVistas");
+
+    if (txtNotificacoesNaoVistas.innerText) {
+        var notifys = + txtNotificacoesNaoVistas.innerText;
+        notifys += 1;
+
+        txtNotificacoesNaoVistas.innerText = notifys;
+
+    }
+    else {
+        $("#pnlNotificationsNaoVistas").empty();
+        $("#pnlNotificationsNaoVistas").html(`<div style="background-color: red;color: ghostwhite; border-radius: 50px; width: 15px; height: 15px; display: initial;
+position: absolute; margin-left: 20px;" class="text-center">
+            <span id="txtNotificationsNVistas" style="font-size: 10px; display: block;">1</span>
+        </div>`);
+    }
+
+//    document.getElementById("pnlNotifications").innerHTML += `<div id="solicitacao" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
+//    <div class="col-lg-2 col-md-2">
+//        var imagem = String.Format("data:image/png;base64,{0}", al.From.FotoAlunoBase64);
+//        <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
+//    </div>
+
+//    <div class="ms-2 col-lg-9 col-md-9">
+//        <p><b>@al.From.Nome.ToUpper()</b> @notificacao.Notificacao</p>
+
+//        <a class="btn btn-block btn-confirm-radius" onclick="aceitarSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Confirmar</a>
+//        <a class="btn btn-block btn-confirm-radius" onclick="excluirSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Excluir</a>
+
+//    </div>
+
+//</div>`;
+
+}
+function StartConnection() {
+    connection.start().then(function () {
+        isConnected = true;
+        return isConnected;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+function IsConnected() {
+    return connection._connectionState == "Connected";
+}
 
 
 function enviaSolicitacaoClub(idClub) {
     connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
         return console.error(err.toString());
-    });    
+    });
+    alert("solicitação enviada com sucesso!");
 }
 
 
 
+
+function openCloseNotificacoes() {
+    if ($("#pnlNotificacoes").hasClass("d-none")) {
+        $("#pnlNotificacoes").removeClass("d-none");
+        $("#pnlNotificacoes").show();
+    } else {
+        $("#pnlNotificacoes").addClass("d-none");
+        $("#pnlNotificacoes").hide();
+    }
+
+}
+
+function excluirSolicitacaoAluno(notificacao) {
+    if (!IsConnected()) {
+        StartConnection();
+    }
+
+
+    if (isConnected) {
+        connection.invoke("ExcluirSolicitacaoAluno", notificacao.IdNotificacao).catch(function (err) {
+            return console.error(err.toString());
+
+        });
+
+        $(`#solicitacao` + notificacao.IdNotificacao).remove();
+    }
+}
+function aceitarSolicitacaoAluno(notificacao) {
+
+    if (!IsConnected()) {
+        isConnected = StartConnection();
+    }
+
+    if (isConnected) {
+        connection.invoke("AceitarSolicitacaoAluno", notificacao.IdClub, notificacao.IdAluno).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        $(`#solicitacao` + notificacao.IdNotificacao).remove();
+    }
+
+}
 

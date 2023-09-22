@@ -1,5 +1,7 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Extensions;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
@@ -13,13 +15,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
 {
 	public class AlunoController : ControllerBase
 	{
-		private readonly IAlunoService _alunoService;
-		private readonly IClubService _clubService;
+		
 
-		public AlunoController(IAlunoService alunoService, IClubService clubService, UserManager<Usuario> userManager) : base(alunoService, userManager)
+		public AlunoController(IAlunoService alunoService, IClubService clubService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor)
 		{
-			_alunoService = alunoService;
-			_clubService = clubService;
+			
 		}
 
 
@@ -30,9 +30,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		{
 
 			await base.RefreshImageUser(User);
+			
 
 
-			DadosAlunoViewModel obj = new DadosAlunoViewModel
+            DadosAlunoViewModel obj = new DadosAlunoViewModel
 			{
 				DadosAluno = await _alunoService.GetById(idAluno),
 				Clubs = await _clubService.ObterByNome(string.Empty, 0) ?? new List<Core.Objetos.Clube.Club>()
@@ -54,7 +55,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 					await request.File.CopyToAsync(ms);
 					request.DadosAluno.FotoAlunoBase64 = Convert.ToBase64String(ms.ToArray());
 				}
-				Roles.SetImage(request.DadosAluno.FotoAlunoBase64);			
+				HttpContext.Session.SetString("photo", request.DadosAluno.FotoAlunoBase64);			
 
 			}
 

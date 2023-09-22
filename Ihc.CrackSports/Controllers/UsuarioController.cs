@@ -1,5 +1,7 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Enums;
@@ -19,17 +21,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
     {
         protected readonly IUsuarioService _usuarioService;
 
-        private readonly IAlunoService _alunoService;
-        private readonly IClubService _clubService;
+
         private readonly IAlunoApplication _alunoApplication;
         private readonly IClubApplication _clubApplication;
 
         public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService,
-            IAlunoApplication alunoApplication, IClubApplication clubApplication ) : base(alunoService, user)
+            IAlunoApplication alunoApplication, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor ) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor)
         {
-            _usuarioService = usuarioService;
-            _alunoService = alunoService;
-            _clubService = clubService;
+            _usuarioService = usuarioService;           
             _alunoApplication = alunoApplication;
             _clubApplication = clubApplication;
         }
@@ -40,6 +39,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
 
             return View();
         }
@@ -106,6 +106,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> MinhaConta(long idUsuario, TipoUsuario tipoUsuario)
         {
             await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
 
             if (User.IsAuthenticated())
             {

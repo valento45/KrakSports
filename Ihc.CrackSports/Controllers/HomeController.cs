@@ -1,5 +1,8 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands;
+using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
@@ -22,7 +25,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService) : base(clubService, alunoService, userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService, INotificationCommand notificationCommand,
+             IUsuarioContext httpContextAccessor) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor)
         {
             _logger = logger;
             _alunoService = alunoService;
@@ -35,6 +39,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             if (User != null)
             {
                 await base.RefreshImageUser(User);
+                await base.RefreshNotifications(User);
             }
 
             return View();
@@ -55,6 +60,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+           
 
             if (ModelState.IsValid)
             {
@@ -70,8 +76,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
-
-            await HttpContext.SignOutAsync("cookies");
+            if (HttpContext != null)
+                await HttpContext?.SignOutAsync("cookies");
             return View("Login");
         }
 
@@ -85,6 +91,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> About()
         {
             await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
             return View();
         }
 

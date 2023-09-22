@@ -1,5 +1,5 @@
 ﻿$(document).ready(() => {
-   
+
 });
 
 
@@ -16,7 +16,7 @@ function saveImageClub() {
 }
 
 function continuarCadastroClub() {
-    nome = $("#txtNomeClub").val();    
+    nome = $("#txtNomeClub").val();
     email = $("#txtEmailClub").val();
     cpfCnpj = 0;
     tipoUsuario = 1;
@@ -34,13 +34,42 @@ function redirectDadosClub(idClub) {
 function onClickAlterarCamisa(idAluno) {
     $("#modal").load("../Club/AtualizarCamisa?idAluno=" + idAluno, function () {
         $("#modal").modal();
-       
+
         $("#modal").show();
-        
+
     });
 }
 
 
 function closeModalAlterarCamisa() {
     $("#modal").hide();
+}
+
+function hideTabs() {
+    $("#pnlSobreClube").addClass("d-none");
+    $("#pnlAtletasClube").addClass("d-none");
+    $("#pnlContatosClube").addClass("d-none");
+
+    $("#tabSobre").removeClass("active");
+    $("#tabAtletas").removeClass("active");
+    $("#tabContatos").removeClass("active");
+}
+
+function onClickTabSobre() {
+    hideTabs();
+
+    $("#pnlSobreClube").removeClass("d-none");
+    $("#tabSobre").addClass("active");
+}
+function onClickTabAtletas() {
+    hideTabs();
+
+    $("#pnlAtletasClube").removeClass("d-none");
+    $("#tabAtletas").addClass("active");
+}
+function onClickTabContatos() {
+    hideTabs();
+
+    $("#pnlContatosClube").removeClass("d-none");
+    $("#tabContatos").addClass("active");
 }

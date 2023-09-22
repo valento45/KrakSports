@@ -95,11 +95,13 @@ CREATE DATABASE bd_sports
 		id_club bigint not null,
 		data_solicitacao timestamp not null,
 		is_aceito boolean null,
+		is_visto boolean null,
 		constraint id_aluno_fk foreign key(id_aluno)
 		references sys.aluno_tb(id_aluno),
 		constraint id_club_gk foreign key(id_club)
 		references sys.club_tb(id_club)
 	);
+
 	
 	create table if not exists sys.aluno_club_tb(
 		id_aluno bigint not null,
@@ -142,17 +144,21 @@ delete from sys.usuario_claim_tb
 delete from sys.aluno_tb
 delete from sys.responsavel_aluno_tb
 
-
+select * from sys.solicitacao_aluno_club_tb
 select * from sys.responsavel_aluno_tb
 	select* from sys.aluno_tb where id_aluno = 12
-	select  * from sys.usuario_tb
+	select  * from sys.usuario_tb where id_usuario = 33 order by id_usuario desc
 	
 	select id_responsavel as Id, id_aluno as IdAluno, nome_responsavel as Nome, documento_responsavel as Documento, cpf_responsavel as CpfCnpj, grau_parentesco as GrauParentesco 
 	from sys.responsavel_aluno_tb where id_aluno = 12
 	select * from sys.usuario_claim_tb
 	select * from sys.club_tb
-	select * from sys.club_tb where id_club = 23
+	select * from sys.club_tb where id_club = 33
 	
+	select * from sys.club_tb where id_usuario =33
+
+	select * from sys.solicitacao_aluno_club_tb where id_club = 23 LIMIT 50
+select * from sys.solicitacao_aluno_club_tb where id_club = 23 order by data_solicitacao desc LIMIT 50
 	drop table sys.usuario_tb
 	drop table sys.usuario_claim_tb
 	drop table sys.club_tb

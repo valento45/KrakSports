@@ -7,12 +7,12 @@
 
 <div class="container">
 
-    <h4 class="mt-5 text-semi-bold-orange">Sobre o Clube</h4>
+    <h4 class="mt-5 text-semi-bold-orange">Informações do Clube</h4>
     <hr class="hr-brown" />
 
 
-    <div class="g-width-10 d-inline-flex club-apresentacao">
-        <div id="pnlDadosGeraisClube" class="g-width-2 " style="border: 1px solid brown; border-radius: 40px;">
+    <div class="d-block d-md-inline-flex mt-5 g-width-10 club-apresentacao">
+        <div id="pnlDadosGeraisClube" class="col-lg-9 col-md-9 col-xxl-2">
             <div class="text-center">
 
                 @if (string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
@@ -33,16 +33,39 @@
         <div id="pnlOpcoes" class="g-width-8 ms-3">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Sobre o clube</a>
+                    <a id="tabSobre" class="nav-link active" href="#" onclick="onClickTabSobre()">Sobre o clube</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Atletas</a>
+                    <a id="tabAtletas" class="nav-link" href="#" onclick="onClickTabAtletas()">Atletas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contatos</a>
+                    <a id="tabContatos" class="nav-link" href="#" onclick="onClickTabContatos()">Contatos</a>
                 </li>
-               
             </ul>
+
+            <div id="pnlSobreClube" class="mt-5" style="min-height: 150px;">
+                <p style="max-width: 600px; margin-left: 50px;">
+                    Fundado em 1977, nosso clube tem como objetivo promover o acesso ao esporte para a parte mais carente da sociedade, identificando as necessidades através de visitas e promovendo associações com as comunidades interessadas.
+                    Nosso projeto se extende, e completamos longos anos.
+                </p>
+            </div>
+            <div id="pnlAtletasClube" class="d-none" style="min-height: 150px;">
+                <div style=" margin-left: 20px;">
+                    <!--Dados atletas-->
+                    @await Html.PartialAsync("Partial/Club/_AtletasClubPartial", Model.Atletas)
+                    <!--FIM Dados atletas-->
+                </div>
+
+            </div>
+            <div id="pnlContatosClube" class="d-none" style="min-height: 150px;"></div>
+
+            <div style="text-align: end;">
+                <a id="btnEnviarSolicitacaoAluno" class="btn  btn-block btn-confirm-radius" onclick="enviaSolicitacaoClub(@Model.DadosClub.Id)">Participar deste clube</a>
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/Club/club.js"></script>
+}

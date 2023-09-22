@@ -1,4 +1,7 @@
-﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+﻿using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Notifications.Base;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -11,10 +14,16 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
     public class NotificationHub : Hub
     {
         private readonly INotificationCommand _notificationCommand;
+        private readonly IAlunoCommand _alunoCommand;
+        private readonly IClubCommand _clubCommand;
+        private readonly IUsuarioContext _usuarioContext;
 
-        public NotificationHub(INotificationCommand notificationCommand)
+        public NotificationHub(INotificationCommand notificationCommand, IAlunoCommand alunoCommand, IClubCommand clubCommand, IUsuarioContext usuarioContext)
         {
             _notificationCommand = notificationCommand;
+            _alunoCommand = alunoCommand;
+            _clubCommand = clubCommand;
+            _usuarioContext = usuarioContext;
         }
 
 
@@ -24,16 +33,35 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
             await Clients.User(user).SendAsync("refreshNotification", title, message, link);
         }
 
-        public async Task SendSolicitacaoAlunoToClub(long idALuno, long idClub)
+        public async Task SendSolicitacaoAlunoToClub(long idUsuario, long idClub)
         {
-            await _notificationCommand.TrataEnvioSolicitacaoAlunoToClub(idALuno, idClub);
-            await Clients.User(idClub.ToString()).SendAsync("refreshNotification", "Solicitação de aluno", "Uma solicitação de aluno foi recebida.", "http://teste/solicitacao/1123");
+
+            var aluno = await _alunoCommand.GetByIdUsuario(idUsuario);
+            var UserClub = await _clubCommand.ObterById(idClub);
+
+            await _notificationCommand.TrataEnvioSolicitacaoAlunoToClub(aluno.Id, idClub);           
+           
+            await Clients.User(UserClub.IdUsuario.ToString()).SendAsync("refreshNotification", "Solicitação de aluno", "Uma solicitação de aluno foi recebida.", "http://teste/solicitacao/1123");
+        }        
+
+        public async Task AceitarSolicitacaoAluno(long idClub, long idAluno)
+        {           
+            var solicitacao = new SolicitacaoAlunoClub { IdClub =  idClub, IdAluno = idAluno };
+
+            var success = await _notificationCommand.AceitarSolicitacao(solicitacao);
+
+            if(!success)            
+                throw new Exception("Não foi possível aceitar a solicitação no momento, tente mais tarde.");
+            
         }
 
+        public async Task ExcluirSolicitacaoAluno(long idNotificacao )
+        {            
 
-        public async Task SendMessage(long idAluno, string message)
-        {
+            var success = await _notificationCommand.RemoverSolicitacao(idNotificacao);
 
+            if (!success)
+                throw new Exception("Não foi possível excluir a solicitação no momento, tente mais tarde.");
         }
 
     }

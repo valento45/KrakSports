@@ -3899,14 +3899,13 @@ textarea.form-control-lg {
 }
 .nav-tabs .nav-link {
   margin-bottom: -1px;
-  background: none;
-  border: 1px solid transparent;
+  background: none;  
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
   border-color: #e9ecef #e9ecef #dee2e6;
-  isolation: isolate;
+ 
 }
 .nav-tabs .nav-link.disabled {
   color: #6c757d;

@@ -1,5 +1,7 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Clube;
@@ -22,7 +24,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubApplication _clubApplication;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication) : base(clubService, user)
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor)
         {
             _clubService = clubService;
             _usuarioService = usuarioService;
@@ -35,6 +37,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> Index()
         {
             await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
+
             return View();
         }
 
@@ -46,6 +50,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 throw new ArgumentNullException("Usuário inválido !");
 
             await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
 
             ClubViewModel model = new ClubViewModel();
 
@@ -102,7 +107,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     {
                         await model.File.CopyToAsync(ms);
                         model.DadosClub.ImagemBase64 = Convert.ToBase64String(ms.ToArray());
-                        Roles.SetImage(model.DadosClub.ImagemBase64);
+                        HttpContext.Session.SetString("photo", model.DadosClub.ImagemBase64);
 
                     }
                 }
@@ -123,6 +128,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> AtualizarCamisa(int idAluno)
         {
+            await base.RefreshNotifications(User);
             var aluno = await _alunoService.GetById(idAluno);
 
             return View("Partial/Club/_ModalAlterarCamisa", aluno);
@@ -142,6 +148,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> VerClubs(int limite)
         {
+            await base.RefreshNotifications(User);
+
             var clubes = await _clubService.ObterTodos(limite);
             var result = new PaginacaoClubViewModel(new Paginacao<Club>(clubes?.AsQueryable(), 1, 10));
 
@@ -165,7 +173,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ApresentacaoClub(long idClub)
         {
+            await base.RefreshNotifications(User);
             ClubViewModel result = await _clubApplication.GetClubViewModelByIdClube(idClub);
+            result.Atletas.CanUpdate = false;
 
             return View(result);
         }

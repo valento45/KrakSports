@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Extensions;
+using Ihc.CrackSports.Core.Objetos.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
 {
-    public abstract class PessoaBase
+    public  class PessoaBase
     {
         public long Id { get; set; }
         /// <summary>
@@ -29,6 +30,7 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
         }
         public Endereco Endereco { get; set; }
         public bool IsVerificado { get; set; }
+        public TipoUsuario TipoUsuario { get; set; }
 
     }
 }

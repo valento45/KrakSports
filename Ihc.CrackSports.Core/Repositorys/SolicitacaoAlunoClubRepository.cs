@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Clube.Dto;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests.Clube.Solicitacoes;
@@ -14,14 +15,22 @@ namespace Ihc.CrackSports.Core.Repositorys
 {
     public class SolicitacaoAlunoClubRepository : RepositoryBase, ISolicitacaoClubAlunoRepository
     {
-        public SolicitacaoAlunoClubRepository(IDbConnection connection) : base(connection)
-        {
+        private readonly IAlunoRepository alunoRepository;
 
+        public SolicitacaoAlunoClubRepository(IDbConnection connection, IAlunoRepository alunoRepository) : base(connection)
+        {
+            this.alunoRepository = alunoRepository;
         }
 
-        public Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao)
+        public async Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao)
         {
-            throw new NotImplementedException();
+            string query = $"update sys.aluno_tb set id_club = {solicitacao.IdClub} where id_aluno = {solicitacao.IdAluno}";
+            await base.ExecuteAsync(query);
+
+            query = $"update sys.solicitacao_aluno_club_tb set is_aceito = true where id_aluno = {solicitacao.IdAluno} AND id_club = {solicitacao.IdClub}";
+            await base.ExecuteAsync(query);
+
+            return true;
         }
 
         public async Task<SolicitacaoAlunoClub> EnviarSolicitacao(SolicitacaoAlunoClubRequest solicitacao)
@@ -32,7 +41,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             NpgsqlCommand cmd = new NpgsqlCommand(query);
             cmd.Parameters.AddWithValue(@"id_aluno", solicitacao.Solicitacao.IdAluno);
             cmd.Parameters.AddWithValue(@"id_club", solicitacao.Solicitacao.IdClub);
-            cmd.Parameters.AddWithValue(@"data_solicitacao", solicitacao.Solicitacao.DataSolicitacao);
+            cmd.Parameters.AddWithValue(@"data_solicitacao", solicitacao.Solicitacao.DataNotificacao);
             cmd.Parameters.AddWithValue(@"is_aceito", solicitacao.Solicitacao.IsAceito);
 
 
@@ -48,15 +57,37 @@ namespace Ihc.CrackSports.Core.Repositorys
             }
             else
                 throw new Exception("Erro ao enviar solicitação ao club." + nameof(SolicitacaoAlunoClubRepository));
-        }        
-
-        public Task<bool> RemoverSolicitacao(long idSolicitacao)
-        {
-            throw new NotImplementedException();
         }
-        public Task<bool> PossuiSolicitacaoPendente(long idAluno)
+
+        public async Task<bool> RemoverSolicitacao(long idSolicitacao)
         {
-            throw new NotImplementedException();
+            string query = "delete from sys.solicitacao_aluno_club_tb where id_solicitacao = " + idSolicitacao;
+            return await base.ExecuteAsync(query);
+        }
+
+        public async Task<bool> PossuiSolicitacaoPendente(long idAluno)
+        {
+            string query = "select count(*) from sys.solicitacao_aluno_club_tb where id_aluno = " + idAluno;
+
+            var result = await base.QueryAsync(query);
+
+            return result.FirstOrDefault() > 0;
+        }
+
+        public async Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube)
+        {
+            string query = $"select * from sys.solicitacao_aluno_club_tb where id_club = {idClube} and is_aceito = false order by data_solicitacao desc LIMIT 50";
+            var result = await base.QueryAsync<SolicitacaoAlunoDto>(query);
+
+            return result.Select(x => x.ToSolicitacao());
+        }
+
+        public async Task<SolicitacaoAlunoClub> ObterSolicitacaoById(long idSolicitacao)
+        {
+            string query = $"select * from sys.solicitacao_aluno_club_tb where id_solicitacao = {idSolicitacao} LIMIT 1";
+            var result = await base.QueryAsync<SolicitacaoAlunoDto>(query);
+
+            return result.FirstOrDefault().ToSolicitacao();
         }
     }
 }

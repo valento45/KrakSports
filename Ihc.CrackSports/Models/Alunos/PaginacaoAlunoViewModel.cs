@@ -14,7 +14,7 @@ namespace Ihc.CrackSports.WebApp.Models.Alunos
         public bool PreviousPage { get; set; }  
         public bool FirstPage { get;set; }
         public bool LastPage { get; set; }
-
+        public bool CanUpdate { get; set; } = true;
         public Paginacao<Aluno> AlunosPaginado { get; private set; }
 
         public void Refresh()

@@ -1,0 +1,63 @@
+﻿@using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+@using Ihc.CrackSports.Core.Commands.Interfaces;
+@using Ihc.CrackSports.Core.Objetos.Alunos;
+@using Ihc.CrackSports.Core.Objetos.Clube;
+@using Ihc.CrackSports.Core.Objetos.Notifications.Base;
+@using Newtonsoft.Json;
+@model List<NotificationBase>
+
+
+<div class="row g-width-10 ">
+
+    <div class=" mb-3" style="display: flex;    flex-shrink: 0;    align-items: center;    justify-content: space-between;">
+        <h4 class="mx-2 " style="color: #F9D19F;">Notificações</h4>
+        <a class="link-redirect-orange" style="color: #F9D19F;cursor: pointer;font-weight: bold; font-size: 25px; margin-right: 10px;" onclick="openCloseNotificacoes()">X</a>
+    </div>
+    <hr class="hr-light" />
+    <div id="pnlNotifications" style="width: 100% !important;">
+        @foreach (var notificacao in Model)
+        {
+            <div id="solicitacao@(notificacao.IdNotificacao)" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
+                @if (notificacao is SolicitacaoAlunoClub al)
+                {
+                    <div class="col-lg-2 col-md-2">
+
+                        @if (string.IsNullOrEmpty(al.From.FotoAlunoBase64))
+                        {
+                            <img class="img-icon-nav ms-2" src="~/imgs/sem_imagem.png" style="width: 60px;    height: 60px;" />
+                        }
+                        else
+                        {
+                            var imagem = String.Format("data:image/png;base64,{0}", al.From.FotoAlunoBase64);
+                            <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
+                        }
+
+                    </div>
+                    <div class="ms-2 col-lg-9 col-md-9">
+                        <p><b>@al.From.Nome.ToUpper()</b> @notificacao.Notificacao</p>
+
+                        @if (notificacao.Tipo == Ihc.CrackSports.Core.Objetos.Notifications.TipoNotificacao.SolicitacaoAluno)
+                        {
+                            <a class="btn btn-block btn-confirm-radius" onclick="aceitarSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Confirmar</a>
+                            <a class="btn btn-block btn-confirm-radius" onclick="excluirSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Excluir</a>
+                        }
+                    </div>
+                }
+                else if (notificacao is NotificationBase nf)
+                {
+                    <div class="col-lg-2 col-md-2">
+                        <img class="img-icon-nav ms-2" src="~/imgs/sino-icon.png" style="width: 60px;    height: 60px;" />
+                    </div>
+                    <div class="ms-2 col-lg-9 col-md-9">
+                        <p> @notificacao.Notificacao</p>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+    @if (!Model.Any())
+    {
+        <a>Você não possui notificações.</a>
+    }
+</div>
+

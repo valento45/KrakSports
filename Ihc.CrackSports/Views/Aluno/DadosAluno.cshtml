@@ -74,8 +74,8 @@
                 <h5 class="text-semi-bold-orange mt-5">Dados do Club</h5>
                 <div class="form-outline  mt-5 ag-field-content g-width-10">
 
-                    <select asp-for="DadosAluno.IdClub" id="cmbClub" class="form-select ag-field-input ag-input-color-light-full">
-                        <option selected>Selecionar</option>
+                    <select asp-for="DadosAluno.IdClub" id="cmbClub" class="form-select ag-field-input ag-input-color-light-full" disabled>
+                        <option selected>N/a</option>
                         @foreach( var obj in Model.Clubs)
                         {
                             <option value="@obj?.Id">@obj?.Nome</option>

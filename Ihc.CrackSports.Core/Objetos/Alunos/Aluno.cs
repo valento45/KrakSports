@@ -15,32 +15,41 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
     public class Aluno : PessoaFisica
     {
         private byte[] _fotoAlunoBytes { get; set; }
-       
+        private string _fotoAlunoBase64 { get; set; }
 
         public long IdClub { get; set; }
         public long IdUsuario { get; set; }
         public string PosicaoJogador { get; set; }
         public int CamisetaNumero { get; set; }
-        public string FotoAlunoBase64 { get; set; }       
+        public string FotoAlunoBase64
+        {
+            get
+            {
+                return _fotoAlunoBase64;
+            }
+            set
+            {
+
+                _fotoAlunoBase64 = value;
+            }
+        }
+
         public Responsavel Responsavel { get; set; }
         public Usuario Usuario { get; set; }
         public bool HasEditResponsavel { get; set; }
 
         public byte[] GetBytesFotoAluno()
         {
-            if(_fotoAlunoBytes == null)
+            if (_fotoAlunoBytes == null)
             {
                 _fotoAlunoBytes = Convert.FromBase64String(this.FotoAlunoBase64);
             }
             return _fotoAlunoBytes;
         }
 
-        public void SetBytesFotoAluno(byte[] byts)
-        {
-            _fotoAlunoBytes = byts;
-        }
 
-   
+
+
 
         public Aluno()
         {
@@ -98,7 +107,7 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             CamisetaNumero = dr["camiseta_numero"] != DBNull.Value ? int.Parse(dr["camiseta_numero"].ToString()) : -1;
         }
 
-        
+
         public void InformarResponsavel(Responsavel responsavel)
         {
             Responsavel = responsavel;

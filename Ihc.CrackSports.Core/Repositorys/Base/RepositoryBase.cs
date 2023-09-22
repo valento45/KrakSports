@@ -114,6 +114,22 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
 
         }
 
+        protected async Task<IEnumerable<int>> QueryAsync(string query, object param) 
+        {
+            try
+            {
+                return await _dbConnection.QueryAsync<int>(query, param);
+            }
+            catch (Exception ex)
+            {
+                await Console.Out.WriteLineAsync(ex.Message);
+                Message = ex.Message;
+                OperationSuccess = false;
+                return null;
+            }
+
+        }
+
         protected async Task<bool> ExecuteCommand(IDbCommand cmd)
         {
             try

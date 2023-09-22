@@ -1,4 +1,6 @@
 using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Authorization.Context;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.WebApp.Configurations.DependenciasInjection;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +12,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInjecaoDependencias(builder.Configuration);
 
 #region Config Identity Core
+
+
+//Configurando session
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<IUsuarioContext, UsuarioContext>();
 
 builder.Services.AddIdentityCore<Usuario>(options => { });
 builder.Services.AddScoped<IUserStore<Usuario>, UsuarioStore>();
@@ -39,8 +55,10 @@ app.UseHttpsRedirection();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-app.UseRouting();
+//Adiciona uso de session
+app.UseSession();
 
+app.UseRouting();
 app.UseAuthorization();
 
 app.MapHub<NotificationHub>("/notificationHub");
