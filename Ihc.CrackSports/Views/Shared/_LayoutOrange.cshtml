@@ -140,8 +140,8 @@ margin-left: 20px;" class="text-center">
     @if (User?.IsAuthenticated() ?? false)
     {
         <div id="pnlNotificacoes" class="bar-notifications mt-5 d-none g-width-5 modal scroll-brown">
-            @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial",_usuarioContext.GetNotificacoes())
-        </div>
+            @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial", await _usuarioContext.GetNotificacoes())
+        </div> 
     }
 
     <div class="container">

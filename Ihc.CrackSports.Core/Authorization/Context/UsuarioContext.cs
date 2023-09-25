@@ -1,7 +1,13 @@
-﻿using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+﻿using Ihc.CrackSports.Core.Authorization.Claims;
+using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+using Ihc.CrackSports.Core.Commands.Interfaces;
+
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Notifications.Base;
+using Ihc.CrackSports.Core.Requests.Notifications;
+using Ihc.CrackSports.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,10 +21,17 @@ namespace Ihc.CrackSports.Core.Authorization.Context
     public class UsuarioContext : IUsuarioContext
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAlunoService _alunoService;
+        private readonly IClubService _clubService;
 
-        public UsuarioContext(IHttpContextAccessor httpContextAccessor)
+
+        public UsuarioContext(IHttpContextAccessor httpContextAccessor, IAlunoService alunoService, IClubService clubService )
         {
             _httpContextAccessor = httpContextAccessor;
+            _alunoService = alunoService;
+            _clubService = clubService;
+      
+            
         }
 
 
@@ -53,7 +66,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context
             _httpContextAccessor.HttpContext.Session.Set("notificacoes", bytes);
         }
 
-        public List<NotificationBase> GetNotificacoes()
+        public async Task< List<NotificationBase>> GetNotificacoes()
         {
             byte[] bytes;
             _httpContextAccessor.HttpContext.Session.TryGetValue("notificacoes", out bytes);
@@ -65,6 +78,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context
 
                 return result.Select(x => x.ToBase()).ToList();
             }
+            
             return new List<NotificationBase>();
         }
 
@@ -80,7 +94,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context
 
                 return result.Count(x => !x.IsVisto);
             }
-           
+
             return 0;
         }
 
@@ -88,6 +102,30 @@ namespace Ihc.CrackSports.Core.Authorization.Context
         {
             byte[] bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(notificacoes.ToList()));
             _httpContextAccessor.HttpContext.Session.Set("notificacoes", bytes);
+        }
+
+        public async Task RefreshImage()
+        {
+            if (_httpContextAccessor != null)
+            {
+                if (!_httpContextAccessor.HttpContext.Session.Keys.Any(x => x == "photo"))
+                {
+                    if (_httpContextAccessor.HttpContext.User?.IsAuthenticated() ?? false)
+                    {
+                        if (_httpContextAccessor.HttpContext.User.IsAluno())
+                        {
+                            var aluno = await _alunoService.GetByIdUsuario(long.Parse(_httpContextAccessor.HttpContext.User.GetIdentificador()));
+
+                            this.SetImage(aluno.FotoAlunoBase64);
+                        }
+                        else if (_httpContextAccessor.HttpContext.User.IsClub())
+                        {
+                            var club = await _clubService.ObterByIdUsuario(long.Parse(_httpContextAccessor.HttpContext.User.GetIdentificador()));
+                            this.SetImage(club.ImagemBase64);
+                        }
+                    }
+                }
+            }
         }
     }
 }

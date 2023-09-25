@@ -101,6 +101,24 @@ CREATE DATABASE bd_sports
 		constraint id_club_gk foreign key(id_club)
 		references sys.club_tb(id_club)
 	);
+	
+	create table if not exists sys.notificacao_tb(
+		id_notificacao serial not null primary key,
+		id_aluno bigint  null,
+		id_club bigint null,
+		data_notificacao timestamp not null,
+		is_visto boolean null,
+		tipo_usuario integer not null,
+		notificacao varchar not null,
+		imagem_notificacao varchar null,
+		link_redirect varchar null,
+		constraint id_aluno_fk foreign key (id_aluno)
+		references sys.aluno_tb(id_aluno),
+		constraint id_club_fk foreign key (id_club)
+		references sys.club_tb(id_club)
+	);
+	
+	
 
 	
 	create table if not exists sys.aluno_club_tb(

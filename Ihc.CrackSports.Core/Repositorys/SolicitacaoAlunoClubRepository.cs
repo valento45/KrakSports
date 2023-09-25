@@ -24,13 +24,14 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao)
         {
+            bool sucesso = false;
             string query = $"update sys.aluno_tb set id_club = {solicitacao.IdClub} where id_aluno = {solicitacao.IdAluno}";
-            await base.ExecuteAsync(query);
+            sucesso = await base.ExecuteAsync(query);
 
             query = $"update sys.solicitacao_aluno_club_tb set is_aceito = true where id_aluno = {solicitacao.IdAluno} AND id_club = {solicitacao.IdClub}";
-            await base.ExecuteAsync(query);
+            sucesso = await base.ExecuteAsync(query);
 
-            return true;
+            return sucesso;
         }
 
         public async Task<SolicitacaoAlunoClub> EnviarSolicitacao(SolicitacaoAlunoClubRequest solicitacao)
@@ -88,6 +89,13 @@ namespace Ihc.CrackSports.Core.Repositorys
             var result = await base.QueryAsync<SolicitacaoAlunoDto>(query);
 
             return result.FirstOrDefault().ToSolicitacao();
+        }
+
+        public async Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao)
+        {
+            string query = "";
+
+            return true;
         }
     }
 }

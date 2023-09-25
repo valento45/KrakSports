@@ -27,11 +27,7 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
         }
 
 
-        public async Task SendNotification(string user, string title, string message, string link)
-        {
-            await _notificationCommand.TrataNotificacao(user, title, message, link);
-            await Clients.User(user).SendAsync("refreshNotification", title, message, link);
-        }
+        
 
         public async Task SendSolicitacaoAlunoToClub(long idUsuario, long idClub)
         {
@@ -42,7 +38,13 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
             await _notificationCommand.TrataEnvioSolicitacaoAlunoToClub(aluno.Id, idClub);           
            
             await Clients.User(UserClub.IdUsuario.ToString()).SendAsync("refreshNotification", "Solicitação de aluno", "Uma solicitação de aluno foi recebida.", "http://teste/solicitacao/1123");
-        }        
+        }
+
+        public async Task SendNotification(string user, string title, string message, string link)
+        {
+            await _notificationCommand.TrataNotificacao(user, title, message, link);
+            await Clients.User(user).SendAsync("refreshNotification", title, message, link);
+        }
 
         public async Task AceitarSolicitacaoAluno(long idClub, long idAluno)
         {           

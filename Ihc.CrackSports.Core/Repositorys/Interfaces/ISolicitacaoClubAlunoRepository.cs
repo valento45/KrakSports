@@ -16,5 +16,6 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<bool> PossuiSolicitacaoPendente(long idAluno);
         Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube);
         Task<SolicitacaoAlunoClub> ObterSolicitacaoById(long idSolicitacao);
+        Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao);
     }
 }

@@ -25,7 +25,7 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddSingleton<IUsuarioContext, UsuarioContext>();
+builder.Services.AddScoped<IUsuarioContext, UsuarioContext>();
 
 builder.Services.AddIdentityCore<Usuario>(options => { });
 builder.Services.AddScoped<IUserStore<Usuario>, UsuarioStore>();

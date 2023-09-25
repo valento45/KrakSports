@@ -10,7 +10,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context.Interfaces
     public interface IUsuarioContext
     {
 
-
+        public Task RefreshImage();
         public void SetImage(string imagebase64);
         public string GetImage();
         public bool HasImage();
@@ -18,7 +18,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context.Interfaces
 
         public void SetNotificacoes(List<NotificationBase> notificacoes);
         public void SetNotificacoes(IEnumerable<NotificationBase> notificacoes);
-        public List<NotificationBase> GetNotificacoes();
+        public Task<List<NotificationBase>> GetNotificacoes();
         public int CountNotificationsNaoVistas();
         
     }

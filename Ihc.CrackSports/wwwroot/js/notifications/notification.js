@@ -19,7 +19,23 @@ connection.on("refreshNotification", (user, title, message, link) => {
     }, 10000);
 
     atualizaNotificacoes();
+    refreshPartialViewNotifications();
 });
+
+function refreshPartialViewNotifications() {
+    util.ajax.get("../Notificacao/RefreshNotificationsPartialView", null,  refreshPartialViewNotificationsSuccesso, refreshPartialViewNotificationsErro);
+}
+
+function refreshPartialViewNotificationsSuccesso(data) {
+    if (data) {
+        $("#pnlNotificacoes").empty();
+
+        $("#pnlNotificacoes").html(data);
+    }
+}
+function refreshPartialViewNotificationsErro(data) {
+    alert("Erro ao atualizar as notificações.");
+}
 
 function atualizaNotificacoes() {
     var txtNotificacoesNaoVistas = document.getElementById("txtNotificationsNVistas");
@@ -39,21 +55,21 @@ position: absolute; margin-left: 20px;" class="text-center">
         </div>`);
     }
 
-//    document.getElementById("pnlNotifications").innerHTML += `<div id="solicitacao" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
-//    <div class="col-lg-2 col-md-2">
-//        var imagem = String.Format("data:image/png;base64,{0}", al.From.FotoAlunoBase64);
-//        <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
-//    </div>
+    //    document.getElementById("pnlNotifications").innerHTML += `<div id="solicitacao" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
+    //    <div class="col-lg-2 col-md-2">
+    //        var imagem = String.Format("data:image/png;base64,{0}", al.From.FotoAlunoBase64);
+    //        <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
+    //    </div>
 
-//    <div class="ms-2 col-lg-9 col-md-9">
-//        <p><b>@al.From.Nome.ToUpper()</b> @notificacao.Notificacao</p>
+    //    <div class="ms-2 col-lg-9 col-md-9">
+    //        <p><b>@al.From.Nome.ToUpper()</b> @notificacao.Notificacao</p>
 
-//        <a class="btn btn-block btn-confirm-radius" onclick="aceitarSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Confirmar</a>
-//        <a class="btn btn-block btn-confirm-radius" onclick="excluirSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Excluir</a>
+    //        <a class="btn btn-block btn-confirm-radius" onclick="aceitarSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Confirmar</a>
+    //        <a class="btn btn-block btn-confirm-radius" onclick="excluirSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Excluir</a>
 
-//    </div>
+    //    </div>
 
-//</div>`;
+    //</div>`;
 
 }
 function StartConnection() {
@@ -103,8 +119,14 @@ function excluirSolicitacaoAluno(notificacao) {
         });
 
         $(`#solicitacao` + notificacao.IdNotificacao).remove();
+        removedNotification();
+
     }
+
+
 }
+
+
 function aceitarSolicitacaoAluno(notificacao) {
 
     if (!IsConnected()) {
@@ -117,7 +139,20 @@ function aceitarSolicitacaoAluno(notificacao) {
         });
 
         $(`#solicitacao` + notificacao.IdNotificacao).remove();
+        removedNotification();
     }
 
+}
+
+function removedNotification() {
+    var txtNotificacoesNaoVistas = document.getElementById("txtNotificationsNVistas");
+
+    if (txtNotificacoesNaoVistas.innerText) {
+        var notifys = + txtNotificacoesNaoVistas.innerText;
+        notifys -= 1;
+
+        txtNotificacoesNaoVistas.innerText = notifys;
+
+    }
 }
 

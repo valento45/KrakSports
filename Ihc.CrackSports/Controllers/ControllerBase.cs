@@ -25,8 +25,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 {
     public class ControllerBase : Controller
     {
-        private readonly INotificationCommand _notificationCommand;
-        private readonly IUsuarioContext _usuarioContext;
+        protected readonly INotificationCommand _notificationCommand;
+        protected readonly IUsuarioContext _usuarioContext;
         protected IAlunoService _alunoService;
         protected IClubService _clubService;
         protected readonly UserManager<Usuario> _userManager;

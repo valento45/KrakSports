@@ -6,8 +6,17 @@
 @inject IUsuarioContext _usuarioContext
 @inject INotificationCommand _notificationCommand
 @{
-    var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-    _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+
+    if (User.IsAuthenticated())
+    {
+        var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+    }
+
+    if (!_usuarioContext.HasImage())
+    {
+       await _usuarioContext.RefreshImage();
+    }
 }
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -126,11 +135,26 @@ position: absolute; margin-left: 20px;" class="text-center">
     @if (User?.IsAuthenticated() ?? false)
     {
         <div id="pnlNotificacoes" class="bar-notifications mt-5 d-none g-width-5 modal scroll-brown">
-            @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial",_usuarioContext.GetNotificacoes())
+            @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial", await _usuarioContext.GetNotificacoes())
         </div>
     }
     <main role="main" class="pb-3">
         @RenderBody()
+
+        <div class="c-loader-overlay">
+            <div class="c-loader" id="c-loader">
+                <img src="~/img/loader.svg" width="250" alt="" />
+                @*<svg x="0px" y="0px" viewBox="0 0 242 234" style="enable-background:new 0 0 242 234;" xml:space="preserve">
+                <polygon fill="#fff" points="174,171.3 129.1,63.7 129,63.7 112,63.7 111.9,63.7 67,171.3 84.1,171.3 120.5,84.2 156.9,171.3 ">
+                <animate id="animation1"
+                attributeName="opacity"
+                from="0" to="1" dur="1s"
+                begin="0s;animation2.end" />
+
+                </polygon>
+                </svg>*@
+            </div>
+        </div>
     </main>
 
 
