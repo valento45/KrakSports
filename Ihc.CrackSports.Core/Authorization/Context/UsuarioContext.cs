@@ -56,8 +56,11 @@ namespace Ihc.CrackSports.Core.Authorization.Context
 
         public void SetImage(string imagebase64)
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(imagebase64);
-            _httpContextAccessor.HttpContext.Session.Set("photo", bytes);
+            if (!string.IsNullOrEmpty(imagebase64))
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(imagebase64);
+                _httpContextAccessor.HttpContext.Session.Set("photo", bytes);
+            }
         }
 
         public void SetNotificacoes(List<NotificationBase> notificacoes)
