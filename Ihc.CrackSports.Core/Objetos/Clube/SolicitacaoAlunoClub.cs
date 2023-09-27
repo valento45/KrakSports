@@ -82,7 +82,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
                 {
                     soli.IdSolicitacao = IdSolicitacao;
                     soli.IdAluno = IdAluno;
-                    soli.IdClub = IdAluno;
+                    soli.IdClub = IdClub;
                     soli.IsAceito = IsAceito;
                     soli.From = From;
                     soli.To = To;
