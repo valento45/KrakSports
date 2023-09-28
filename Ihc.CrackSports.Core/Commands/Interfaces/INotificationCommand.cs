@@ -13,16 +13,20 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
     {
         Task TrataNotificacao(string user, string title, string message, string link);
         Task TrataEnvioSolicitacaoAlunoToClub(long idAluno, long idClub);
-
-
         Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao);
         Task<bool> RemoverSolicitacao(long idSolicitacao);
         Task<bool> PossuiSolicitacaoPendente(long idAluno);
         Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube);
-
-
         Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes( NotificationRequest request);
         Task<SolicitacaoAlunoClub> ObterSolicitacaoAlunoById( long idSolicitacao);
-        
-    }
+
+
+        /// <summary>
+        /// Notificacao de Solicitacao Aluno-Clube
+        /// </summary>
+        /// <param name="solicitacao"></param>
+        /// <returns></returns>
+		Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao);
+
+	}
 }

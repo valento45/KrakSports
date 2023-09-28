@@ -124,5 +124,10 @@ namespace Ihc.CrackSports.Core.Commands
         {
            return await _solicitacaoClubAlunoRepository.ObterSolicitacaoById(idSolicitacao);    
         }
-    }
+
+		public async Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao)
+		{
+            return await _solicitacaoClubAlunoRepository.NotificarSolicitacaoAlunoAceito(solicitacao);
+		}
+	}
 }
