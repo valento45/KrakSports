@@ -10,7 +10,7 @@ connection.start().then(function () {
 });
 
 connection.on("refreshNotification", (user, title, message, link) => {
-    alert("Solicitacao recebida");
+    
 
 
     $("#notifications").html("ADDED by <b>" + user + "</b>");
@@ -40,7 +40,7 @@ function refreshPartialViewNotificationsErro(data) {
 function atualizaNotificacoes() {
     var txtNotificacoesNaoVistas = document.getElementById("txtNotificationsNVistas");
 
-    if (txtNotificacoesNaoVistas.innerText) {
+    if (txtNotificacoesNaoVistas && txtNotificacoesNaoVistas.innerText) {
         var notifys = + txtNotificacoesNaoVistas.innerText;
         notifys += 1;
 
@@ -85,10 +85,12 @@ function IsConnected() {
 }
 
 
-function enviaSolicitacaoClub(idClub) {
+function enviaSolicitacaoClub(idClub) {    
     connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
+        alert("Erro ao enviar solicitação. Tente mais tarde.")
         return console.error(err.toString());
     });
+
     alert("solicitação enviada com sucesso!");
 }
 

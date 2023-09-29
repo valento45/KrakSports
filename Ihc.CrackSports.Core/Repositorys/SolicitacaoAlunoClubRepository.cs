@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Clube.Dto;
+using Ihc.CrackSports.Core.Objetos.Enums;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests.Clube.Solicitacoes;
@@ -100,12 +101,12 @@ namespace Ihc.CrackSports.Core.Repositorys
 			NpgsqlCommand cmd = new NpgsqlCommand(query);
 			cmd.Parameters.AddWithValue(@"id_aluno", solicitacao.IdAluno);
 			cmd.Parameters.AddWithValue(@"id_club", solicitacao.IdClub);
-			cmd.Parameters.AddWithValue(@"data_notificacao", solicitacao.DataNotificacao);
-			cmd.Parameters.AddWithValue(@"is_visto", solicitacao.IsVisto);
-			cmd.Parameters.AddWithValue(@"tipo_usuario", solicitacao.Tipo);
-			cmd.Parameters.AddWithValue(@"notificacao", solicitacao.Notificacao);
+			cmd.Parameters.AddWithValue(@"data_notificacao", solicitacao?.DataNotificacao ?? DateTime.Now);
+			cmd.Parameters.AddWithValue(@"is_visto", solicitacao?.IsVisto ?? false);
+			cmd.Parameters.AddWithValue(@"tipo_usuario", (int)TipoUsuario.Aluno);
+			cmd.Parameters.AddWithValue(@"notificacao", solicitacao?.Notificacao ?? "");
 			cmd.Parameters.AddWithValue(@"imagem_notificacao", "");
-			cmd.Parameters.AddWithValue(@"link_redirect", solicitacao.LinkRedirect);
+			cmd.Parameters.AddWithValue(@"link_redirect", solicitacao?.LinkRedirect ?? "");
 
 			int codigo;
 			var result = await base.ExecuteScalarAsync(cmd);

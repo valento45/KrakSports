@@ -182,5 +182,9 @@ select * from sys.solicitacao_aluno_club_tb where id_club = 23 order by data_sol
 	drop table sys.club_tb
 	drop table sys.aluno_tb
 	drop table sys.responsavel_aluno_tb
-
+	
+	
+	insert into sys.notificacao_tb (id_aluno, id_club, data_notificacao, is_visto, tipo_usuario, notificacao, imagem_notificacao,
+									link_redirect) values (22, 23, now(), false, @tipo_usuario, @notificacao,
+														   @imagem_notificacao, @link_redirect) returning id_notificacao
 

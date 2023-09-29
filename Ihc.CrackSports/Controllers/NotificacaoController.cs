@@ -1,7 +1,9 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Authorization.Context;
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Requests.Notifications;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<PartialViewResult> RefreshNotificationsPartialView()
         {
             var result = await _usuarioContext.GetNotificacoes();
+
+            if (result == null && User.IsAuthenticated())
+            {
+                var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
+                var notifications = await _notificationCommand.ObterTodasNotificacoes(request);
+
+                result = notifications.ToList();
+            }
+
             return PartialView("Partial/Notificacoes/_NotificacoesPartial", result);
         }
     }

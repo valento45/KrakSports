@@ -81,8 +81,8 @@ namespace Ihc.CrackSports.Core.Authorization.Context
 
                 return result.Select(x => x.ToBase()).ToList();
             }
-            
-            return new List<NotificationBase>();
+
+            return null;
         }
 
         public int CountNotificationsNaoVistas()

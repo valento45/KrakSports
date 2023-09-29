@@ -108,16 +108,14 @@ namespace Ihc.CrackSports.Core.Commands
                     _usuarioContext.SetNotificacoes(result.ToList());
 
                     return result;
-                }
-                else
-                {
-                    return new List<NotificationBase>();
-                }
+                }             
             }
-            else
+            else if(request.TipoUsuario == Objetos.Enums.TipoUsuario.Aluno)
             {
                 return new List<NotificationBase>();
             }
+
+            return new List<NotificationBase>();
         }
 
         public async Task<SolicitacaoAlunoClub> ObterSolicitacaoAlunoById(long idSolicitacao)
@@ -127,6 +125,10 @@ namespace Ihc.CrackSports.Core.Commands
 
 		public async Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao)
 		{
+            if(solicitacao.DataNotificacao <= new DateTime())
+                solicitacao.DataNotificacao = DateTime.Now;
+
+
             return await _solicitacaoClubAlunoRepository.NotificarSolicitacaoAlunoAceito(solicitacao);
 		}
 	}
