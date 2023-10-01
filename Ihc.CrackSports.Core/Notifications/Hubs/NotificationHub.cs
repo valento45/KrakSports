@@ -54,9 +54,16 @@ namespace Ihc.CrackSports.Core.Notifications.Hubs
                 throw new Exception("Não foi possível aceitar a solicitação no momento, tente mais tarde.");
             else
             {
-                solicitacao.Notificacao = "Aceitou sua solicitação para particiar do Clube.";
+
                 solicitacao.From = await _alunoCommand.GetById(idAluno);
                 solicitacao.To = await _clubCommand.ObterById(idClub);
+                solicitacao.Notificacao = $"O Clube {solicitacao.To.Nome} Aceitou sua solicitação, agora você faz parte deste clube.";
+
+                if (solicitacao.To?.HasImagem() ?? false)
+                    solicitacao.ImagemNotificacao = solicitacao.To.ImagemBase64;
+
+                if (solicitacao.To != null)
+                    solicitacao.LinkRedirect = $"../Club/ApresentacaoClub?idClub={solicitacao.To.Id}";
 
                 await _notificationCommand.NotificarSolicitacaoAlunoAceito(solicitacao);
 

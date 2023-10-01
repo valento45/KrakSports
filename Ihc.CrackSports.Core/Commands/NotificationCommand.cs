@@ -20,14 +20,51 @@ namespace Ihc.CrackSports.Core.Commands
         private readonly IClubCommand _clubCommand;
         private readonly IAlunoCommand _alunoCommand;
         private readonly IUsuarioContext _usuarioContext;
+        private readonly INotificacaoRepository _notificacaoRepository;
 
-        public NotificationCommand(ISolicitacaoClubAlunoRepository solicitacaoClubAlunoRepository, IClubCommand clubCommand, IAlunoCommand alunoCommand, IUsuarioContext usuarioContext)
+        public NotificationCommand(ISolicitacaoClubAlunoRepository solicitacaoClubAlunoRepository, IClubCommand clubCommand, IAlunoCommand alunoCommand,
+            IUsuarioContext usuarioContext, INotificacaoRepository notificacaoRepository)
         {
             _solicitacaoClubAlunoRepository = solicitacaoClubAlunoRepository;
             _clubCommand = clubCommand;
             _alunoCommand = alunoCommand;
             _usuarioContext = usuarioContext;
+            _notificacaoRepository = notificacaoRepository;
         }
+
+
+
+        #region METODOS PRIVADOS
+
+        private async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesAluno(long idAluno)
+        {
+            var result = await _notificacaoRepository.ObterTodasNotificacoesAluno(idAluno);
+            return result.OrderByDescending(x => x.DataNotificacao);
+        }
+
+        private async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesClube(long idClube)
+        {
+            var result = new List<NotificationBase>();
+
+
+            var solicitacoes = await this.ObterTodasSolicitacoesDoClube(idClube);
+
+            foreach (var obj in solicitacoes)
+            {
+                obj.InformarAluno(await _alunoCommand.GetById(obj.IdAluno));
+                obj.Notificacao = " Enviou uma solicitação para participar do clube.";             
+
+                result.Add(obj);
+            }
+
+
+            return result.OrderByDescending(x => x.DataNotificacao);
+        }
+        #endregion
+
+
+
+
 
         public async Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao)
         {
@@ -77,24 +114,7 @@ namespace Ihc.CrackSports.Core.Commands
             Console.WriteLine("bateu");
         }
 
-        private async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesClube(long idClube)
-        {
-            var result = new List<NotificationBase>();
-
-
-            var solicitacoes = await this.ObterTodasSolicitacoesDoClube(idClube);
-
-            foreach(var obj in solicitacoes)
-            {
-                obj.InformarAluno(await _alunoCommand.GetById(obj.IdAluno));
-                obj.TratarNotificacao();
-
-                result.Add(obj);
-            }     
-
-          
-            return result.OrderByDescending(x => x.DataNotificacao);
-        }
+  
 
 
         public async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes(NotificationRequest request)
@@ -112,7 +132,12 @@ namespace Ihc.CrackSports.Core.Commands
             }
             else if(request.TipoUsuario == Objetos.Enums.TipoUsuario.Aluno)
             {
-                return new List<NotificationBase>();
+                var aluno = await _alunoCommand.GetByIdUsuario(request.IdUsuario);
+                var result = await this.ObterTodasNotificacoesAluno(aluno.Id);
+                _usuarioContext.SetNotificacoes(result.ToList());
+
+                return result;
+                
             }
 
             return new List<NotificationBase>();

@@ -1,8 +1,23 @@
 ﻿@using Ihc.CrackSports.Core.Authorization.Claims;
 @using System.Security.Claims;
 @using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+@using Ihc.CrackSports.Core.Commands.Interfaces;
 @using Ihc.CrackSports.Core.Requests.Notifications;
 @inject IUsuarioContext _usuarioContext
+@inject INotificationCommand _notificationCommand
+@{
+
+    if (User.IsAuthenticated())
+    {
+        var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+    }
+
+    if (!_usuarioContext.HasImage())
+    {
+        await _usuarioContext.RefreshImage();
+    }
+}
 
 <!DOCTYPE html>
 <html lang="pt-br" class="fundo-login">
@@ -76,13 +91,17 @@
                                 <div class="nav-right tooltip-bottom">
                                     <!--Sino de notificacoes-->
                                     <a class="nav-link notifications p-0" href="#" onclick="openCloseNotificacoes()">
-                                        @if (Roles.NovasNotificacoes() > 0)
-                                        {
-                                            <div style="background-color: red;color: ghostwhite; border-radius: 50px; width: 15px; height: 15px; display: initial; position: absolute;
-margin-left: 20px;" class="text-center">
-                                                <span style="font-size: 10px; display: block;">@Roles.NovasNotificacoes()</span>
-                                            </div>
-                                        }
+                                        <div id="pnlNotificationsNaoVistas">
+                                            @if (_usuarioContext.CountNotificationsNaoVistas() > 0)
+                                            {
+
+                                                <div style="background-color: red;color: ghostwhite; border-radius: 50px; width: 15px; height: 15px; display: initial;
+position: absolute; margin-left: 20px;" class="text-center">
+                                                    <span id="txtNotificationsNVistas" style="font-size: 10px; display: block;">@_usuarioContext.CountNotificationsNaoVistas()</span>
+                                                </div>
+
+                                            }
+                                        </div>
                                         <img class="img-icon-nav " src="~/imgs/sino-icon.png" />
                                     </a>
                                     <!--FIM Sino de notificacoes-->

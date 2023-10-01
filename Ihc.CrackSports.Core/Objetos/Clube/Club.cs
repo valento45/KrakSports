@@ -21,5 +21,8 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
             
         }
 
+        public bool HasImagem()
+            => !string.IsNullOrEmpty(ImagemBase64);  
+
     }
 }

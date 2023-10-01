@@ -14,23 +14,25 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
     {
         public long IdEvento { get; set; }
         public DateTime DataHoraEvento { get; set; }
-        public TipoEvento   Tipo { get; set; }
+        public TipoEvento Tipo { get; set; }
         public long IdClub1 { get; set; }
         public long IdClub2 { get; set; }
         public string EnderecoResumido { get; set; }
         public string ImagemBase64 { get; set; }
         public string Observacoes { get; set; }
-
+        public int GolsClub1 { get; set; }
+        public int GolsClub2 { get; set; }
+        public bool IsEncerrado { get; set; }
 
 
         public Evento()
         {
-            
+
         }
 
         public Evento(DataRow dr)
         {
-            
+
         }
     }
 }

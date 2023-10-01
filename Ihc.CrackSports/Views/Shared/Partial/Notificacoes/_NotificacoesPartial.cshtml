@@ -17,7 +17,7 @@
     <div id="pnlNotifications" style="width: 100% !important;">
         @foreach (var notificacao in Model)
         {
-            <div id="solicitacao@(notificacao.IdNotificacao)" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
+            <div id="solicitacao@(notificacao.IdNotificacao)" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex" onclick="redirectNotification('@notificacao.LinkRedirect')">
                 @if (notificacao is SolicitacaoAlunoClub al)
                 {
                     <div class="col-lg-2 col-md-2">
@@ -46,9 +46,17 @@
                 else if (notificacao is NotificationBase nf)
                 {
                     <div class="col-lg-2 col-md-2">
-                        <img class="img-icon-nav ms-2" src="~/imgs/sino-icon.png" style="width: 60px;    height: 60px;" />
+                        @if (!string.IsNullOrEmpty(notificacao.ImagemNotificacao))
+                        {
+                            var imagem = String.Format("data:image/png;base64,{0}", nf.ImagemNotificacao);
+                            <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
+                        }
+                        else
+                        {
+                            <img class="img-icon-nav ms-2" src="~/imgs/sino-icon.png" style="width: 60px;    height: 60px;" />
+                        }
                     </div>
-                    <div class="ms-2 col-lg-9 col-md-9">
+                    <div class="ms-3 col-lg-9 col-md-9">
                         <p> @notificacao.Notificacao</p>
                     </div>
                 }

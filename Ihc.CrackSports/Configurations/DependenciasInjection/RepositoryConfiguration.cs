@@ -18,6 +18,8 @@ namespace Ihc.CrackSports.WebApp.Configurations.DependenciasInjection
             services.AddTransient<IResponsavelRepository, ResponsavelRepository>();
             services.AddTransient<IClubRepository, ClubRepository>();
             services.AddTransient<ISolicitacaoClubAlunoRepository, SolicitacaoAlunoClubRepository>();
+            services.AddTransient<INotificacaoRepository, NotificacaoRepository>();
+            services.AddTransient<IEventoRepository, EventoRepository>();
         }
 
 

@@ -52,12 +52,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
         }
 
 
-        public void TratarNotificacao()
-        {
-
-            Notificacao = $"enviou uma solicitação para participar do Clube. ";
-        }
-
+      
         public void InformarAluno(Aluno from)
         {
             From = from;
@@ -77,6 +72,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
                 notification.DataNotificacao = DataNotificacao;
                 notification.Notificacao = Notificacao;
                 notification.LinkRedirect = LinkRedirect;
+                notification.Tipo = TipoNotificacao.SolicitacaoAluno;
 
                 if(notification is SolicitacaoAlunoClub soli)
                 {
@@ -101,6 +97,11 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
                 notification.DataNotificacao = DataNotificacao;
                 notification.Notificacao = Notificacao;
                 notification.LinkRedirect = LinkRedirect;
+                notification.ImagemNotificacao = ImagemNotificacao;
+                notification.IdAluno = IdAluno;
+                notification.IdClube = IdClub;
+                notification.Tipo = TipoNotificacao.Outros;
+                notification.TipoUsuario = this.TipoUsuario;
 
                 return notification;
             }

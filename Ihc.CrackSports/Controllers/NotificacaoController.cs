@@ -24,7 +24,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             var result = await _usuarioContext.GetNotificacoes();
 
-            if (result == null && User.IsAuthenticated())
+            if (User.IsAuthenticated())
             {
                 var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
                 var notifications = await _notificationCommand.ObterTodasNotificacoes(request);

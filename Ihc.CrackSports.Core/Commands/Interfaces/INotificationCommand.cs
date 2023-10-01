@@ -16,6 +16,9 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao);
         Task<bool> RemoverSolicitacao(long idSolicitacao);
         Task<bool> PossuiSolicitacaoPendente(long idAluno);
+
+
+
         Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube);
         Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes( NotificationRequest request);
         Task<SolicitacaoAlunoClub> ObterSolicitacaoAlunoById( long idSolicitacao);

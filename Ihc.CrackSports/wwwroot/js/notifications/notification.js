@@ -10,7 +10,7 @@ connection.start().then(function () {
 });
 
 connection.on("refreshNotification", (user, title, message, link) => {
-    
+
 
 
     $("#notifications").html("ADDED by <b>" + user + "</b>");
@@ -23,7 +23,7 @@ connection.on("refreshNotification", (user, title, message, link) => {
 });
 
 function refreshPartialViewNotifications() {
-    util.ajax.get("../Notificacao/RefreshNotificationsPartialView", null,  refreshPartialViewNotificationsSuccesso, refreshPartialViewNotificationsErro);
+    util.ajax.get("../Notificacao/RefreshNotificationsPartialView", null, refreshPartialViewNotificationsSuccesso, refreshPartialViewNotificationsErro);
 }
 
 function refreshPartialViewNotificationsSuccesso(data) {
@@ -45,7 +45,7 @@ function atualizaNotificacoes() {
         notifys += 1;
 
         txtNotificacoesNaoVistas.innerText = notifys;
-
+        $("#pnlNotificacoesNVistas").removeClass("d-none");
     }
     else {
         $("#pnlNotificationsNaoVistas").empty();
@@ -85,7 +85,7 @@ function IsConnected() {
 }
 
 
-function enviaSolicitacaoClub(idClub) {    
+function enviaSolicitacaoClub(idClub) {
     connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
         alert("Erro ao enviar solicitação. Tente mais tarde.")
         return console.error(err.toString());
@@ -153,8 +153,19 @@ function removedNotification() {
         var notifys = + txtNotificacoesNaoVistas.innerText;
         notifys -= 1;
 
-        txtNotificacoesNaoVistas.innerText = notifys;
+        if (notifys == 0) {
+            $("#pnlNotificacoesNVistas").addClass("d-none");
+        }
+
+        else
+            txtNotificacoesNaoVistas.innerText = notifys;
+
+
 
     }
 }
 
+function redirectNotification(linkRedirect) {
+    if (linkRedirect)
+        window.location.href = linkRedirect;
+}

@@ -1,6 +1,7 @@
 ﻿using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,8 +21,10 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Base
         public string Notificacao { get; set; }
         public bool IsVisto { get; set; }
         public string LinkRedirect { get; set; }
-       
-
+        public string ImagemNotificacao { get; set; }
+        public TipoUsuario TipoUsuario { get; set; }
+        public long IdAluno { get; set; }
+        public long IdClube { get; set; }
 
 
 

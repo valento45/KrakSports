@@ -105,7 +105,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 			cmd.Parameters.AddWithValue(@"is_visto", solicitacao?.IsVisto ?? false);
 			cmd.Parameters.AddWithValue(@"tipo_usuario", (int)TipoUsuario.Aluno);
 			cmd.Parameters.AddWithValue(@"notificacao", solicitacao?.Notificacao ?? "");
-			cmd.Parameters.AddWithValue(@"imagem_notificacao", "");
+			cmd.Parameters.AddWithValue(@"imagem_notificacao", solicitacao.ImagemNotificacao ?? "");
 			cmd.Parameters.AddWithValue(@"link_redirect", solicitacao?.LinkRedirect ?? "");
 
 			int codigo;

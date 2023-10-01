@@ -71,6 +71,7 @@ CREATE DATABASE bd_sports
 		complemento varchar(200),
 		camiseta_numero integer,
 		is_verificado boolean null,
+		gols_marcados integer null,
 		CONSTRAINT id_usuario_fk foreign key (id_usuario)
 		references sys.usuario_tb(id_usuario)	,
 		CONSTRAINT id_club_fk foreign key (id_club)
@@ -121,9 +122,9 @@ CREATE DATABASE bd_sports
 	
 
 	
-	create table if not exists sys.aluno_club_tb(
-		id_aluno bigint not null,
+	create table if not exists sys.aluno_club_tb(		
 		id_club bigint not null,
+		id_aluno bigint not null,
 		data_ingresso timestamp null,
 		gols_marcados integer null
 	);
@@ -131,19 +132,40 @@ CREATE DATABASE bd_sports
 	
 	create table if not exists sys.agenda_evento_tb(
 		id_evento serial not null primary key,
-		data_hora_evento timestamp not null,
+		data_hora timestamp not null,
 		tipo_evento integer not null,
 		id_club1 bigint not null,
 		id_club2 bigint null,
 		endereco_resumido varchar,
 		imagem_base64 varchar,
 		observacoes varchar(300),
+		gols_club1 integer null,
+		gols_club2 integer null,
+		is_encerrado boolean null,
 		constraint id_club1_fk foreign key(id_club1)
 		references sys.club_tb(id_club),
 		constraint id_club2_fk foreign key(id_club2)
 		references sys.club_tb(id_club)
 	);
+	select * from sys.agenda_evento_tb where data_hora between timestamp '2015-07-15 00:00:00' and timestamp '2015-07-20 00:00:00'
 	
+	create table if not exists sys.gols_evento_atleta_tb(
+		id_evento bigint not null,
+		id_aluno bigint not null,
+		id_club bigint not null,
+		gols_marcados integer not null,
+		constraint id_evento_fk foreign key (id_evento)
+		references sys.agenda_evento_tb(id_evento),
+		constraint id_clube_fk foreign key(id_club)
+		references sys.club_tb(id_club),		
+		constraint id_aluno_fk foreign key(id_aluno)
+		references sys.aluno_tb(id_aluno)
+	);
+	
+	--ALTER TABLES
+	alter table if exists sys.aluno_tb add column gols_marcados integer null;
+	
+
 	--Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
@@ -157,34 +179,4 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	
 	
 --Querys testes
-delete from sys.usuario_tb
-delete from sys.usuario_claim_tb
-delete from sys.aluno_tb
-delete from sys.responsavel_aluno_tb
-
-select * from sys.solicitacao_aluno_club_tb
-select * from sys.responsavel_aluno_tb
-	select* from sys.aluno_tb where id_aluno = 12
-	select  * from sys.usuario_tb where id_usuario = 33 order by id_usuario desc
-	
-	select id_responsavel as Id, id_aluno as IdAluno, nome_responsavel as Nome, documento_responsavel as Documento, cpf_responsavel as CpfCnpj, grau_parentesco as GrauParentesco 
-	from sys.responsavel_aluno_tb where id_aluno = 12
-	select * from sys.usuario_claim_tb
-	select * from sys.club_tb
-	select * from sys.club_tb where id_club = 33
-	
-	select * from sys.club_tb where id_usuario =33
-
-	select * from sys.solicitacao_aluno_club_tb where id_club = 23 LIMIT 50
-select * from sys.solicitacao_aluno_club_tb where id_club = 23 order by data_solicitacao desc LIMIT 50
-	drop table sys.usuario_tb
-	drop table sys.usuario_claim_tb
-	drop table sys.club_tb
-	drop table sys.aluno_tb
-	drop table sys.responsavel_aluno_tb
-	
-	
-	insert into sys.notificacao_tb (id_aluno, id_club, data_notificacao, is_visto, tipo_usuario, notificacao, imagem_notificacao,
-									link_redirect) values (22, 23, now(), false, @tipo_usuario, @notificacao,
-														   @imagem_notificacao, @link_redirect) returning id_notificacao
 
