@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Authorization;
+using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Services.Interfaces;
@@ -32,7 +33,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CadastroEvento()
         {
-            return View();
+            if ((User?.IsAuthenticated() ?? false) && User.IsClub())
+                return View();
+            else
+            {
+                return View("Unauthorized");
+            }
         }
     }
 }

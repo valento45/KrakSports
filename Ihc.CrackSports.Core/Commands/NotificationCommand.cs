@@ -124,6 +124,10 @@ namespace Ihc.CrackSports.Core.Commands
                 if (request.IdUsuario > 0)
                 {
                     var club = await _clubCommand.ObterByIdUsuario(request.IdUsuario);
+
+                    if(club?.Id <= 0)
+                        return new List<NotificationBase>();    
+
                     var result = await ObterTodasNotificacoesClube(club.Id);
                     _usuarioContext.SetNotificacoes(result.ToList());
 

@@ -1,4 +1,6 @@
-﻿@using Ihc.CrackSports.Core.Objetos.Competicoes;
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+@using Ihc.CrackSports.Core.Objetos.Competicoes;
 @model Evento
 
 @{
@@ -7,52 +9,110 @@
 
 <div class="container mt-5 ">
     <h3 class="text-semi-bold-orange mt-5 ms-5">Cadastro de evento</h3>
-    <hr />
+    <hr class="hr-brown" />
 
     <div class=" col-9 d-inline-flex mt-5 w-100">
         <form class="form-group form-control layout-orange-full radius-form" asp-action="CadastroEvento" asp-controller="Evento" method="post" style="border-color: #800000 ; padding: 5%;">
 
-            <input asp-for="IdEvento" class="d-none"  />
-            <input asp-for="IdClub1" class="d-none"  />
+            <input asp-for="IdEvento" class="d-none" />
+            <input asp-for="IdClub1" class="d-none" />
             <input asp-for="IdClub2" class="d-none" />
-            
+
 
             <input class="d-none" />
             <input class="d-none" />
             <div class="text-center">
-               @*  @if (string.IsNullOrEmpty(Model.DadosAluno.FotoAlunoBase64))
+                @*  @if (string.IsNullOrEmpty(Model.DadosAluno.FotoAlunoBase64))
                 {
 
-                    <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
+                <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
                 }
                 else
                 {
 
-                    var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
+                var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
 
-                    <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
+                <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
                 }
-                <br>   *@             
+                <br>   *@
 
             </div>
 
             <!--Dados do evento-->
             <div id="pnlDadosEvento">
-                <div class="form-outline mt-5 ag-field-content g-width-10">
 
-                    <input asp-for="DataHoraEvento" type="datetime" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" minLenght="4" autocomplete="off" required />
-                    <label id="txtDataHoraEventoLabel" class="form-label ag-field-label" for="txtDataHoraEvento">Data/Hora*</label>
-                </div>             
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mt-5 ag-field-content g-width-5">
 
+                        <input asp-for="DataHoraEvento" type="date" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" />
+                        <label id="txtDataHoraEventoLabel" class="form-label ag-field-label" for="txtDataHoraEvento">Data*</label>
+                    </div>
 
-                
+                    <div class="form-outline mt-5 ag-field-content g-width-5 ms-3">
+
+                        <input type="text" id="txtHoraEvento" class="form-control ag-field-input ag-input-color-orange-full"
+                               data-mask="00:00" autocomplete="off" placeholder="HH:MM" />
+                        <label id="txtHoraEventoLabel" class="form-label ag-field-label" for="txtHoraEvento">Hora*</label>
+                    </div>
+                </div>
+
+                <div class="form-outline ag-field-content g-width-10">
+                    <select id="cmbTipoEvento" class="form-select ag-field-input ag-input-color-orange-full">
+                        <option selected>Selecionar</option>
+                        <option value="@((int)TipoEvento.Treino)">Treino</option>
+                        @if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
+                        {
+                            <option value="@((int)TipoEvento.Amistoso)">Amistoso</option>
+                            <option value="@((int)TipoEvento.Campeonato)">Campeonato</option>
+                            <option value="@((int)TipoEvento.Torneio)">Torneio</option>
+                        }
+
+                    </select>
+                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Tipo do evento*</label>
+                </div>
+
+                <div class="g-width-10 d-inline-flex justify-content-center d-block d-sm-inline-flex">
+
+                    <div class="text-center" style="display: grid;">
+                        <img class="mt-4 ms-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
+                        <span class="text-bold-orange-light"></span>
+                        <button id="btnSelecionarAdv1" class="btn btn-block btn-confirm-radius mt-2" type="button">Selecionar adversário</button>
+                    </div>
+
+                    <span class="mx-4 text-bold-orange-light" style="margin-top: 5rem;">VS</span>
+
+                    <div class="text-center " style="display: grid;">
+                        <img class="mt-4 ms-4" src="~/imgs/aluno1.jpeg" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
+                        <span class="text-bold-orange-light"></span>
+                        <button id="btnSelecionarAdv2" class="btn btn-block btn-confirm-radius  mt-2" type="button">Selecionar adversário</button>
+                    </div>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mt-5 ag-field-content g-width-10">
+
+                        <input asp-for="EnderecoResumido" type="text" id="txtEnderecoEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" min-lenght="10" required />
+                        <label id="txtEnderecoEventoLabel" class="form-label ag-field-label" for="txtEnderecoEvento">Endereço*</label>
+                    </div>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mt-5 ag-field-content g-width-10">
+
+                        <textarea asp-for="Observacoes" type="text" id="txtEnderecoEvento" class="form-control ag-field-input ag-input-color-orange-full"
+                                  autocomplete="off" rows="5" style="height: 100px !important; padding-left: 50px;"></textarea>
+                        <label id="txtEnderecoEventoLabel" class="form-label ag-field-label" for="txtEnderecoEvento">Observações</label>
+
+                    </div>
+                </div>
+
             </div>
             <!--FIM Dados do evento-->
-            
+
 
             <div class="mb-2 ms-5 mx-2 mt-5">
                 <button id="btnSalvarEvento" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
-                <a href="#" class=" btn-voltar mx-5 text-white" >Voltar</a>
+                <a href="#" class=" btn-voltar mx-5 text-white">Voltar</a>
             </div>
         </form>
     </div>
