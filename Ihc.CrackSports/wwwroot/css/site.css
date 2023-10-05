@@ -682,6 +682,17 @@ html {
             color: ghostwhite;
         }
 
+
+.select-club li {
+    
+}
+
+    .select-club li:hover {
+        cursor: pointer;
+        background-color: #F9D19F !important;
+        
+    }
+
 @media only screen and (max-width: 600px) {
     .bar-notifications {
         padding: 0px;

@@ -34,41 +34,44 @@
                     <td></td>
                 </tr>
             }
-            @foreach (var obj in Model.ObterListaPaginada())
+            else
             {
-                <tr>
-                    @if (string.IsNullOrEmpty(obj.FotoAlunoBase64))
-                    {
-                        <td style="width: 70px;">
-                            <img src="~/imgs/sem_imagem.png" style="width: 35px; height: 35px;" />
-                        </td>
-                    }
-                    else
-                    {
-                        var imagem = String.Format("data:image/png;base64,{0}", obj.FotoAlunoBase64);
-                        <td style="width: 70px;">
-                            <img src="@imagem" style="width: 35px; height: 35px;box-shadow: 1px 1px 50px 1px #00000066;" alt="imagem aluno" />
-                        </td>
-                    }
-
-                    <td class="t-start">@obj.Nome.ToUpper()</td>
-                    <td>@obj.Idade Anos</td>
-                    <td>@obj.PosicaoJogador</td>
-                    <td>@obj.CamisetaNumero</td>
-                    <td class="d-inline-flex">
-                        @if (Model.CanUpdate)
+                @foreach (var obj in Model.ObterListaPaginada())
+                {
+                    <tr>
+                        @if (string.IsNullOrEmpty(obj.FotoAlunoBase64))
                         {
-                            <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Alterar Nº da camiseta do Atleta. "
-                                 style="height: 40px; width: 40px; margin-right: 10px;">
-                                <a class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;" onclick="onClickAlterarCamisa(@obj.Id)"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
-                            </div>
-                            <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Remover atleta do Club."
-                                 style="height: 40px; width: 40px; margin-right: 10px;">
-                                <a class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
-                            </div>
+                            <td style="width: 70px;">
+                                <img src="~/imgs/sem_imagem.png" style="width: 35px; height: 35px;" />
+                            </td>
                         }
-                    </td>
-                </tr>
+                        else
+                        {
+                            var imagem = String.Format("data:image/png;base64,{0}", obj.FotoAlunoBase64);
+                            <td style="width: 70px;">
+                                <img src="@imagem" style="width: 35px; height: 35px;box-shadow: 1px 1px 50px 1px #00000066;" alt="imagem aluno" />
+                            </td>
+                        }
+
+                        <td class="t-start">@obj.Nome.ToUpper()</td>
+                        <td>@obj.Idade Anos</td>
+                        <td>@obj.PosicaoJogador</td>
+                        <td>@obj.CamisetaNumero</td>
+                        <td class="d-inline-flex">
+                            @if (Model.CanUpdate)
+                            {
+                                <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Alterar Nº da camiseta do Atleta. "
+                                     style="height: 40px; width: 40px; margin-right: 10px;">
+                                    <a class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;" onclick="onClickAlterarCamisa(@obj.Id)"> <img src="~/imgs/btEditar.png" style="width: 30px; height: 30px;" /></a>
+                                </div>
+                                <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Remover atleta do Club."
+                                     style="height: 40px; width: 40px; margin-right: 10px;">
+                                    <a class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>

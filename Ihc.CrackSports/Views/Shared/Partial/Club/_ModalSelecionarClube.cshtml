@@ -2,18 +2,37 @@
 @model IEnumerable<Club>
 
 
-<div class="modal-dialog" style="margin-top: 200px;">
+<div class="modal-dialog " style="margin-top: 200px; ">
     <div class="modal-content layout-orange-full radius-form p-3">
-        <div class="row g-width-10 table-brown">
+        <div class="modal-header mb-3">
+            <h4 class="modal-title">Selecionar Clube</h4>
+            <a class="link-redirect-orange" style="cursor: pointer;font-weight: bold; font-size: 25px; margin-right: 10px;" onclick="closeModalSelecionarClube()">X</a>
+        </div>
 
-            <table class="table mt-5">
-               <thead>
+        <div class="row g-width-10 " style="align-self: center;">
+            <div  style="background-color: ghostwhite; padding: 1.5rem; border-radius: 50px;">
+                <ul class="scroll-brown select-club" style="max-height: 50vh; overflow: auto;">
+                    @foreach (var club in Model)
+                    {
+                        <li class="g-width-10" style="list-style: none;" onclick="selectedClube('@Json.Serialize(club)')">
+                            <div class="d-inline-flex g-width-10">
+                                @if (string.IsNullOrEmpty(club.ImagemBase64))
+                                {
 
-               </thead>
-               <tbody>
+                                    <img src="~/imgs/sem_imagem.png" style="width: 35px; height: 35px; border-radius: 20px;" />
+                                }
+                                else
+                                {
+                                    var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);
+                                    <img src="@imagem" style="width: 35px; height: 35px;box-shadow: 1px 1px 50px 1px #00000066; border-radius: 20px;" alt="imagem aluno" />
 
-               </tbody>
-            </table>
+                                }
+                                <span class="ms-3">@club.Nome.ToUpper()</span>                                
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>          
         </div>
     </div>
 </div>

@@ -7,7 +7,9 @@
     Layout = "_Layout";
 }
 
+
 <div class="container mt-5 ">
+    <div class="modal " id="modalSelecionarClube" style="background-color: #00000099;">    </div>
     <h3 class="text-semi-bold-orange mt-5 ms-5">Cadastro de evento</h3>
     <hr class="hr-brown" />
 
@@ -18,25 +20,6 @@
             <input asp-for="IdClub1" class="d-none" />
             <input asp-for="IdClub2" class="d-none" />
 
-
-            <input class="d-none" />
-            <input class="d-none" />
-            <div class="text-center">
-                @*  @if (string.IsNullOrEmpty(Model.DadosAluno.FotoAlunoBase64))
-                {
-
-                <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
-                }
-                else
-                {
-
-                var imagem = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.DadosAluno.GetBytesFotoAluno()));
-
-                <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem aluno" />
-                }
-                <br>   *@
-
-            </div>
 
             <!--Dados do evento-->
             <div id="pnlDadosEvento">
@@ -76,7 +59,7 @@
                     <div class="text-center" style="display: grid;">
                         <img class="mt-4 ms-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
                         <span class="text-bold-orange-light"></span>
-                        <button id="btnSelecionarAdv1" class="btn btn-block btn-confirm-radius mt-2" type="button">Selecionar adversário</button>
+                        <button id="btnSelecionarAdv1" class="btn btn-block btn-confirm-radius mt-2" type="button" onclick="onClickSelecionarClube(1)">Selecionar adversário</button>
                     </div>
 
                     <span class="mx-4 text-bold-orange-light" style="margin-top: 5rem;">VS</span>
@@ -84,7 +67,7 @@
                     <div class="text-center " style="display: grid;">
                         <img class="mt-4 ms-4" src="~/imgs/aluno1.jpeg" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
                         <span class="text-bold-orange-light"></span>
-                        <button id="btnSelecionarAdv2" class="btn btn-block btn-confirm-radius  mt-2" type="button">Selecionar adversário</button>
+                        <button id="btnSelecionarAdv2" class="btn btn-block btn-confirm-radius  mt-2" type="button" onclick="onClickSelecionarClube(2)">Selecionar adversário</button>
                     </div>
                 </div>
 
@@ -118,3 +101,7 @@
     </div>
 
 </div>
+
+@section Scripts{
+    <script src="~/js/Club/_modalSelecionaClub.js" asp-append-version="true"></script>
+}

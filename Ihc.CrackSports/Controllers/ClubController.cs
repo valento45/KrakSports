@@ -179,5 +179,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             return View(result);
         }
+
+
+
+        [HttpGet]
+        public async Task<PartialViewResult> SelecionarClubePartial()
+        {
+            var result = await _clubService.ObterTodos();
+            return PartialView("Partial/Club/_ModalSelecionarClube", result);
+        }
     }
 }

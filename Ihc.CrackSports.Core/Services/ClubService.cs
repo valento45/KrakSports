@@ -46,7 +46,7 @@ namespace Ihc.CrackSports.Core.Services
 			return await _clubCommand.ObterByIdUsuario(idUser);
         }
 
-        public async Task<List<Club>?> ObterTodos(int limite)
+        public async Task<List<Club>?> ObterTodos(int limite = 0)
         {
             return await _clubCommand.ObterTodos(limite);   
         }
