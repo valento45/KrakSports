@@ -23,12 +23,43 @@ function onClickSelecionarClube(numeroAdversario) {
 
 function selectedClube(data) {
 
-    if (_numeroAdversarioCorrente == _adversarioPrimeiro) {
+    var clubeSelecionado = instanceClubeSelecionado(data);
+    setClubeSelected(clubeSelecionado);
 
-    }
-    else if (_numeroAdversarioCorrente == _adversarioSegundo) {
-
-    }
 }
 
 
+function instanceClubeSelecionado(data) {
+
+    if (data) {
+
+        var clubeSelecionado = new Object();
+        
+        clubeSelecionado.nome = $(data).children("div").children("span").text();
+        clubeSelecionado.idClube = $(data).children("div").children("input").val();
+        clubeSelecionado.imagem = $(data).children("div").children("img").attr('src');
+
+        return clubeSelecionado;
+    }
+}
+
+function setClubeSelected(clube) {
+    if (_numeroAdversarioCorrente == _adversarioPrimeiro) {
+        setClubeAdversario(clube);
+    }
+    else if (_numeroAdversarioCorrente == _adversarioSegundo) {
+        setClubeAdversario2(clube);
+    }
+    closeModalSelecionarClube();
+}
+
+function setClubeAdversario(clube) {
+    $("#txtCodigoAdversario").val(clube.idClube);
+    $("#lblAdversario").text(`${clube.nome}`);
+    $("#imgAdversario").attr('src',`${clube.imagem}`);    
+}
+function setClubeAdversario2(clube) {
+    $("#txtCodigoAdversario2").val(clube.idClube);
+    $("#lblAdversario2").text(`${clube.nome}`);
+    $("#imgAdversario2").attr('src', `${clube.imagem}`);
+}

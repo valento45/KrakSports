@@ -14,7 +14,7 @@
                 <ul class="scroll-brown select-club" style="max-height: 50vh; overflow: auto;">
                     @foreach (var club in Model)
                     {
-                        <li class="g-width-10" style="list-style: none;" onclick="selectedClube('@Json.Serialize(club)')">
+                        <li class="g-width-10" style="list-style: none;" onclick="selectedClube(this)">
                             <div class="d-inline-flex g-width-10">
                                 @if (string.IsNullOrEmpty(club.ImagemBase64))
                                 {
@@ -24,10 +24,11 @@
                                 else
                                 {
                                     var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);
-                                    <img src="@imagem" style="width: 35px; height: 35px;box-shadow: 1px 1px 50px 1px #00000066; border-radius: 20px;" alt="imagem aluno" />
+                                    <img src="@imagem" style="width: 35px; height: 35px; border-radius: 20px;" alt="imagem aluno" />
 
                                 }
                                 <span class="ms-3">@club.Nome.ToUpper()</span>                                
+                                <input type="text" class="ms-3" hidden value="@club.Id" />                              
                             </div>
                         </li>
                     }
