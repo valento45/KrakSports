@@ -1,0 +1,28 @@
+﻿@using Ihc.CrackSports.Core.Responses.AgendaEventos;
+@model EventosResponse
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container mt-5">
+    <div class="d-inline-flex mt-5 g-width-10" style="justify-content: space-between;">
+        <h3 class="text-semi-bold-orange ">Agenda de eventos</h3>
+        <a asp-controller="Evento" asp-action="CadastroEvento" id="btnIncluirEvento" class="btn  btn-block btn-confirm-radius text-center">Incluir Evento</a>
+    </div>
+    <hr class="hr-brown" />
+
+    <div class="mt-5">
+        <ul>
+            <li class="row">
+
+                <div class="row g-width-10">
+                    <a>Treino Barcelona</a>                    
+                    <span>02/10/2023</span>
+                </div>
+                <br />
+
+            </li>
+        </ul>
+    </div>
+</div>

@@ -50,6 +50,7 @@ namespace Ihc.CrackSports.Core.Services
             EventosResponse response = new EventosResponse();
 
             response.InformarEventos(await _eventoCommand.GetEventos(dataInicio, dataFim));
+            response.InformarPeriodo(dataInicio, dataFim);
 
             return response;
         }

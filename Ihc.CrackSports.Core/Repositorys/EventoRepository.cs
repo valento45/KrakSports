@@ -73,8 +73,8 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<IEnumerable<Evento>> GetEventos(DateTime dataInicio, DateTime dataFim)
         {
-            string query = $"select * from sys.agenda_evento_tb where data_hora" +
-                $" between timestamp '{dataInicio.ToString("yyyy-MM-dd HH:mm:ss")}' and timestamp '{dataFim.ToString("yyyy-MM-dd HH:mm:ss")}' ";
+            string query = $"select * from sys.agenda_evento_tb " ;
+            //  +  $"where data_hora between timestamp '{dataInicio.ToString("yyyy-MM-dd HH:mm:ss")}' and timestamp '{dataFim.ToString("yyyy-MM-dd HH:mm:ss")}' ";
 
             var result = await base.QueryAsync<EventoDto>(query);
 

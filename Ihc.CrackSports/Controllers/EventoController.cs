@@ -27,7 +27,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var de = DateTime.Parse($"01/{DateTime.Now.Month}/{DateTime.Now.Year}");
             var ate = DateTime.Now.AddMonths(1).AddDays(-1);
 
-            var result = "";//await _eventoApplication.GetEventos(de, ate);
+            var result = await _eventoApplication.GetEventos(de, ate);
 
             return View(result);
         }
