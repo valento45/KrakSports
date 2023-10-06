@@ -20,12 +20,12 @@ namespace Ihc.CrackSports.Core.Services
             _eventoCommand  = eventoCommand;
         }
 
-        public async Task<bool> IncluirEvento(Evento evento)
+        private async Task<bool> IncluirEvento(Evento evento)
         {
             return await _eventoCommand.IncluirEvento(evento);
         }
 
-        public async Task<bool> AtualizarEvento(Evento evento)
+        private async Task<bool> AtualizarEvento(Evento evento)
         {
             return await _eventoCommand.AtualizarEvento(evento);
         }
@@ -68,6 +68,14 @@ namespace Ihc.CrackSports.Core.Services
         public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
         {
             return await _eventoCommand.LancarPlacarEvento(golsMarcados, isEncerrado);
+        }
+
+        public async Task<bool> Salvar(Evento evento)
+        {
+            if (evento.IdEvento > 0)
+                return await this.AtualizarEvento(evento);
+            else
+                return await this.IncluirEvento(evento);
         }
     }
 }

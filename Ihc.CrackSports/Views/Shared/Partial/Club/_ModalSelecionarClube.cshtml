@@ -2,16 +2,20 @@
 @model IEnumerable<Club>
 
 
-<div class="modal-dialog " style="margin-top: 200px; ">
+<div class="modal-dialog " style="margin-top: 100px; ">
     <div class="modal-content layout-orange-full radius-form p-3">
         <div class="modal-header mb-3">
             <h4 class="modal-title">Selecionar Clube</h4>
             <a class="link-redirect-orange" style="cursor: pointer;font-weight: bold; font-size: 25px; margin-right: 10px;" onclick="closeModalSelecionarClube()">X</a>
         </div>
+        <div class="form-outline mt-5 mb-3 ag-field-content g-width-10">
+            <input type="text" id="txtFiltro" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" onkeyup="onKeyUpFiltro(this)" />
+            <label id="txtFiltroLabel" class="form-label ag-field-label" for="txtFiltro">Filtrar por</label>
+        </div>
 
         <div class="row g-width-10 " style="align-self: center;">
             <div  style="background-color: ghostwhite; padding: 1.5rem; border-radius: 50px;">
-                <ul class="scroll-brown select-club" style="max-height: 50vh; overflow: auto;">
+                <ul id="listClubes" class="scroll-brown select-club" style="max-height: 30vh; overflow: auto;">
                     @foreach (var club in Model)
                     {
                         <li class="g-width-10" style="list-style: none;" onclick="selectedClube(this)">

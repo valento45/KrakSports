@@ -31,7 +31,7 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto
                 IdEvento = id_evento,
                 IdClub1 = id_club1,
                 IdClub2 = id_club2,
-                DataHoraEvento = data_hora,
+                DataHora = data_hora,
                 EnderecoResumido = endereco_resumido,
                 GolsClub1 = gols_club1,
                 GolsClub2 = gols_club2,

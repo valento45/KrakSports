@@ -160,7 +160,7 @@ position: absolute; margin-left: 20px;" class="text-center">
     {
         <div id="pnlNotificacoes" class="bar-notifications mt-5 d-none g-width-5 modal scroll-brown">
             @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial", await _usuarioContext.GetNotificacoes())
-        </div> 
+        </div>
     }
 
     <div class="container">
@@ -192,6 +192,9 @@ position: absolute; margin-left: 20px;" class="text-center">
     <!--Scripts Notifications-->
     <script src="~/js/signalr/dist/browser/signalr.js" asp-append-version="true"></script>
     <script src="~/js/notifications/notification.js" asp-append-version="true"></script>
+
+    <!--Agenda Evento-->
+    <script src="~/js/Evento/agendaEvento.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

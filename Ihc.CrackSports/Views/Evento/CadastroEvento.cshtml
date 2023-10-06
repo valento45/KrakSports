@@ -1,6 +1,8 @@
 ﻿@using Ihc.CrackSports.Core.Authorization.Claims;
 @using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 @using Ihc.CrackSports.Core.Objetos.Competicoes;
+@using System;
+
 @model Evento
 
 @{
@@ -14,33 +16,29 @@
     <hr class="hr-brown" />
 
     <div class=" col-9 d-inline-flex mt-5 w-100">
-        <form class="form-group form-control layout-orange-full radius-form" asp-action="CadastroEvento" asp-controller="Evento" method="post" style="border-color: #800000 ; padding: 5%;">
-
-            <input asp-for="IdEvento" class="d-none" />
-            <input asp-for="IdClub1" class="d-none" />
-            <input asp-for="IdClub2" class="d-none" />
-
-
+        <form class="form-group form-control layout-orange-full radius-form" asp-action="SalvarEvento" asp-controller="Evento" method="post" style="border-color: #800000 ; padding: 5%;">
+                        
             <!--Dados do evento-->
             <div id="pnlDadosEvento">
+                <input asp-for="IdEvento" class="d-none" />
 
                 <div class="d-inline-flex g-width-10">
                     <div class="form-outline mt-5 ag-field-content g-width-5">
 
-                        <input asp-for="DataHoraEvento" type="date" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" />
+                        <input asp-for="DataHora" type="date" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" />
                         <label id="txtDataHoraEventoLabel" class="form-label ag-field-label" for="txtDataHoraEvento">Data*</label>
                     </div>
 
                     <div class="form-outline mt-5 ag-field-content g-width-5 ms-3">
 
-                        <input type="text" id="txtHoraEvento" class="form-control ag-field-input ag-input-color-orange-full"
+                        <input asp-for="HoraEvento" type="text" id="txtHoraEvento" class="form-control ag-field-input ag-input-color-orange-full"
                                data-mask="00:00" autocomplete="off" placeholder="HH:MM" />
                         <label id="txtHoraEventoLabel" class="form-label ag-field-label" for="txtHoraEvento">Hora*</label>
                     </div>
                 </div>
 
                 <div class="form-outline ag-field-content g-width-10">
-                    <select id="cmbTipoEvento" class="form-select ag-field-input ag-input-color-orange-full">
+                    <select asp-for="Tipo" id="cmbTipoEvento" class="form-select ag-field-input ag-input-color-orange-full">
                         <option selected>Selecionar</option>
                         <option value="@((int)TipoEvento.Treino)">Treino</option>
                         @if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
@@ -57,7 +55,7 @@
                 <div class="g-width-10 d-inline-flex justify-content-center d-block d-sm-inline-flex">
 
                     <div class="text-center" style="display: grid;">
-                        <input id="txtCodigoAdversario"  hidden/>
+                        <input type="number" asp-for="IdClub1" id="txtCodigoAdversario" class="d-none" />
                         <img id="imgAdversario" class="mt-4 ms-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
                         <span id="lblAdversario" class="text-bold-orange-light"></span>
                         <button id="btnSelecionarAdv1" class="btn btn-block btn-confirm-radius mt-2" type="button" onclick="onClickSelecionarClube(1)">Selecionar adversário</button>
@@ -66,7 +64,7 @@
                     <span class="mx-4 text-bold-orange-light" style="margin-top: 5rem;">VS</span>
 
                     <div class="text-center " style="display: grid;">
-                        <input id="txtCodigoAdversari2" hidden />
+                        <input type="number" asp-for="IdClub2" id="txtCodigoAdversario2" class="d-none" />
                         <img id="imgAdversario2" class="mt-4 ms-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem adv1" />
                         <span id="lblAdversario2" class="text-bold-orange-light"></span>
                         <button id="btnSelecionarAdv2" class="btn btn-block btn-confirm-radius  mt-2" type="button" onclick="onClickSelecionarClube(2)">Selecionar adversário</button>
@@ -106,4 +104,5 @@
 
 @section Scripts{
     <script src="~/js/Club/_modalSelecionaClub.js" asp-append-version="true"></script>
+    
 }

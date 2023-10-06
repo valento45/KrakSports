@@ -13,7 +13,7 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
     public class Evento
     {
         public long IdEvento { get; set; }
-        public DateTime DataHoraEvento { get; set; }
+        public DateTime DataHora { get; set; }
         public TipoEvento Tipo { get; set; }
         public long IdClub1 { get; set; }
         public long IdClub2 { get; set; }
@@ -23,16 +23,30 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
         public int GolsClub1 { get; set; }
         public int GolsClub2 { get; set; }
         public bool IsEncerrado { get; set; }
-
+        public TimeSpan HoraEvento { get; set; }
+        public Club Clube1 { get; private set; }
+        public Club Clube2 { get; private set; }
 
         public Evento()
         {
-
+            DataHora = DateTime.Parse($"01/01/{DateTime.Now.Year}") ;
         }
 
         public Evento(DataRow dr)
         {
 
         }
+
+        public void InformarClube(Club club)
+        {
+            Clube1 = club;
+        }
+        public void InformarClube2(Club club)
+        {
+            Clube2 = club;
+        }
+
+
+        public bool IsValido() => IdClub1 > 0 && IdClub2 > 0;
     }
 }

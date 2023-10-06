@@ -16,14 +16,8 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         /// </summary>
         /// <param name="evento"></param>
         /// <returns></returns>
-        Task<bool> IncluirEvento(Evento evento);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="evento"></param>
-        /// <returns></returns>
-        Task<bool> AtualizarEvento(Evento evento);
+        Task<bool> Salvar(Evento evento);
+        
 
         /// <summary>
         /// 

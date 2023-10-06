@@ -13,6 +13,7 @@ namespace Ihc.CrackSports.WebApp.Configurations.DependenciasInjection
         {
             services.AddTransient<IAlunoApplication, AlunoApplication>();            
             services.AddTransient<IClubApplication, ClubApplication>();            
+            services.AddTransient<IEventoApplication, EventoApplication>();            
            
              
         }

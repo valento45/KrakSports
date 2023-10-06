@@ -1,0 +1,60 @@
+﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+using Ihc.CrackSports.Core.Objetos.Competicoes;
+using Ihc.CrackSports.Core.Responses.AgendaEventos;
+using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
+
+namespace Ihc.CrackSports.WebApp.Application
+{
+    public class EventoApplication : IEventoApplication
+    {
+        private readonly IEventoService _eventoService;
+        private readonly IClubService _clubService;
+
+        public EventoApplication(IEventoService eventoService, IClubService clubService)
+        {
+            _eventoService = eventoService;
+            _clubService = clubService;
+        }
+
+        public async Task<bool> EncerrarEvento(long idEvento)
+        {
+            return await _eventoService.EncerrarEvento(idEvento);
+        }
+
+        public async Task<bool> ExcluirEvento(long IdEvento)
+        {
+            return await _eventoService.ExcluirEvento(IdEvento);
+        }
+
+        public async Task<Evento> GetEventoById(long idEvento)
+        {
+            var evento = await _eventoService.GetEventoById(idEvento);
+
+            evento.InformarClube(await _clubService.ObterById(evento.IdClub1) ?? new Core.Objetos.Clube.Club());
+            evento.InformarClube(await _clubService.ObterById(evento.IdClub2) ?? new Core.Objetos.Clube.Club());
+
+            return evento;
+        }
+
+        public async Task<EventosResponse> GetEventos(DateTime dataInicio, DateTime dataFim)
+        {
+            return await _eventoService.GetEventos(dataInicio, dataFim);
+        }
+
+        public  async Task<EventosResponse> GetEventosByIdClube(long IdClube)
+        {
+            return await _eventoService.GetEventosByIdClube(IdClube);
+        }
+
+        public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
+        {
+            return await _eventoService.LancarPlacarEvento(golsMarcados, isEncerrado);
+        }
+
+        public async Task<bool> Salvar(Evento evento)
+        {
+            return await _eventoService.Salvar(evento);
+        }
+    }
+}
