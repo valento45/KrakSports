@@ -142,13 +142,13 @@ CREATE DATABASE bd_sports
 		gols_club1 integer null,
 		gols_club2 integer null,
 		is_encerrado boolean null,
+		hora_evento varchar(10) null
 		constraint id_club1_fk foreign key(id_club1)
 		references sys.club_tb(id_club),
 		constraint id_club2_fk foreign key(id_club2)
 		references sys.club_tb(id_club)
 	);
-	select * from sys.agenda_evento_tb where data_hora between timestamp '2015-07-15 00:00:00' and timestamp '2015-07-20 00:00:00'
-	
+
 	create table if not exists sys.gols_evento_atleta_tb(
 		id_evento bigint not null,
 		id_aluno bigint not null,
@@ -162,11 +162,8 @@ CREATE DATABASE bd_sports
 		references sys.aluno_tb(id_aluno)
 	);
 	
-	--ALTER TABLES
-	alter table if exists sys.aluno_tb add column gols_marcados integer null;
 	
-
-	--Tornar usuario administrador
+--Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
 --Criar Role usuario Club
@@ -175,8 +172,15 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
 insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
 insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	
+
+	--ALTER TABLES
+	alter table if exists sys.aluno_tb add column gols_marcados integer null;
+	alter table sys.agenda_evento_tb add column hora_evento varchar(10) null
 	
 	
 	
 --Querys testes
+
+select * from sys.agenda_evento_tb order by data_hora LIMIT 200
+
 

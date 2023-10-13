@@ -1,28 +1,60 @@
-﻿@using Ihc.CrackSports.Core.Responses.AgendaEventos;
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.Core.Responses.AgendaEventos;
 @model EventosResponse
 
 @{
     Layout = "_Layout";
 }
 
-<div class="container mt-5">
+<div class="container">
     <div class="d-inline-flex mt-5 g-width-10" style="justify-content: space-between;">
         <h3 class="text-semi-bold-orange ">Agenda de eventos</h3>
-        <a asp-controller="Evento" asp-action="CadastroEvento" id="btnIncluirEvento" class="btn  btn-block btn-confirm-radius text-center">Incluir Evento</a>
+
+        @if ((User?.IsAuthenticated() ?? false) && (User.IsClub() || User.IsAdm()))
+        {
+            <a asp-controller="Evento" asp-action="CadastroEvento" id="btnIncluirEvento" class="btn  btn-block btn-confirm-radius text-center" style="height: 40px;">Incluir Evento</a>
+        }
     </div>
     <hr class="hr-brown" />
 
-    <div class="mt-5">
-        <ul>
-            <li class="row">
 
-                <div class="row g-width-10">
-                    <a>Treino Barcelona</a>                    
-                    <span>02/10/2023</span>
-                </div>
-                <br />
+    <!--Filtros-->
+    <h4 class="text-semi-bold-orange mt-5">Filtrar</h4>
+    <div class="g-width-10 d-inline-flex">
 
-            </li>
-        </ul>
+        <div class="form-outline ag-field-content g-width-7">
+            <select id="cmbConsultarMesAgenda" class="form-select ag-field-input ag-input-color-light-full">
+                <option value="0" selected="">Selecionar</option>
+                <option value="1">Janeiro</option>
+                <option value="2">Fevereiro</option>
+                <option value="3">Março</option>
+                <option value="4">Abril</option>
+                <option value="5">Maio</option>
+                <option value="6">Junho</option>
+                <option value="7">Julho</option>
+                <option value="8">Agosto</option>
+                <option value="9">Setembro</option>
+                <option value="10">Outubro</option>
+                <option value="11">Novembro</option>
+                <option value="12">Dezembro</option>
+            </select>
+            <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Mês</label>
+        </div>
+
+        <div class="form-outline  ag-field-content g-width-3 ms-2">
+            <input type="number" id="txtAnoFiltroEvento" class="form-control ag-field-input ag-input-color-light-full w-10" data-mask="0000" autocomplete="off" value="@DateTime.Now.Year" />
+            <label id="txtAnoFiltroEventoLabel" class="form-label text-semi-bold-light ag-field-label" for="txtAnoFiltroEvento">Ano</label>
+        </div>
+
     </div>
+    <a id="btnPesquisarEvento" class="btn  btn-block btn-confirm-radius text-center g-width-1 mt-2" style="height: 40px">Buscar</a>
+    <!--Filtros-->
+
+
+    <div id="pnlListaEventosPartial" class="mt-5">
+        @await Html.PartialAsync("Partial/AgendaEventos/_EventosPartial", Model)
+    </div>
+
+
 </div>

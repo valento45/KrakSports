@@ -22,24 +22,12 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto
         public int gols_club1 { get; set; }
         public int gols_club2 { get; set; }
         public bool is_encerrado { get; set; }
+        public string hora_evento { get; set; }
 
 
         public Evento ToEvento()
         {
-            return new Evento
-            {
-                IdEvento = id_evento,
-                IdClub1 = id_club1,
-                IdClub2 = id_club2,
-                DataHora = data_hora,
-                EnderecoResumido = endereco_resumido,
-                GolsClub1 = gols_club1,
-                GolsClub2 = gols_club2,
-                ImagemBase64 = imagem_base64,
-                IsEncerrado = is_encerrado,
-                Observacoes = observacoes,
-                Tipo = (TipoEvento)tipo_evento
-            };
+            return Evento.ConvertToEvento(this);
         }
     }
 }

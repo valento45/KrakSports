@@ -17,6 +17,22 @@ namespace Ihc.CrackSports.WebApp.Application
             _clubService = clubService;
         }
 
+
+        private async Task<IEnumerable<Evento>> ObterEventosComClubes(IEnumerable<Evento> eventos)
+        {
+            List<Evento> EventosNew = new List<Evento>();
+
+            foreach (var item in eventos)
+            {
+                item.InformarClube(await _clubService.ObterById(item.IdClub1));
+                item.InformarClube2(await _clubService.ObterById(item.IdClub2));
+
+                EventosNew.Add(item);
+            }
+
+            return EventosNew;
+        }
+
         public async Task<bool> EncerrarEvento(long idEvento)
         {
             return await _eventoService.EncerrarEvento(idEvento);
@@ -39,10 +55,14 @@ namespace Ihc.CrackSports.WebApp.Application
 
         public async Task<EventosResponse> GetEventos(DateTime dataInicio, DateTime dataFim)
         {
-            return await _eventoService.GetEventos(dataInicio, dataFim);
+            var eventos = await _eventoService.GetEventos(dataInicio, dataFim);
+
+            eventos.InformarEventos(await this.ObterEventosComClubes(eventos.Eventos));
+
+            return eventos;
         }
 
-        public  async Task<EventosResponse> GetEventosByIdClube(long IdClube)
+        public async Task<EventosResponse> GetEventosByIdClube(long IdClube)
         {
             return await _eventoService.GetEventosByIdClube(IdClube);
         }

@@ -3,6 +3,8 @@ using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
+using Ihc.CrackSports.Core.Requests.Agenda;
+using Ihc.CrackSports.Core.Services;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -24,8 +26,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var de = DateTime.Parse($"01/{DateTime.Now.Month}/{DateTime.Now.Year}");
-            var ate = DateTime.Now.AddMonths(1).AddDays(-1);
+            var de = new DateTime();
+            var ate = new DateTime();
 
             var result = await _eventoApplication.GetEventos(de, ate);
 
@@ -43,18 +45,35 @@ namespace Ihc.CrackSports.WebApp.Controllers
             }
             else
                 return View("Unauthorized");
-            
+
         }
 
 
         [HttpPost]
         public async Task<IActionResult> SalvarEvento(Evento evento)
-        {        
+        {
 
             if (await _eventoApplication.Salvar(evento))
                 return View("CadastroEvento", evento);
 
             throw new ApplicationException("Erro ao salvar o evento. Por favor, tente mais tarde.");
+        }
+
+        [HttpPost]
+        public async Task<PartialViewResult> ListarEventosPartialView([FromBody] ListarEventosRequest model)
+        {
+            DateTime de = new DateTime(), ate = new DateTime();
+
+            if (model.IsValido())
+            {
+                de = DateTime.Parse($"01/{model.Mes}/{model.Ano}");
+                ate = de.AddMonths(1).AddDays(-1);
+            }
+
+
+            var result = await _eventoApplication.GetEventos(de, ate);
+
+            return PartialView("Partial/AgendaEventos/_EventosPartial", result);
         }
     }
 }

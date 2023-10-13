@@ -22,22 +22,23 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> IncluirEvento(Evento evento)
         {
-            string query = "insert into sys.agenda_evento_tb (data_hora, tipo_evento, id_club1, id_club2, endereco_resumido, imagem_base64, observacoes)" +
-                " values(@data_hora, @tipo_evento, @id_club1, @id_club2, @endereco_resumido, @imagem_base64, @observacoes) returning id_evento";
+            string query = "insert into sys.agenda_evento_tb (data_hora, tipo_evento, id_club1, id_club2, endereco_resumido, imagem_base64, observacoes, hora_evento)" +
+                " values(@data_hora, @tipo_evento, @id_club1, @id_club2, @endereco_resumido, @imagem_base64, @observacoes, @hora_evento) returning id_evento";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
-            cmd.Parameters.AddWithValue(@"data_hora", evento.DataHora);
+            cmd.Parameters.AddWithValue(@"data_hora", evento.Data);
             cmd.Parameters.AddWithValue(@"tipo_evento", (int)evento.Tipo);
             cmd.Parameters.AddWithValue(@"id_club1", evento.IdClub1);
             cmd.Parameters.AddWithValue(@"id_club2", evento.IdClub2);
             cmd.Parameters.AddWithValue(@"endereco_resumido", evento.EnderecoResumido);
             cmd.Parameters.AddWithValue(@"imagem_base64", evento?.ImagemBase64 ?? "");
             cmd.Parameters.AddWithValue(@"observacoes", evento?.Observacoes ?? "");
+            cmd.Parameters.AddWithValue(@"hora_evento", evento?.HoraEvento.ToString() ?? "");
 
             var result = await base.ExecuteScalarAsync(cmd);
 
             long idEventReturned;
-            if(long.TryParse(result?.ToString(), out idEventReturned))
+            if (long.TryParse(result?.ToString(), out idEventReturned))
             {
                 evento.IdEvento = idEventReturned;
                 return true;
@@ -55,7 +56,7 @@ namespace Ihc.CrackSports.Core.Repositorys
                 new
                 {
                     id_evento = evento.IdEvento,
-                    data_hora = evento.DataHora,
+                    data_hora = evento.Data,
                     tipo_evento = (int)evento.Tipo,
                     id_club1 = evento.IdClub1,
                     id_club2 = evento.IdClub2,
@@ -73,12 +74,17 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<IEnumerable<Evento>> GetEventos(DateTime dataInicio, DateTime dataFim)
         {
-            string query = $"select * from sys.agenda_evento_tb " ;
-            //  +  $"where data_hora between timestamp '{dataInicio.ToString("yyyy-MM-dd HH:mm:ss")}' and timestamp '{dataFim.ToString("yyyy-MM-dd HH:mm:ss")}' ";
+            string query = $"select * from sys.agenda_evento_tb ";
+
+            if (dataInicio > DateTime.MinValue && dataFim > DateTime.MinValue)
+                query += $"where data_hora between timestamp '{dataInicio.ToString("yyyy-MM-dd")}' and timestamp '{dataFim.ToString("yyyy-MM-dd")}' ";
+
+
+            query += "order by data_hora LIMIT 200";
 
             var result = await base.QueryAsync<EventoDto>(query);
 
-            return result?.Select(x => x.ToEvento())?.OrderBy(x => x.DataHora)?.AsEnumerable() ?? new List<Evento>();
+            return result?.Select(x => x.ToEvento())?.OrderBy(x => x.Data)?.AsEnumerable() ?? new List<Evento>();
         }
 
 
@@ -88,7 +94,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             var result = await base.QueryAsync<EventoDto>(query);
 
-            return result?.Select(x => x.ToEvento())?.OrderBy(x => x.DataHora)?.AsEnumerable() ?? new List<Evento>();
+            return result?.Select(x => x.ToEvento())?.OrderBy(x => x.Data)?.AsEnumerable() ?? new List<Evento>();
         }
 
         public async Task<Evento> GetEventoById(long IdEvento)

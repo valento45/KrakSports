@@ -13,7 +13,6 @@ builder.Services.AddInjecaoDependencias(builder.Configuration);
 
 #region Config Identity Core
 
-
 //Configurando session
 builder.Services.AddDistributedMemoryCache();
 

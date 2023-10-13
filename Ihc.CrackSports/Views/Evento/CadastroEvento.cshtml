@@ -25,14 +25,14 @@
                 <div class="d-inline-flex g-width-10">
                     <div class="form-outline mt-5 ag-field-content g-width-5">
 
-                        <input asp-for="DataHora" type="date" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" />
+                        <input asp-for="Data" type="date" id="txtDataHoraEvento" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" />
                         <label id="txtDataHoraEventoLabel" class="form-label ag-field-label" for="txtDataHoraEvento">Data*</label>
                     </div>
 
                     <div class="form-outline mt-5 ag-field-content g-width-5 ms-3">
 
                         <input asp-for="HoraEvento" type="text" id="txtHoraEvento" class="form-control ag-field-input ag-input-color-orange-full"
-                               data-mask="00:00" autocomplete="off" placeholder="HH:MM" />
+                               data-mask="00:00" autocomplete="off" placeholder="HH:MM" value="" />
                         <label id="txtHoraEventoLabel" class="form-label ag-field-label" for="txtHoraEvento">Hora*</label>
                     </div>
                 </div>
