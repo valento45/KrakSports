@@ -4,7 +4,6 @@ using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Requests.Agenda;
-using Ihc.CrackSports.Core.Services;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -74,6 +73,24 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var result = await _eventoApplication.GetEventos(de, ate);
 
             return PartialView("Partial/AgendaEventos/_EventosPartial", result);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ConfimarExclusaoEvento(long idEvento)
+        {
+            var evento = await _eventoApplication.GetEventoById(idEvento);
+
+            return View("Partial/AgendaEventos/Partial/_ModalConfirmExclusaoEvento", evento);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ConfimarExclusaoEvento([FromBody] Evento evento)
+        {
+            var result = await _eventoApplication.ExcluirEvento(evento.IdEvento);
+
+            return Ok(result);
         }
     }
 }

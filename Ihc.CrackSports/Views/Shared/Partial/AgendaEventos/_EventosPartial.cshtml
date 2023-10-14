@@ -1,4 +1,5 @@
-﻿@using Ihc.CrackSports.Core.Extensions;
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using Ihc.CrackSports.Core.Extensions;
 @using Ihc.CrackSports.Core.Responses.AgendaEventos;
 @model EventosResponse
 
@@ -9,7 +10,21 @@
         <li class="row">
 
             <div class="row g-width-10">
-                <h5 class="mb-3"><b>@evt.Tipo.GetEnumDescription() - @evt.Data.ObterDataEscrita()</b></h5>
+
+                <div class="d-inline-flex justify-content-between">
+                    <h5 class="mb-3"><b>@evt.Tipo.GetEnumDescription() - @evt.Data.ObterDataEscrita()</b></h5>
+
+                    <!--Btn Excluir Agenda Evento (Exibir apenas para usuário Administrador)-->
+                    @* @if ((User?.IsAuthenticated() ?? false) && User.IsAdm()) *@
+
+                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Excluir agenda do Evento">
+                        <a class="layout-orange-full-btn tooltip-arrow" onclick="onClickExcluirAgendaEvento(@evt.IdEvento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+                            <img src="~/imgs/delete.png" style="width: 30px; height: 30px;" />
+                        </a>
+                    </div>
+
+                </div>
+
                 <div class="d-inline-flex mb-3 justify-content-center g-width-10" style="align-items: center;">
 
                     <span style="min-width: 130px; max-width: 130px; text-align-last: end;"><b>@evt.Clube1.Nome</b></span>
@@ -50,6 +65,7 @@
                     <span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @evt.Observacoes</span>
                 }
             </div>
+
             <hr class="mt-3" />
         </li>
     }

@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+﻿using Ihc.CrackSports.Core.Extensions;
+using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto;
 using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
 using Ihc.CrackSports.Core.Objetos.Clube;
@@ -77,6 +78,18 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
                 Tipo = (TipoEvento)evento.tipo_evento,
                 HoraEvento = !string.IsNullOrEmpty(evento.hora_evento) ? TimeSpan.Parse(evento.hora_evento) : new TimeSpan(0)
             };
+        }
+
+
+        public override string ToString()
+        {
+            StringBuilder str = new StringBuilder();
+
+
+            str.Append($"{Tipo.GetEnumDescription()} - {Data.ObterDataEscrita()}");
+
+
+            return str.ToString();
         }
     }
 }

@@ -138,12 +138,28 @@ html {
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
+.btn-voltar-radius {
+    border-radius: 20px;
+    background-color: ghostwhite;
+    color: brown;
+    min-width: 120px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
 
-    .btn-confirm-radius:hover {
-        transform: scale(1.1);
-        transition: all 0.5s;
-        color: ghostwhite;
+.btn-close-modal {
+    color: brown !important;
+}
+
+    .btn-close-modal:hover {
+        color: #FA8C05 !important;
     }
+
+
+.btn-confirm-radius:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+    color: ghostwhite;
+}
 
 
 .btn-voltar {
@@ -235,7 +251,7 @@ html {
 
 .text-white-light a {
     font-family: Poppins-Light;
-    color: ghostwhite !important;
+    color: ghostwhite;
     text-decoration: none;
 }
 
@@ -684,13 +700,11 @@ html {
 
 
 .select-club li {
-    
 }
 
     .select-club li:hover {
         cursor: pointer;
         background-color: #F9D19F !important;
-        
     }
 
 @media only screen and (max-width: 600px) {

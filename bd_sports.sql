@@ -184,3 +184,4 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 select * from sys.agenda_evento_tb order by data_hora LIMIT 200
 
 
+

@@ -1,0 +1,31 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Competicoes;
+@model Evento
+
+@{
+    Layout = null;
+    ViewBag.Title = "Excluir agenda evento";
+}
+
+<div class="modal-dialog" style="margin-top: 200px;">
+    <div class="modal-content layout-light-full radius-form p-3">
+        <form class=" text-white-light radius-form">
+            <div class="modal-header">
+                <h4 class="modal-title text-semi-bold-orange">Confirmar exclusão</h4>
+                <a class="link-redirect-orange btn-close-modal" style="cursor: pointer;font-weight: bold; font-size: 25px; margin-right: 10px; " onclick="closeModalExcluirEvento()">X</a>
+            </div>
+            <div class="modal-body border-none">
+                <div class="form-outline ag-field-content g-width-10">
+                    <h5 class="text-semi-bold-orange">Deseja realmente excluir o evento: </h5>
+                    <p class="text-semi-bold-orange"><b style="color: #FA8C05 !important;">@(Model.ToString())</b> ?</p>
+                </div>
+
+            </div>
+            <div class="modal-footer border-none">
+                <div class="mt-2">
+                    <button class="btn  btn-block btn-confirm-radius" type="submit" onclick="confirmarExclusaoEvento(@Model.IdEvento)">Confirmar</button>
+                    <a class="btn btn-block btn-voltar-radius btn-close-modal mx-2" onclick="closeModalExcluirEvento()" style="cursor: pointer; ">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

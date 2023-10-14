@@ -27,23 +27,27 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
         /// <returns></returns>
         protected async Task<bool> ExecuteAsync(string query, object param = null)
         {
+            bool result = false;
             try
             {
-                _dbConnection.Open();
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
 
 
-                int result = await _dbConnection.ExecuteAsync(query, param);
+                int rowsAffecteds = await _dbConnection.ExecuteAsync(query, param);
 
-                return result > 0;
+                result = rowsAffecteds > 0;
             }
             catch (Exception ex)
             {
                 await Console.Out.WriteLineAsync(ex.Message);
                 Message = ex.Message;
                 OperationSuccess = false;
-                return false;
+                result = false;
             }
             finally { _dbConnection.Close(); }
+
+            return result;
         }
 
 
@@ -56,7 +60,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
         {
             try
             {
-                _dbConnection.Open();
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
 
                 var result = await _dbConnection.QueryAsync<int>(query);
 
@@ -80,14 +85,14 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
         /// <returns></returns>
         protected async Task<List<T>> QueryAsync<T>(string query) where T : class
         {
+            IEnumerable<T> result;
+
             try
             {
-                _dbConnection.Open();
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
 
-                var result = await _dbConnection.QueryAsync<T>(query);
-
-                return result.ToList();
-
+                result = await _dbConnection.QueryAsync<T>(query);
             }
             catch (Exception ex)
             {
@@ -97,6 +102,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
                 return null;
             }
             finally { _dbConnection.Close(); }
+
+            return result?.ToList() ?? new List<T>();
         }
         protected async Task<IEnumerable<T>> QueryAsync<T>(string query, object param) where T : class
         {
@@ -114,7 +121,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
 
         }
 
-        protected async Task<IEnumerable<int>> QueryAsync(string query, object param) 
+        protected async Task<IEnumerable<int>> QueryAsync(string query, object param)
         {
             try
             {
@@ -134,7 +141,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
         {
             try
             {
-                _dbConnection.Open();
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
 
                 cmd.Connection = _dbConnection;
 
@@ -157,7 +165,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Base
         {
             try
             {
-                _dbConnection.Open();
+                if (_dbConnection.State == ConnectionState.Closed)
+                    _dbConnection.Open();
 
                 cmd.Connection = _dbConnection;
 
