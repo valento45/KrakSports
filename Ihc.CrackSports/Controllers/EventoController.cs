@@ -53,7 +53,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
 
             if (await _eventoApplication.Salvar(evento))
+            {               
                 return View("CadastroEvento", evento);
+            }
 
             throw new ApplicationException("Erro ao salvar o evento. Por favor, tente mais tarde.");
         }

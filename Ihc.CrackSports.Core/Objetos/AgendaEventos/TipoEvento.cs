@@ -9,8 +9,8 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos
 {
     public enum TipoEvento : int
     {
-        [Description("Treino")]
-        Treino = 0,
+        [Description("Selecionar")]
+        Selecionar = 0,        
 
         [Description("Competição")]
         Competicao = 1,
@@ -22,6 +22,9 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos
         Campeonato = 3,
 
         [Description("Amistoso")]
-        Amistoso = 4
+        Amistoso = 4,
+
+        [Description("Treino")]
+        Treino = 99
     }
 }

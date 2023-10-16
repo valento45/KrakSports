@@ -1,8 +1,12 @@
 ﻿$(document).ready(() => {
     $("#btnPesquisarEvento").on('click', buscarEventosClick);
+
+    if (_excluded)
+        $("#btnPesquisarEvento").click();
+
 });
 
-
+let _excluded = false;
 
 
 
@@ -54,13 +58,10 @@ function confirmarExclusaoEvento(idEvento) {
 
 
 function excluirAgendaEventoSucesso(data) {
-    if (data) {
-        $("#btnPesquisarEvento").click();
-    }
-    else {
+    if (!data) {
         alert("Não foi possível excluir o evento nesse momento. Por favor, tente novamente em alguns instantes.");
     }
-
+    _excluded = true;
 }
 function excluirAgendaEventoError(erro) {
     alert("Não foi possível excluir o evento nesse momento. Por favor, tente novamente em alguns instantes.");
