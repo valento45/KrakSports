@@ -5,11 +5,13 @@ using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.Core.Utils.Paginacoes;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Clube;
+using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -24,7 +26,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubApplication _clubApplication;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor)
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) 
+            : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
         {
             _clubService = clubService;
             _usuarioService = usuarioService;
@@ -115,7 +118,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 var result = await _clubService.Salvar(model.DadosClub);
 
                 if (result.IsSuccessStatusCode)
-                    return View("Partial/Club/CadastroClubPartial", model);
+                {
+					var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);
+					return View("Partial/MessagesInformation/_MessageInformation", message);
+					
+                }
                 else
                     throw new Exception($"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}");
 

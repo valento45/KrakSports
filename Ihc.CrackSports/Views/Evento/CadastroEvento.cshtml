@@ -41,7 +41,7 @@
                     <select asp-for="Tipo" id="cmbTipoEvento" class="form-select ag-field-input ag-input-color-orange-full" value="0">
                         <option value="0" selected>Selecionar</option>
                         <option value="@((int)TipoEvento.Treino)">Treino</option>
-                        @if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
+                        @if ((User?.IsAuthenticated() ?? false) && User.IsAdm() || User.IsClub())
                         {
                             <option value="@((int)TipoEvento.Amistoso)">Amistoso</option>
                             <option value="@((int)TipoEvento.Campeonato)">Campeonato</option>

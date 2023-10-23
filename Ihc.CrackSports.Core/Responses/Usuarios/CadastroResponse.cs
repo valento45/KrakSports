@@ -11,7 +11,7 @@ namespace Ihc.CrackSports.Core.Responses.Usuarios
     {
 
         public string TipoCadastro { get; set; }
-
+        public bool IsInsert { get; set; }
         public CadastroResponse()
         {
             

@@ -26,7 +26,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IClubApplication _clubApplication;
 
         public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService,
-            IAlunoApplication alunoApplication, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor ) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor)
+            IAlunoApplication alunoApplication, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication ) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
         {
             _usuarioService = usuarioService;           
             _alunoApplication = alunoApplication;

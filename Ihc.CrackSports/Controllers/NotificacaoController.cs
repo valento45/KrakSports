@@ -5,6 +5,7 @@ using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Requests.Notifications;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 {
     public class NotificacaoController : ControllerBase
     {
-        public NotificacaoController(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor)
+        public NotificacaoController(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
+            : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
 
         }

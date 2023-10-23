@@ -142,12 +142,14 @@ CREATE DATABASE bd_sports
 		gols_club1 integer null,
 		gols_club2 integer null,
 		is_encerrado boolean null,
-		hora_evento varchar(10) null
-		constraint id_club1_fk foreign key(id_club1)
+		hora_evento varchar(10) null,
+		constraint id_clube1_fk foreign key(id_club1)
 		references sys.club_tb(id_club),
-		constraint id_club2_fk foreign key(id_club2)
+		constraint id_clube2_fk foreign key(id_club2)
 		references sys.club_tb(id_club)
 	);
+	
+	
 
 	create table if not exists sys.gols_evento_atleta_tb(
 		id_evento bigint not null,
@@ -174,8 +176,8 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	
 
 	--ALTER TABLES
-	alter table if exists sys.aluno_tb add column gols_marcados integer null;
-	alter table sys.agenda_evento_tb add column hora_evento varchar(10) null
+	alter table if exists sys.aluno_tb add column if not exists gols_marcados integer null;
+	alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
 	
 	
 	

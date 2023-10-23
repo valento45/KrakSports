@@ -6,6 +6,7 @@ using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Requests.Agenda;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
+using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +17,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		private readonly IEventoApplication _eventoApplication;
 
 		public EventoController(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand,
-			IUsuarioContext httpContextAccessor, IEventoApplication eventoService) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor)
+			IUsuarioContext httpContextAccessor, IEventoApplication eventoService, IMessageApplication messageApplication) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
 		{
 			_eventoApplication = eventoService;
 		}
@@ -54,10 +55,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 			if (await _eventoApplication.Salvar(evento))
 			{
-				return View("CadastroEvento", evento);
-			}
+				var result = await _messageApplication.GetMessage(evento, TipoMessage.Insercao);
 
-			throw new ApplicationException("Erro ao salvar o evento. Por favor, tente mais tarde.");
+				return View("Partial/MessagesInformation/_MessageInformation", result);
+			}			
+
+			return View("Partial/MessagesInformation/_MessageInformation", await _messageApplication.GetMessage(evento, TipoMessage.Erro));
 		}
 
 		[HttpPost]

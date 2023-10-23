@@ -10,6 +10,7 @@ using Ihc.CrackSports.Core.Requests.Notifications;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +28,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
     {
         protected readonly INotificationCommand _notificationCommand;
         protected readonly IUsuarioContext _usuarioContext;
-        protected IAlunoService _alunoService;
+		protected readonly IMessageApplication _messageApplication;
+		protected IAlunoService _alunoService;
         protected IClubService _clubService;
         protected readonly UserManager<Usuario> _userManager;
         protected readonly NotificationHub _notificationHub;
@@ -36,14 +38,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         #region Construtores        
 
-        public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor)
+        public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
         {
             _clubService = clubService;
             _alunoService = alunoService;
             _userManager = userManager;
             _notificationCommand = notificationCommand;
             _usuarioContext = httpContextAccessor;
-        }
+			_messageApplication = messageApplication;
+		}
 
         #endregion
 

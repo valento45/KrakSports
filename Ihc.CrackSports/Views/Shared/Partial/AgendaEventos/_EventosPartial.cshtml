@@ -5,76 +5,76 @@
 
 <ul class="p-2">
 
-    @foreach (var evt in Model.Eventos)
-    {
-        <li class="row">
+	@foreach (var evt in Model.Eventos)
+	{
+		<li class="row">
 
-            <div class="row g-width-10">
+			<div class="row g-width-10">
 
-                <div class="d-inline-flex justify-content-between">
-                    <h5 class="mb-3"><b>@evt.Tipo.GetEnumDescription() - @evt.Data.ObterDataEscrita()</b></h5>
+				<div class="d-inline-flex justify-content-between">
+					<h5 class="mb-3"><b>@evt.Tipo.GetEnumDescription() - @evt.Data.ObterDataEscrita()</b></h5>
 
-                    <!--Btn Excluir Agenda Evento (Exibir apenas para usuário Administrador)-->
-                    @* @if ((User?.IsAuthenticated() ?? false) && User.IsAdm()) *@
+					<!--Btn Excluir Agenda Evento (Exibir apenas para usuário Administrador)-->
+					@* @if ((User?.IsAuthenticated() ?? false) && User.IsAdm()) *@
 
-                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Excluir agenda do Evento">
-                        <a class="layout-orange-full-btn tooltip-arrow" onclick="onClickExcluirAgendaEvento(@evt.IdEvento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
-                            <img src="~/imgs/delete.png" style="width: 30px; height: 30px;" />
-                        </a>
-                    </div>
+					<div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Excluir agenda do Evento">
+						<a class="layout-orange-full-btn tooltip-arrow" onclick="onClickExcluirAgendaEvento(@evt.IdEvento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+							<img src="~/imgs/delete.png" style="width: 30px; height: 30px;" />
+						</a>
+					</div>
 
-                </div>
+				</div>
 
-                <div class="d-inline-flex mb-3 justify-content-center g-width-10" style="align-items: center;">
+				<div class="d-inline-flex mb-3 justify-content-center g-width-10" style="align-items: center;">
 
-                    <span style="min-width: 130px; max-width: 130px; text-align-last: end;"><b>@evt.Clube1.Nome</b></span>
+					<span style="min-width: 130px; max-width: 130px; text-align-last: end;"><b>@evt.Clube1.Nome</b></span>
 
-                    <div class="ms-2 d-inline-flex" style="align-items: center;">
-                        @if (evt.Clube1.HasImagem())
-                        {
-                            var imagem = String.Format("data:image/png;base64,{0}", evt.Clube1.ImagemBase64);
-                            <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
-                        }
-                        else
-                        {
-                            <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
-                        }
+					<div class="ms-2 d-inline-flex" style="align-items: center;">
+						@if (evt.Clube1.HasImagem())
+						{
+							var imagem = String.Format("data:image/png;base64,{0}", evt.Clube1.ImagemBase64);
+							<img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+						}
+						else
+						{
+							<img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+						}
 
-                        <span style="color: #FA8C05 ; font-weight: bold;" class="mx-2">X</span>
+						<span style="color: #FA8C05 ; font-weight: bold;" class="mx-2">X</span>
 
-                        @if (evt.Clube2.HasImagem())
-                        {
-                            var imagem = String.Format("data:image/png;base64,{0}", evt.Clube2.ImagemBase64);
-                            <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
-                        }
-                        else
-                        {
-                            <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
-                        }
-                    </div>
+						@if (evt.Clube2.HasImagem())
+						{
+							var imagem = String.Format("data:image/png;base64,{0}", evt.Clube2.ImagemBase64);
+							<img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+						}
+						else
+						{
+							<img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+						}
+					</div>
 
-                    <span style="min-width: 130px; max-width: 130px;" class="ms-2"><b>@evt.Clube2.Nome</b></span>
-                </div>
+					<span style="min-width: 130px; max-width: 130px;" class="ms-2"><b>@evt.Clube2.Nome</b></span>
+				</div>
 
-                <span class="mb-1" style="text-align-last: center;"><b>Local:</b> @evt.EnderecoResumido</span>
-                <h4 style="text-align-last: center;"><b>@evt.HoraEvento.FormatarHoraEvento()</b></h4>
+				<span class="mb-1" style="text-align-last: center;"><b>Local:</b> @evt.EnderecoResumido</span>
+				<h4 style="text-align-last: center;"><b>@evt.HoraEvento.FormatarHoraEvento()</b></h4>
 
-                @if (!string.IsNullOrEmpty(evt.Observacoes))
-                {
+				@if (!string.IsNullOrEmpty(evt.Observacoes))
+				{
 
-                    <span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @evt.Observacoes</span>
-                }
-            </div>
+					<span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @evt.Observacoes</span>
+				}
+			</div>
 
-            <hr class="mt-3" />
-        </li>
-    }
-    @if (!Model.Eventos?.Any() ?? true)
-    {
-        <li style="list-style: none;">
-            <div style="height: 100px; width: 100%; background-color: beige; text-align-last: center;">
-                <h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum evento para o período informado !</h4>
-            </div>
-        </li>
-    }
+			<hr class="mt-3" />
+		</li>
+	}
+	@if (!Model.Eventos?.Any() ?? true)
+	{
+		<li style="list-style: none;">
+			<div style="height: 100px; width: 100%; background-color: beige; text-align-last: center; padding: 10px;">
+				<h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum evento para o período informado !</h4>
+			</div>
+		</li>
+	}
 </ul>

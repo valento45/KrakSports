@@ -28,12 +28,14 @@ namespace Ihc.CrackSports.Core.Commands
             {
                 if (await _clubRepository.Atualizar(club))
                     response.StatusCode = 200;
+                response.IsInsert = false;
             }
             else
             {
                 if (await _clubRepository.Incluir(club))
                     response.StatusCode = 200;
-            }
+				response.IsInsert = true;
+			}
 
             return response;
         }

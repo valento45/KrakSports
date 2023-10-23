@@ -7,6 +7,7 @@ using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
 using Microsoft.AspNetCore.Authentication;
@@ -26,7 +27,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IClubService _clubService;
 
         public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService, INotificationCommand notificationCommand,
-             IUsuarioContext httpContextAccessor) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor)
+             IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
             _logger = logger;
             _alunoService = alunoService;
@@ -65,7 +66,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 if (await base.Autenticar(model))
-                    return RedirectToAction("About");
+                    return RedirectToAction("Index");
                 else
                     return View();
 

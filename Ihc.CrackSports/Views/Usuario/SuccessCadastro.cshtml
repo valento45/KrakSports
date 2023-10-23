@@ -1,9 +1,13 @@
 ﻿@using Ihc.CrackSports.Core.Authorization;
 @model Usuario
 
-<div class="container-fluid">
-
-
-    <h5 class=" text-semi-bold-orange mt-5">Seja bem vindo,<b> @Model.UserName</b></h5>
-
+<div class="container justify-content-center mt-5 mb-5" style="background-color: darkseagreen; box-shadow: 1px 1px 50px 1px #00000066;">
+	<div class="d-inline-flex" style="height: 100px; width:100%; background-color: darkseagreen; align-items: center;">
+		<img class="ms-2" src="~/imgs/confirm-icon1.png" style="width: 70px; height: 70px;" />
+		<p class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">Seja bem vindo, @Model.UserName</p>
+		<br />
+		<h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">
+			Seu usuário foi cadastrado com sucesso ! 
+		</h4>
+	</div>
 </div>
