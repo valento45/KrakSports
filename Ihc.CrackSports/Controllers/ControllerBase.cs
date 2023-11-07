@@ -222,7 +222,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         public async Task EnviarNotificacao(string user, string title, string message, string link)
         {
-            await _notificationHub.SendNotification(user, title, message, link);
+            //await _notificationHub.SendNotification(user, title, message, link);
         }
     }
 }
