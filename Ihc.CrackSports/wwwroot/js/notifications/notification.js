@@ -2,16 +2,7 @@
 let isConnected = false;
 var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
 
-
-connection.start().then(function () {
-    isConnected = true;
-}).catch(function (err) {
-    return console.error(err.toString());
-});
-
 connection.on("refreshNotification", (user, title, message, link) => {
-
-
 
     $("#notifications").html("ADDED by <b>" + user + "</b>");
     window.setTimeout(function () {
@@ -21,6 +12,20 @@ connection.on("refreshNotification", (user, title, message, link) => {
     atualizaNotificacoes();
     refreshPartialViewNotifications();
 });
+
+function StartConnection() {
+    connection.start().then(function () {
+        isConnected = true;
+        return isConnected;
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+function IsConnected() {
+    return connection._connectionState == "Connected";
+}
+
+
 
 function refreshPartialViewNotifications() {
     util.ajax.get("../Notificacao/RefreshNotificationsPartialView", null, refreshPartialViewNotificationsSuccesso, refreshPartialViewNotificationsErro);
@@ -55,43 +60,30 @@ position: absolute; margin-left: 20px;" class="text-center">
         </div>`);
     }
 
-    //    document.getElementById("pnlNotifications").innerHTML += `<div id="solicitacao" class="mt-2 card-notification  col-lg-6 col-md-6 d-inline-flex">
-    //    <div class="col-lg-2 col-md-2">
-    //        var imagem = String.Format("data:image/png;base64,{0}", al.From.FotoAlunoBase64);
-    //        <img class="img-icon-nav ms-2" src="@imagem" style="width: 60px;    height: 60px;" />
-    //    </div>
-
-    //    <div class="ms-2 col-lg-9 col-md-9">
-    //        <p><b>@al.From.Nome.ToUpper()</b> @notificacao.Notificacao</p>
-
-    //        <a class="btn btn-block btn-confirm-radius" onclick="aceitarSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Confirmar</a>
-    //        <a class="btn btn-block btn-confirm-radius" onclick="excluirSolicitacaoAluno(@JsonConvert.SerializeObject( notificacao))">Excluir</a>
-
-    //    </div>
-
-    //</div>`;
-
 }
-function StartConnection() {
-    connection.start().then(function () {
-        isConnected = true;
-        return isConnected;
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
-}
-function IsConnected() {
-    return connection._connectionState == "Connected";
-}
+
 
 
 function enviaSolicitacaoClub(idClub) {
-    connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
-        alert("Erro ao enviar solicitação. Tente mais tarde.")
-        return console.error(err.toString());
-    });
+    //connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
+    //    alert("Erro ao enviar solicitação. Tente mais tarde.")
+    //    return console.error(err.toString());
+    //});
+
+    var model = {
+        idUsuario = _userLogado,
+        idClub = idClub
+    };
+    util.ajax.post("../Notificacao/EnviaSolicitacaoClub", model, enviaSolicitacaoClubSucess, enviaSolicitacaoClubError);
+
+}
+
+function enviaSolicitacaoClubSucess(data) {
 
     alert("solicitação enviada com sucesso!");
+}
+function enviaSolicitacaoClubError(erro) {
+    alert("Erro ao enviar solicitação, por favor tente mais tarde.");
 }
 
 
@@ -109,41 +101,54 @@ function openCloseNotificacoes() {
 }
 
 function excluirSolicitacaoAluno(notificacao) {
-    if (!IsConnected()) {
-        StartConnection();
-    }
+    //if (!IsConnected()) {
+    //    StartConnection();
+    //}
 
 
-    if (isConnected) {
-        connection.invoke("ExcluirSolicitacaoAluno", notificacao.IdNotificacao).catch(function (err) {
-            return console.error(err.toString());
+    //if (isConnected) {
+    //    connection.invoke("ExcluirSolicitacaoAluno", notificacao.IdNotificacao).catch(function (err) {
+    //        return console.error(err.toString());
 
-        });
+    //    });
 
-        $(`#solicitacao` + notificacao.IdNotificacao).remove();
-        removedNotification();
+    //    $(`#solicitacao` + notificacao.IdNotificacao).remove();
+    //    removedNotification();
 
-    }
-
+    //}
+    util.ajax.post("../Notificacao/ExcluirNotificacao", notificacao.IdNotificacao, excluirSolicitacaoAlunoSucess, excluirSolicitacaoAlunoError);
 
 }
+
+function excluirSolicitacaoAlunoSucess(data) {
+
+    removedNotification();
+}
+function excluirSolicitacaoAlunoError(erro) { }
 
 
 function aceitarSolicitacaoAluno(notificacao) {
 
-    if (!IsConnected()) {
-        isConnected = StartConnection();
-    }
+    //if (!IsConnected()) {
+    //    isConnected = StartConnection();
+    //}
 
-    if (isConnected) {
-        connection.invoke("AceitarSolicitacaoAluno", notificacao.IdClub, notificacao.IdAluno).catch(function (err) {
-            return console.error(err.toString());
-        });
+    //if (isConnected) {
+    //    connection.invoke("AceitarSolicitacaoAluno", notificacao.IdClub, notificacao.IdAluno).catch(function (err) {
+    //        return console.error(err.toString());
+    //    });
 
-        $(`#solicitacao` + notificacao.IdNotificacao).remove();
-        removedNotification();
-    }
+    //    $(`#solicitacao` + notificacao.IdNotificacao).remove();
+    //    removedNotification();
+    //}
+    util.ajax.post("../Notificacao/AceitarSolicitacaoAluno", notificacao.IdNotificacao, aceitarSolicitacaoAlunoSucesso, aceitarSolicitacaoAlunoError);
+}
 
+function aceitarSolicitacaoAlunoSucesso(data) {
+    removedNotification();
+}
+function aceitarSolicitacaoAlunoError(erro) {
+    alert("Não foi possível aceitar a solicitação, por favor tente novamente mais tarde.")
 }
 
 function removedNotification() {
@@ -159,9 +164,6 @@ function removedNotification() {
 
         else
             txtNotificacoesNaoVistas.innerText = notifys;
-
-
-
     }
 }
 
