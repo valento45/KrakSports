@@ -1,31 +1,40 @@
-﻿"use strict";
-let isConnected = false;
-var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+﻿//$(document).ready(() => {
 
-connection.on("refreshNotification", (user, title, message, link) => {
 
-    $("#notifications").html("ADDED by <b>" + user + "</b>");
-    window.setTimeout(function () {
-        $("#notifications").html("NOTIFICATIONS");
-    }, 10000);
+//    refreshPartialViewNotifications();
+//});
 
-    atualizaNotificacoes();
+//let isConnected = false;
+//var connection = new signalR.HubConnectionBuilder().withUrl("/notificationHub").build();
+
+//connection.on("refreshNotification", (user, title, message, link) => {
+
+//    $("#notifications").html("ADDED by <b>" + user + "</b>");
+//    window.setTimeout(function () {
+//        $("#notifications").html("NOTIFICATIONS");
+//    }, 10000);
+
+//    atualizaNotificacoes();
+//    refreshPartialViewNotifications();
+//});
+
+//function StartConnection() {
+//    connection.start().then(function () {
+//        isConnected = true;
+//        return isConnected;
+//    }).catch(function (err) {
+//        return console.error(err.toString());
+//    });
+//}
+//function IsConnected() {
+//    return connection._connectionState == "Connected";
+//}
+
+$(function () {
+
     refreshPartialViewNotifications();
+
 });
-
-function StartConnection() {
-    connection.start().then(function () {
-        isConnected = true;
-        return isConnected;
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
-}
-function IsConnected() {
-    return connection._connectionState == "Connected";
-}
-
-
 
 function refreshPartialViewNotifications() {
     util.ajax.get("../Notificacao/RefreshNotificationsPartialView", null, refreshPartialViewNotificationsSuccesso, refreshPartialViewNotificationsErro);
@@ -35,7 +44,7 @@ function refreshPartialViewNotificationsSuccesso(data) {
     if (data) {
         $("#pnlNotificacoes").empty();
 
-        $("#pnlNotificacoes").html(data);
+        $("#pnlNotificacoes").html(data);        
     }
 }
 function refreshPartialViewNotificationsErro(data) {
@@ -70,11 +79,18 @@ function enviaSolicitacaoClub(idClub) {
     //    return console.error(err.toString());
     //});
 
-    var model = {
-        idUsuario = _userLogado,
-        idClub = idClub
-    };
-    util.ajax.post("../Notificacao/EnviaSolicitacaoClub", model, enviaSolicitacaoClubSucess, enviaSolicitacaoClubError);
+    if (_userLogado) {        
+
+        var model = new Object();
+        model.idUsuario = _userLogado;
+        model.idClub = idClub;
+
+        util.ajax.post("../Notificacao/EnviaSolicitacaoClub", model, enviaSolicitacaoClubSucess, enviaSolicitacaoClubError);
+    } else {
+        alert("Não é possível enviar solicitações sem estar logado. Efetue o login, e tente novamente.");
+    }
+
+
 
 }
 
@@ -124,7 +140,9 @@ function excluirSolicitacaoAlunoSucess(data) {
 
     removedNotification();
 }
-function excluirSolicitacaoAlunoError(erro) { }
+function excluirSolicitacaoAlunoError(erro) {
+
+}
 
 
 function aceitarSolicitacaoAluno(notificacao) {
@@ -145,13 +163,22 @@ function aceitarSolicitacaoAluno(notificacao) {
 }
 
 function aceitarSolicitacaoAlunoSucesso(data) {
-    removedNotification();
+    tryRemoveNotification(data);
 }
 function aceitarSolicitacaoAlunoError(erro) {
     alert("Não foi possível aceitar a solicitação, por favor tente novamente mais tarde.")
 }
 
+
+function tryRemoveNotification(data) {
+    if (data) {
+        $(`#solicitacao${data.idSolicitacao}`).remove();
+        removedNotification();
+    }
+}
+
 function removedNotification() {
+
     var txtNotificacoesNaoVistas = document.getElementById("txtNotificationsNVistas");
 
     if (txtNotificacoesNaoVistas.innerText) {

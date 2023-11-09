@@ -5,6 +5,7 @@ using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Notifications.SolicitacoesPedidos;
 using Ihc.CrackSports.Core.Requests.Notifications;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
@@ -47,20 +48,25 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return Json(result);
         }
 
-        [HttpPost]  
-        public async Task<JsonResult> AceitarSolicitacaoAluno(long idNotificacao)
+        [HttpPost]
+        public async Task<JsonResult> AceitarSolicitacaoAluno([FromBody] long idNotificacao)
         {
-            var solicitacao = await _notificationCommand.ObterSolicitacaoAlunoById(idNotificacao);                
-            return Json(await _notificationCommand.AceitarSolicitacao(solicitacao));
+            var solicitacao = await _notificationCommand.ObterSolicitacaoAlunoById(idNotificacao);
+
+            if (await _notificationCommand.AceitarSolicitacao(solicitacao)) 
+                return Json(solicitacao);
+            else
+                throw new Exception("Não foi possível aceitar a solicitação no momento.");
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> EnviaSolicitacaoClub(long idUsuario, long idClub)
+        public async Task<IActionResult> EnviaSolicitacaoClub([FromBody] UserAlunoToClube request)
         {
-            var aluno = await _alunoService.GetByIdUsuario(idUsuario);
-            
-            await _notificationCommand.TrataEnvioSolicitacaoAlunoToClub(aluno.Id, idClub);
+
+            var aluno = await _alunoService.GetByIdUsuario(request.IdUsuario);
+
+            await _notificationCommand.TrataEnvioSolicitacaoAlunoToClub(aluno.Id, request.IdClub);
 
             return Ok();
         }

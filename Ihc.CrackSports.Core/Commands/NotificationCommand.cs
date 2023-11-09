@@ -52,7 +52,7 @@ namespace Ihc.CrackSports.Core.Commands
             foreach (var obj in solicitacoes)
             {
                 obj.InformarAluno(await _alunoCommand.GetById(obj.IdAluno));
-                obj.Notificacao = " Enviou uma solicitação para participar do clube.";             
+                obj.Notificacao = " Enviou uma solicitação para participar do clube.";
 
                 result.Add(obj);
             }
@@ -68,8 +68,12 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<bool> AceitarSolicitacao(SolicitacaoAlunoClub solicitacao)
         {
-            return await _solicitacaoClubAlunoRepository.AceitarSolicitacao(solicitacao);
 
+            var result = await _solicitacaoClubAlunoRepository.AceitarSolicitacao(solicitacao);
+
+            if (result)
+                await this.NotificarSolicitacaoAlunoAceito(solicitacao);
+            return result;
         }
 
         public async Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube)
@@ -114,7 +118,7 @@ namespace Ihc.CrackSports.Core.Commands
             Console.WriteLine("bateu");
         }
 
-  
+
 
 
         public async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes(NotificationRequest request)
@@ -125,23 +129,23 @@ namespace Ihc.CrackSports.Core.Commands
                 {
                     var club = await _clubCommand.ObterByIdUsuario(request.IdUsuario);
 
-                    if(club?.Id <= 0)
-                        return new List<NotificationBase>();    
+                    if (club?.Id <= 0)
+                        return new List<NotificationBase>();
 
                     var result = await ObterTodasNotificacoesClube(club.Id);
                     _usuarioContext.SetNotificacoes(result.ToList());
 
                     return result;
-                }             
+                }
             }
-            else if(request.TipoUsuario == Objetos.Enums.TipoUsuario.Aluno)
+            else if (request.TipoUsuario == Objetos.Enums.TipoUsuario.Aluno)
             {
                 var aluno = await _alunoCommand.GetByIdUsuario(request.IdUsuario);
                 var result = await this.ObterTodasNotificacoesAluno(aluno.Id);
                 _usuarioContext.SetNotificacoes(result.ToList());
 
                 return result;
-                
+
             }
 
             return new List<NotificationBase>();
@@ -149,16 +153,34 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<SolicitacaoAlunoClub> ObterSolicitacaoAlunoById(long idSolicitacao)
         {
-           return await _solicitacaoClubAlunoRepository.ObterSolicitacaoById(idSolicitacao);    
+            return await _solicitacaoClubAlunoRepository.ObterSolicitacaoById(idSolicitacao);
         }
 
-		public async Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao)
-		{
-            if(solicitacao.DataNotificacao <= new DateTime())
-                solicitacao.DataNotificacao = DateTime.Now;
-
+        public async Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao)
+        {
+            await this.FillInstance(solicitacao);
 
             return await _solicitacaoClubAlunoRepository.NotificarSolicitacaoAlunoAceito(solicitacao);
-		}
-	}
+        }
+
+
+        private async Task FillInstance(SolicitacaoAlunoClub solicitacao)
+        {
+            if (solicitacao == null)
+                throw new ArgumentNullException("Não é possível preencher as referências de um objeto vazio ou nulo.");
+
+
+            solicitacao.DataNotificacao = solicitacao.DataNotificacao <= new DateTime() ? DateTime.Now : solicitacao.DataNotificacao;
+            solicitacao.From = await _alunoCommand.GetById(solicitacao.IdAluno);
+            solicitacao.To = await _clubCommand.ObterById(solicitacao.IdClub);
+            solicitacao.Notificacao = $"O Clube {solicitacao.To.Nome} Aceitou sua solicitação, agora você faz parte deste clube.";
+
+            if (solicitacao.To?.HasImagem() ?? false)
+                solicitacao.ImagemNotificacao = solicitacao.To.ImagemBase64;
+
+            if (solicitacao.To != null)
+                solicitacao.LinkRedirect = $"../Club/ApresentacaoClub?idClub={solicitacao.To.Id}";
+
+        }
+    }
 }
