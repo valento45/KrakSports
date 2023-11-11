@@ -1,0 +1,125 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+
+<div class="mt-5 container">
+    <h4 class="text-bold-orange">#Patrocinadores Krak Sports</h4>
+    <hr />
+
+    <div class="g-width-10 mb-5" style="text-align: -webkit-center;">
+        <form class="form-control mt-5 g-width-7 g-sm-width-10 col-sm-12 radius-form" style="padding: 30px;">
+            <h4 class="text-bold-orange">Dados gerais para contato</h4>
+
+
+            <div class="form-small">
+                <!--Dados do patrocinador-->
+                <div class="form-outline mb-4 ag-field-content g-width-10 ms-1">
+                    <input type="text" id="txtNomeRazaoSocial" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label id="txtNomeRazaoSocialLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeRazaoSocial">Nome / Razão social</label>
+                </div>
+
+                <div class="form-outline ag-field-content g-width-10 ms-1">
+                    <input type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">E-mail</label>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+
+                    <div class="ag-field-content g-width-7 " style="margin-right: 1rem;">
+                        <div class="form-radio row ms-2">
+
+                            <label class="radio-label" for="rdbPessoaFisica">
+                                Pessoa física
+                                <input class="d-none" id="rdbPessoaFisica" type="radio" value="PF" name="favelanguage" checked>
+                                <span class="checkmark"></span>
+                            </label>
+
+                            <label class="radio-label" for="rdbPessoaJuridica">
+                                Pessoa jurídica
+                                <input class="d-none" id="rdbPessoaJuridica" type="radio" value="PJ" name="favelanguage">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-7 ms-1">
+                        <input type="text" id="txtCpfCnpj" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="txtCpfCnpjLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfCnpj">CPF / CNPJ</label>
+                    </div>
+                </div>
+
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-5">
+                        <input type="text" id="txtTelefone" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" data-mask="(00)0000-0000" required />
+                        <label id="txtTelefoneLabel" class="form-label text-semi-bold-light ag-field-label" for="txtTelefone">Telefone</label>
+                    </div>
+                    <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtCelular" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" data-mask="(00)00000-0000" required />
+                        <label id="txtCelularLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelular">Celular</label>
+                    </div>
+                </div>
+
+
+                <h4 class="text-bold-orange">Redes sociais</h4>
+                <div class="d-inline-flex g-width-10">
+                    <div class="form-outline ag-field-content g-width-5">
+                        <input type="text" id="txtInstagram" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off"  required />
+                        <label id="txtInstagramLabel" class="form-label text-semi-bold-light ag-field-label" for="txtInstagram">Instagram</label>
+                        <p style="color:brown;">Cole a URL do seu instagram</p>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-5 ms-3">
+                        <input type="text" id="txtLinkedin" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off"  required />
+                        <label id="txtLinkedinLabel" class="form-label text-semi-bold-light ag-field-label" for="txtLinkedin">Linkedin</label>
+                        <p style="color:brown;">Cole a URL do seu Linkedin</p>
+                    </div>                    
+                </div>
+                <div class="form-outline mb-4 ag-field-content g-width-10 ">
+                    <input type="text" id="txtSite" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                    <label id="txtSiteLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSite">Site (URL)</label>
+                    <p style="color:brown;">Cole a URL do seu site</p>
+                </div>
+
+                
+                <!--FIM Dados do patrocinador-->
+
+
+                <!--Logo TIPO-->
+                <div class="d-flex justify-content-center mb-5 form-load-image" style="text-align: center;">
+                    <input type="file" id="file" hidden />
+                    <textarea id="output" class="d-none"></textarea>
+
+                    <div class="row g-width-5 d-flex justify-content-center">
+                        
+                        <img class="mt-1" alt="Prévia da imagem" id="preview" style="height:130px; width:130px;" />
+                        <button class="d-none" type="button" id="download">Download</button>
+                        <label class="btn  btn-block btn-confirm-radius mt-2" for="file" style="width: 300px;">Selecione seu logotipo</label>
+                    </div>
+                </div>
+                <!--FIM Logo TIPO-->
+
+
+                <!--Mensagem-->
+                <div class="form-outline ag-field-content g-width-10 mb-4 ">
+                    <textarea id="txtMensagem" class="form-control ag-field-input ag-input-color-light-full" placeholder="Nos deixe uma mensagem..."
+                              style="min-height:100px; padding: 20px;"></textarea>
+                    <label id="txtMensagemLabel" class="form-label text-semi-bold-light ag-field-label" for="txtMensagem">Mensagem (Opcional)</label>
+                    <span id="lblLimiteCaractere">Limite de caracteres 3000</span>
+                </div>                
+                
+                <!--FIM Mensagem-->
+
+                <div class="mt-5 d-flex ms-5 row-i d-block d-md-inline-flex d-sm-inline-flex">
+                    <button id="btnEnviarPatrocinador" class="btn  btn-block btn-confirm-radius" type="button">Enviar</button>
+                    <a href="#" class=" btn-voltar mx-2 mt-1" onclick="onRedirectToSejaUmColaborador()">Voltar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/Componentes/carregarImagem.js"></script>
+    <script type="text/javascript" src="~/js/Colaborador/colaborador.js"></script>
+}

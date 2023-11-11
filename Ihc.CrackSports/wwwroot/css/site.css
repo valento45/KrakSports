@@ -66,7 +66,8 @@ html {
 
     .link-redirect-orange:hover {
         color: #F9D19F !important;
-    }
+        cursor: pointer;       
+    }   
 
     .link-redirect-orange a:hover {
         color: #F9D19F !important;
@@ -79,6 +80,19 @@ html {
     width: 35px;
     height: 35px;
     border-radius: 50px;
+}
+
+.form-seja-colaborador{
+
+}
+.form-seja-colaborador .link-redirect-orange:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.text-orange-light-normal {
+    font-family: Poppins-Light;
+    color: #F9D19F;
 }
 
 .text-semi-bold-light {
@@ -255,7 +269,70 @@ html {
     text-decoration: none;
 }
 
+.form-small{
 
+}
+
+    .form-small .ag-field-input {
+        font-family: Poppins-Light;
+        font-size: 1rem;
+        letter-spacing: .5px;
+        border: 0;
+        outline: 0;
+        border-bottom: 1px solid;
+        padding-bottom: .5rem;
+        width: 100%;
+        border-radius: 50px;
+        line-height: 1rem;
+        background-color: transparent;
+        color: brown;
+    }
+
+    .form-small .ag-field-label {
+        font-family: Poppins-Light !important;
+        font-size: 1rem;
+        letter-spacing: .5px;
+        position: absolute;
+        left: 0;        
+        pointer-events: none;
+        transition: all .3s ease;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 10px;
+        line-height: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .form-small .ag-field-input:focus ~ .ag-field-label {
+        font-family: Poppins;
+        font-size: 1rem;
+        letter-spacing: .1rem;
+        line-height: 1.2rem;
+        transform: translate3d(0,-120%,0);
+        margin-top: 0px;
+    }
+
+    .form-small .ag-field-input:valid ~ .ag-field-label {
+        font-family: Poppins;
+        font-size: 1rem;
+        letter-spacing: .1rem;
+        line-height: 1.2rem;
+        transform: translate3d(0,-120%,0);
+        margin-top: 0px;
+        
+    }
+
+
+    .form-small .ag-field-input:read-only ~ .ag-field-label {
+        font-family: Poppins;
+        font-size: 1rem;
+        letter-spacing: .1rem;
+        line-height: 1.2rem;
+        transform: translate3d(0,-120%,0);
+        margin-top: 0px;
+    }
 
 .ag-field-label {
     font-family: Poppins-Light !important;
@@ -719,6 +796,10 @@ html {
         max-height: 80vh;
         color: ghostwhite;
         margin-top: 5.5vh !important;
+    }
+
+    .g-sm-width-10{
+        width: 100%;
     }
 }
 

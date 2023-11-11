@@ -6,7 +6,8 @@ namespace Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information
 	{
 		public string Titulo { get; private set; }
 		public string Message { get; private set; }
-		public TipoMessage Tipo { get; set; }
+        public string TextoInformativo { get; private set; }
+        public TipoMessage Tipo { get; set; }
 		public string UrlRedirect { get;  set; }
 		public string UrlVoltar { get; set; }
 		public bool Sucesso { get; set; }
@@ -54,6 +55,10 @@ namespace Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information
 			Message = message;
 		}
 
+		public void InformarTextoInformativo(string texto)
+		{
+			TextoInformativo = texto;
+		}
 
 		public void InformarTitulo(string titulo)
 		{

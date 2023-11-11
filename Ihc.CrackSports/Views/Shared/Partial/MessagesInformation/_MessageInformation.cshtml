@@ -4,23 +4,28 @@
 
 @if (Model.Sucesso)
 {
-	<div class="container justify-content-center mt-5 mb-5" style="background-color: darkseagreen; box-shadow: 1px 1px 50px 1px #00000066;">
-		<div class="d-inline-flex" style="height: 100px; width:100%; background-color: darkseagreen; align-items: center;">
-			<img class="ms-2" src="~/imgs/confirm-icon1.png" style="width: 70px; height: 70px;" />
-			<h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">
-				@Model.Message
-			</h4>
-		</div>
-	</div>
+    <div class="container justify-content-center mt-5 mb-5" style="background-color: darkseagreen; box-shadow: 1px 1px 50px 1px #00000066;">
+        <div class="d-inline-flex" style="height: 100px; width:100%; background-color: darkseagreen; align-items: center;">
+            <img class="ms-2" src="~/imgs/confirm-icon1.png" style="width: 70px; height: 70px;" />
+
+            <div class="row">
+                <h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">
+                    @Model.Message
+                </h4>
+                <div class="ms-5" style="color:white;">@Model.TextoInformativo</div>
+            </div>
+
+        </div>
+    </div>
 }
 else
 {
-	<div class="container justify-content-center mt-5 mb-5" style="background-color: beige; box-shadow: 1px 1px 50px 1px #00000066;">
-		<div class="d-inline-flex" style="height: 100px; width:100%; background-color: beige;  align-items: center;">
-			<img class="ms-2" src="~/imgs/icon-warning1.png" style="width: 70px; height: 70px;" />
-			<h4 class="text-semi-bold-orange ms-5">
-				@Model.Message
-			</h4>
-		</div>
-	</div>
+    <div class="container justify-content-center mt-5 mb-5" style="background-color: beige; box-shadow: 1px 1px 50px 1px #00000066;">
+        <div class="d-inline-flex" style="height: 100px; width:100%; background-color: beige;  align-items: center;">
+            <img class="ms-2" src="~/imgs/icon-warning1.png" style="width: 70px; height: 70px;" />
+            <h4 class="text-semi-bold-orange ms-5">
+                @Model.Message
+            </h4>
+        </div>
+    </div>
 }

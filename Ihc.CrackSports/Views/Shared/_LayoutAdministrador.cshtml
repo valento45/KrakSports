@@ -1,0 +1,138 @@
+﻿@using Ihc.CrackSports.Core.Authorization.Claims;
+@using System.Security.Claims;
+@using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
+@using Ihc.CrackSports.Core.Commands.Interfaces;
+@using Ihc.CrackSports.Core.Requests.Notifications;
+@inject IUsuarioContext _usuarioContext
+@inject INotificationCommand _notificationCommand
+@{
+
+    if (User.IsAuthenticated())
+    {
+        var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+    }
+
+    if (!_usuarioContext.HasImage())
+    {
+        await _usuarioContext.RefreshImage();
+    }
+}
+<!DOCTYPE html>
+<html lang="pt-br" class="layout-administrador">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Ihc.CrackSports</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/image-css.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/validacoes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Componentes/radioButtonComponente.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Administrador/administrador.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+
+</head>
+<body id="bodyLayout" class="layout-administrador" style="min-height: 100vh !important;">
+    <!--Loader Overlay - Tela Carregamento-->
+    <div class="c-loader-overlay">
+        <div class="c-loader" id="c-loader">
+            <img src="~/img/loader.svg" width="250" alt="" />
+        </div>
+    </div>
+    <!--FIM Loader Overlay-->
+
+    <div class="d-inline-flex" style="height: 100%; width: 100%;">
+        <header class="layout-administrador" style="min-height: 100vh !important;">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh !important;">
+                <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">Administrador</span>
+                </a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active" aria-current="page" onclick="onClickInicio(this)">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
+                            Início
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white" onclick="onClickPatrocinadores(this)">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
+                            Patrocinadores
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white" onclick="onClickClubes(this)">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
+                            Clubes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white" onclick="onClickAtletas(this)">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
+                            Atletas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link text-white" onclick="onClickConfiguracoes(this)">
+                            <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
+                            Configurações
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/imgs/aluno1.jpeg" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong>Usuario logado</strong>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="#">Perfil</a></li>
+                        <li><a class="dropdown-item" href="#">Novo usuário</a></li>                        
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Sair</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <main role="main" class="pb-3 ms-1" style="width: 100%; background-color: ghostwhite;">
+            @RenderBody()
+
+         
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container mb-5 mt-5">
+            &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/UtilAjax.js" asp-append-version="true"></script>
+    <script src="~/js/Usuario/Usuario.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/js/Administrador/administrador.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.mask/jquery.mask.min.js" asp-append-version="true"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <script>
+        let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
+    </script>
+
+    <!--Scripts Notifications-->
+    <script src="~/js/notifications/notification.js"></script>
+
+    <!--Agenda Evento-->
+    <script src="~/js/Evento/agendaEvento.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

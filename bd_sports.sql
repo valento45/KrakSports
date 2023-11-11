@@ -165,6 +165,25 @@ CREATE DATABASE bd_sports
 	);
 	
 	
+		create table if not exists sys.patrocinador_tb(
+		id_patrocinador serial not null primary key,
+		nome_razaosocial varchar not null,
+		email varchar not null,
+		is_pj boolean not null,
+		cpf_cnpj bigint null,
+		telefone varchar null,
+		celular varchar not null,
+		mensagem varchar null,
+		logotipo_base64 varchar null,
+	 	status integer not null,
+		observacoes varchar null,
+		instagram_url varchar null,
+		linkedin_url varchar null,
+		site_url varchar null,
+		ordem_apresentacao integer null		
+	);
+	
+	
 --Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
@@ -184,6 +203,10 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 --Querys testes
 
 select * from sys.agenda_evento_tb order by data_hora LIMIT 200
+
+select *from sys.usuario_tb
+
+select * from sys.solicitacao_aluno_club_tb
 
 
 

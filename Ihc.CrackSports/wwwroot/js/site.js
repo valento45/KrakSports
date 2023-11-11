@@ -19,3 +19,19 @@ function onFocusOutCamposObrigatorios(e) {
         campo.removeClass("campos-invalidos");
     }
 }
+
+function onRedirectToSejaUmColaborador() {
+    window.location.href = "../Colaborador/SejaUmColaborador";
+}
+
+function onRedirectInscricoesAtleta() {
+    window.location.href = "../Usuario";
+}
+function onRedirectInscricoesClube() {
+    window.location.href = "../Club/Index";
+}
+
+function onRedirectCadastroPatrocinador() {
+    window.location.href = "../Colaborador/CadastroPatrocinador";
+}
+

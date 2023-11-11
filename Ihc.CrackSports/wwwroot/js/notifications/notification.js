@@ -74,6 +74,7 @@ position: absolute; margin-left: 20px;" class="text-center">
 
 
 function enviaSolicitacaoClub(idClub) {
+
     //connection.invoke("SendSolicitacaoAlunoToClub", _userLogado, idClub).catch(function (err) {
     //    alert("Erro ao enviar solicitação. Tente mais tarde.")
     //    return console.error(err.toString());
@@ -89,9 +90,6 @@ function enviaSolicitacaoClub(idClub) {
     } else {
         alert("Não é possível enviar solicitações sem estar logado. Efetue o login, e tente novamente.");
     }
-
-
-
 }
 
 function enviaSolicitacaoClubSucess(data) {

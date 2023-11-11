@@ -101,18 +101,16 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> AtualizarDadosGerais(Aluno aluno)
         {
-            string query = "update sys.aluno_tb set id_club = @id_club, nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +
-                "email = @email," +
+            string query = "update sys.aluno_tb set nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +                
                "foto_base64 = @foto_base64, posicao_jogador = @posicao_jogador where id_aluno = @id_aluno;";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
-            cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);
-            cmd.Parameters.AddWithValue(@"id_club", aluno?.IdClub > 0 ? aluno?.IdClub : DBNull.Value);
+            cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);            
             cmd.Parameters.AddWithValue(@"nome", aluno?.Nome ?? "");
             cmd.Parameters.AddWithValue(@"documento", aluno?.Documento ?? "");
             cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);
             cmd.Parameters.AddWithValue(@"data_nascimento", aluno?.DataNascimento ?? new DateTime());
-            cmd.Parameters.AddWithValue(@"email", aluno?.Email ?? "");
+            //cmd.Parameters.AddWithValue(@"email", aluno?.Email ?? "");
             cmd.Parameters.AddWithValue(@"posicao_jogador", aluno?.PosicaoJogador ?? "");
             cmd.Parameters.AddWithValue(@"foto_base64", aluno?.FotoAlunoBase64 ?? "");
 

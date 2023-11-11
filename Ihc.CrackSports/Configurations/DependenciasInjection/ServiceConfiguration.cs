@@ -16,6 +16,7 @@ namespace Ihc.CrackSports.WebApp.Configurations.DependenciasInjection
             services.AddTransient<IAlunoService, AlunoService>();
             services.AddTransient<IClubService, ClubService>();
             services.AddTransient<IEventoService, EventoService>();          
+            services.AddTransient<IColaboradorService, ColaboradorService>();          
 
           
         }

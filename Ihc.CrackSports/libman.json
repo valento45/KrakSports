@@ -3,11 +3,6 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "provider": "cdnjs",
-      "library": "jquery.mask@1.14.16",
-      "destination": "wwwroot/lib/jquery.mask/"
-    },
-    {
       "provider": "unpkg",
       "library": "@microsoft/signalr@latest",
       "destination": "wwwroot/js/signalr",
@@ -15,6 +10,10 @@
         "dist/browser/signalr.js",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "jquery.mask@1.14.16",
+      "destination": "wwwroot/js/jquery.mask/"
     }
   ]
 }

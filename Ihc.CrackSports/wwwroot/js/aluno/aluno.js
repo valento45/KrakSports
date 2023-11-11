@@ -14,15 +14,17 @@ function redirectDadosAluno(idAluno) {
 }
 
 
-function onClickCarregarImagem() {
+function onClickCarregarImagem(e) {
+
     document.getElementById('campoArquivo').click();
+
 }
 
 function onChangeImage(e) {
     saveImage();
 }
 
-function saveImage() {  
+function saveImage() {
     document.getElementById('btnSalvarDadosAluno').click();
 }
 
