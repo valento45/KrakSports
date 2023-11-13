@@ -15,10 +15,28 @@
 }
 
 .layout-administrador {
-    background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)) !important
+    /*background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity)) !important*/
+    background-color:brown !important;
 }
 
 
 .layout-body{
 
+}
+
+.layout-administrador span:hover {
+    color: #F9D19F !important;
+}
+
+.dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active, .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #F9D19F;
+    border-bottom: 1px solid #F9D19F !important;
+    background-color: transparent !important;
+    border-radius: 10%;
+}
+
+.dropdown-menu-orange {
+    color: #dee2e6;
+    background-color: #FA8C05 !important;
+    border-radius: 20px !important;
 }

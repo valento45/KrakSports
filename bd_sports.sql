@@ -78,6 +78,27 @@ CREATE DATABASE bd_sports
 		references sys.club_tb(id_club)	
 	);
 	
+	create table if not exists sys.administrador_tb(
+		id_administrador serial not null primary key,
+		id_usuario bigint null,
+		nome varchar not null,
+		documento varchar,
+		cpf_cnpj bigint,
+		foto_base64 varchar,
+		data_nascimento timestamp,
+		email varchar(300),
+		telefone varchar(50),
+		celular varchar(50),
+		endereco varchar,
+		numero integer,
+		cidade varchar,
+		uf varchar,
+		cep varchar,
+		complemento varchar(200),
+		CONSTRAINT id_usuario_adm_fk foreign key (id_usuario)
+		references sys.usuario_tb(id_usuario)
+	);
+	
 
 	create table if not exists sys.responsavel_aluno_tb(
 		id_responsavel serial not null primary key,
@@ -184,6 +205,9 @@ CREATE DATABASE bd_sports
 	);
 	
 	
+	
+	
+	
 --Tornar usuario administrador
 insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
@@ -207,6 +231,11 @@ select * from sys.agenda_evento_tb order by data_hora LIMIT 200
 select *from sys.usuario_tb
 
 select * from sys.solicitacao_aluno_club_tb
+
+update sys.aluno_tb set id_club = null
+
+select * from sys.patrocinador_tb
+
 
 
 

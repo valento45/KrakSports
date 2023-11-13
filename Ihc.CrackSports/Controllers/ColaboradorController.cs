@@ -3,6 +3,7 @@ using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Colaborador;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.Core.ViewModel.Colaborador;
 using Ihc.CrackSports.WebApp.Application;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
@@ -48,6 +49,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var result = await _messageApplication.GetMessage(patrocinador, TipoMessage.Insercao, insertPatrocinador);
 
             return View("Partial/MessagesInformation/_MessageInformation", result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RefreshPaginacaoColaborador([FromBody] PatrocinadoresAdminViewModel request)
+        {
+
+
+            return View();
         }
     }
 }

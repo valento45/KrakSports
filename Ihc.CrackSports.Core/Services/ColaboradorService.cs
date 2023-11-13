@@ -38,6 +38,11 @@ namespace Ihc.CrackSports.Core.Services
             return await _colaboradorCommand .GetAllAtivos();
         }
 
+        public Task<IEnumerable<Patrocinador>> GetAllInativos()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Patrocinador>> GetAllPendentes()
         {
             return await _colaboradorCommand.GetAllPendentes();
@@ -45,7 +50,8 @@ namespace Ihc.CrackSports.Core.Services
 
         public async Task<bool> NovoPatrocinador(Patrocinador patrocinador)
         {
-            patrocinador.LogoTipoBase64 = patrocinador.LogoTipoBase64.Replace("data:image/jpeg;base64,", "");
+            patrocinador.LogoTipoBase64 = patrocinador.LogoTipoBase64;
+
 
             return await _colaboradorCommand.NovoPatrocinador(patrocinador);
         }

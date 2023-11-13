@@ -57,6 +57,11 @@ html {
     margin-bottom: 60px;
 }
 
+.navbar-white .navbar-toggler-icon {
+    background-image: url(menu-icon2.png);
+    background-color: #cccccc;
+}
+
 .link-redirect-orange {
     color: ghostwhite;
     font-weight: bold;

@@ -59,7 +59,7 @@ namespace Ihc.CrackSports.Core.Authorization
                     senha = user.PasswordHash,
                     email = user.Email,
                     tipo_usuario = (int)user.TipoUsuario
-                }) ;
+                });
 
             if (inserted > 0)
                 return IdentityResult.Success;
@@ -89,9 +89,16 @@ namespace Ihc.CrackSports.Core.Authorization
 
         }
 
-        public Task<Usuario> FindByIdAsync(string userId, CancellationToken cancellationToken)
+        public async Task<Usuario> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var user = await _usuarioService.GetById(long.Parse(userId));
+                user.Claims = await this.GetClaimsAsync(user, cancellationToken);
+                return user;
+            }
+            return null;
+
         }
 
         public async Task<Usuario> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)

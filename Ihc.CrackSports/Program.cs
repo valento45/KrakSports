@@ -62,7 +62,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 	SupportedCultures = cultures
 });
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+app.UseForwardedHeaders();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 

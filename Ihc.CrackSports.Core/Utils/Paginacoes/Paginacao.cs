@@ -18,6 +18,7 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         public Paginacao(IQueryable<T> superset, int pageNumber, int pageSize) : base(superset, pageNumber, pageSize)
         {
             Superset = superset;
+            Subset?.AddRange(superset);
         }
 
 

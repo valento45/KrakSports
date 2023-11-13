@@ -1,0 +1,96 @@
+﻿@using Ihc.CrackSports.Core.ViewModel.Colaborador;
+@model PatrocinadoresAdminViewModel
+@{
+    Layout = null;
+}
+
+
+<div class="mt-5 ms-5 mx-5">
+
+    <h3 class="text-bold-orange">Patrocinadores</h3>
+    <hr />
+
+
+    <div class="d-block d-md-inline-flex mt-5 g-width-10 club-apresentacao">
+
+        <div id="pnlOpcoes" class="g-width-8 ms-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a id="tabPatrocinadores" class="nav-link active" href="#" onclick="onClickTab('Patrocinadores')">Ativos</a>
+                </li>
+                <li class="nav-item">
+                    <a id="tabSolicitacoes" class="nav-link" href="#" onclick="onClickTab('Solicitacoes')">Novas Solicitações </a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="tabInativos" class="nav-link" href="#" onclick="onClickTab('Inativos')">Inativos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a id="tabRendimentos" class="nav-link" href="#" onclick="onClickTab('Rendimentos')">Indicadores de reviews</a>
+                </li>
+            </ul>
+
+            <div id="pnlPatrocinadores" class="mt-5" style="min-height: 150px;">
+                <p style="max-width: 600px; margin-left: 50px;">
+                    Fundado em 1977, nosso clube tem como objetivo promover o acesso ao esporte para a parte mais carente da sociedade, identificando as necessidades através de visitas e promovendo associações com as comunidades interessadas.
+                    Nosso projeto se extende, e completamos longos anos.
+                </p>
+            </div>
+
+            <div id="pnlSolicitacoes" class="d-none mt-5" style="min-height: 150px;">
+
+                <div class="cards-index row-i d-block d-md-inline-flex d-sm-inline-flex" style="display:flex !important; max-width: 90%; flex-wrap: wrap;justify-content: unset; ">
+
+                    @foreach (var obj in Model.Solicitacoes.PatrocinadorPaginacao.ObterListaPaginada())
+                    {
+                        <div class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
+                            <div class="d-inline-flex">
+                                <img class="mt-1" src="@obj.LogoTipoBase64" alt="money" style="width: 50px; height: 60px;" />
+                                <div class="row ms-1">
+                                    <div>
+                                        <h5 style="font-weight: bold; max-height: 48px;">@obj.NomeOuRazaoSocial</h5>
+                                        <p class="m-0" style="max-height: 48px;">@obj.MensagemResumo<span class="btn-voltar" style="color:brown; font-weight: bold;">...ver mais</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-inline-flex" style="position: absolute; margin-top: 137px; margin-left: 30px;">
+                                <a class="btn btn-confirm-radius">Aceitar</a>
+                                <a class="btn  btn-voltar">Excluir</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="text-center mt-5">
+                    <a onclick="voltarPagina()">
+                        <img class="paginacao-icon" src="~/imgs/seta-esquerda-icon.jpg" />
+                    </a>
+
+                    <a class="ms-5 " onclick="proximaPagina()">
+                        <img class="paginacao-icon" src="~/imgs/seta-icon.jpg" />
+                    </a>
+                </div>
+            </div>
+
+            <div id="pnlInativos" class="d-none mt-5" style="min-height: 150px;">
+
+                <p style="max-width: 600px; margin-left: 50px;">
+                    Patrocinadores inativos ou bloqueados
+                </p>
+            </div>
+
+            <div id="pnlRendimentos" class="d-none mt-5" style="min-height: 150px;">
+                <h3 class="text-bold-orange"> Em breve traremos este recurso para você.</h3>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        let _paginacaoPatrocinadores = @Json.Serialize(Model);
+        let urlRefreshPaginacaoPatrocinadores = '@Url.Action("RefreshPaginacaoColaborador", "Colaborador")';
+    </script>
+    <script type="text/javascript" src="~/js/Colaborador/pesquisaColaborador.js"></script>
+}

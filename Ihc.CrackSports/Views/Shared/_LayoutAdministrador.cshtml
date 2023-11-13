@@ -19,7 +19,7 @@
     }
 }
 <!DOCTYPE html>
-<html lang="pt-br" class="layout-administrador">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
 
 </head>
-<body id="bodyLayout" class="layout-administrador" style="min-height: 100vh !important;">
+<body id="bodyLayout" style="min-height: 100vh !important;">
     <!--Loader Overlay - Tela Carregamento-->
     <div class="c-loader-overlay">
         <div class="c-loader" id="c-loader">
@@ -45,41 +45,41 @@
 
     <div class="d-inline-flex" style="height: 100%; width: 100%;">
         <header class="layout-administrador" style="min-height: 100vh !important;">
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; min-height: 100vh !important;">
+            <div class="d-flex flex-column flex-shrink-0 p-3 text-white " style="width: 280px; min-height: 100vh !important;">
                 <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-                    <span class="fs-4">Administrador</span>
+                    <span class="fs-4"><b>Krak Sports</b></span>
                 </a>
                 <hr>
                 <ul class="nav nav-pills flex-column mb-auto">
                     <li class="nav-item">
                         <a href="#" class="nav-link active" aria-current="page" onclick="onClickInicio(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-                            Início
+                            <b>Início</b>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white" onclick="onClickPatrocinadores(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-                            Patrocinadores
+                            <b>Patrocinadores</b>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white" onclick="onClickClubes(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-                            Clubes
+                            <b> Clubes</b>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white" onclick="onClickAtletas(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-                            Atletas
+                            <b>Atletas</b>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="nav-link text-white" onclick="onClickConfiguracoes(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-                            Configurações
+                            <b>Configurações</b>
                         </a>
                     </li>
                 </ul>
@@ -89,24 +89,24 @@
                         <img src="~/imgs/aluno1.jpeg" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong>Usuario logado</strong>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1" style="">
+                    <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-orange text-small shadow" aria-labelledby="dropdownUser1" style="">
                         <li><a class="dropdown-item" href="#">Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">Novo usuário</a></li>                        
+                        <li><a class="dropdown-item" href="#">Novo usuário</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Sair</a></li>
                     </ul>
                 </div>
             </div>
         </header>
-        <main role="main" class="pb-3 ms-1" style="width: 100%; background-color: ghostwhite;">
+        <main id="mainMenuContent" role="main" class="pb-3 ms-1" style="width: 100%; background-color: ghostwhite;">
             @RenderBody()
 
-         
+
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container mb-5 mt-5">
+    <footer class="border-top footer text-muted ">
+        <div class="container mb-5 mt-5 ">
             &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
         </div>
     </footer>

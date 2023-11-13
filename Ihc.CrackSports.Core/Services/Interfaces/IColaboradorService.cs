@@ -15,5 +15,6 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<bool> AtualizarPatrocinador(Patrocinador patrocinador);
         Task<bool> ExcluirPatrocinador(long idPatrocinador);
         Task<IEnumerable<Patrocinador>> GetAllPendentes();
+        Task<IEnumerable<Patrocinador>> GetAllInativos();
     }
 }
