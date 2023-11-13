@@ -1,11 +1,11 @@
-CREATE DATABASE bd_sports
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+--CREATE DATABASE bd_sports
+   -- WITH
+    --OWNER = postgres
+    --ENCODING = 'UTF8'
+    --CONNECTION LIMIT = -1
+   -- IS_TEMPLATE = False;
 	
-	CREATE SCHEMA sys
+	CREATE SCHEMA if not exists sys
     AUTHORIZATION postgres;
 	
 
@@ -209,13 +209,13 @@ CREATE DATABASE bd_sports
 	
 	
 --Tornar usuario administrador
-insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
+--insert into if not exists sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
 --Criar Role usuario Club
-insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
-insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	
 
 	--ALTER TABLES
@@ -223,19 +223,5 @@ insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
 	
 	
-	
---Querys testes
-
-select * from sys.agenda_evento_tb order by data_hora LIMIT 200
-
-select *from sys.usuario_tb
-
-select * from sys.solicitacao_aluno_club_tb
-
-update sys.aluno_tb set id_club = null
-
-select * from sys.patrocinador_tb
-
-
 
 
