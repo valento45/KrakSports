@@ -9,9 +9,6 @@ function apenasNumeros(string) {
     return parseInt(numsStr);
 }
 
-function redirectDadosAluno(idAluno) {
-    window.location.href = `../Aluno/DadosAluno?idAluno=${idAluno}`;
-}
 
 
 function onClickCarregarImagem(e) {

@@ -28,18 +28,19 @@ namespace Ihc.CrackSports.WebApp.Configurations.DependenciasInjection
         {
             string connectionString = "";
 
-            //if (!Debugger.IsAttached)
-            //{
-            //    string encryptBase = configuration.GetConnectionString("Production");
+            if (!Debugger.IsAttached)
+            {
+                //string encryptBase = configuration.GetConnectionString("Production");
 
-            //    var baseDecrypt = Security.Decrypt(encryptBase);
-            //    var basedados = JsonConvert.DeserializeObject<DatabaseSecurity>(baseDecrypt);
+                //var baseDecrypt = Security.Decrypt(encryptBase);
+                //var basedados = JsonConvert.DeserializeObject<DatabaseSecurity>(baseDecrypt);
 
-            //    connectionString = $"Server={basedados.Server};Database={basedados.Database};user={basedados.User};password={basedados.Pass};SslMode=VerifyFull;";
-            //}
+                //connectionString = $"Server={basedados.Server};Database={basedados.Database};user={basedados.User};password={basedados.Pass};SslMode=VerifyFull;";
+                connectionString = configuration.GetConnectionString("Production");
+            }
 
-            //else
-            connectionString = configuration.GetConnectionString("Postgres");
+            else
+                connectionString = configuration.GetConnectionString("Postgres");
 
 
             NpgsqlConnection con = new NpgsqlConnection(connectionString);

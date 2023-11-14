@@ -35,3 +35,7 @@ function onRedirectCadastroPatrocinador() {
     window.location.href = "../Colaborador/CadastroPatrocinador";
 }
 
+function redirectDadosAluno(idAluno) {
+    window.location.href = `../Aluno/DadosAluno?idAluno=${idAluno}`;
+}
+
