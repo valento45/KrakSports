@@ -71,8 +71,8 @@ html {
 
     .link-redirect-orange:hover {
         color: #F9D19F !important;
-        cursor: pointer;       
-    }   
+        cursor: pointer;
+    }
 
     .link-redirect-orange a:hover {
         color: #F9D19F !important;
@@ -87,13 +87,13 @@ html {
     border-radius: 50px;
 }
 
-.form-seja-colaborador{
+.form-seja-colaborador {
+}
 
-}
-.form-seja-colaborador .link-redirect-orange:hover {
-    transform: scale(1.1);
-    transition: all 0.5s;
-}
+    .form-seja-colaborador .link-redirect-orange:hover {
+        transform: scale(1.1);
+        transition: all 0.5s;
+    }
 
 .text-orange-light-normal {
     font-family: Poppins-Light;
@@ -148,6 +148,14 @@ html {
         color: ghostwhite;
     }
 
+.btn-radius {
+    border-radius: 20px;
+}
+
+    .btn-radius:hover {
+        transform: scale(1.1);
+        transition: all 0.5s;
+    }
 
 .btn-confirm-radius {
     border-radius: 20px;
@@ -156,6 +164,12 @@ html {
     min-width: 120px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
+
+    .btn-confirm-radius:hover {
+        transform: scale(1.1);
+        transition: all 0.5s;
+        color: ghostwhite;
+    }
 
 .btn-voltar-radius {
     border-radius: 20px;
@@ -174,11 +188,7 @@ html {
     }
 
 
-.btn-confirm-radius:hover {
-    transform: scale(1.1);
-    transition: all 0.5s;
-    color: ghostwhite;
-}
+
 
 
 .btn-voltar {
@@ -191,6 +201,7 @@ html {
 
     .btn-voltar:hover {
         color: #F9D19F !important;
+        border-color: #F9D19F !important;
     }
 
 .btn-voltar-radius {
@@ -274,8 +285,7 @@ html {
     text-decoration: none;
 }
 
-.form-small{
-
+.form-small {
 }
 
     .form-small .ag-field-input {
@@ -298,7 +308,7 @@ html {
         font-size: 1rem;
         letter-spacing: .5px;
         position: absolute;
-        left: 0;        
+        left: 0;
         pointer-events: none;
         transition: all .3s ease;
         max-width: 100%;
@@ -326,7 +336,6 @@ html {
         line-height: 1.2rem;
         transform: translate3d(0,-120%,0);
         margin-top: 0px;
-        
     }
 
 
@@ -803,7 +812,7 @@ html {
         margin-top: 5.5vh !important;
     }
 
-    .g-sm-width-10{
+    .g-sm-width-10 {
         width: 100%;
     }
 }

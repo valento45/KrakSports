@@ -1,0 +1,130 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Colaborador;
+@model Patrocinador
+
+@{
+    Layout = null;
+}
+
+
+<div class="mt-5 ">
+    <div class="ms-5 mx-5">
+        <h4 class="text-bold-orange ">Dados do patrocinador</h4>
+        <hr />
+    </div>
+
+    <form id="pnlDadosPatrocinador" class="form-control mt-5 g-width-10 g-sm-width-10 col-sm-12 " method="post" asp-controller="Administrador" asp-action="AtualizarDadosPatrocinador">
+
+        <div class="mt-2">
+            <div class="mt-2">
+                <a onclick="onClickPatrocinadores(this)" class="btn btn-voltar mx-5" style="border-bottom: 5px solid; border-bottom-color: brown;">Voltar para tela de patrocinadores</a>
+            </div>
+
+            <div class="mt-5 d-block d-sm-inline-flex g-width-10">
+                <div class="d-flex mb-5 form-load-image ms-5 mt-4" style="text-align: center;">
+                    <input type="file" id="file" hidden />
+                    <textarea id="output" class="d-none"></textarea>
+
+                    <div class="row g-width-5 " style="position: relative;">
+                        <div class="justify-content-center">
+
+                            @if (!string.IsNullOrEmpty(Model.LogoTipoBase64))
+                            {
+                                <img src="@Model.LogoTipoBase64" class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px; border-radius: 20px;" />
+                            }
+                            else
+                            {
+                                <img class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px;" />
+                            }
+                            <label class="btn btn-block btn-confirm-radius mt-2" for="file" style="width: 200px;">Carregar imagem</label>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" asp-for="IdPatrocinador" />
+                <input type="hidden" asp-for="IsPj" />
+                <input type="hidden" asp-for="LinkSite" />
+                <input type="hidden" asp-for="LinkInstagram" />
+                <input type="hidden" asp-for="LinkLinkedin" />
+                <input type="hidden" asp-for="LogoTipoBase64" />
+
+
+                <!--Inicio FORMULARIO-->
+                <div class="form-small g-width-10">
+                    <div class="form-outline mb-4 ag-field-content g-width-10">
+                        <input asp-for="NomeOuRazaoSocial" type="text" id="txtNomeRazaoSocial" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="txtNomeRazaoSocialLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomeRazaoSocial">Nome / Razão social</label>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-10 ms-1">
+                        <input asp-for="Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">E-mail</label>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-5 ms-1">
+                        <input asp-for="CpfCnpj" type="text" id="txtCpfCnpj" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="txtCpfCnpjLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCpfCnpj">CPF / CNPJ</label>
+                    </div>
+
+                    <div class="d-inline-flex g-width-10">
+                        <div class="form-outline mb-4 ag-field-content g-width-5">
+                            <input asp-for="Telefone" type="text" id="txtTelefone" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" data-mask="(00)0000-0000" required />
+                            <label id="txtTelefoneLabel" class="form-label text-semi-bold-light ag-field-label" for="txtTelefone">Telefone</label>
+                        </div>
+                        <div class="form-outline mb-4 ag-field-content g-width-5 ms-3">
+                            <input asp-for="Celular" type="text" id="txtCelular" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" data-mask="(00)00000-0000" required />
+                            <label id="txtCelularLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelular">Celular</label>
+                        </div>
+                    </div>
+
+                    <div class="d-inline-flex g-width-10 mb-2">
+
+                        @if (!string.IsNullOrEmpty(Model.LinkSite))
+                        {
+                            <div class="btn btn-radius">
+                                <a href="@Model.LinkSite" target="_blank">
+                                    <img style="height: 50px; width: 50px; border-radius: 50px;" src="~/imgs/site-icon.png" />
+                                </a>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.LinkInstagram))
+                        {
+                            <div class="btn btn-radius">
+                                <a href="@Model.LinkInstagram" target="_blank">
+                                    <img style="height: 50px; width: 50px; border-radius: 50px;" src="~/imgs/insta-icon2.png" />
+                                </a>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.LinkLinkedin))
+                        {
+                            <div class="btn btn-radius">
+                                <a href="@Model.LinkLinkedin" target="_blank">
+                                    <img style="height: 50px; width: 50px; border-radius: 50px;" src="~/imgs/linkedin-icon.png" />
+                                </a>
+                            </div>
+                        }
+                    </div>
+
+                    <!--Mensagem-->
+                    <div class="form-outline ag-field-content g-width-10 mb-4 ">
+                        <textarea asp-for="Mensagem" id="txtMensagem" class="form-control ag-field-input ag-input-color-light-full" placeholder="Nos deixe uma mensagem..."
+                                  style="min-height:100px; padding: 20px;"></textarea>
+                        <label id="txtMensagemLabel" class="form-label text-semi-bold-light ag-field-label" for="txtMensagem">Mensagem do patrocinador</label>
+                    </div>
+
+                    <!--FIM Mensagem-->
+
+
+                    <div class="mb-4 ms-5 mx-4 mt-5">
+                        <button id="" class="btn  btn-block btn-confirm-radius" type="submit">Salvar</button>
+                        <a href="#" class=" btn-voltar mx-5">Voltar</a>
+                    </div>
+
+                </div>
+                <!--FIM FORMULARIO-->
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -38,9 +38,9 @@ namespace Ihc.CrackSports.Core.Services
             return await _colaboradorCommand .GetAllAtivos();
         }
 
-        public Task<IEnumerable<Patrocinador>> GetAllInativos()
+        public async Task<IEnumerable<Patrocinador>> GetAllInativos()
         {
-            throw new NotImplementedException();
+            return await _colaboradorCommand.GetAllInativos();
         }
 
         public async Task<IEnumerable<Patrocinador>> GetAllPendentes()

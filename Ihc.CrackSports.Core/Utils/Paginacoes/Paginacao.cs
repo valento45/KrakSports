@@ -26,6 +26,10 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         {
             if (this.Superset != null && base.TotalItemCount > 0)
             {
+                if(PageNumber >= PageCount)                
+                    PageNumber--;
+                
+
                 Subset.AddRange(Superset.Skip(PageNumber * PageSize).Take(PageSize).ToList());
 
                 if (PageNumber > base.PageCount)

@@ -61,12 +61,12 @@ function activeInactiveButton(e) {
 
 
 function hideTabs() {
-    $("#pnlPatrocinadores").addClass("d-none");
+    $("#pnlPatrocinadoresAtivos").addClass("d-none");
     $("#pnlSolicitacoes").addClass("d-none");
     $("#pnlRendimentos").addClass("d-none");
     $("#pnlInativos").addClass("d-none");
 
-    $("#tabPatrocinadores").removeClass("active");
+    $("#tabPatrocinadoresAtivos").removeClass("active");
     $("#tabSolicitacoes").removeClass("active");
     $("#tabRendimentos").removeClass("active");
     $("#tabInativos").removeClass("active");
@@ -74,8 +74,17 @@ function hideTabs() {
 
 function onClickTab(option) {
     hideTabs();
-    
-    
+
+
     $(`#tab${option}`).addClass("active");
     $(`#pnl${option}`).removeClass("d-none");
+}
+
+
+function onClickDetalhesPatrocinador(e) {
+
+    util.ajax.post("../Administrador/DetalhesPatrocinadorPartialView", e,
+        onClickMenuSucesso,
+        onClickMenuError);     
+
 }

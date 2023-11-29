@@ -25,18 +25,18 @@ namespace Ihc.CrackSports.Core.Repositorys
                 " values (@nome_razaosocial, @email, @is_pj, @cpf_cnpj, @telefone, @celular, @logotipo_base64, @mensagem, @status, @instagram_url, @linkedin_url, @site_url) returning id_patrocinador";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
-            cmd.Parameters.AddWithValue(@"nome_razaosocial", patrocinador.NomeOuRazaoSocial);
-            cmd.Parameters.AddWithValue(@"email", patrocinador.Email);
+            cmd.Parameters.AddWithValue(@"nome_razaosocial", patrocinador?.NomeOuRazaoSocial ?? "");
+            cmd.Parameters.AddWithValue(@"email", patrocinador?.Email ?? "");
             cmd.Parameters.AddWithValue(@"is_pj", patrocinador.IsPj);
-            cmd.Parameters.AddWithValue(@"cpf_cnpj", patrocinador.CpfCnpj);
-            cmd.Parameters.AddWithValue(@"telefone", patrocinador.Telefone);
-            cmd.Parameters.AddWithValue(@"celular", patrocinador.Celular);
-            cmd.Parameters.AddWithValue(@"logotipo_base64", patrocinador.LogoTipoBase64);
+            cmd.Parameters.AddWithValue(@"cpf_cnpj", patrocinador?.CpfCnpj ?? 0);
+            cmd.Parameters.AddWithValue(@"telefone", patrocinador?.Telefone ?? "");
+            cmd.Parameters.AddWithValue(@"celular", patrocinador?.Celular ?? "");
+            cmd.Parameters.AddWithValue(@"logotipo_base64", patrocinador?.LogoTipoBase64 ?? "");
             cmd.Parameters.AddWithValue(@"mensagem", patrocinador.Mensagem);
             cmd.Parameters.AddWithValue(@"status", (int)patrocinador.Status);
-            cmd.Parameters.AddWithValue(@"instagram_url", patrocinador.LinkInstagram);
-            cmd.Parameters.AddWithValue(@"linkedin_url", patrocinador.LinkLinkedin);
-            cmd.Parameters.AddWithValue(@"site_url", patrocinador.LinkSite);
+            cmd.Parameters.AddWithValue(@"instagram_url", patrocinador?.LinkInstagram ?? "");
+            cmd.Parameters.AddWithValue(@"linkedin_url", patrocinador?.LinkLinkedin ?? "");
+            cmd.Parameters.AddWithValue(@"site_url", patrocinador?.LinkSite ?? "");
             var result = await base.ExecuteScalarAsync(cmd);
 
             if (result != null && int.Parse(result.ToString()) > 0)
@@ -54,20 +54,20 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
             cmd.Parameters.AddWithValue(@"id_patrocinador", patrocinador.IdPatrocinador);
-            cmd.Parameters.AddWithValue(@"nome_razaosocial", patrocinador.NomeOuRazaoSocial);
-            cmd.Parameters.AddWithValue(@"email", patrocinador.Email);
+            cmd.Parameters.AddWithValue(@"nome_razaosocial", patrocinador?.NomeOuRazaoSocial ?? "");
+            cmd.Parameters.AddWithValue(@"email", patrocinador?.Email ?? "");
             cmd.Parameters.AddWithValue(@"is_pj", patrocinador.IsPj);
-            cmd.Parameters.AddWithValue(@"cpf_cnpj", patrocinador.CpfCnpj);
-            cmd.Parameters.AddWithValue(@"telefone", patrocinador.Telefone);
-            cmd.Parameters.AddWithValue(@"celular", patrocinador.Celular);
-            cmd.Parameters.AddWithValue(@"mensagem", patrocinador.Mensagem);
-            cmd.Parameters.AddWithValue(@"logotipo_base64", patrocinador.LogoTipoBase64);
+            cmd.Parameters.AddWithValue(@"cpf_cnpj", patrocinador?.CpfCnpj ?? 0);
+            cmd.Parameters.AddWithValue(@"telefone", patrocinador?.Telefone ?? "");
+            cmd.Parameters.AddWithValue(@"celular", patrocinador?.Celular ?? "");
+            cmd.Parameters.AddWithValue(@"mensagem", patrocinador?.Mensagem ?? "");
+            cmd.Parameters.AddWithValue(@"logotipo_base64", patrocinador?.LogoTipoBase64 ?? "");
             cmd.Parameters.AddWithValue(@"status", (int)patrocinador.Status);
-            cmd.Parameters.AddWithValue(@"observacoes", patrocinador.Observacoes);
-            cmd.Parameters.AddWithValue(@"instagram_url", patrocinador.LinkInstagram);
-            cmd.Parameters.AddWithValue(@"linkedin_url", patrocinador.LinkLinkedin);
-            cmd.Parameters.AddWithValue(@"site_url", patrocinador.LinkSite);
-            cmd.Parameters.AddWithValue(@"ordem_apresentacao", patrocinador.OrdemApresentacao);
+            cmd.Parameters.AddWithValue(@"observacoes", patrocinador?.Observacoes ?? "");
+            cmd.Parameters.AddWithValue(@"instagram_url", patrocinador?.LinkInstagram ?? "");
+            cmd.Parameters.AddWithValue(@"linkedin_url", patrocinador?.LinkLinkedin ?? "");
+            cmd.Parameters.AddWithValue(@"site_url", patrocinador?.LinkSite ?? "");
+            cmd.Parameters.AddWithValue(@"ordem_apresentacao", patrocinador?.OrdemApresentacao ?? 0);
 
             var result = await base.ExecuteCommand(cmd);
 
@@ -109,5 +109,13 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result?.Select(x => x.ToPatrocinador()) ?? new List<Patrocinador>();
         }
 
+        public async Task<IEnumerable<Patrocinador>> GetAllInativos()
+        {
+            string query = "select * from sys.patrocinador_tb where status = 2 ";
+
+
+            var result = await base.QueryAsync<PatrocinadorDto>(query);
+            return result?.Select(x => x.ToPatrocinador()) ?? new List<Patrocinador>();
+        }
     }
 }

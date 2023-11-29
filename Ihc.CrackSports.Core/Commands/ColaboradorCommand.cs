@@ -38,6 +38,11 @@ namespace Ihc.CrackSports.Core.Commands
             return await _colaboradorRepository.GetAllAtivos();
         }
 
+        public async Task<IEnumerable<Patrocinador>> GetAllInativos()
+        {
+            return await _colaboradorRepository.GetAllInativos();
+        }
+
         public async Task<IEnumerable<Patrocinador>> GetAllPendentes()
         {
             return await _colaboradorRepository.GetAllPendentes();

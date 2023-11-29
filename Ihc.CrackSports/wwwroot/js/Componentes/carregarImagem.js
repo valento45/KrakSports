@@ -2,9 +2,9 @@
 
 $(function () {
     $(".form-load-image").children("input").on('change', previewFile);
-    $(".form-load-image").children("textarea").on('input', previewText);
-
+    $(".form-load-image").children("textarea").on('input', previewText);    
 });
+
 
 
 function previewFile({ target }) {

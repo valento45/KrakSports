@@ -1,0 +1,81 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Colaborador;
+@using Ihc.CrackSports.Core.ViewModel.Colaborador;
+@using Newtonsoft.Json;
+@model PaginacaoPatrocinadorViewModel
+
+
+@if (Model.PatrocinadorPaginacao?.Any() ?? false)
+{
+    <div class="cards-index row-i d-block d-md-inline-flex d-sm-inline-flex" style="display:flex !important; max-width: 90%; flex-wrap: wrap;justify-content: unset; ">
+
+        @foreach (var obj in Model.PatrocinadorPaginacao.ObterListaPaginada())
+        {
+            <div onclick="onClickDetalhesPatrocinador(@JsonConvert.SerializeObject(obj))" class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
+                <div class="d-inline-flex">
+                    <img class="mt-1" src="@obj.LogoTipoBase64" alt="money" style="width: 50px; height: 60px;" />
+                    <div class="row ms-1">
+                        <div>
+                            <h5 style="font-weight: bold; max-height: 48px;">@obj.NomeOuRazaoSocial</h5>
+                            <p class="m-0" style="max-height: 48px;">@obj.MensagemResumo<span onclick="onClickDetalhesPatrocinador(@JsonConvert.SerializeObject(obj))" class="btn-voltar" style="color:brown; font-weight: bold;">...ver mais</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-inline-flex" style="position: absolute; margin-top: 137px; margin-left: 30px;">
+                    @if (obj.Status == Ihc.CrackSports.Core.Objetos.Colaborador.StatusPatrocinador.Pendente)
+                    {
+                        <a class="btn btn-confirm-radius" onclick="aceitarSolicitacaoPatrocinador(@JsonConvert.SerializeObject(obj))">Aceitar</a>
+                        <a class="btn  btn-voltar" onclick="excluirSolicitacaoPatrocinador(@JsonConvert.SerializeObject(obj))">Excluir</a>
+                    }
+                    else if (obj.Status == Ihc.CrackSports.Core.Objetos.Colaborador.StatusPatrocinador.Ativo)
+                    {
+                        <a class="btn btn-confirm-radius" onclick="onClickDetalhesPatrocinador(@JsonConvert.SerializeObject(obj))">Detalhes</a>
+                        <a class="btn  btn-voltar" onclick="inativarPatrocinador(@JsonConvert.SerializeObject(obj))">Inativar</a>
+                    }
+                    else if (obj.Status == Ihc.CrackSports.Core.Objetos.Colaborador.StatusPatrocinador.Bloqueado)
+                    {
+                        <a class="btn btn-confirm-radius" onclick="reativarPatrocinador(@JsonConvert.SerializeObject(obj))">Reativar</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-center mt-5">
+        @if (Model.TodosPatrocinadores.Any(x => x.Status == StatusPatrocinador.Pendente))
+        {
+            <a onclick="voltarPagina(@JsonConvert.SerializeObject(Model), 'Pendente')">
+                <img class="paginacao-icon" src="~/imgs/seta-esquerda-icon.jpg" />
+            </a>
+
+            <a class="ms-5 " onclick="proximaPagina(@JsonConvert.SerializeObject(Model), 'Pendente')">
+                <img class="paginacao-icon" src="~/imgs/seta-icon.jpg" />
+            </a>
+        }
+        else if (Model.TodosPatrocinadores.Any(x => x.Status == StatusPatrocinador.Ativo))
+        {
+            <a onclick="voltarPagina(@JsonConvert.SerializeObject(Model), 'Ativo')">
+                <img class="paginacao-icon" src="~/imgs/seta-esquerda-icon.jpg" />
+            </a>
+
+            <a class="ms-5 " onclick="proximaPagina(@JsonConvert.SerializeObject(Model), 'Ativo')">
+                <img class="paginacao-icon" src="~/imgs/seta-icon.jpg" />
+            </a>
+        }
+        else
+        {
+            <a onclick="voltarPagina(@JsonConvert.SerializeObject(Model), 'Inativo')">
+                <img class="paginacao-icon" src="~/imgs/seta-esquerda-icon.jpg" />
+            </a>
+
+            <a class="ms-5 " onclick="proximaPagina(@JsonConvert.SerializeObject(Model), 'Inativo')">
+                <img class="paginacao-icon" src="~/imgs/seta-icon.jpg" />
+            </a>
+        }
+
+    </div>
+}
+else
+{
+    <h3 class="text-bold-orange">Não foram encontrados registros.</h3>
+}
+

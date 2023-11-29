@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Colaborador\" />
+    <Folder Include="Views\Colaborador\Partial\" />
   </ItemGroup>
 
 </Project>

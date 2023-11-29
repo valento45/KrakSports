@@ -73,3 +73,4 @@ function novoPatrocinadorErro(erro) {
     alert("Erro ao cadastrar patrocinador")
 
 }
+

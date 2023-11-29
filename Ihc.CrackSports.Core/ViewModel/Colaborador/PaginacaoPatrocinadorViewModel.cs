@@ -24,9 +24,15 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
         }
 
 
+        public PaginacaoPatrocinadorViewModel()
+        {
+            
+        }
+
+
         public PaginacaoPatrocinadorViewModel(PaginacaoPatrocinadorViewModelRequest request)
         {
-            PatrocinadorPaginacao = new Paginacao<Patrocinador>(request.AllItens.AsQueryable(), request.PageNumber > 0 ? request.PageNumber : 1, 6);
+            PatrocinadorPaginacao = new Paginacao<Patrocinador>(request.TodosPatrocinadores.AsQueryable(), request.PageNumber > 0 ? request.PageNumber : 1, 6);
 
             NextPage = request.NextPage;
             PreviousPage = request.PreviousPage;
@@ -61,16 +67,25 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
             PatrocinadorPaginacao.Clear();
 
             if (NextPage)
+            {
                 PatrocinadorPaginacao.ProximaPagina();
-
+                NextPage = false;
+            }
             else if (PreviousPage)
+            {
                 PatrocinadorPaginacao.VoltarPagina();
-
+                PreviousPage = false;
+            }
             else if (FirstPage)
+            {
                 PatrocinadorPaginacao.PrimeiraPagina();
-
+                FirstPage = false;
+            }
             else if (LastPage)
+            {
                 PatrocinadorPaginacao.UltimaPagina();
+                LastPage = false;
+            }
             else            
                 PatrocinadorPaginacao.PrimeiraPagina();
             
@@ -87,7 +102,7 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
         public bool LastPage { get; set; }
         public int PageNumber { get; set; }
         public int PageCount { get; set; }
-        public List<Patrocinador> ItensPagined { get; set; }
-        public List<Patrocinador> AllItens { get; set; }
+        public List<Patrocinador> PatrocinadorPaginacao { get; set; }
+        public List<Patrocinador> TodosPatrocinadores { get; set; }
     }
 }

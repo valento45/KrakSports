@@ -10,11 +10,12 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
     public interface IColaboradorRepository
     {
         Task<IEnumerable<Patrocinador>> GetAll();
-        Task<IEnumerable<Patrocinador>> GetAllAtivos();
         Task<bool> NovoPatrocinador(Patrocinador patrocinador);
         Task<bool> AtualizarPatrocinador(Patrocinador patrocinador);
-        Task<bool> ExcluirPatrocinador(long idPatrocinador);
+        Task<bool> ExcluirPatrocinador(long idPatrocinador);        
         Task<IEnumerable<Patrocinador>> GetAllPendentes();
+        Task<IEnumerable<Patrocinador>> GetAllAtivos();
+        Task<IEnumerable<Patrocinador>> GetAllInativos();
 
     }
 }

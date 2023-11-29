@@ -5,6 +5,12 @@
 
 
 
+const urlRefreshPaginacaoPatrocinadores = "../Colaborador/RefreshPaginacaoColaborador";
+const urlAceitarPatrocinador = "../Colaborador/AceitarPatrocinador";
+const urlExcluirPatrocinador = "../Colaborador/ExcluirPatrocinador";
+const urlInativarPatrocinador = "../Colaborador/InativarPatrocinador";
+const urlReativarPatrocinador = "../Colaborador/ReativarPatrocinador";
+
 function onFocusOutCamposObrigatorios(e) {
 
     var campo = $(`#${e.currentTarget.id}`);
@@ -39,3 +45,8 @@ function redirectDadosAluno(idAluno) {
     window.location.href = `../Aluno/DadosAluno?idAluno=${idAluno}`;
 }
 
+
+
+function onClickRedirectNovaAba(url) {
+    window.open(url, '_blank');
+}

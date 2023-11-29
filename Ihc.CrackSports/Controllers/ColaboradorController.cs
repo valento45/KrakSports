@@ -52,11 +52,48 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RefreshPaginacaoColaborador([FromBody] PatrocinadoresAdminViewModel request)
+        public async Task<PartialViewResult> RefreshPaginacaoColaborador([FromBody] PaginacaoPatrocinadorViewModelRequest request)
         {
 
+            PaginacaoPatrocinadorViewModel result = new PaginacaoPatrocinadorViewModel(request);
 
-            return View();
+            await result.Refresh();
+
+            return PartialView("Partial/Patrocinadores/_ListaPatrocinadoresPartial", result);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> AceitarPatrocinador([FromBody] Patrocinador model)
+        {
+            model.Status = StatusPatrocinador.Ativo;
+            var result = await _colaboradorService.AtualizarPatrocinador(model);
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ExcluirPatrocinador([FromBody] Patrocinador model)
+        {
+            var result = await _colaboradorService.ExcluirPatrocinador(model.IdPatrocinador);
+
+            return Json(result);
+        }
+
+        public async Task<JsonResult> InativarPatrocinador([FromBody] Patrocinador model)
+        {
+            model.Status = StatusPatrocinador.Bloqueado;
+            var result = await _colaboradorService.AtualizarPatrocinador(model);
+
+            return Json(result);
+        }
+
+        public async Task<JsonResult> ReativarPatrocinador([FromBody] Patrocinador model)
+        {
+            model.Status = StatusPatrocinador.Ativo;
+            var result = await _colaboradorService.AtualizarPatrocinador(model);
+
+            return Json(result);
         }
     }
 }

@@ -45,10 +45,58 @@ namespace Ihc.CrackSports.Core.Objetos.Colaborador
         public string LogoTipoBase64 { get; set; }
         public string Observacoes { get; set; }
         public StatusPatrocinador Status { get; set; }
-        public string LinkSite { get; set; }
-        public string LinkInstagram { get; set; }
-        public string LinkLinkedin { get; set; }
         public int OrdemApresentacao { get; set; }
+
+
+        private string _linkSite { get; set; }
+        private string _linkInstagram { get; set; }
+        private string _linkLinkedin { get; set; }
+
+        public string LinkSite
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_linkSite))
+                    if (!_linkSite.Contains("http") && !_linkSite.Contains("https"))
+                        _linkSite = $"http://{_linkSite}";
+
+
+                return _linkSite;
+
+            }
+            set { _linkSite = value; }
+        }
+
+
+        public string LinkInstagram
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_linkInstagram))
+                    if (!_linkInstagram.Contains("http") && !_linkInstagram.Contains("https"))
+                        _linkInstagram = $"http://{_linkInstagram}";
+
+                return _linkInstagram;
+
+            }
+            set { _linkInstagram = value; }
+        }
+        public string LinkLinkedin
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_linkLinkedin))
+                    if (!_linkLinkedin.Contains("http") && !_linkLinkedin.Contains("https"))
+                        _linkLinkedin = $"http://{_linkLinkedin}";
+
+                return _linkLinkedin;
+            }
+            set
+            {
+                _linkLinkedin = value;
+            }
+        }
+
     }
 
     public enum StatusPatrocinador : int
