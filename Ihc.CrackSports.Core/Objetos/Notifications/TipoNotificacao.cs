@@ -9,6 +9,7 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications
     public enum TipoNotificacao : int
     {
         SolicitacaoAluno = 0,
-        Outros = 1
+        Outros = 1,
+        Evento = 2
     }
 }

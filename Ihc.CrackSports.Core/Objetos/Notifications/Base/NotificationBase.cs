@@ -14,7 +14,6 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Base
     public class NotificationBase
     {
 
-
         public long IdNotificacao { get; set; }
         public TipoNotificacao Tipo { get; set; }
         public DateTime DataNotificacao { get; set; }
@@ -25,12 +24,12 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Base
         public TipoUsuario TipoUsuario { get; set; }
         public long IdAluno { get; set; }
         public long IdClube { get; set; }
-
+        
 
 
         public NotificationBase()
         {
-
+            DataNotificacao = DateTime.Now;
         }
 
         public NotificationBase(DataRow dr)

@@ -1,7 +1,7 @@
 ﻿var util = util || {};
 
 var frameId = "frameWebApp";
-
+let _excluded = false;
 
 util.storage = {
     setItem: function (name, object) {

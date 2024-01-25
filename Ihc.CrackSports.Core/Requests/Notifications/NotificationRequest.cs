@@ -9,6 +9,7 @@ namespace Ihc.CrackSports.Core.Requests.Notifications
 {
     public class NotificationRequest
     {
+        public long IdNotificacao { get; set; }
         public long IdUsuario { get; set; }
         public TipoUsuario  TipoUsuario { get; set; }
 

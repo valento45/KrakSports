@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using System;
@@ -59,6 +60,16 @@ namespace Ihc.CrackSports.Core.Commands
         public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
         {
             return await _eventoRepository.LancarPlacarEvento(golsMarcados, isEncerrado);
+        }
+
+        public async Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub)
+        {
+            return await _eventoRepository.EscalarTime(time, idEvento, idClub); 
+        }
+
+        public async Task<bool> LimparEscalacaoTime(long idEvento, long idClub)
+        {
+            return await _eventoRepository.LimparEscalacaoTime(idEvento, idClub);
         }
     }
 }

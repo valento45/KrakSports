@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using System;
 using System.Collections.Generic;
@@ -68,5 +69,9 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         /// <param name="idEvento"></param>
         /// <returns></returns>
         Task<bool> EncerrarEvento(long idEvento);
+
+        Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub);
+
+        Task<bool> LimparEscalacaoTime(long idEvento, long idClub);
     }
 }

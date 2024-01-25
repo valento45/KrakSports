@@ -1,5 +1,6 @@
 ﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
@@ -114,6 +115,35 @@ namespace Ihc.CrackSports.Core.Repositorys
         public Task<bool> EncerrarEvento(long idEvento)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub)
+        {
+            if(time?.Any() ?? false)
+            {
+                string query = "insert into sys.atleta_evento_tb (id_evento, id_aluno, id_clube) values ";
+
+                foreach (Aluno aluno in time)
+                {
+                    query += $"({idEvento}, {aluno.Id}, {idClub}) ,";
+                }
+
+                query = query.Substring(0, query.Length - 2);
+
+                var result = await base.ExecuteAsync(query);
+                return result;
+            }
+
+            return false;
+        }
+
+
+
+        public async Task<bool> LimparEscalacaoTime(long idEvento, long idClub)
+        {
+            string query = $"delete from sys.atleta_evento_tb where id_evento = {idEvento} AND id_club = {idClub}";
+
+            return await base.ExecuteAsync(query);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Ihc.CrackSports.Core.Extensions
 
         public static string FormatarHoraEvento(this TimeSpan time)
         {
-            string result = $"{time.Hours}h{time.Minutes}";
+            string result = $"{time.Hours.ToString("00")}h{time.Minutes.ToString("00")}";
 
             return result;
         }

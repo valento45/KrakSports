@@ -1,0 +1,74 @@
+﻿@using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.Core.Objetos.Competicoes;
+@using Newtonsoft.Json;
+@model Evento
+
+@{
+    Layout = "_Layout";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/Eventos/verEvento.css" asp-append-version="true" />
+}
+
+<div class="container mt-5">
+
+    <h4 class="mt-5 text-semi-bold-orange">Detalhes do evento</h4>
+    <hr />
+
+    <div class="row g-width-10 mt-5 pnl-ver-evento ">
+
+        <div class="d-inline-flex justify-content-between mb-3">
+            <h5 class="mb-3"><b>@Model.Tipo.GetEnumDescription() - @Model.Data.ObterDataEscrita()</b></h5>
+        </div>
+
+        <div class="d-inline-flex mb-3 justify-content-center g-width-10" style="align-items: center;">
+
+            <span style="min-width: 130px; max-width: 130px; text-align-last: end;"><b>@Model.Clube1.Nome</b></span>
+
+            <div class="ms-2 d-inline-flex" style="align-items: center;">
+                @if (Model.Clube1.HasImagem())
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", Model.Clube1.ImagemBase64);
+                    <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                }
+                else
+                {
+                    <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                }
+
+                <span style="color: #FA8C05 ; font-weight: bold;" class="mx-2">X</span>
+
+                @if (Model.Clube2.HasImagem())
+                {
+                    var imagem = String.Format("data:image/png;base64,{0}", Model.Clube2.ImagemBase64);
+                    <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                }
+                else
+                {
+                    <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                }
+            </div>
+
+            <span style="min-width: 130px; max-width: 130px;" class="ms-2"><b>@Model.Clube2.Nome</b></span>
+        </div>
+
+        <span class="mb-1" style="text-align-last: center;"><b>Local:</b> @Model.EnderecoResumido</span>
+        <h4 style="text-align-last: center;"><b>@Model.HoraEvento.FormatarHoraEvento()</b></h4>
+
+        @if (!string.IsNullOrEmpty(Model.Observacoes))
+        {
+
+            <span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @Model.Observacoes</span>
+        }
+
+
+        <div class="mb-1 col-lg-12">
+            <a class="btn  btn-block btn-confirm-radius-escuro mt-2" onclick="onClickEscalarEquipe(@(JsonConvert.SerializeObject(Model)))">Escalar equipe</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/js/Evento/agendaEvento.js"></script>
+}

@@ -188,9 +188,6 @@ html {
     }
 
 
-
-
-
 .btn-voltar {
     min-width: 120px;
     border: none;
@@ -761,6 +758,9 @@ html {
     color: ghostwhite;
 }
 
+.notification-nao-vista {
+    background-color: #FFC99D55;
+}
 
 
 .card-notification {

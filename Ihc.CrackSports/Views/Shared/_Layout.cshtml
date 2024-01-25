@@ -13,7 +13,7 @@
         _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
     }
 
-    if (!_usuarioContext.HasImage())
+    if (!_usuarioContext.HasImage() )
     {
        await _usuarioContext.RefreshImage();
     }
@@ -29,8 +29,11 @@
     <link rel="stylesheet" href="~/css/image-css.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/validacoes.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Componentes/radioButtonComponente.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css" />
+    
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="~/css/Eventos/lancarResultado.css" asp-append-version="true" />
 
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body id="bodyLayout">
     <header>

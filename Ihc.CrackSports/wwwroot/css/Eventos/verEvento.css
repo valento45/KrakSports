@@ -1,0 +1,38 @@
+﻿.pnl-ver-evento {
+    background-color: #FFC99D55;
+    padding: 2rem;
+    border-radius: 50px;
+}
+
+.pnl-detalhes-evento-escalacao {
+    background-color: #80808044;
+    padding: 2rem;
+}
+
+.btn-adicionar {
+    width: 30px;
+    height: 30px;
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.btn-adicionar:hover{
+    background-color: brown !important;
+    color: white !important;
+    
+}
+
+.pnl-todos-jogadores {
+    background-color: #FE363622;
+
+}
+.pnl-jogadores-escalados {
+    background-color: #75993D44;
+}
+

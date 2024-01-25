@@ -1,11 +1,14 @@
-﻿using Ihc.CrackSports.Core.Authorization;
+﻿using Ihc.CrackSports.Core.Access;
+using Ihc.CrackSports.Core.Authorization;
 using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
 using Ihc.CrackSports.Core.Requests.Aluno;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,6 +119,23 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
         public void InformarResponsavel(List<Responsavel> responsavel)
         {
             Responsavel = responsavel?.FirstOrDefault() ?? new Responsavel();
+        }
+
+        public static Aluno GetById(long idAluno)
+        {
+            string query = "select * from sys.aluno_tb where id_aluno = " + idAluno;
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+
+            var ds = PGAccess.ExecuteReader(cmd);
+            if(ds != null)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    return new Aluno(row);
+                }
+            }
+
+            return null;           
         }
     }
 }

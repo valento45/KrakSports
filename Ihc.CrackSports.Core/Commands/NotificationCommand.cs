@@ -9,6 +9,7 @@ using Ihc.CrackSports.Core.Requests.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,18 +48,33 @@ namespace Ihc.CrackSports.Core.Commands
             var result = new List<NotificationBase>();
 
 
-            var solicitacoes = await this.ObterTodasSolicitacoesDoClube(idClube);
+            await IncluirSolicitacoesAlunosClube(result, await this.ObterTodasSolicitacoesDoClube(idClube));
+            await IncluirNotificacoesGenerics(result, await _notificacaoRepository.ObterTodasNotificacoesClube(idClube));
 
-            foreach (var obj in solicitacoes)
+
+            return result.OrderByDescending(x => x.DataNotificacao);
+        }
+
+
+        private async Task IncluirSolicitacoesAlunosClube(List<NotificationBase> include, IEnumerable<SolicitacaoAlunoClub> reference)
+        {
+            if(include ==  null) include = new List<NotificationBase>();
+
+            foreach (var obj in reference)
             {
                 obj.InformarAluno(await _alunoCommand.GetById(obj.IdAluno));
                 obj.Notificacao = " Enviou uma solicitação para participar do clube.";
 
-                result.Add(obj);
+                include.Add(obj);
             }
+        }
 
 
-            return result.OrderByDescending(x => x.DataNotificacao);
+        private async Task IncluirNotificacoesGenerics(List<NotificationBase> include, IEnumerable<NotificationBase> reference)
+        {
+            if (include == null) include = new List<NotificationBase>();
+
+            include.AddRange(reference);
         }
         #endregion
 
@@ -181,6 +197,22 @@ namespace Ihc.CrackSports.Core.Commands
             if (solicitacao.To != null)
                 solicitacao.LinkRedirect = $"../Club/ApresentacaoClub?idClub={solicitacao.To.Id}";
 
+        }
+
+        public async Task<bool> IncluirNotificacao(NotificationBase notification)
+        {
+            if (notification == null)
+                return false;
+
+            return await _notificacaoRepository.IncluirNotificacao(notification);
+        }
+
+        public async Task<bool> AtualizarNotificacao(NotificationBase notification)
+        {
+            if (notification == null)
+                return false;
+
+            return await _notificacaoRepository.AtualizarNotificacao(notification);
         }
     }
 }

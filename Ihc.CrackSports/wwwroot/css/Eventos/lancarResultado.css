@@ -1,0 +1,56 @@
+﻿.form-resultado {
+    width: 100%;
+    place-content: center;
+}
+
+    .form-resultado label, .form-resultado select, .form-resultado input {
+        font-size: 15px;
+        line-height: 2rem;
+    }
+
+
+
+.pnl-time-1 span, .pnl-time-1 label {
+    color: orange;
+}
+
+.pnl-time-1 a{
+    background-color: orange;
+}
+
+.pnl-time-1 select{
+    border-color: orange;
+    color: orange;
+
+}
+
+    .pnl-time-1 select:focus {
+        background-color: orange;
+    }
+
+
+.pnl-time-1 input {
+    border-color: orange;
+    color: orange;
+}
+
+    .pnl-time-1 input:focus {
+        background-color: orange;
+    }
+
+
+.text-time-1 {
+    color: orange;
+}
+
+
+.pnl-time-2 span, .pnl-time-2 label {
+    color: brown;
+}
+
+.pnl-time-2 a {
+    background-color: brown;
+}
+.text-time-2 {
+    color: brown;
+}

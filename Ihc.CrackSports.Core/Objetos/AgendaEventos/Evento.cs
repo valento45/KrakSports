@@ -1,8 +1,10 @@
 ﻿using Ihc.CrackSports.Core.Extensions;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Base.Pessoas;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Notifications.Base;
 using Ihc.CrackSports.Core.Services;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using System;
@@ -16,6 +18,9 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
 {
     public class Evento
     {
+        private Club club1;
+        private Club club2;
+
         public long IdEvento { get; set; }
         public DateTime Data { get; set; }
         public TipoEvento Tipo { get; set; }
@@ -30,21 +35,38 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
         public TimeSpan HoraEvento { get; set; }
         public Club Clube1
         {
-            get;
-            private set;
+            get
+            {
+                if ((club1 == null || club1.Id <= 0) && IdClub1 > 0)
+                    club1 = Club.ObterClube(IdClub1);
+
+                return club1;
+            }
+            set
+            {
+                club1 = value;
+            }
         }
         public Club Clube2
         {
-            get;
-            private set;
+            get
+            {
+                if ((club2 == null || club2.Id <= 0) && IdClub2 > 0)
+                    club2 = Club.ObterClube(IdClub2);
+
+                return club2;
+            }
+            set
+            {
+                club2 = value;
+            }
         }
-
-
 
         public Evento()
         {
             Data = DateTime.Parse($"01/01/{DateTime.Now.Year}");
-
+            Clube1 = new Club();
+            Clube2 = new Club();
         }
 
 
@@ -90,6 +112,23 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
 
 
             return str.ToString();
+        }
+
+        public NotificationBase ObterNotificacao(Club club)
+        {
+            if (club != null)
+            {
+
+                NotificationBase notification = new NotificationBase();
+                notification.Notificacao = "Seu clube foi classificado para um evento.";
+                notification.Tipo = Notifications.TipoNotificacao.Evento;
+                notification.IdClube = club.Id;
+                notification.LinkRedirect = $"../Evento/VerEvento?idEvento={IdEvento}";
+                notification.TipoUsuario = Enums.TipoUsuario.Club;
+
+                return notification;
+            }
+            return null;
         }
     }
 }

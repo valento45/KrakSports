@@ -1,5 +1,7 @@
-﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
+using Ihc.CrackSports.Core.Objetos.Notifications.Base;
 using Ihc.CrackSports.Core.Responses.AgendaEventos;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
@@ -10,11 +12,13 @@ namespace Ihc.CrackSports.WebApp.Application
     {
         private readonly IEventoService _eventoService;
         private readonly IClubService _clubService;
+        private readonly INotificationCommand _notificationCommand;
 
-        public EventoApplication(IEventoService eventoService, IClubService clubService)
+        public EventoApplication(IEventoService eventoService, IClubService clubService, INotificationCommand notificationCommand)
         {
             _eventoService = eventoService;
             _clubService = clubService;
+            _notificationCommand = notificationCommand;
         }
 
 
@@ -48,7 +52,7 @@ namespace Ihc.CrackSports.WebApp.Application
             var evento = await _eventoService.GetEventoById(idEvento);
 
             evento.InformarClube(await _clubService.ObterById(evento.IdClub1) ?? new Core.Objetos.Clube.Club());
-            evento.InformarClube(await _clubService.ObterById(evento.IdClub2) ?? new Core.Objetos.Clube.Club());
+            evento.InformarClube2(await _clubService.ObterById(evento.IdClub2) ?? new Core.Objetos.Clube.Club());
 
             return evento;
         }
@@ -74,7 +78,15 @@ namespace Ihc.CrackSports.WebApp.Application
 
         public async Task<bool> Salvar(Evento evento)
         {
-            return await _eventoService.Salvar(evento);
+            if (await _eventoService.Salvar(evento))
+            {
+                await _notificationCommand.IncluirNotificacao(evento.ObterNotificacao(evento.Clube1));
+                await _notificationCommand.IncluirNotificacao(evento.ObterNotificacao(evento.Clube2));
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

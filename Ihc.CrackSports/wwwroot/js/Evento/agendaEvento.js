@@ -1,4 +1,6 @@
-﻿$(document).ready(() => {
+﻿
+
+$(document).ready(() => {
     $("#btnPesquisarEvento").on('click', buscarEventosClick);
 
     if (_excluded)
@@ -6,7 +8,7 @@
 
 });
 
-let _excluded = false;
+
 
 
 
@@ -67,3 +69,16 @@ function excluirAgendaEventoError(erro) {
     alert("Não foi possível excluir o evento nesse momento. Por favor, tente novamente em alguns instantes.");
 }
 
+
+function lancarResultado(evento) {
+
+    window.location.href = `..${_urlLancarResultado}?idEvento=${evento.IdEvento}`;
+
+}
+
+function onClickEscalarEquipe(evento) {
+    console.log(evento);
+
+
+    window.location.href = `../Evento/EscalarEquipe?idEvento=${evento.IdEvento}`;
+}

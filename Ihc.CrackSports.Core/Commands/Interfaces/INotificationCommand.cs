@@ -30,7 +30,9 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         /// <param name="solicitacao"></param>
         /// <returns></returns>
 		Task<bool> NotificarSolicitacaoAlunoAceito(SolicitacaoAlunoClub solicitacao);
-        
 
-	}
+        Task<bool> IncluirNotificacao(NotificationBase notification);
+
+        Task<bool> AtualizarNotificacao(NotificationBase notification);
+    }
 }

@@ -1,9 +1,9 @@
---CREATE DATABASE bd_sports
-   -- WITH
-    --OWNER = postgres
-    --ENCODING = 'UTF8'
-    --CONNECTION LIMIT = -1
-   -- IS_TEMPLATE = False;
+CREATE DATABASE bd_sports
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 	
 	CREATE SCHEMA if not exists sys
     AUTHORIZATION postgres;
@@ -46,7 +46,7 @@
 		data_fundacao timestamp null,
 		nome_presidente varchar null
 	);		
-	
+
 
 	create table if not exists sys.aluno_tb(
 		id_aluno serial not null primary key,
@@ -131,7 +131,7 @@
 		data_notificacao timestamp not null,
 		is_visto boolean null,
 		tipo_usuario integer not null,
-		notificacao varchar not null,
+		notificacao varchar not null,	
 		imagem_notificacao varchar null,
 		link_redirect varchar null,
 		constraint id_aluno_fk foreign key (id_aluno)
@@ -139,7 +139,6 @@
 		constraint id_club_fk foreign key (id_club)
 		references sys.club_tb(id_club)
 	);
-	
 	
 
 	
@@ -223,5 +222,14 @@
 	alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
 	
 	
+	create table if not exists sys.atleta_evento_tb(
+		id_evento serial not null primary key,
+		id_aluno integer not null,
+		id_clube integer not null,
+		constraint id_aluno_fk foreign key(id_aluno)
+		references sys.aluno_tb(id_aluno),
+		constraint id_clube_fk foreign key (id_clube)
+		references sys.club_tb(id_club)	
+	);
 
 

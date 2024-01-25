@@ -15,6 +15,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
 
         Task<bool> ExcluirNotificacoes(NotificationRequest request);
 
+        Task<bool> IncluirNotificacao(NotificationBase notification);
 
+        Task<bool> AtualizarNotificacao(NotificationBase notification);
     }
 }

@@ -15,7 +15,7 @@ namespace Ihc.CrackSports.Core.Access
      
         public static IDbConnection GetConnection()
         {
-            string connectionString = $"User ID=admin;Password=admin;Host=localhost;Port=5432;Database=bd_sports;";
+            string connectionString = @"User ID=postgres;Password=admin;Host=localhost;Port=5432;Database=bd_sports;";
 
             NpgsqlConnection conn = new NpgsqlConnection(connectionString);
             
