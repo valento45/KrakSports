@@ -82,3 +82,5 @@ function onClickEscalarEquipe(evento) {
 
     window.location.href = `../Evento/EscalarEquipe?idEvento=${evento.IdEvento}`;
 }
+
+        
