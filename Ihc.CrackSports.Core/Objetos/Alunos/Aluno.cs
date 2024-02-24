@@ -82,7 +82,7 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             ///Pessoa base
             Id = long.Parse(dr["id_aluno"].ToString());
             Nome = dr["nome"].ToString();
-            IsPj = dr["is_pj"] != DBNull.Value ? bool.Parse(dr["is_pj"].ToString()) : false;
+            
             CpfCnpj = dr["cpf_cnpj"] != DBNull.Value ? long.Parse(dr["cpf_cnpj"].ToString()) : 0;
             Endereco = new Endereco();
             Endereco.Logradouro = dr["endereco"].ToString();
@@ -127,7 +127,7 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
             var ds = PGAccess.ExecuteReader(cmd);
-            if(ds != null)
+            if (ds != null)
             {
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
@@ -135,7 +135,11 @@ namespace Ihc.CrackSports.Core.Objetos.Alunos
                 }
             }
 
-            return null;           
+            return null;
         }
+
+
+        public bool HasImage() =>
+             !string.IsNullOrEmpty(FotoAlunoBase64);
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using Ihc.CrackSports.Core.Objetos.Competicoes;
+@using Newtonsoft.Json;
 @model Evento
 
 @{
@@ -11,6 +12,7 @@
     <h3 class="text-semi-bold-orange mt-5 ms-5">Lançamento de placar</h3>
     <hr />
 
+    <input id="inputEvento" type="hidden" value="@JsonConvert.SerializeObject(Model)" />
 
     <!--Placar-->
     <div class="d-inline-flex mb-3 justify-content-center g-width-10 mt-5" style="align-items: center;">
@@ -28,9 +30,9 @@
                 <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
             }
 
-            <span id="lblGolsClube1" style="font-weight: bold;" class="mx-2">1</span>
+            <span id="lblGolsClube1" style="font-weight: bold;" class="mx-2">@Model.AtletasEventoClube1.Sum(x => x.GolsMarcados)</span>
             <span style="color: #FA8C05 ; font-weight: bold;" class="mx-2">X</span>
-            <span id="lblGolsClube2" style="font-weight: bold;" class="mx-2">0</span>
+            <span id="lblGolsClube2" style="font-weight: bold;" class="mx-2">@Model.AtletasEventoClube2.Sum(x => x.GolsMarcados)</span>
 
             @if (Model.Clube2.HasImagem())
             {
@@ -43,7 +45,7 @@
             }
         </div>
 
-        <span class="text-time-2 ms-2" style="min-width: 130px; max-width: 130px;" ><b>@Model.Clube2.Nome</b></span>
+        <span class="text-time-2 ms-2" style="min-width: 130px; max-width: 130px;"><b>@Model.Clube2.Nome</b></span>
     </div>
     <!--FIM Placar!-->
 
@@ -59,41 +61,65 @@
 
                     <select id="cmbJogadorTime1" class="form-select ag-field-input ag-input-color-light-full">
                         <option selected="">Selecionar</option>
-                        <option value="0">Lucas Meirelles Souza</option>
-                        <option value="1">Leonidas Full</option>
+                        @foreach (var atleta in Model.Clube1.AtletasClube)
+                        {
+                            <option value="@JsonConvert.SerializeObject(atleta)">@atleta.Nome.ToUpper()</option>
+                        }
                     </select>
                     <label class="form-label text-semi-bold-light ag-field-label" for="cmbJogadorTime1">Jogador*</label>
                 </div>
 
                 <div class="form-outline  ag-field-content col-lg-2 ms-3">
-                    <input type="text" id="txtQtdGolsTime2" class="form-control ag-field-input ag-input-color-light-full " data-mask="0000" autocomplete="off" required maxlength="14">
-                    <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime2">Nº de gols*</label>
+                    <input type="text" id="txtQtdGolsTime1" class="form-control ag-field-input ag-input-color-light-full " data-mask="0000" autocomplete="off" required maxlength="14">
+                    <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime1">Nº de gols*</label>
                 </div>
 
 
                 <div class="col-lg-1 ms-3 mt-5">
-                    <a class="btn  btn-block btn-confirm-radius-escuro">Adicionar</a>
+                    <a class="btn  btn-block btn-confirm-radius-escuro" onclick="onAdicionarGol(this, 1)">Adicionar</a>
                 </div>
             </div>
 
             <!--Panel Listagem de Gols-->
-            <table class="table table-dark mt-3">
+            <table class="table table-dark table-time-1 mt-3">
                 <thead>
                     <tr>
-                        <td></td>
-                        <td>Nome</td>
-                        <td>Gols</td>
+                        <th></th>
+                        <th>Nome</th>
+                        <th>Gols</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
 
+                    @foreach (var atletas in Model.AtletasEventoClube1)
+                    {
+                        <tr>
+                            <td style="width:100px;">
+                                @if (atletas.DadosAtleta.HasImage())
+                                {
+                                    <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
+                                }
+                                else
+                                {
+                                    <img class="img-icon-nav ms-2" src="">
+                                }
+                            </td>
+                            <td>
+                                <span class="text-white">@atletas.DadosAtleta.Nome.ToUpper()</span>
+                            </td>
+                            <td>
+                                <span class="text-white">@atletas.GolsMarcados</span>
+                            </td>
+                            <td>
+                                <span class="text-white">X</span>
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
         <!--FIM Clube 1-->
-
-
-
         <!--Clube 2-->
         <div class="col-lg-6 pnl-time-2">
 
@@ -147,3 +173,8 @@
         <!--FIM Clube 2-->
     </div>
 </div>
+
+
+@section Scripts{
+    <script src="~/js/Evento/lancarResultado.js"></script>
+}

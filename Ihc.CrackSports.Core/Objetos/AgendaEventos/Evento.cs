@@ -21,6 +21,36 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
         private Club club1;
         private Club club2;
 
+        private ICollection<AtletaEvento> _atletasEventoClube1 { get; set; }
+        public ICollection<AtletaEvento> AtletasEventoClube1
+        {
+            get
+            {
+                if (_atletasEventoClube1 == null)
+                    _atletasEventoClube1 = new List<AtletaEvento>();
+
+
+                return _atletasEventoClube1;
+            }
+            private set { _atletasEventoClube1 = value; }
+        }
+
+
+
+        private ICollection<AtletaEvento> _atletasEventoClube2 { get; set; }
+        public ICollection<AtletaEvento> AtletasEventoClube2
+        {
+            get
+            {
+                if (_atletasEventoClube2 == null)
+                    _atletasEventoClube2 = new List<AtletaEvento>();
+
+                return _atletasEventoClube2;
+            }
+            private set { _atletasEventoClube2 = value; }
+        }
+
+
         public long IdEvento { get; set; }
         public DateTime Data { get; set; }
         public TipoEvento Tipo { get; set; }
@@ -129,6 +159,30 @@ namespace Ihc.CrackSports.Core.Objetos.Competicoes
                 return notification;
             }
             return null;
+        }
+
+
+        public void InformarAtletasClubeUm(ICollection<AtletaEvento> atletas)
+        {
+
+            AtletasEventoClube1 = atletas;
+        }
+
+
+        public void InformarAtletasClubeDois(ICollection<AtletaEvento> atletas)
+        {
+            AtletasEventoClube2 = atletas;
+        }
+
+
+
+        public void AddAtletaEventoGol(Aluno aluno, int golsMarcados)
+        {
+            if (AtletasEventoClube1 == null)
+                AtletasEventoClube1 = new List<AtletaEvento>();
+
+
+            AtletasEventoClube1.Add(new AtletaEvento(aluno, IdEvento, golsMarcados));
         }
     }
 }

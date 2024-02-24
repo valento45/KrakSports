@@ -60,9 +60,9 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         /// <param name="golsMarcados"></param>
         /// <param name="isEncerrado"></param>
         /// <returns></returns>
-        Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false);
+        Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false);
 
-
+        Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
         /// <summary>
         /// 
         /// </summary>

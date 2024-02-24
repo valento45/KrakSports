@@ -71,10 +71,7 @@ namespace Ihc.CrackSports.WebApp.Application
             return await _eventoService.GetEventosByIdClube(IdClube);
         }
 
-        public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
-        {
-            return await _eventoService.LancarPlacarEvento(golsMarcados, isEncerrado);
-        }
+      
 
         public async Task<bool> Salvar(Evento evento)
         {
@@ -87,6 +84,16 @@ namespace Ihc.CrackSports.WebApp.Application
             }
 
             return false;
+        }
+
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+        {
+            return await _eventoService.LancarPlacarEvento(atletaEvento, isEncerrado);
+        }
+
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+        {
+            return await _eventoService.ObterPlacar(idEvento);
         }
     }
 }

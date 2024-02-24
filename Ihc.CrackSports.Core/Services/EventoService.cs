@@ -17,7 +17,7 @@ namespace Ihc.CrackSports.Core.Services
 
         public EventoService(IEventoCommand eventoCommand)
         {
-            _eventoCommand  = eventoCommand;
+            _eventoCommand = eventoCommand;
         }
 
         private async Task<bool> IncluirEvento(Evento evento)
@@ -64,12 +64,6 @@ namespace Ihc.CrackSports.Core.Services
             return response;
         }
 
-       
-
-        public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
-        {
-            return await _eventoCommand.LancarPlacarEvento(golsMarcados, isEncerrado);
-        }
 
         public async Task<bool> Salvar(Evento evento)
         {
@@ -77,6 +71,18 @@ namespace Ihc.CrackSports.Core.Services
                 return await this.AtualizarEvento(evento);
             else
                 return await this.IncluirEvento(evento);
+        }
+
+
+
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+        {
+            return await _eventoCommand.LancarPlacarEvento(atletaEvento, isEncerrado);
+        }
+
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+        {
+            return await _eventoCommand.ObterPlacar(idEvento);
         }
     }
 }

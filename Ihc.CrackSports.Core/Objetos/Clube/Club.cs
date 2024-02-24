@@ -18,7 +18,25 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
         public long IdUsuario { get; set; }
         public DateTime DataFundacao { get; set; }
         public string NomePresidente { get; set; }
-        public IEnumerable<Aluno> AtletasClube { get; private set; }
+
+
+        private IEnumerable<Aluno> _atletas { get; set; }
+        public IEnumerable<Aluno> AtletasClube
+        {
+            get
+            {
+                if(_atletas == null)
+                    _atletas = new List<Aluno>();   
+
+                return _atletas;
+            }
+            private set
+            {
+                _atletas = value;
+            }
+        }
+
+
 
         public Club()
         {
@@ -36,16 +54,16 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
             Endereco = new Endereco
             {
                 Logradouro = dr["endereco"].ToString(),
-                Numero = !string.IsNullOrEmpty(dr["numero"].ToString()) ?  int.Parse(dr["numero"].ToString()) : 0,
+                Numero = !string.IsNullOrEmpty(dr["numero"].ToString()) ? int.Parse(dr["numero"].ToString()) : 0,
                 Cidade = dr["cidade"].ToString(),
                 CEP = dr["cep"].ToString(),
                 UF = dr["uf"].ToString()
             };
 
             ImagemBase64 = dr["imagem_base64"].ToString();
-            IsVerificado = !string.IsNullOrEmpty(dr["is_verificado"].ToString()) ?  bool.Parse(dr["is_verificado"].ToString()) : false;
+            IsVerificado = !string.IsNullOrEmpty(dr["is_verificado"].ToString()) ? bool.Parse(dr["is_verificado"].ToString()) : false;
             DataFundacao = DateTime.Parse(dr["data_fundacao"].ToString());
-            NomePresidente = dr["nome_presidente"].ToString();          
+            NomePresidente = dr["nome_presidente"].ToString();
         }
 
         public bool HasImagem()

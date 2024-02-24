@@ -22,7 +22,7 @@ namespace Ihc.CrackSports.Core.Commands
 
         public async Task<bool> IncluirEvento(Evento evento)
         {
-          return await _eventoRepository.IncluirEvento(evento);
+            return await _eventoRepository.IncluirEvento(evento);
         }
 
 
@@ -56,20 +56,27 @@ namespace Ihc.CrackSports.Core.Commands
             return await _eventoRepository.GetEventosByIdClube(IdClube);
         }
 
-      
-        public async Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
-        {
-            return await _eventoRepository.LancarPlacarEvento(golsMarcados, isEncerrado);
-        }
+
+
 
         public async Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub)
         {
-            return await _eventoRepository.EscalarTime(time, idEvento, idClub); 
+            return await _eventoRepository.EscalarTime(time, idEvento, idClub);
         }
 
         public async Task<bool> LimparEscalacaoTime(long idEvento, long idClub)
         {
             return await _eventoRepository.LimparEscalacaoTime(idEvento, idClub);
+        }
+
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+        {
+
+            return await _eventoRepository.LancarPlacarEvento(atletaEvento, isEncerrado);
+        }
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+        {
+            return await _eventoRepository.ObterPlacar(idEvento);
         }
     }
 }

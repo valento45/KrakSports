@@ -9,19 +9,14 @@
     }
 
 
-
 .pnl-time-1 span, .pnl-time-1 label {
     color: orange;
 }
 
-.pnl-time-1 a{
-    background-color: orange;
-}
 
-.pnl-time-1 select{
+.pnl-time-1 select {
     border-color: orange;
     color: orange;
-
 }
 
     .pnl-time-1 select:focus {
@@ -51,6 +46,19 @@
 .pnl-time-2 a {
     background-color: brown;
 }
+
 .text-time-2 {
     color: brown;
 }
+
+
+
+
+
+
+.table-time-1 {
+}
+
+    .table-time-1 a {
+        border: none !important;
+    }

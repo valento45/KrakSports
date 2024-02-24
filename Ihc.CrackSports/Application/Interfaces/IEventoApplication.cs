@@ -6,10 +6,11 @@ namespace Ihc.CrackSports.WebApp.Application.Interfaces
 {
     public interface IEventoApplication
     {
-        Task<Evento> GetEventoById(long idEvento);       
+        Task<Evento> GetEventoById(long idEvento);
 
-        Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false);    
-        
+        Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false);
+
+
         Task<bool> EncerrarEvento(long idEvento);
         
         Task<EventosResponse> GetEventos(DateTime dataInicio, DateTime dataFim);
@@ -19,5 +20,7 @@ namespace Ihc.CrackSports.WebApp.Application.Interfaces
         Task<bool> Salvar(Evento evento);
 
         Task<bool> ExcluirEvento(long IdEvento);
+
+        Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
     }
 }

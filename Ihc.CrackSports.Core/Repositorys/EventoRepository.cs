@@ -107,9 +107,13 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result?.Select(x => x.ToEvento())?.FirstOrDefault() ?? null;
         }
 
-        public Task<bool> LancarPlacarEvento(List<GolsEventoAtleta> golsMarcados, bool isEncerrado = false)
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
         {
-            throw new NotImplementedException();
+            string query = $"select * from sys.atleta_evento_tb where id_evento = {idEvento}";
+
+            var result = await base.QueryAsync<AtletaEventoDto>(query);
+
+            return result?.Select(x => x.ToObjeto()) ?? new List<AtletaEvento>();
         }
 
         public Task<bool> EncerrarEvento(long idEvento)
@@ -119,7 +123,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub)
         {
-            if(time?.Any() ?? false)
+            if (time?.Any() ?? false)
             {
                 string query = "insert into sys.atleta_evento_tb (id_evento, id_aluno, id_clube) values ";
 
@@ -144,6 +148,17 @@ namespace Ihc.CrackSports.Core.Repositorys
             string query = $"delete from sys.atleta_evento_tb where id_evento = {idEvento} AND id_club = {idClub}";
 
             return await base.ExecuteAsync(query);
+        }
+
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+        {
+
+            string query = "INSERT INTO sys.atleta_evento_tb (id_evento, id_aluno, id_clube, gols_marcados)" +
+                $" values ({atletaEvento.IdEvento}, {atletaEvento.IdAluno}, {atletaEvento.IdClube}, {atletaEvento.GolsMarcados});";
+
+            var result = await base.ExecuteAsync(query);
+
+            return result;
         }
     }
 }

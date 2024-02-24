@@ -3,15 +3,16 @@ using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Requests.Agenda;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.EventoModels;
+using Ihc.CrackSports.WebApp.Models.Eventos;
 using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace Ihc.CrackSports.WebApp.Controllers
 {
@@ -101,7 +102,26 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> LancarResultado(long idEvento)
         {
             var evento = await _eventoApplication.GetEventoById(idEvento);
+
+            evento.Clube1.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube1.Id));
+            evento.Clube2.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube2.Id));
+
+            var placarAtlteas = await _eventoApplication.ObterPlacar(idEvento);
+
+            evento.InformarAtletasClubeUm(placarAtlteas.Where(x => x.IdClube == evento.Clube1.Id).ToList());
+            evento.InformarAtletasClubeDois(placarAtlteas.Where(x => x.IdClube == evento.Clube2.Id).ToList());
+
             return View(evento);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AdicionarGol([FromBody] AtletaEventoGolsViewModel model)
+        {
+            var obj = new AtletaEvento(model.Aluno, model.Evento.IdEvento, model.Gols);
+
+            var result = await _eventoApplication.LancarPlacarEvento(obj);
+
+            return Json(result);
         }
 
         [HttpPost]

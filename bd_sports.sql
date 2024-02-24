@@ -169,21 +169,7 @@ CREATE DATABASE bd_sports
 		references sys.club_tb(id_club)
 	);
 	
-	
 
-	create table if not exists sys.gols_evento_atleta_tb(
-		id_evento bigint not null,
-		id_aluno bigint not null,
-		id_club bigint not null,
-		gols_marcados integer not null,
-		constraint id_evento_fk foreign key (id_evento)
-		references sys.agenda_evento_tb(id_evento),
-		constraint id_clube_fk foreign key(id_club)
-		references sys.club_tb(id_club),		
-		constraint id_aluno_fk foreign key(id_aluno)
-		references sys.aluno_tb(id_aluno)
-	);
-	
 	
 		create table if not exists sys.patrocinador_tb(
 		id_patrocinador serial not null primary key,
@@ -221,11 +207,13 @@ CREATE DATABASE bd_sports
 	alter table if exists sys.aluno_tb add column if not exists gols_marcados integer null;
 	alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
 	
+	--drop table sys.atleta_evento_tb
 	
 	create table if not exists sys.atleta_evento_tb(
-		id_evento serial not null primary key,
+		id_evento integer not null,
 		id_aluno integer not null,
 		id_clube integer not null,
+		gols_marcados integer not null,
 		constraint id_aluno_fk foreign key(id_aluno)
 		references sys.aluno_tb(id_aluno),
 		constraint id_clube_fk foreign key (id_clube)
