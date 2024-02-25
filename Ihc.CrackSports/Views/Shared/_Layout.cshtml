@@ -29,9 +29,11 @@
     <link rel="stylesheet" href="~/css/image-css.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/validacoes.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Componentes/radioButtonComponente.css" asp-append-version="true" />
-    
     <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" />
     <link rel="stylesheet" href="~/css/Eventos/lancarResultado.css" asp-append-version="true" />
+
+
+
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -65,7 +67,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Sobre">Sobre nós</a>
+                            <a class="nav-link " asp-area="" asp-controller="Placar" asp-action="Index">Placar</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Administrador" asp-action="Index">Administrador</a>

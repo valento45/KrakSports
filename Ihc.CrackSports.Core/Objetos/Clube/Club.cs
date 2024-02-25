@@ -46,7 +46,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
         public Club(DataRow dr)
         {
             Id = long.Parse(dr["id_club"].ToString());
-            IdUsuario = long.Parse(dr["id_usuario"].ToString());
+            IdUsuario = !string.IsNullOrEmpty(dr["id_usuario"].ToString()) ? long.Parse(dr["id_usuario"].ToString()) : 0;
             Nome = dr["nome_fantasia"].ToString();
             RazaoSocial = dr["razao_social"].ToString();
             CpfCnpj = dr["cpf_cnpj"] != DBNull.Value ? long.Parse(dr["cpf_cnpj"].ToString()) : 0;
@@ -61,9 +61,9 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
             };
 
             ImagemBase64 = dr["imagem_base64"].ToString();
-            IsVerificado = !string.IsNullOrEmpty(dr["is_verificado"].ToString()) ? bool.Parse(dr["is_verificado"].ToString()) : false;
-            DataFundacao = DateTime.Parse(dr["data_fundacao"].ToString());
-            NomePresidente = dr["nome_presidente"].ToString();
+            IsVerificado = !string.IsNullOrEmpty(dr["is_verificado"].ToString()) ?  bool.Parse(dr["is_verificado"].ToString()) : false;
+            DataFundacao = !string.IsNullOrEmpty(dr["data_fundacao"].ToString()) ? DateTime.Parse(dr["data_fundacao"].ToString()) : new DateTime();
+            NomePresidente = dr["nome_presidente"].ToString();          
         }
 
         public bool HasImagem()

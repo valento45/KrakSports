@@ -149,6 +149,7 @@ CREATE DATABASE bd_sports
 		gols_marcados integer null
 	);
 	
+
 	
 	create table if not exists sys.agenda_evento_tb(
 		id_evento serial not null primary key,
@@ -191,16 +192,16 @@ CREATE DATABASE bd_sports
 	
 	
 	
-	
+	--select * from sys.usuario_tb where login like 'admin'
 	
 --Tornar usuario administrador
---insert into if not exists sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
+--insert into sys.usuario_claim_tb (id_usuario, claim) values (32, 'adm')
 
 --Criar Role usuario Club
---insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'upd-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'del-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'read-club');
 	
 
 	--ALTER TABLES

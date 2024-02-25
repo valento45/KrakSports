@@ -1,0 +1,19 @@
+**Feature - Nova implementação
+	Placar do evento
+
+	O placar deve ter a foto do time - quantos gols x gols adversario - foto adversario
+
+
+	abaixo do placar geral de cada time deve ter uma lsita dos jogadores com o nome e quantidade de gols, exemplo:
+
+	NOME			GOLS
+	NEYMAR JR               5  
+
+
+
+
+
+
+**CORREÇÃO do Redirect da opção "Eventos" no menu superior
+	Pagina com erro: _LayoutOrange
+	Pagina que pode se basear ( redirect funcionando): _Layout

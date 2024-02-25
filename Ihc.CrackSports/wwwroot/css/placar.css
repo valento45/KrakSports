@@ -1,0 +1,50 @@
+﻿.placar {
+    justify-content: center;
+    display: flex;
+    margin-left : -50px;
+   
+}
+.img-style {
+    width: 150px;
+    height: 150px;
+    border-radius: 90px;
+    box-shadow: 0px 0px 1px 1px #00000055
+}
+.vs {
+    margin-top: 5rem;
+}
+
+.badge {
+    background-color: brown; !important;
+    color: white;
+    width: 50px;
+}
+
+.name-time {
+    color: ghostwhite;
+}
+.container {
+    color: black;
+}
+.detalhes-placar {
+    background-color: #fde38b;
+    color: #800000;
+    font-weight: bold;
+    height: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.img-detalhes-placar{
+    width: 20px;
+    
+}
+
+.campos-detalhes-placar
+{
+    justify-content:space-between;
+    display:flex;
+
+
+}
