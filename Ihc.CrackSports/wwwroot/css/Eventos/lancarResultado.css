@@ -93,3 +93,15 @@
     .table-time-2 a{
         background-color: transparent !important;
     }
+
+
+
+
+.card-evento {
+    border-radius: 50px;
+    padding: 15px;
+}
+
+.card-evento:hover{
+    background-color: gainsboro !important;
+}
