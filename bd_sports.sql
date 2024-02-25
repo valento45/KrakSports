@@ -149,7 +149,6 @@ CREATE DATABASE bd_sports
 		gols_marcados integer null
 	);
 	
-
 	
 	create table if not exists sys.agenda_evento_tb(
 		id_evento serial not null primary key,
@@ -192,25 +191,26 @@ CREATE DATABASE bd_sports
 	
 	
 	
-	--select * from sys.usuario_tb where login like 'admin'
+	
 	
 --Tornar usuario administrador
---insert into sys.usuario_claim_tb (id_usuario, claim) values (32, 'adm')
+--insert into if not exists sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
 
 --Criar Role usuario Club
---insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'upd-club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'del-club');
---insert into sys.usuario_claim_tb(id_usuario, claim) values (32, 'read-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'upd-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'del-club');
+--insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'read-club');
 	
 
 	--ALTER TABLES
-	alter table if exists sys.aluno_tb add column if not exists gols_marcados integer null;
-	alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
+	--alter table if exists sys.aluno_tb add column if not exists gols_marcados integer null;
+	--alter table sys.agenda_evento_tb add column if not exists hora_evento varchar(10) null;
 	
 	--drop table sys.atleta_evento_tb
 	
 	create table if not exists sys.atleta_evento_tb(
+		id_lancamento serial not null primary key,
 		id_evento integer not null,
 		id_aluno integer not null,
 		id_clube integer not null,
@@ -222,3 +222,11 @@ CREATE DATABASE bd_sports
 	);
 
 
+select  atl.id_aluno, atl.nome, cl.nome_fantasia as nome_clube, atl.foto_base64, sum(aevt.gols_marcados) as gols_marcados from sys.agenda_evento_tb as evt
+inner join sys.atleta_evento_tb as  aevt ON evt.id_evento = aevt.id_evento
+inner join sys.aluno_tb as atl ON atl.id_aluno = aevt.id_aluno
+inner join sys.club_tb as cl on cl.id_club = atl.id_club
+where evt.data_hora between to_timestamp('01-01-2023','dd-MM-yyyy') AND to_timestamp('01-01-2025','dd-MM-yyyy')
+group by atl.id_aluno, atl.nome, cl.nome_fantasia 
+order by gols_marcados desc
+limit 3

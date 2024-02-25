@@ -1,0 +1,61 @@
+﻿.img-coroa{
+    width: 75px;
+    height: 75px;
+}
+
+.card-ouro {
+    box-shadow: 1px 1px 50px 1px #F7A000 !important;
+}
+
+.card-prata {
+    box-shadow: 1px 1px 50px 1px #00000066 !important;
+}
+
+.card-bronze {
+    box-shadow: 1px 1px 50px 1px #87532F !important;
+}
+
+.card-melhor-artilheiro {
+    min-height: 400px;
+    display: flex;
+    border: 1px solid;
+    border-color: gainsboro;
+    border-radius: 50px;
+    justify-content: center;
+    box-shadow: 1px 1px 50px 1px #00000066;
+}
+
+    .card-melhor-artilheiro:hover{
+        
+    }
+
+    .card-melhor-artilheiro span {
+        color: brown;
+        font-weight: bold;
+    }
+
+    .card-melhor-artilheiro a {
+        border: none;
+        color: black;
+        text-decoration: initial;
+    }
+
+    .img-artilheiro {
+        width: 65px;
+        height: 65px;
+        border-radius: 50px;
+    }
+
+
+
+.a-ms-6 {
+    margin-left: 4rem !important;
+}
+
+
+.text-posicao {
+    font-size: 18px;
+    color: brown;
+    position:absolute;
+    line-height: 0;
+}
