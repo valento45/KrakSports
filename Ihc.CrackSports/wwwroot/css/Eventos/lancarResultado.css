@@ -1,17 +1,12 @@
 ﻿.form-resultado {
     width: 100%;
-    place-content: center;
+    place-content: baseline;
 }
 
     .form-resultado label, .form-resultado select, .form-resultado input {
         font-size: 15px;
         line-height: 2rem;
     }
-
-
-.pnl-time-1 span, .pnl-time-1 label {
-    color: orange;
-}
 
 
 .pnl-time-1 select {
@@ -59,6 +54,42 @@
 .table-time-1 {
 }
 
-    .table-time-1 a {
-        border: none !important;
+.table-time-1 thead{
+    background-color: brown;
+    color: ghostwhite;
+}
+
+
+    .table-time-1 tbody tr {
+        background-color: beige;
+        
+    }
+
+
+    .table-time-1 span {
+        color: brown;
+    }
+
+
+
+.table-time-2 {
+}
+
+    .table-time-2 thead {
+        background-color: brown;
+        color: ghostwhite;
+    }
+
+
+    .table-time-2 tbody tr {
+        background-color: beige;
+    }
+
+
+    .table-time-2 span {
+        color: brown;
+    }
+
+    .table-time-2 a{
+        background-color: transparent !important;
     }

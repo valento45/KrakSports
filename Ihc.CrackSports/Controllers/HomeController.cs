@@ -96,6 +96,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SobreNos()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

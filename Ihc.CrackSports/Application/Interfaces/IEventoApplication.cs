@@ -22,5 +22,7 @@ namespace Ihc.CrackSports.WebApp.Application.Interfaces
         Task<bool> ExcluirEvento(long IdEvento);
 
         Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
+
+        Task<bool> ExcluirLancamentoPlacar(long idLancamento);
     }
 }

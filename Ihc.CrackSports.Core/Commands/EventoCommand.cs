@@ -78,5 +78,10 @@ namespace Ihc.CrackSports.Core.Commands
         {
             return await _eventoRepository.ObterPlacar(idEvento);
         }
+
+        public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
+        {
+            return await _eventoRepository.ExcluirLancamentoPlacar(idLancamento);
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos
     {
         private Aluno _dadosAtleta;
 
+        public long IdLancamento { get; set; }
+
         public long IdEvento { get; set; }
         public long IdAluno { get; set; }
         public long IdClube { get; set; }

@@ -160,5 +160,13 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             return result;
         }
+
+        public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
+        {
+            string query = "delete from sys.atleta_evento_tb where id_lancamento = " + idLancamento;
+
+            var result = await this.ExecuteAsync(query);
+            return result;
+        }
     }
 }

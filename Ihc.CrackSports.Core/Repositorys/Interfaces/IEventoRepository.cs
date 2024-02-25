@@ -54,14 +54,7 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         /// <returns></returns>
         Task<IEnumerable<Evento>> GetEventosByIdClube(long IdClube);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="golsMarcados"></param>
-        /// <param name="isEncerrado"></param>
-        /// <returns></returns>
-        Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false);
-        Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
+
         /// <summary>
         /// 
         /// </summary>
@@ -71,5 +64,16 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
 
         Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub);
         Task<bool> LimparEscalacaoTime(long idEvento, long idClub);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="golsMarcados"></param>
+        /// <param name="isEncerrado"></param>
+        /// <returns></returns>
+        Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false);
+        Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
+
+        Task<bool> ExcluirLancamentoPlacar(long idLancamento);
     }
 }

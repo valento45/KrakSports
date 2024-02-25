@@ -125,10 +125,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GravarResultado([FromBody] Evento evento)
+        public async Task<JsonResult> RemoverGol([FromBody] long idLancamento)
         {
+            var result = await _eventoApplication.ExcluirLancamentoPlacar(idLancamento);
 
-            return View();
+            return Json(result);
         }
 
         [HttpGet]

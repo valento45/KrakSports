@@ -1,6 +1,6 @@
 ﻿$(document).ready(() => {
 
-    
+
 
 });
 
@@ -97,6 +97,11 @@ function apenasNumeros(string) {
 
 function redirectMinhaConta(tipoUsuario) {
     if (_userLogado) {
-        window.location.href = `../Usuario/MinhaConta?idUsuario=${_userLogado}&tipoUsuario=${tipoUsuario}`;
+        if (tipoUsuario == 2) {
+            window.location.href = `../Administrador/Index`;
+        } else {
+
+            window.location.href = `../Usuario/MinhaConta?idUsuario=${_userLogado}&tipoUsuario=${tipoUsuario}`;
+        }
     }
 }

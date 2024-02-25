@@ -8,6 +8,7 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto
 {
     public class AtletaEventoDto
     {
+        public long id_lancamento { get; set; }
         public long id_evento { get; set; }
         public long id_aluno{ get; set; }
         public long id_clube { get; set; }
@@ -23,6 +24,7 @@ namespace Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto
         {
             return new AtletaEvento
             {
+                IdLancamento = id_lancamento,
                 IdEvento = id_evento,
                 IdAluno = id_aluno,
                 IdClube = id_clube, 

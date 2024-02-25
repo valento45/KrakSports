@@ -65,5 +65,7 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<EventosResponse> GetEventosByIdClube(long IdClube);
 
         Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
+
+        Task<bool> ExcluirLancamentoPlacar(long idLancamento);
     }
 }

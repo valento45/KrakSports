@@ -73,5 +73,8 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         Task<bool> EscalarTime(List<Aluno> time, long idEvento, long idClub);
 
         Task<bool> LimparEscalacaoTime(long idEvento, long idClub);
+
+
+        Task<bool> ExcluirLancamentoPlacar(long idLancamento);
     }
 }

@@ -95,5 +95,10 @@ namespace Ihc.CrackSports.WebApp.Application
         {
             return await _eventoService.ObterPlacar(idEvento);
         }
+
+        public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
+        {
+            return await _eventoService.ExcluirLancamentoPlacar(idLancamento);
+        }
     }
 }
