@@ -2,6 +2,7 @@
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Base.Auxiliar;
+using Ihc.CrackSports.Core.Objetos.Ranking.Enums;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -24,9 +25,18 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> RankingAtletas()
         {
 
-            var rankingExibicao = await _rankingService.GetRankingExibicao(new Periodo());
+            var rankingExibicao = await _rankingService.GetRankingExibicao(PeriodoRanking.Default);
 
             return View(rankingExibicao);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> FiltrarRankingAtletas(PeriodoRanking periodoRanking)
+        {
+            var rankingExibicao = await _rankingService.GetRankingExibicao(periodoRanking);
+
+            return View(nameof(RankingAtletas), rankingExibicao);
         }
     }
 }

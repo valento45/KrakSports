@@ -1,4 +1,4 @@
-﻿.img-coroa{
+﻿.img-coroa {
     width: 75px;
     height: 75px;
 }
@@ -7,13 +7,19 @@
     box-shadow: 1px 1px 50px 1px #F7A000 !important;
 }
 
+   
+
 .card-prata {
     box-shadow: 1px 1px 50px 1px #00000066 !important;
 }
 
+
+
 .card-bronze {
     box-shadow: 1px 1px 50px 1px #87532F !important;
 }
+
+   
 
 .card-melhor-artilheiro {
     min-height: 400px;
@@ -25,8 +31,7 @@
     box-shadow: 1px 1px 50px 1px #00000066;
 }
 
-    .card-melhor-artilheiro:hover{
-        
+    .card-melhor-artilheiro:hover {
     }
 
     .card-melhor-artilheiro span {
@@ -40,11 +45,12 @@
         text-decoration: initial;
     }
 
-    .img-artilheiro {
-        width: 65px;
-        height: 65px;
-        border-radius: 50px;
-    }
+.img-artilheiro {
+    width: 65px;
+    height: 65px;
+    border-radius: 50px;
+    box-shadow: 1px 1px 50px 1px #00000066;
+}
 
 
 
@@ -56,6 +62,6 @@
 .text-posicao {
     font-size: 18px;
     color: brown;
-    position:absolute;
+    position: absolute;
     line-height: 0;
 }

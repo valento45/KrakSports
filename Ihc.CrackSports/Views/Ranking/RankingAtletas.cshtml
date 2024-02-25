@@ -19,11 +19,11 @@
         <div class="g-width-10 d-inline-flex">
 
             <div class="form-outline ag-field-content g-width-10">
-                <select id="cmbConsultarMesAgenda" class="form-select ag-field-input ag-input-color-light-full">
+                <select id="cmbFiltrarRanking" onchange="onChangeFiltros(this)" class="form-select ag-field-input ag-input-color-light-full">
                     <option value="0" selected="">Selecionar</option>
                     <option value="1">Semanal</option>
                     <option value="2">Mensal</option>
-                    <option value="2">Anual</option>
+                    <option value="3">Anual</option>
                 </select>
                 <label class="form-label text-semi-bold-light ag-field-label" for="cmbGrauParentesco">Filtrar por</label>
             </div>
@@ -127,3 +127,8 @@
     </div>
 
 </div>
+
+
+@section Scripts{
+    <script src="~/js/Rankings/rankingAtletas.js"></script>
+}

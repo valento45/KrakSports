@@ -22,5 +22,10 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Auxiliar
             De = de;
             Ate = ate;
         }
+
+        public bool IsValido()
+        {
+            return De > new DateTime() && Ate > new DateTime();
+        }
     }
 }
