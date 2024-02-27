@@ -2,6 +2,7 @@
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,8 @@ public class PlacarController : ControllerBase
     {
         return View();
     }
-   
+
     
+
+
 }

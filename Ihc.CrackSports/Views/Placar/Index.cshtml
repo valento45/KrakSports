@@ -1,12 +1,36 @@
-﻿@{
+﻿@using Ihc.CrackSports.Core.Objetos.Competicoes;
+@using Newtonsoft.Json;
+@model Evento
+
+@{
     Layout = "_Layout";
 }
 
 <link rel="stylesheet" href="~/css/placar.css" asp-append-version="true" />
+<div class="container">
+    <div class="d-inline-flex mt-5" style="justify-content:space-between;">
+        <h3 class="text-semi-bold-orange ">Resultados do Placar</h3>
+    </div>
+    <hr class="hr-brown">
+</div>
+
+<div class="container mt-5 col-lg-12 d-flex " style="justify-content:center ">
+    
+    <div class="form-outline mt-5 ag-field-content col-lg-5">
+        <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios">
+        <label id="txtDelabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">De </label>
+    </div>
+    
+    <div class="form-outline mt-5 ms-3 ag-field-content col-lg-5">
+        <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios">
+        <label id="txateLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Ate</label>
+    </div>
+ </div>
 
 <div class="placar">
 
-    <form class="form-group form-control ms-5 layout-placar radius-form">
+    <div class="form-group form-control ms-5  layout-placar radius-form">
+
         <div class="g-width-10  justify-content-center d-block d-inline-flex">
             <div class="text-center" style="display: grid d-inline-flex;">
                 <span class="name-time">Corintinhas </span>
@@ -29,36 +53,17 @@
         <div class="col-lg-12 mb-5 mt-1 detalhes-placar ">
             <div class="campos-detalhes-placar">
                 <a>Detalhes do placar</a>
+              
+              
                 <img class="img-detalhes-placar" src="/imgs/seta-para-baixo2.jpg" />
+
+                
             </div>
 
         </div>
 
-        <div class="g-width-10 d-inline-flex justify-content-center d-block d-sm-inline-flex">
-            <div class="text-center" style="display: grid d-inline-flex;">
-                <span class="name-time">Corintinhas </span>
-                <input type="number" id="txtCodigoAdversario" class="d-none" data-val="true" data-val-required="The IdClub1 field is required." name="IdClub1" value="0"><input name="__Invariant" type="hidden" value="IdClub1">
-                <img id="imgAdversario" class="mt-4 ms-4  img-style" src="/imgs/sem_imagem.png" alt="imagem adv1">
-                <span class="badge rounded-pill border-radiu bg-danger">0</span>
-            </div>
-
-            <span class="mx-4 text-bold-orange-light vs" >VS</span>
-
-            <div class="text-center " style="display: grid d-inline-flex;">
-                <input type="number" id="txtCodigoAdversario2" class="d-none" data-val="true" data-val-required="The IdClub2 field is required." name="IdClub2" value="0"><input name="__Invariant" type="hidden" value="IdClub2">
-                <span class="badge rounded-pill border-radiu bg-danger">0</span>
-                <img id="imgAdversario2" class="mt-4 ms-4  img-style" src="/imgs/sem_imagem.png" alt="imagem adv1">
-                <span class="name-time"> Corintinhas </span>
-            </div>
-        </div>
-        <div class="col-lg-12 mb-5 mt-1 detalhes-placar " > 
-            <div class="campos-detalhes-placar">
-                <a>Detalhes do placar</a>
-                 <img class="img-detalhes-placar" src="/imgs/seta-para-baixo2.jpg" />
-            </div>
-         
-        </div>
-    </form>
+      
+    </div>
 </div>
 
 
