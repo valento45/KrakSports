@@ -7,6 +7,7 @@ using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Requests.Agenda;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.WebApp.Application;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.EventoModels;
 using Ihc.CrackSports.WebApp.Models.Eventos;
@@ -102,7 +103,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> LancarResultado(long idEvento)
         {
             var evento = await _eventoApplication.GetEventoById(idEvento);
-
+            
             evento.Clube1.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube1.Id));
             evento.Clube2.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube2.Id));
 
