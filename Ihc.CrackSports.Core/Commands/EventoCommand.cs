@@ -69,15 +69,6 @@ namespace Ihc.CrackSports.Core.Commands
             return await _eventoRepository.LimparEscalacaoTime(idEvento, idClub);
         }
 
-        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
-        {
-
-            return await _eventoRepository.LancarPlacarEvento(atletaEvento, isEncerrado);
-        }
-        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
-        {
-            return await _eventoRepository.ObterPlacar(idEvento);
-        }
 
         public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
         {

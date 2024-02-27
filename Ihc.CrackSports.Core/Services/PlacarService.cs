@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Services.Interfaces;
 using System;
@@ -18,10 +19,14 @@ namespace Ihc.CrackSports.Core.Services
             this.placarCommand = placarCommand;
         }
 
-        public async Task<IEnumerable<Evento>> ObterPlacarGeral(DateTime dataInicio, DateTime dataFim)
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
         {
-            return await placarCommand.ObterPlacarGeral(dataInicio, dataFim);
+            return await placarCommand.LancarPlacarEvento(atletaEvento, isEncerrado);
         }
-        
+
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+        {
+            return await placarCommand.ObterPlacar(idEvento);
+        }
     }
 }

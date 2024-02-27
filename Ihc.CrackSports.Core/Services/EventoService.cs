@@ -72,18 +72,9 @@ namespace Ihc.CrackSports.Core.Services
             else
                 return await this.IncluirEvento(evento);
         }
+         
 
-
-
-        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
-        {
-            return await _eventoCommand.LancarPlacarEvento(atletaEvento, isEncerrado);
-        }
-
-        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
-        {
-            return await _eventoCommand.ObterPlacar(idEvento);
-        }
+      
 
         public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
         {

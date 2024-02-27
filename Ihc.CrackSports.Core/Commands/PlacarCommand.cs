@@ -1,4 +1,5 @@
 ﻿using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.AgendaEventos;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using System;
@@ -13,12 +14,22 @@ public class PlacarCommand : IPlacarCommand
 {
     private readonly IPlacarRepository placarRepository;
 
-    public async Task<IEnumerable<Evento>> ObterPlacarGeral(DateTime dataInicio, DateTime dataFim)
-    {
-        return await placarRepository.PlacarEventos(dataInicio, dataFim);
-    }
+
     public PlacarCommand(IPlacarRepository placarRepository)
     {
         this.placarRepository = placarRepository;
     }
+
+    public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+    {
+        return await placarRepository.LancarPlacarEvento(atletaEvento, isEncerrado);
+    }
+
+    public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+    {
+        return await placarRepository.ObterPlacarById(idEvento);
+    }
+
+
+  
 }

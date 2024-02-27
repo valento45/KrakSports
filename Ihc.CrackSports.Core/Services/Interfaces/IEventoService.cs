@@ -33,13 +33,7 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         /// <returns></returns>
         Task<Evento> GetEventoById(long IdEvento);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="golsMarcados"></param>
-        /// <param name="isEncerrado"></param>
-        /// <returns></returns>
-        Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false);
+
 
 
         /// <summary>
@@ -64,7 +58,7 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         /// <returns></returns>
         Task<EventosResponse> GetEventosByIdClube(long IdClube);
 
-        Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento);
+        
 
         Task<bool> ExcluirLancamentoPlacar(long idLancamento);
     }

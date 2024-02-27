@@ -1,4 +1,5 @@
-﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto;
+﻿using Ihc.CrackSports.Core.Objetos.AgendaEventos;
+using Ihc.CrackSports.Core.Objetos.AgendaEventos.Dto;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Repositorys.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
@@ -17,15 +18,24 @@ namespace Ihc.CrackSports.Core.Repositorys
         {
         }
 
-        public async Task<IEnumerable<Evento>> PlacarEventos(DateTime dataInicio, DateTime dataFim)
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
         {
-            string query = $"select * from sys.agenda_evento_tb ";
 
+            string query = "INSERT INTO sys.atleta_evento_tb (id_evento, id_aluno, id_clube, gols_marcados)" +
+                $" values ({atletaEvento.IdEvento}, {atletaEvento.IdAluno}, {atletaEvento.IdClube}, {atletaEvento.GolsMarcados});";
 
+            var result = await base.ExecuteAsync(query);
 
-            var result = await QueryAsync<EventoDto>(query);
+            return result;
+        }
 
-            return result?.Select(x => x.ToEvento())?.OrderBy(x => x.Data)?.AsEnumerable() ?? new List<Evento>();
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacarById(long idEvento)
+        {
+            string query = $"select * from sys.atleta_evento_tb where id_evento = {idEvento}";
+
+            var result = await base.QueryAsync<AtletaEventoDto>(query);
+
+            return result?.Select(x => x.ToObjeto()) ?? new List<AtletaEvento>();
         }
     }
 }

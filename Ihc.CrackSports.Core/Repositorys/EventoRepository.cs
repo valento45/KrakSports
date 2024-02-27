@@ -107,14 +107,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result?.Select(x => x.ToEvento())?.FirstOrDefault() ?? null;
         }
 
-        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
-        {
-            string query = $"select * from sys.atleta_evento_tb where id_evento = {idEvento}";
-
-            var result = await base.QueryAsync<AtletaEventoDto>(query);
-
-            return result?.Select(x => x.ToObjeto()) ?? new List<AtletaEvento>();
-        }
+    
 
         public Task<bool> EncerrarEvento(long idEvento)
         {

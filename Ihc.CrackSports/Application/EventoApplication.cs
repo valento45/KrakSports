@@ -13,12 +13,15 @@ namespace Ihc.CrackSports.WebApp.Application
         private readonly IEventoService _eventoService;
         private readonly IClubService _clubService;
         private readonly INotificationCommand _notificationCommand;
+        private readonly IPlacarCommand _placarCommand;
 
-        public EventoApplication(IEventoService eventoService, IClubService clubService, INotificationCommand notificationCommand)
+        public EventoApplication(IEventoService eventoService, IClubService clubService,
+            INotificationCommand notificationCommand, IPlacarCommand placarCommand)
         {
             _eventoService = eventoService;
             _clubService = clubService;
             _notificationCommand = notificationCommand;
+            _placarCommand = placarCommand;
         }
 
 
@@ -90,19 +93,20 @@ namespace Ihc.CrackSports.WebApp.Application
             return false;
         }
 
-        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
-        {
-            return await _eventoService.LancarPlacarEvento(atletaEvento, isEncerrado);
-        }
-
-        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
-        {
-            return await _eventoService.ObterPlacar(idEvento);
-        }
 
         public async Task<bool> ExcluirLancamentoPlacar(long idLancamento)
         {
             return await _eventoService.ExcluirLancamentoPlacar(idLancamento);
+        }
+
+        public async Task<bool> LancarPlacarEvento(AtletaEvento atletaEvento, bool isEncerrado = false)
+        {
+            return await _placarCommand.LancarPlacarEvento(atletaEvento, isEncerrado);
+        }
+
+        public async Task<IEnumerable<AtletaEvento>> ObterPlacar(long idEvento)
+        {
+            return await _placarCommand.ObterPlacar(idEvento);
         }
     }
 }
