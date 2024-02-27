@@ -838,3 +838,56 @@ html {
     }
 }
 
+
+.carousel-index img {
+    width: 190px;
+    height: 130px;
+    border-radius: 50px;
+    /*box-shadow: 1px 1px 50px 1px #FFFFFF !important;*/
+}
+
+.carousel-index span{
+    color: white;
+    text-decoration: none !important;
+}
+
+.patrocinador-group:hover {
+    transform: scale(1.03);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.carousel-facelift {
+    height: 100vh;
+    background-color: #000000;
+    margin-top: 5rem !important;
+}
+    .carousel-facelift p{
+        color: white;
+        
+    }
+
+.center-caroulsel{
+    padding-top: 15% !important;
+    text-align:center;
+}
+
+.carousel-item {
+    display: grid;
+    text-align: center;
+}
+
+    .carousel-item span{
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .carousel-item:active {
+        transition: all 0.5s;
+    }
+
+    .carousel-item:hover{
+        transform: scale(1.03);
+        transition: all 0.5s;
+        cursor: pointer;
+    }

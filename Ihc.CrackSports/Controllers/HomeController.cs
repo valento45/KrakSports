@@ -7,6 +7,7 @@ using Ihc.CrackSports.Core.Notifications.Hubs;
 using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Security;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.Core.ViewModel.Home;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models;
 using Ihc.CrackSports.WebApp.Models.Usuarios;
@@ -25,25 +26,35 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
+        private readonly IColaboradorService _colaboradorService;
 
         public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService, INotificationCommand notificationCommand,
-             IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
+             IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
             _logger = logger;
             _alunoService = alunoService;
             _clubService = clubService;
+            _colaboradorService = colaboradorService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
-        {
+        {           
+
             if (User != null)
             {
                 await base.RefreshImageUser(User);
                 await base.RefreshNotifications(User);
             }
 
-            return View();
+
+            var homeViewModel = new HomeViewModel();
+            var patrocinadores = await _colaboradorService.GetAllAtivos();
+
+            homeViewModel.InformarPatrocinadores(patrocinadores.Skip(0).Take(5));
+            
+
+            return View(homeViewModel);
         }
 
         [HttpGet]

@@ -50,3 +50,53 @@ function redirectDadosAluno(idAluno) {
 function onClickRedirectNovaAba(url) {
     window.open(url, '_blank');
 }
+
+function closeModal(idModal) {
+    $(`#${idModal}`).hide();
+}
+
+
+
+let _indiceItem = 0;
+function onClickAvancarPaginaCarousel(totalItens) {
+    //Remove active de todos itens
+    $(".carousel-item").removeClass("active");
+    $(".carousel-item").children("div").removeClass("d-flex");
+    $(".carousel-item").children("div").addClass("d-none");
+    $(".carousel-item").addClass("d-none");
+
+
+    if (_indiceItem < (totalItens - 1))
+        _indiceItem = _indiceItem + 1;
+    else {
+        _indiceItem = 0;
+    }
+
+    $(`#item_caroulsel_${_indiceItem}`).removeClass("d-none");
+    $(`#item_caroulsel_${_indiceItem}`).children("div").removeClass("d-none");
+    $(`#item_caroulsel_${_indiceItem}`).children("div").addClass("d-flex");
+    $(`#item_caroulsel_${_indiceItem}`).addClass("active");
+
+}
+
+
+function onClickVoltarPaginaCarousel(totalItens) {
+    //Remove active de todos itens
+    $(".carousel-item").removeClass("active");
+    $(".carousel-item").children("div").removeClass("d-flex");
+    $(".carousel-item").children("div").addClass("d-none");
+    $(".carousel-item").addClass("d-none");
+
+
+    if (_indiceItem > 0)
+        _indiceItem = _indiceItem - 1;
+    else {
+        _indiceItem = totalItens - 1;
+    }
+
+    $(`#item_caroulsel_${_indiceItem}`).removeClass("d-none");
+    $(`#item_caroulsel_${_indiceItem}`).children("div").removeClass("d-none");
+    $(`#item_caroulsel_${_indiceItem}`).children("div").addClass("d-flex");
+    $(`#item_caroulsel_${_indiceItem}`).addClass("active");
+
+}

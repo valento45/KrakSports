@@ -80,6 +80,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return Json(result);
         }
 
+
+        [HttpPost]
         public async Task<JsonResult> InativarPatrocinador([FromBody] Patrocinador model)
         {
             model.Status = StatusPatrocinador.Bloqueado;
@@ -88,12 +90,24 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return Json(result);
         }
 
+        [HttpPost]
         public async Task<JsonResult> ReativarPatrocinador([FromBody] Patrocinador model)
         {
             model.Status = StatusPatrocinador.Ativo;
             var result = await _colaboradorService.AtualizarPatrocinador(model);
 
             return Json(result);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmarInativacaoPatrocinador(long idPatrocinador)
+        {
+            var obj = await _colaboradorService.GetAllAtivos();
+
+            var result = obj.FirstOrDefault(x => x.IdPatrocinador == idPatrocinador);
+
+            return View("Partial/Administrador/_ModalConfirmInaPatrocinador", result);
         }
     }
 }

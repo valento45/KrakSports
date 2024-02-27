@@ -10,7 +10,7 @@
 
         @foreach (var obj in Model.PatrocinadorPaginacao.ObterListaPaginada())
         {
-            <div onclick="onClickDetalhesPatrocinador(@JsonConvert.SerializeObject(obj))" class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
+            <div class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
                 <div class="d-inline-flex">
                     <img class="mt-1" src="@obj.LogoTipoBase64" alt="money" style="width: 50px; height: 60px;" />
                     <div class="row ms-1">
@@ -29,7 +29,7 @@
                     else if (obj.Status == Ihc.CrackSports.Core.Objetos.Colaborador.StatusPatrocinador.Ativo)
                     {
                         <a class="btn btn-confirm-radius" onclick="onClickDetalhesPatrocinador(@JsonConvert.SerializeObject(obj))">Detalhes</a>
-                        <a class="btn  btn-voltar" onclick="inativarPatrocinador(@JsonConvert.SerializeObject(obj))">Inativar</a>
+                        <a class="btn  btn-voltar" onclick="confirmarInativacaoPatrocinador(@obj.IdPatrocinador)">Inativar</a>
                     }
                     else if (obj.Status == Ihc.CrackSports.Core.Objetos.Colaborador.StatusPatrocinador.Bloqueado)
                     {

@@ -1,4 +1,4 @@
-﻿$(document).ready(() => {
+﻿ $(document).ready(() => {
 
 
 });
@@ -88,3 +88,6 @@ function onClickDetalhesPatrocinador(e) {
         onClickMenuError);     
 
 }
+
+
+

@@ -46,6 +46,8 @@ namespace Ihc.CrackSports.Core.Objetos.Colaborador
         public string Observacoes { get; set; }
         public StatusPatrocinador Status { get; set; }
         public int OrdemApresentacao { get; set; }
+        public bool ExibirNaIndex { get; set; }
+
 
 
         private string _linkSite { get; set; }

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Ihc.CrackSports.Core.ViewModel.Home;
+@model HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,11 +10,16 @@
 
 </div>
 
-<div class="container" style="height: 100%;">
+<div class="container mb-3" style="height: 100%;">
 
     <div class="text-center">
         <h1 class="display-4 mt-5 text-semi-bold-orange ">Krak Sports</h1>
         <p class="mt-5">Para mais detalhes sobre as inscrições de atletas, clique em <a asp-action="Index" asp-controller="Usuario" class=" link-redirect-orange" style="color: #FA8C05 ;">Saiba mais</a>.</p>
+    </div>
+
+
+    <div class="mt-5 text-center">
+        <a href="#carouselFaceLift" class="btn btn-voltar mx-5" style="border-bottom: 5px solid; border-bottom-color: brown;">Conheça nossos Patrocinadores</a>
     </div>
 
     <div style="margin-top:5rem;">
@@ -44,4 +52,117 @@
             </button>
         </div>
     </div>
+
+
 </div>
+
+
+
+<div id="carouselFaceLift" class="carousel-facelift ">
+    <div class="col-lg-12 mb-5 container ">
+
+
+        <p class="pt-5" style="font-size: 24px;font-weight: bold;">Patrocinadores em destaque</p>
+        <hr class="mb-5" style="background-color:white;" />
+
+
+        <div class="center-caroulsel">
+            @foreach (var patrocinador in Model.Patrocinadores)
+            {
+                <a href="@patrocinador.LinkSite" class="col-lg-2 carousel-index ms-1">
+
+                    <div class="p-1 text-center patrocinador-group" style="display: inline-grid;    place-content: center;">
+                        <img src="@patrocinador.LogoTipoBase64" />
+                        <span class="mt-2">@patrocinador.NomeOuRazaoSocial</span>
+                    </div>
+                </a>
+            }
+        </div>
+
+        <div class="text-white mt-5 pb-5">
+            <p>Nossos patrocinadores são de extrema importância, pois juntos colaboramos e trabalhamos para alcançar ambos objetivos.</p>
+            <p>Venha conhecer e particiar dessa ação conosco ! Juntos somos mais fortes.</p>
+            <p>© 2023   Krak Sports - Associação de clubs de futebol</p>
+        </div>
+
+
+        <div class="mt-5" style="text-align-last: center;">
+            <button onclick="onRedirectToSejaUmColaborador()" type="button" class="btn  btn-block btn-confirm-radius mb-4"
+                    style="width: 150px; margin-top: 4rem;">
+                #Jogue junto
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<div id="carouselExampleIndicators" class="mt-5 d-none" style="background-color: darkred; min-height: 100vh;">
+
+    <div class="container pt-5">
+        <p class="text-white" style="font-size: 24px;font-weight: bold;">Patrocinadores em destaque</p>
+        <hr style="background-color: white;" />
+    </div>
+
+    <div class="container pt-4">
+
+        <div class="carousel carousel-index slide" data-ride="carousel" style="margin-top: 10rem;">
+
+            <div class="carousel-inner">
+                @{
+                    int indice = 0;
+                }
+                @foreach (var patrocinador in Model.Patrocinadores)
+                {
+                    @if (indice == 0)
+                    {
+
+                        <a href="@patrocinador.LinkSite" id="item_caroulsel_@indice" class="carousel-item active ">
+                            <div class="d-flex justify-content-center mb-3 p-1">
+
+                                <img class="d-block w-80" src="@patrocinador.LogoTipoBase64" alt="First slide">
+                            </div>
+
+                            <span class="text-white" style="">
+                                @patrocinador.NomeRazaoSocialResumo
+                            </span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@patrocinador.LinkSite" id="item_caroulsel_@indice" class="carousel-item d-none">
+                            <div class="d-none justify-content-center mb-3 p-1">
+
+                                <img class="d-block w-80" src="@patrocinador.LogoTipoBase64" alt="First slide">
+                            </div>
+                            <span class="text-white">
+                                @patrocinador.NomeRazaoSocialResumo
+                            </span>
+                        </a>
+                    }
+                    indice++;
+                }
+
+            </div>
+
+            <a onclick="onClickVoltarPaginaCarousel(@Model.Patrocinadores.Count())" class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Voltar</span>
+            </a>
+            <a onclick="onClickAvancarPaginaCarousel(@Model.Patrocinadores.Count())" class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Avançar</span>
+            </a>
+        </div>
+
+
+        <div class="text-white mt-5 pb-5">
+            <p>Nossos patrocinadores são de extrema importância, pois juntos colaboramos e trabalhamos para alcançar ambos objetivos.</p>
+            <p>Venha conhecer e particiar dessa ação conosco ! Juntos somos mais fortes.</p>
+            <p>© 2023   Krak Sports - Associação de clubs de futebol</p>
+        </div>
+    </div>
+
+
+
+</div>
+

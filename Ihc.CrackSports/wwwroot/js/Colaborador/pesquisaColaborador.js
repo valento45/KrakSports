@@ -7,7 +7,7 @@ function voltarPagina(e, tipo) {
     e.PreviousPage = true;
 
 
-    refreshPaginacao(e);
+    refreshPaginacao(e, tipo);
 
 }
 function proximaPagina(e, tipo) {
@@ -109,10 +109,21 @@ function responseError(error) {
 
 }
 
+function confirmarInativacaoPatrocinador(idPatrocinador) {
+
+    $("#modal").load("../Colaborador/ConfirmarInativacaoPatrocinador?idPatrocinador=" + idPatrocinador, function () {
+        $("#modal").modal();
+
+        $("#modal").show();
+
+    });
+}
 
 function inativarPatrocinador(model) {
     util.ajax.post(urlInativarPatrocinador, model, inativarPatrocinadorSucesso, responseError);
 }
+
+
 function inativarPatrocinadorSucesso(data) {
     alert("Patrocinador inativado com sucesso!");
     window.location.reload();
