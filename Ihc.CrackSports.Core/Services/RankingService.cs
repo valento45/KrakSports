@@ -52,7 +52,7 @@ namespace Ihc.CrackSports.Core.Services
             else
             {
                 DateTime de = DateTime.Parse($"01/01/2023");
-                DateTime ate = DateTime.Parse($"31/12/2025");
+                DateTime ate = DateTime.Parse($"01/01/2025");
 
 
                 periodo = new Periodo(de, ate);
