@@ -11,10 +11,21 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Auxiliar
         public DateTime De { get; set; }
         public DateTime Ate { get; set; }
 
+        public Periodo()
+        {
+            De = new DateTime();
+            Ate = new DateTime();
+        }
+
         public Periodo(DateTime de, DateTime ate)
         {
             De = de;
             Ate = ate;
+        }
+
+        public bool IsValido()
+        {
+            return De > new DateTime() && Ate > new DateTime();
         }
     }
 }

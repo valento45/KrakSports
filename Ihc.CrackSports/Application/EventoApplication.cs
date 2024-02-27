@@ -61,7 +61,11 @@ namespace Ihc.CrackSports.WebApp.Application
         {
             var eventos = await _eventoService.GetEventos(dataInicio, dataFim);
 
-            eventos.InformarEventos(await this.ObterEventosComClubes(eventos.Eventos));
+            var evtOrdered = await this.ObterEventosComClubes(eventos.Eventos);
+
+            eventos.InformarEventos(evtOrdered.OrderByDescending(x => x.Data));
+
+
 
             return eventos;
         }
@@ -71,7 +75,7 @@ namespace Ihc.CrackSports.WebApp.Application
             return await _eventoService.GetEventosByIdClube(IdClube);
         }
 
-      
+
 
         public async Task<bool> Salvar(Evento evento)
         {
