@@ -42,10 +42,8 @@
 
                 <input type="hidden" asp-for="IdPatrocinador" />
                 <input type="hidden" asp-for="IsPj" />
-                <input type="hidden" asp-for="LinkSite" />
-                <input type="hidden" asp-for="LinkInstagram" />
-                <input type="hidden" asp-for="LinkLinkedin" />
                 <input type="hidden" asp-for="LogoTipoBase64" />
+                <input type="hidden" asp-for="Status" />
 
 
                 <!--Inicio FORMULARIO-->
@@ -74,6 +72,27 @@
                             <input asp-for="Celular" type="text" id="txtCelular" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" data-mask="(00)00000-0000" required />
                             <label id="txtCelularLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelular">Celular</label>
                         </div>
+                    </div>
+
+
+                    <div class="form-outline ag-field-content g-width-10 ms-1">
+                        <input asp-for="LinkSite" type="text" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="" class="form-label text-semi-bold-light ag-field-label" for="">URL Site</label>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-10 ms-1">
+                        <input asp-for="LinkInstagram" type="text" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="" class="form-label text-semi-bold-light ag-field-label" for="">URL Instagram</label>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-10 ms-1">
+                        <input asp-for="LinkLinkedin" type="text" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="" class="form-label text-semi-bold-light ag-field-label" for="">URL Lihkedin</label>
+                    </div>
+
+                    <div class="form-outline ag-field-content g-width-10 ms-1">
+                        <input asp-for="OrdemApresentacao" type="number" class="form-control ag-field-input ag-input-color-light-full" autocomplete="off" required />
+                        <label id="" class="form-label text-semi-bold-light ag-field-label" for="">Ordem apresentação</label>
                     </div>
 
                     <div class="d-inline-flex g-width-10 mb-2">

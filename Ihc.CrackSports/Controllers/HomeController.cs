@@ -49,7 +49,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
             var homeViewModel = new HomeViewModel();
+
             var patrocinadores = await _colaboradorService.GetAllAtivos();
+            patrocinadores = patrocinadores.Where(x => x.OrdemApresentacao > 0);
 
             homeViewModel.InformarPatrocinadores(patrocinadores.Skip(0).Take(5));
             

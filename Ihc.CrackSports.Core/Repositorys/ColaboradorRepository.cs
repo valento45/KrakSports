@@ -93,7 +93,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<IEnumerable<Patrocinador>> GetAllAtivos()
         {
-            string query = "select * from sys.patrocinador_tb where status = 1 order by ordem_apresentacao desc";
+            string query = "select * from sys.patrocinador_tb where status = 1 order by ordem_apresentacao";
 
 
             var result = await base.QueryAsync<PatrocinadorDto>(query);

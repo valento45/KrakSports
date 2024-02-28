@@ -858,7 +858,7 @@ html {
 }
 
 .carousel-facelift {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #000000;
     margin-top: 5rem !important;
 }
