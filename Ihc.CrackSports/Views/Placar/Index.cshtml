@@ -1,71 +1,229 @@
-﻿@using Ihc.CrackSports.Core.Objetos.Competicoes;
+﻿@using Ihc.CrackSports.Core.Extensions;
+@using Ihc.CrackSports.Core.Responses.AgendaEventos;
 @using Newtonsoft.Json;
-@model Evento
+@model EventosResponse
 
 @{
     Layout = "_Layout";
 }
 
-<link rel="stylesheet" href="~/css/placar.css" asp-append-version="true" />
-<div class="container">
-    <div class="d-inline-flex mt-5" style="justify-content:space-between;">
-        <h3 class="text-semi-bold-orange ">Resultados do Placar</h3>
-    </div>
-    <hr class="hr-brown">
-</div>
 
-<div class="container mt-5 col-lg-12 d-flex " style="justify-content:center ">
-    
-    <div class="form-outline mt-5 ag-field-content col-lg-5">
-        <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios">
-        <label id="txtDelabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">De </label>
-    </div>
-    
-    <div class="form-outline mt-5 ms-3 ag-field-content col-lg-5">
-        <input id="txtDataNascAluno" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios">
-        <label id="txateLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataNascAluno">Ate</label>
-    </div>
- </div>
 
-<div class="placar">
+@section Styles{
+    <link rel="stylesheet" href="~/css/placar.css" asp-append-version="true" />
+}
 
-    <div class="form-group form-control ms-5  layout-placar radius-form">
 
-        <div class="g-width-10  justify-content-center d-block d-inline-flex">
-            <div class="text-center" style="display: grid d-inline-flex;">
-                <span class="name-time">Corintinhas </span>
-                <input type="number" id="txtCodigoAdversario" class="d-none" data-val="true" data-val-required="The IdClub1 field is required." name="IdClub1" value="0"><input name="__Invariant" type="hidden" value="IdClub1">
-                <img id="imgAdversario" class="mt-4 ms-4 img-style" src="/imgs/sem_imagem.png" alt="imagem adv1">
-                <span class="badge rounded-pill border-radiu bg-danger ">0</span>
+<div class="container mt-5">
+
+    <h4 class="text-bold-orange">Placar de eventos</h4>
+    <hr />
+
+    <!--Header cabeçalho de filtros-->
+    <form class="col-lg-12 col-sm-12 mb-3" asp-controller="Placar" asp-action="FiltrarPlacar" method="post">
+        <input asp-for="Periodo" type="hidden" />
+
+        <div class="d-flex col-lg-12">
+            <div class="form-outline mb-4 ag-field-content col-lg-4 col-sm-2">
+                <input asp-for="Periodo.De" id="txtDataInicial" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" />
+                <label id="txtDataInicialLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataInicial">
+                    Data inicial
+                </label>
             </div>
 
-            <span class="mx-4 text-bold-orange-light vs">VS</span>
-
-            <div class="text-center " style="display: grid d-inline-flex;">
-                <input type="number" id="txtCodigoAdversario2" class="d-none" data-val="true" data-val-required="The IdClub2 field is required." name="IdClub2" value="0"><input name="__Invariant" type="hidden" value="IdClub2">
-                <span class="badge rounded-pill border-radiu bg-danger">0</span>
-                <img id="imgAdversario2" class="mt-4 ms-4 img-style" src="/imgs/sem_imagem.png"  alt="imagem adv1">
-                <span class="name-time">Corintinhas </span>
+            <div class="form-outline mb-4 ag-field-content col-lg-4 col-sm-2 ms-3">
+                <input asp-for="Periodo.Ate" id="txtDataFinal" type="date" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" />
+                <label id="txtDataFinalLabel" class="form-label text-semi-bold-light ag-field-label" for="txtDataFinal">
+                    Data final
+                </label>
             </div>
-
-             
-        </div>
-        <div class="col-lg-12 mb-5 mt-1 detalhes-placar ">
-            <div class="campos-detalhes-placar">
-                <a>Detalhes do placar</a>
-              
-              
-                <img class="img-detalhes-placar" src="/imgs/seta-para-baixo2.jpg" />
-
-                
-            </div>
-
         </div>
 
-      
+        <div class="col-lg-2 col-sm-1 ">
+            <button id="btnBuscarPlacar" class="btn  btn-block btn-confirm-radius" type="submit">Buscar</button>
+        </div>
+
+    </form>
+
+    <!--Conteúdo -->
+    <div class="col-lg-12">
+        <ul class="p-2">
+            @foreach (var evt in Model.Eventos)
+            {
+                <!--Placar GERAL-->
+                <li class="row">
+
+                    <div class="row g-width-10 card-evento-not-hover">
+
+                        <div class="d-inline-flex justify-content-between">
+                            <h5 class="mb-3"><b>@evt.Tipo.GetEnumDescription() - @evt.Data.ObterDataEscrita()</b></h5>
+                        </div>
+
+                        <div class="d-inline-flex mb-3 justify-content-center g-width-10" style="align-items: center;">
+
+                            <span style="min-width: 130px; max-width: 130px; text-align-last: end;"><b>@evt.Clube1.Nome</b></span>
+
+                            <div class="ms-2 d-inline-flex" style="align-items: center;">
+                                @if (evt.Clube1.HasImagem())
+                                {
+                                    var imagem = String.Format("data:image/png;base64,{0}", evt.Clube1.ImagemBase64);
+                                    <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                                }
+                                else
+                                {
+                                    <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                                }
+                                <span id="lblGolsClube1" style="font-weight: bold;" class="mx-2">@evt.AtletasEventoClube1.Sum(x => x.GolsMarcados)</span>
+                                <span style="color: #FA8C05 ; font-weight: bold;" class="mx-2">X</span>
+                                <span id="lblGolsClube2" style="font-weight: bold;" class="mx-2">@evt.AtletasEventoClube2.Sum(x => x.GolsMarcados)</span>
+                                <span></span>
+
+                                @if (evt.Clube2.HasImagem())
+                                {
+                                    var imagem = String.Format("data:image/png;base64,{0}", evt.Clube2.ImagemBase64);
+                                    <img src="@imagem" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                                }
+                                else
+                                {
+                                    <img src="~/imgs/sem_imagem.png" style="width: 60px;  height: 60px;  border-radius: 50px;" alt="imagem aluno" />
+                                }
+                            </div>
+
+                            <span style="min-width: 130px; max-width: 130px;" class="ms-2"><b>@evt.Clube2.Nome</b></span>
+                        </div>
+
+                        <span class="mb-1" style="text-align-last: center;"><b>Local:</b> @evt.EnderecoResumido</span>
+                        <h4 style="text-align-last: center;"><b>@evt.HoraEvento.FormatarHoraEvento()</b></h4>
+
+                        @if (!string.IsNullOrEmpty(evt.Observacoes))
+                        {
+
+                            <span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @evt.Observacoes</span>
+                        }
+
+
+
+                    </div>
+
+
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-item">
+
+                            <h2 class="accordion-header" id="flush-headingOne_@evt.IdEvento">
+                                <button class="accordion-button collapsed accordion-atletas-evt" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne_@evt.IdEvento" aria-expanded="false" aria-controls="flush-collapseOne_@evt.IdEvento">
+                                    <span>Detalhes do Placar</span>
+                                </button>
+                            </h2>
+
+                            <div id="flush-collapseOne_@evt.IdEvento" class="accordion-collapse collapse" aria-labelledby="flush-headingOne_@evt.IdEvento" data-bs-parent="#accordionFlushExample">
+                             
+                                <div class="col-lg-12 d-flex justify-content-between">
+                                    <div class="col-lg-5">
+                                        <table class="table table-time-1 mt-3 col-lg-5">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Nome</th>
+                                                    <th>Gols</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach (var atletas in evt.AtletasEventoClube1)
+                                                {
+                                                    <tr>
+                                                        <td style="width:100px;">
+                                                            @if (atletas.DadosAtleta.HasImage())
+                                                            {
+                                                                <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img class="img-icon-nav ms-2" src="">
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="">@atletas.GolsMarcados</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <span class="text-center mt-3" style="color: brown; font-size: 22px; font-weight: bold;">VS</span>
+                                    
+                                    <div class="col-lg-5">
+                                        <table class="table table-time-1 mt-3 col-lg-5">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Nome</th>
+                                                    <th>Gols</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                @foreach (var atletas in evt.AtletasEventoClube2)
+                                                {
+                                                    <tr>
+                                                        <td style="width:100px;">
+                                                            @if (atletas.DadosAtleta.HasImage())
+                                                            {
+                                                                <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
+                                                            }
+                                                            else
+                                                            {
+                                                                <img class="img-icon-nav ms-2" src="">
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="">@atletas.GolsMarcados</span>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @* <div class="accordion-atletas-evt col-lg-12">
+
+                <div class="d-flex col-lg-12 p-2 justify-content-between">
+                <span>Detalhes do Placar</span>
+
+                <div>
+                <a class="btn-accordion" onclick="onClickDetalhesPlacar(@evt.IdEvento)">
+                <img class="img-accordion-normal" id="idImgDetalhesPlacar_@evt.IdEvento" src="~/imgs/seta-baixo-new.png">
+                </a>
+                </div>
+                </div>
+
+                </div> *@
+
+
+                    <hr class="mt-3" />
+                </li>
+            }
+        </ul>
     </div>
+
+
+
+
 </div>
 
-
-
-
+@section Scripts{
+    <script src="~/js/Placar/placar.js"></script>
+}

@@ -59,8 +59,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     return View("Unauthorized");
                 }
 
-                PatrocinadoresAdminViewModel result = new PatrocinadoresAdminViewModel();
-
+                PatrocinadoresAdminViewModel result = new PatrocinadoresAdminViewModel() { PageSize = 6 };
+                
                 result.InformarAtivos(await result.InicializarPaginacao(await _colaboradorService.GetAllAtivos()));
                 result.InformarSolicitacoes(await result.InicializarPaginacao(await _colaboradorService.GetAllPendentes()));
                 result.InformarInativos(await result.InicializarPaginacao(await _colaboradorService.GetAllInativos()));

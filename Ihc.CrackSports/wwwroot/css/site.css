@@ -840,13 +840,14 @@ html {
 
 
 .carousel-index img {
-    width: 190px;
+    width: 150px;
     height: 130px;
-    border-radius: 50px;
+    border-radius: 70px;
     /*box-shadow: 1px 1px 50px 1px #FFFFFF !important;*/
 }
 
-.carousel-index span{
+.carousel-index span {
+    /*color: #F9D19F;*/
     color: white;
     text-decoration: none !important;
 }
@@ -859,8 +860,9 @@ html {
 
 .carousel-facelift {
     min-height: 100vh;
-    background-color: #000000;
-    margin-top: 5rem !important;
+    background-color: #282828;
+    padding-bottom: 5rem !important;
+    
 }
     .carousel-facelift p{
         color: white;
@@ -868,8 +870,12 @@ html {
     }
 
 .center-caroulsel{
-    padding-top: 15% !important;
+    padding-top: 12% !important;
     text-align:center;
+}
+
+.center-text {
+    text-align: center;
 }
 
 .carousel-item {

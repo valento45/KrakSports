@@ -81,7 +81,7 @@ namespace Ihc.CrackSports.Core.Repositorys
                 query += $"where data_hora between timestamp '{dataInicio.ToString("yyyy-MM-dd")}' and timestamp '{dataFim.ToString("yyyy-MM-dd")}' ";
 
 
-            query += "order by data_hora LIMIT 200";
+            query += " order by data_hora LIMIT 200";
 
             var result = await base.QueryAsync<EventoDto>(query);
 

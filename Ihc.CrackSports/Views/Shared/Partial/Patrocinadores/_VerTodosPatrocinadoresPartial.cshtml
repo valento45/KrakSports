@@ -1,0 +1,14 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Colaborador;
+@model List<Patrocinador>
+
+
+@foreach (var patrocinador in Model)
+{
+    <a href="@patrocinador.LinkSite" class="col-lg-2 carousel-index ms-1">
+
+        <div class="p-1 text-center patrocinador-group" style="display: inline-grid;    place-content: center;">
+            <img src="@patrocinador.LogoTipoBase64" />
+            <span class="mt-2">@patrocinador.NomeOuRazaoSocial</span>
+        </div>
+    </a>
+}

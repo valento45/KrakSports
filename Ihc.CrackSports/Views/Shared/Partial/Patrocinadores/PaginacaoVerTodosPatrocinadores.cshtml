@@ -1,0 +1,28 @@
+﻿@using Ihc.CrackSports.Core.ViewModel.Colaborador;
+@using Newtonsoft.Json;
+@model PaginacaoPatrocinadorViewModel
+
+<div class="col-lg-12 carousel-facelift ">
+
+    <div class="container">
+        <p class="pt-5" style="font-size: 24px;font-weight: bold; color:#F9D19F;">Todos os patrocinadores</p>
+        <hr class="mb-5" style="background-color:white;" />
+    </div>
+    <div class="center-text container pt-5">
+
+        @await Html.PartialAsync("Partial/Patrocinadores/_VerTodosPatrocinadoresPartial", Model.PatrocinadorPaginacao.ObterListaPaginada())
+
+    </div>
+
+
+    <div class=" text-center mt-5">
+        <a onclick="voltarPaginaVerTodos(@JsonConvert.SerializeObject(Model))">
+            <img class="paginacao-icon" src="/imgs/seta-icon-paginacao.png">
+        </a>
+
+        <a class="ms-5 " onclick="proximaPaginaVerTodos(@JsonConvert.SerializeObject(Model))">
+            <img class="paginacao-icon" src="/imgs/seta-icon-direita-paginacao.png">
+        </a>
+    </div>
+
+</div>

@@ -1,56 +1,49 @@
 ﻿.placar {
-    width: 60%;
-    justify-content: center;
-    display: flex;
-    margin-left: 18%;
-    margin-top: 50px;
-}
-.layout-placar {
-    
-    background-color: white;
-    border-color :#800000;
-}
-.img-style {
-    width: 150px;
-    height: 150px;
-    border-radius: 90px;
-    box-shadow: 0px 0px 1px 1px #00000055
-}
-.vs {
-    margin-top: 5rem;
+    min-height: 200px;
+
+
 }
 
-.badge {
-    background-color: brown; !important;
-    color: white;
-    width: 50px;
+.placar span{
+    color: orange;
 }
 
-.name-time {
-    color: ghostwhite;
-}
-.container {
-    color: black;
-}
-.detalhes-placar {
-    background-color: #fde38b;
-    color: #800000;
-    font-weight: bold;
-    height: 50px;
-    padding-left: 10px;
-    padding-right: 10px;
+.placar p {
+
 }
 
 
-.img-detalhes-placar{
-    width: 20px;
+.accordion-atletas-evt {
+    min-height: 40px;
+    background-color: beige;
+    border: 1px solid brown;
+}
+
+.accordion-atletas-evt span{
+    color: brown;
+    font-weight: bold;    
+}
+
+.accordion-atletas-evt img{
+    width: 35px;
+    height: 35px;
+}
+
+.btn-accordion{
+    cursor: pointer;
     
 }
 
-.campos-detalhes-placar
-{
-    justify-content:space-between;
-    display:flex;
+    .btn-accordion:hover {
+        transform: scale(1.02) !important;
+    }
 
 
+.img-accordion-cima {
+    transform: rotate(180deg);
+    transition: 0.5s;
+}
+
+.img-accordion-normal {
+    transition: 0.5s;
 }

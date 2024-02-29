@@ -30,13 +30,13 @@
         </div>
     </div>
 
-    <div class="mt-5 col-lg-12 d-flex justify-content-center">
+    <div class="mt-5 col-lg-12 d-sm-inline-flex justify-content-between">
 
         @foreach (var obj in Model.AtletasRanking)
         {
             @if (obj.PosicaoRanking == 1)
             {
-                <div class="col-lg-3 p-2 card-melhor-artilheiro card-ouro d-flex">
+                <div class="col-lg-3 p-2 card-melhor-artilheiro card-ouro d-flex mb-5">
 
                     <strong class="mt-2 text-posicao"> 1º</strong>
                     <div class="mt-3" style="text-align-last: center;">
@@ -67,7 +67,7 @@
             }
             else if (obj.PosicaoRanking == 2)
             {
-                <div class="col-lg-3 p-2 card-melhor-artilheiro card-prata d-flex a-ms-6">
+                <div class="col-lg-3 p-2 card-melhor-artilheiro card-prata d-flex mb-5">
                     <strong class="mt-2 text-posicao"> 2º</strong>
                     <div class="mt-3" style="text-align-last: center;">
                         <img class="img-coroa" src="~/imgs/coroa-icon.png" />
@@ -96,7 +96,7 @@
             }
             else if (obj.PosicaoRanking == 3)
             {
-                <div class="col-lg-3 p-2 card-melhor-artilheiro card-bronze d-flex a-ms-6">
+                <div class="col-lg-3 p-2 card-melhor-artilheiro card-bronze d-flex mb-5">
                     <strong class="mt-2 text-posicao"> 3º</strong>
                     <div class="mt-3" style="text-align-last: center;">
                         <img class="img-coroa" src="~/imgs/coroa-icon.png" />

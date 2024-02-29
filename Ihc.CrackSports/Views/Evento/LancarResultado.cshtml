@@ -49,158 +49,161 @@
     </div>
     <!--FIM Placar GERAL -->
 
-    <div class="mb-1 d-flex" style="justify-content:space-between;">
+    <div class="col-lg-12 d-flex justify-content-center">
+        <div class="mb-1 col-lg-12 d-sm-inline-flex" style="justify-content:space-between;">
 
-        <!--Clube 1-->
-        <div class="col-lg-5 pnl-time-1">
+            <!--Clube 1-->
+            <div class="col-lg-5 pnl-time-1">
 
-            <!--Panel Inclusão de Gols-->
-            <div class="form-resultado d-flex">
+                <!--Panel Inclusão de Gols-->
+                <div class="form-resultado d-flex">
 
-                <div class="form-outline ag-field-content col-lg-3">
+                    <div class="form-outline ag-field-content col-lg-3">
 
-                    <select id="cmbJogadorTime1" class="form-select ag-field-input ag-input-color-light-full">
-                        <option selected="">Selecionar</option>
-                        @foreach (var atleta in Model.Clube1.AtletasClube)
-                        {
-                            <option value="@JsonConvert.SerializeObject(atleta)">@atleta.Nome.ToUpper()</option>
-                        }
-                    </select>
-                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbJogadorTime1">Jogador*</label>
+                        <select id="cmbJogadorTime1" class="form-select ag-field-input ag-input-color-light-full">
+                            <option selected="">Selecionar</option>
+                            @foreach (var atleta in Model.Clube1.AtletasClube)
+                            {
+                                <option value="@JsonConvert.SerializeObject(atleta)">@atleta.Nome.ToUpper()</option>
+                            }
+                        </select>
+                        <label class="form-label text-semi-bold-light ag-field-label" for="cmbJogadorTime1">Jogador*</label>
+                    </div>
+
+                    <div class="form-outline  ag-field-content col-lg-2 ms-3">
+                        <input type="text" id="txtQtdGolsTime1" class="form-control ag-field-input ag-input-color-light-full " data-mask="0000" autocomplete="off" required maxlength="14">
+                        <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime1">Nº de gols*</label>
+                    </div>
+
+
+                    <div class="col-lg-1 ms-3 mt-5">
+                        <a class="btn  btn-block btn-confirm-radius-escuro" onclick="onAdicionarGol(this, 1)">Adicionar</a>
+                    </div>
                 </div>
 
-                <div class="form-outline  ag-field-content col-lg-2 ms-3">
-                    <input type="text" id="txtQtdGolsTime1" class="form-control ag-field-input ag-input-color-light-full " data-mask="0000" autocomplete="off" required maxlength="14">
-                    <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime1">Nº de gols*</label>
-                </div>
-
-
-                <div class="col-lg-1 ms-3 mt-5">
-                    <a class="btn  btn-block btn-confirm-radius-escuro" onclick="onAdicionarGol(this, 1)">Adicionar</a>
-                </div>
-            </div>
-
-            <!--Panel Listagem de Gols-->
-            <table class="table table-time-1 mt-3">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nome</th>
-                        <th>Gols</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var atletas in Model.AtletasEventoClube1)
-                    {
+                <!--Panel Listagem de Gols-->
+                <table class="table table-time-1 mt-3">
+                    <thead>
                         <tr>
-                            <td style="width:100px;">
-                                @if (atletas.DadosAtleta.HasImage())
-                                {
-                                    <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
-                                }
-                                else
-                                {
-                                    <img class="img-icon-nav ms-2" src="">
-                                }
-                            </td>
-                            <td>
-                                <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
-                            </td>
-                            <td>
-                                <span class="">@atletas.GolsMarcados</span>
-                            </td>
-                            <td class="d-inline-flex">
-                                <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="" style="height: 40px; width: 40px; margin-right: 10px;" data-bs-original-title="Remover Gol(s)">
-                                    <a class="layout-orange-full-btn" onclick="onClickRemoverGol(@atletas.IdLancamento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
-                                        <img src="/imgs/excluir.png" style="width: 30px; height: 30px;">
-                                    </a>
-                                </div>
-                            </td>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>Gols</th>
+                            <th>Ação</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <!--FIM Clube 1-->
+                    </thead>
+                    <tbody>
 
-        <!--Clube 2-->
-        <div class="col-lg-5 pnl-time-2">
-
-            <!--Panel Inclusão de Gols-->
-            <div class="form-resultado d-flex">
-
-                <div class="form-outline ag-field-content col-lg-3">
-
-                    <select id="cmbJogadorTime2" class="form-select ag-field-input ag-input-color-light-full">
-                        <option selected="">Selecionar</option>
-                        @foreach (var atleta in Model.Clube2.AtletasClube)
+                        @foreach (var atletas in Model.AtletasEventoClube1)
                         {
-                            <option value="@JsonConvert.SerializeObject(atleta)">@atleta.Nome.ToUpper()</option>
+                            <tr>
+                                <td style="width:100px;">
+                                    @if (atletas.DadosAtleta.HasImage())
+                                    {
+                                        <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
+                                    }
+                                    else
+                                    {
+                                        <img class="img-icon-nav ms-2" src="">
+                                    }
+                                </td>
+                                <td>
+                                    <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
+                                </td>
+                                <td>
+                                    <span class="">@atletas.GolsMarcados</span>
+                                </td>
+                                <td class="d-inline-flex">
+                                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="" style="height: 40px; width: 40px; margin-right: 10px;" data-bs-original-title="Remover Gol(s)">
+                                        <a class="layout-orange-full-btn" onclick="onClickRemoverGol(@atletas.IdLancamento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+                                            <img src="/imgs/excluir.png" style="width: 30px; height: 30px;">
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                    </select>
-                    <label class="form-label text-semi-bold-light ag-field-label" for="cmbJogadorTime2">Jogador*</label>
-                </div>
-
-                <div class="form-outline  ag-field-content col-lg-2 ms-3">
-                    <input type="text" id="txtQtdGolsTime2" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="0000" minlenght="1" autocomplete="off" required="" maxlength="14">
-                    <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime2">Nº de gols*</label>
-                </div>
-
-
-                <div class="col-lg-1 ms-3 mt-5">
-                    <a class="btn  btn-block btn-confirm-radius-escuro" onclick="onAdicionarGol(this, 2)">Adicionar</a>
-                </div>
+                    </tbody>
+                </table>
             </div>
+            <!--FIM Clube 1-->
+            <!--Clube 2-->
+            <div class="col-lg-5 pnl-time-2">
 
-            <!--Panel Listagem de Gols-->
-            <table class="table table-time-2 mt-3">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Nome</th>
-                        <th>Gols</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
+                <!--Panel Inclusão de Gols-->
+                <div class="form-resultado d-flex">
 
-                    @foreach (var atletas in Model.AtletasEventoClube2)
-                    {
+                    <div class="form-outline ag-field-content col-lg-3">
+
+                        <select id="cmbJogadorTime2" class="form-select ag-field-input ag-input-color-light-full">
+                            <option selected="">Selecionar</option>
+                            @foreach (var atleta in Model.Clube2.AtletasClube)
+                            {
+                                <option value="@JsonConvert.SerializeObject(atleta)">@atleta.Nome.ToUpper()</option>
+                            }
+                        </select>
+                        <label class="form-label text-semi-bold-light ag-field-label" for="cmbJogadorTime2">Jogador*</label>
+                    </div>
+
+                    <div class="form-outline  ag-field-content col-lg-2 ms-3">
+                        <input type="text" id="txtQtdGolsTime2" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="0000" minlenght="1" autocomplete="off" required="" maxlength="14">
+                        <label id="txtQtdGolsTime2Label" class="form-label text-semi-bold-light ag-field-label" for="txtQtdGolsTime2">Nº de gols*</label>
+                    </div>
+
+
+                    <div class="col-lg-1 ms-3 mt-5">
+                        <a class="btn  btn-block btn-confirm-radius-escuro" onclick="onAdicionarGol(this, 2)">Adicionar</a>
+                    </div>
+                </div>
+
+                <!--Panel Listagem de Gols-->
+                <table class="table table-time-2 mt-3">
+                    <thead>
                         <tr>
-                            <td style="width:100px;">
-                                @if (atletas.DadosAtleta.HasImage())
-                                {
-                                    <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
-                                }
-                                else
-                                {
-                                    <img class="img-icon-nav ms-2" src="">
-                                }
-                            </td>
-                            <td>
-                                <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
-                            </td>
-                            <td>
-                                <span class="">@atletas.GolsMarcados</span>
-                            </td>
-                            <td class="d-inline-flex">
-                                <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="" style="height: 40px; width: 40px; margin-right: 10px;" data-bs-original-title="Remover Gol(s)">
-                                    <a class="layout-orange-full-btn" onclick="onClickRemoverGol(@atletas.IdLancamento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
-                                        <img src="/imgs/excluir.png" style="width: 30px; height: 30px;">
-                                    </a>
-                                </div>
-                            </td>
+                            <th></th>
+                            <th>Nome</th>
+                            <th>Gols</th>
+                            <th>Ação</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
 
+                        @foreach (var atletas in Model.AtletasEventoClube2)
+                        {
+                            <tr>
+                                <td style="width:100px;">
+                                    @if (atletas.DadosAtleta.HasImage())
+                                    {
+                                        <img class="img-icon-nav ms-2" src="data:image/png;base64, @atletas.DadosAtleta.FotoAlunoBase64">
+                                    }
+                                    else
+                                    {
+                                        <img class="img-icon-nav ms-2" src="">
+                                    }
+                                </td>
+                                <td>
+                                    <span class="">@atletas.DadosAtleta.Nome.ToUpper()</span>
+                                </td>
+                                <td>
+                                    <span class="">@atletas.GolsMarcados</span>
+                                </td>
+                                <td class="d-inline-flex">
+                                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="" style="height: 40px; width: 40px; margin-right: 10px;" data-bs-original-title="Remover Gol(s)">
+                                        <a class="layout-orange-full-btn" onclick="onClickRemoverGol(@atletas.IdLancamento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+                                            <img src="/imgs/excluir.png" style="width: 30px; height: 30px;">
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <!--FIM Clube 2-->
         </div>
-        <!--FIM Clube 2-->
     </div>
 </div>
 
 
-
+@section Scripts{
+    <script src="~/js/Evento/lancarResultado.js"></script>
+}

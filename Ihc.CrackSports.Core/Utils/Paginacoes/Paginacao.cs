@@ -18,7 +18,7 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         public Paginacao(IQueryable<T> superset, int pageNumber, int pageSize) : base(superset, pageNumber, pageSize)
         {
             Superset = superset;
-            
+
         }
 
 
@@ -26,14 +26,17 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
         {
             if (this.Superset != null && base.TotalItemCount > 0)
             {
-                if(PageNumber >= PageCount)                
+                if (PageNumber >= PageCount)
                     PageNumber--;
-                
+
 
                 Subset.AddRange(Superset.Skip(PageNumber * PageSize).Take(PageSize).ToList());
 
                 if (PageNumber > base.PageCount)
                     PageNumber = base.PageCount;
+                else
+                    PageNumber++;
+
             }
         }
         public void VoltarPagina()
@@ -41,7 +44,10 @@ namespace Ihc.CrackSports.Core.Utils.Paginacoes
 
             if (this.Superset != null && base.TotalItemCount > 0)
             {
-                PageNumber -= 1;
+                if (PageNumber == PageCount)
+                    PageNumber -= 2;
+                else
+                    PageNumber -= 1;
 
                 if (PageNumber <= 0)
                     Subset.AddRange(Superset.Skip(0).Take(PageSize).ToList());

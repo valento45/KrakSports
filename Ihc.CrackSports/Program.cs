@@ -56,6 +56,8 @@ var cultures = new[] {
 	new CultureInfo("pt-BR"),
 	new CultureInfo("en-US")
 };
+
+
 app.UseRequestLocalization(new RequestLocalizationOptions
 {
 	DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("pt-BR"),

@@ -1,0 +1,14 @@
+﻿@using Ihc.CrackSports.Core.ViewModel.Colaborador;
+@using Newtonsoft.Json;
+@model PaginacaoPatrocinadorViewModel
+@{
+    Layout = "_Layout";
+}
+
+<div id="pnlPartialViewVerTodosPatrocinadores" >
+    
+    @await Html.PartialAsync("Partial/Patrocinadores/PaginacaoVerTodosPatrocinadores", Model)
+</div>
+@section Scripts{
+    <script src="~/js/Colaborador/verTodosPatrocinadores.js"></script>
+}

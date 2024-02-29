@@ -6,6 +6,7 @@
 
 
 const urlRefreshPaginacaoPatrocinadores = "../Colaborador/RefreshPaginacaoColaborador";
+const urlRefreshPaginacaoVerTodosPatrocinadores = "../Colaborador/RefreshPaginacaoVerTodosPatrocinadores";
 const urlAceitarPatrocinador = "../Colaborador/AceitarPatrocinador";
 const urlExcluirPatrocinador = "../Colaborador/ExcluirPatrocinador";
 const urlInativarPatrocinador = "../Colaborador/InativarPatrocinador";

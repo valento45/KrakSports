@@ -13,6 +13,7 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
         public bool LastPage { get; set; }
         public int PageNumber { get; set; }
         public int PageCount { get; set; }
+        public int PageSize { get; set; }
 
         public Paginacao<Patrocinador> PatrocinadorPaginacao { get; set; }
         public List<Patrocinador> TodosPatrocinadores
@@ -26,19 +27,26 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
 
         public PaginacaoPatrocinadorViewModel()
         {
-            
+
         }
 
 
         public PaginacaoPatrocinadorViewModel(PaginacaoPatrocinadorViewModelRequest request)
         {
-            PatrocinadorPaginacao = new Paginacao<Patrocinador>(request.TodosPatrocinadores.AsQueryable(), request.PageNumber > 0 ? request.PageNumber : 1, 6);
+
+            int pageSize = request.PageSize > 0 ? request.PageSize : 6;
+            int pageNumber = request.PageNumber > 0 ? request.PageNumber : 1;
+
+            PatrocinadorPaginacao = new Paginacao<Patrocinador>(request.TodosPatrocinadores.AsQueryable(),
+                pageNumber, pageSize);
 
             NextPage = request.NextPage;
             PreviousPage = request.PreviousPage;
             FirstPage = request.FirstPage;
             LastPage = request.LastPage;
             PageNumber = request.PageNumber;
+            PageSize = pageSize;
+
             PageCount = PatrocinadorPaginacao.PageCount;
         }
 
@@ -51,8 +59,8 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
 
         public PaginacaoPatrocinadorViewModel(PaginacaoPatrocinadorViewModel request)
         {
-            
-            PatrocinadorPaginacao = request.PatrocinadorPaginacao;        
+
+            PatrocinadorPaginacao = request.PatrocinadorPaginacao;
             NextPage = request.NextPage;
             PreviousPage = request.PreviousPage;
             FirstPage = request.FirstPage;
@@ -86,9 +94,11 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
                 PatrocinadorPaginacao.UltimaPagina();
                 LastPage = false;
             }
-            else            
+            else
                 PatrocinadorPaginacao.PrimeiraPagina();
-            
+
+            this.PageNumber = PatrocinadorPaginacao.PageNumber;
+
         }
 
         public List<Patrocinador> ObterListaPaginada() => PatrocinadorPaginacao.ObterListaPaginada();
@@ -102,6 +112,7 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
         public bool LastPage { get; set; }
         public int PageNumber { get; set; }
         public int PageCount { get; set; }
+        public int PageSize { get; set; }
         public List<Patrocinador> PatrocinadorPaginacao { get; set; }
         public List<Patrocinador> TodosPatrocinadores { get; set; }
     }

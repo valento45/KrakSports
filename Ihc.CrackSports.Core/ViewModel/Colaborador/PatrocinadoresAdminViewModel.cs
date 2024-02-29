@@ -15,6 +15,8 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
         public PaginacaoPatrocinadorViewModel Solicitacoes { get; private set; }
 
 
+        public int PageSize { get; set; }
+
         public void InformarAtivos(PaginacaoPatrocinadorViewModel ativos)
         {
             Ativos = ativos;
@@ -32,12 +34,19 @@ namespace Ihc.CrackSports.Core.ViewModel.Colaborador
 
         public async  Task<PaginacaoPatrocinadorViewModel> InicializarPaginacao(IEnumerable<Patrocinador> superser)
         {
-            Paginacao<Patrocinador> paginacao = new Paginacao<Patrocinador>(superser.AsQueryable(), 1, 10);
+            int pageSize = PageSize > 0 ? PageSize : 10;    
+            Paginacao<Patrocinador> paginacao = new Paginacao<Patrocinador>(superser.AsQueryable(), 1, pageSize);
             PaginacaoPatrocinadorViewModel res = new PaginacaoPatrocinadorViewModel(paginacao);
 
             await res.Refresh();
 
             return res;
+        }
+
+
+        public async Task<IEnumerable<Patrocinador>> ObterAtivos()
+        {
+            return Ativos.ObterListaPaginada();
         }
     }
 }

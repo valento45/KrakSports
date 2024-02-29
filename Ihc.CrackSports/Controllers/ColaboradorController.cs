@@ -3,6 +3,7 @@ using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Colaborador;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.Core.Utils.Paginacoes;
 using Ihc.CrackSports.Core.ViewModel.Colaborador;
 using Ihc.CrackSports.WebApp.Application;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
@@ -63,6 +64,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
 
+
+
+
         [HttpPost]
         public async Task<JsonResult> AceitarPatrocinador([FromBody] Patrocinador model)
         {
@@ -108,6 +112,34 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var result = obj.FirstOrDefault(x => x.IdPatrocinador == idPatrocinador);
 
             return View("Partial/Administrador/_ModalConfirmInaPatrocinador", result);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> VerTodosPatrocinadores()
+        {
+
+            var patrocinadores = await _colaboradorService.GetAllAtivos();
+            var paginacaoPatrocinadores = new Paginacao<Patrocinador>(patrocinadores.AsQueryable(), 1, 10);
+
+
+            PaginacaoPatrocinadorViewModel result = new PaginacaoPatrocinadorViewModel(paginacaoPatrocinadores);
+            await result.Refresh();
+
+
+            return View(result);
+        }
+
+
+        [HttpPost]
+        public async Task<PartialViewResult> RefreshPaginacaoVerTodosPatrocinadores([FromBody] PaginacaoPatrocinadorViewModelRequest request)
+        {
+            request.PageSize = 10;
+            PaginacaoPatrocinadorViewModel result = new PaginacaoPatrocinadorViewModel(request);
+
+            await result.Refresh();
+
+            return PartialView("Partial/Patrocinadores/PaginacaoVerTodosPatrocinadores", result);
         }
     }
 }
