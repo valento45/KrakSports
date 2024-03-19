@@ -35,7 +35,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var ate = new DateTime();
 
             var result = await _eventoApplication.GetEventos(de, ate);
-
+            
             return View(result);
         }
 
@@ -83,6 +83,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             return PartialView("Partial/AgendaEventos/_EventosPartial", result);
         }
+
+
         [HttpGet]
         public async Task<IActionResult> ConfimarExclusaoEvento(long idEvento)
         {
