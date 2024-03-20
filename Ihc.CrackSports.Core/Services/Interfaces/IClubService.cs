@@ -16,6 +16,6 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<Club?> ObterById(long idClub);
         Task<Club?> ObterByIdUsuario(long idUser);
         Task<List<Club>?> ObterByNome(string nome, int limite);
-        Task<List<Club>?> ObterTodos(int limite = 0);
+        Task<List<Club>?> ObterTodos(int limite = 0, bool exibeSomenteAtivos = false);
     }
 }

@@ -157,7 +157,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             await base.RefreshNotifications(User);
 
-            var clubes = await _clubService.ObterTodos(limite);
+            var clubes = await _clubService.ObterTodos(limite, true);
             var result = new PaginacaoClubViewModel(new Paginacao<Club>(clubes?.AsQueryable(), 1, 10));
 
             ViewBag.paginacao = result;
@@ -194,7 +194,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<PartialViewResult> SelecionarClubePartial()
         {
-            var result = await _clubService.ObterTodos();
+            var result = await _clubService.ObterTodos(0, true);
             return PartialView("Partial/Club/_ModalSelecionarClube", result);
         }
     }

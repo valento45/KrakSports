@@ -69,9 +69,9 @@ namespace Ihc.CrackSports.Core.Commands
             return result;
         }
 
-        public async Task<List<Club>?> ObterTodos(int limite)
+        public async Task<List<Club>?> ObterTodos(int limite, bool exibeSomenteAtivos = false)
         {
-            var result = await _clubRepository.ObterTodos(limite);
+            var result = await _clubRepository.ObterTodos(limite, exibeSomenteAtivos);
             return result.ToList();
         }
     }

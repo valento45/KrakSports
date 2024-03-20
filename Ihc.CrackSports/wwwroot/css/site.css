@@ -862,16 +862,15 @@ html {
     min-height: 100vh;
     background-color: #282828;
     padding-bottom: 5rem !important;
-    
 }
-    .carousel-facelift p{
+
+    .carousel-facelift p {
         color: white;
-        
     }
 
-.center-caroulsel{
+.center-caroulsel {
     padding-top: 12% !important;
-    text-align:center;
+    text-align: center;
 }
 
 .center-text {
@@ -883,7 +882,7 @@ html {
     text-align: center;
 }
 
-    .carousel-item span{
+    .carousel-item span {
         font-size: 16px;
         font-weight: bold;
     }
@@ -892,7 +891,7 @@ html {
         transition: all 0.5s;
     }
 
-    .carousel-item:hover{
+    .carousel-item:hover {
         transform: scale(1.03);
         transition: all 0.5s;
         cursor: pointer;
@@ -900,7 +899,20 @@ html {
 
 
 
-#pnlContatosClube{
+.message-warning {
+    height: 100px;
+    width: 100%;
+    background-color: beige;
+    text-align-last: center;
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+
+
+#pnlContatosClube {
     padding: 1.5rem;
 }
 
