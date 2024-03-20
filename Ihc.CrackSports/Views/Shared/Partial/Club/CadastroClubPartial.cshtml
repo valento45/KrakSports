@@ -71,14 +71,24 @@
                             <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
                         </div>
+
+                        <div class="form-outline ag-field-content g-width-10 mb-5 ">
+                            <textarea asp-for="DadosClub.SobreOClube" id="txtMensagem" class="txt-max-input form-control ag-field-input ag-input-color-light-full" placeholder="Descreva sobre o Clube..." style="min-height:100px; padding: 20px;"></textarea>
+                            <label id="txtMensagemLabel" class=" form-label text-semi-bold-light ag-field-label" for="txtMensagem">Sobre o Clube (Opcional)</label>
+                            <span id="lblLimiteCaractere" class="lblLimiteCaractere">Limite de caracteres 3000</span>
+                        </div>
+
+
                         <div class="form-outline  ag-field-content g-width-10 ">
                             <input asp-for="DadosUsuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
                         </div>
+
                         <div class="form-outline  ag-field-content g-width-7">
                             <input asp-for="DadosUsuario.PasswordHash" type="password" id="txtSenhaClub" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtSenhaClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha*</label>
                         </div>
+
                         <div class="form-outline mb-1 ag-field-content g-width-10 ">
                             <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7 valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtConfirmaSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmaSenha">Confirmar Senha*</label>
@@ -107,4 +117,5 @@
 
 @section Scripts{
     <script src="~/js/Club/club.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/Componentes/maxInputsComponent.js" type="text/javascript" asp-append-version="true"></script>
 }

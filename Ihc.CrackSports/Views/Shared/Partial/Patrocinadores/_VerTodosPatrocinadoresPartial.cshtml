@@ -2,13 +2,23 @@
 @model List<Patrocinador>
 
 
-@foreach (var patrocinador in Model)
+@if (!Model.Any())
 {
-    <a href="@patrocinador.LinkSite" class="col-lg-2 carousel-index ms-1">
+    <div style="height: 100px; width: 100%; background-color: beige; text-align-last: center; padding: 10px;">
+        <h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum registro para o filtro informado !</h4>
+    </div>
+}
+else
+{
 
-        <div class="p-1 text-center patrocinador-group" style="display: inline-grid;    place-content: center;">
-            <img src="@patrocinador.LogoTipoBase64" />
-            <span class="mt-2">@patrocinador.NomeOuRazaoSocial</span>
-        </div>
-    </a>
+    @foreach (var patrocinador in Model)
+    {
+        <a href="@patrocinador.LinkSite" class="col-lg-2 carousel-index ms-1">
+
+            <div class="p-1 text-center patrocinador-group" style="display: inline-grid;    place-content: center;">
+                <img src="@patrocinador.LogoTipoBase64" />
+                <span class="mt-2">@patrocinador.NomeOuRazaoSocial</span>
+            </div>
+        </a>
+    }
 }

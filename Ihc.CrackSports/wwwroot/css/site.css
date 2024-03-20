@@ -897,3 +897,19 @@ html {
         transition: all 0.5s;
         cursor: pointer;
     }
+
+
+
+#pnlContatosClube{
+    padding: 1.5rem;
+}
+
+    #pnlContatosClube p {
+        color: #FA8C05;
+        font-weight: bold;
+    }
+
+    #pnlContatosClube span {
+        color: brown;
+        margin-left: 0.50rem;
+    }

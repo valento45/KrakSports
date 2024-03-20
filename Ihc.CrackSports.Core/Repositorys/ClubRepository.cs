@@ -34,6 +34,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
             cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
             cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? null);
+            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? null);
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
@@ -48,7 +49,8 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Atualizar(Club club)
         {
-            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64, data_fundacao = @data_fundacao, nome_presidente = @nome_presidente where id_club = @id_club";
+            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
+                " data_fundacao = @data_fundacao, nome_presidente = @nome_presidente, sobre_o_clube = @sobre_o_clube where id_club = @id_club";
 
             return await base.ExecuteAsync(query, new
             {
@@ -58,7 +60,8 @@ namespace Ihc.CrackSports.Core.Repositorys
                 uf = club.Endereco.UF,
                 imagem_base64 = club.ImagemBase64,
                 data_fundacao = club.DataFundacao,
-                nome_presidente = club.NomePresidente
+                nome_presidente = club.NomePresidente,
+                sobre_o_clube = club.SobreOClube
             });
         }
 
