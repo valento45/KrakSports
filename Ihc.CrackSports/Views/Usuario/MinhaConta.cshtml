@@ -8,7 +8,7 @@
     ViewData["Title"] = "Minha conta";
 }
 
-<div class=" mt-5">
+<div class=" mt-5 mb-5">
     @if(Model.TipoUsuario == Ihc.CrackSports.Core.Objetos.Enums.TipoUsuario.Aluno)
     {
         @await Html.PartialAsync("Partial/MinhaConta/_AlunoPartial", Model)        
