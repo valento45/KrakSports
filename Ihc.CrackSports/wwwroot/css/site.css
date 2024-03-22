@@ -80,6 +80,10 @@ html {
         transition: all 0.5s;
     }
 
+.navbar {
+    padding-bottom: 0.2rem !important;
+    padding-top: 0.2rem !important;
+}
 
 .img-icon-nav {
     width: 35px;
