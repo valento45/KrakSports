@@ -28,8 +28,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
     {
         protected readonly INotificationCommand _notificationCommand;
         protected readonly IUsuarioContext _usuarioContext;
-		protected readonly IMessageApplication _messageApplication;
-		protected IAlunoService _alunoService;
+        protected readonly IMessageApplication _messageApplication;
+        protected IAlunoService _alunoService;
         protected IClubService _clubService;
         protected readonly UserManager<Usuario> _userManager;
         protected readonly NotificationHub _notificationHub;
@@ -45,8 +45,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
             _userManager = userManager;
             _notificationCommand = notificationCommand;
             _usuarioContext = httpContextAccessor;
-			_messageApplication = messageApplication;
-		}
+            _messageApplication = messageApplication;
+        }
 
         #endregion
 
@@ -63,12 +63,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         {
                             var aluno = await _alunoService.GetByIdUsuario(long.Parse(User.GetIdentificador()));
 
-                            _usuarioContext.SetImage(aluno.FotoAlunoBase64);
+                            if (aluno != null)
+                                _usuarioContext.SetImage(aluno.FotoAlunoBase64);
+
                         }
                         else if (User.IsClub())
                         {
                             var club = await _clubService.ObterByIdUsuario(long.Parse(User.GetIdentificador()));
-                            _usuarioContext.SetImage(club.ImagemBase64);
+                            if (club != null)
+                                _usuarioContext.SetImage(club.ImagemBase64);
                         }
                     }
                 }

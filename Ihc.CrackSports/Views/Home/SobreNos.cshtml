@@ -1,9 +1,55 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "KrakSports - Sobre nós";
 }
 
-<div class="container mt-5">
-    <h3 class="text-semi-bold-orange">Sobre nós</h3>
+@section Styles{
+    <style>
+        .apresentacao-sobre {
+            box-shadow: 1px 1px 50px 1px #00000066;
+        }
+
+            .apresentacao-sobre img {
+                height: 20rem;
+                width: 20rem;
+                border-radius: 50px;
+                box-shadow: 1px 1px 50px 1px #00000066;
+            }
+    </style>
+}
+
+<div class="container mt-5 layout-light-full">
+    <h1 class="text-semi-bold-orange">Sobre a <b>#KrakSports</b></h1>
     <hr />
+     
+    <div class="mt-5 apresentacao-sobre">
+
+        <div class="mt-5 d-sm-inline-flex col-sm-12 box-shadow justify-content-center">
+
+            <div class="col-sm-3 p-3">
+                <img src="~/imgs/kraksports momento.jpg" />
+            </div>
+
+            <div class="col-sm-3 p-3 ms-5">
+                <img src="~/imgs/kraksports -icon.jpg" />
+            </div>
+
+            <div class="col-sm-3 p-3 ms-5">
+                <img src="~/imgs/kraksports samuel e marcos.jpg" />
+            </div>
+
+        </div>
+
+
+        <ul class="pb-5 mt-5" style="list-style: none;">
+            <li>
+                <p>
+                    Nós da <b>KrakSports</b> somos um Grupo de Profissionais Conceituados do Esporte com Conhecimento, Capacidade ,
+                    Experiência nos mais diversos segmentos onde reunidos somos a <b>KraksportsCorporation</b> proporcionando assim tudo o que há de
+                    melhor no esporte em todas as modalidades na finalidade de proporcionar para nossos associados e parceiros em um único lugar
+                    os melhores profissionais qualificados para juntos alcançarmos alta performace e alto desempenho em suas respectivas
+                    modalidades com êxito seja  no desempenho pessoal ou de suas equipes em competições de alto nível nacionais e internacionais.
+                </p>
+            </li>
+        </ul>
+    </div>
 </div>
