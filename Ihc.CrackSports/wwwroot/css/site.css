@@ -56,9 +56,6 @@ html {
 .nav-link body {
     margin-bottom: 60px;
 }
-.navbar{
-    max-height: 55px;
-}
 
 .navbar-white .navbar-toggler-icon {
     background-image: url(menu-icon2.png);
