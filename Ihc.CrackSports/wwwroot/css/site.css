@@ -56,6 +56,9 @@ html {
 .nav-link body {
     margin-bottom: 60px;
 }
+.navbar{
+    max-height: 55px;
+}
 
 .navbar-white .navbar-toggler-icon {
     background-image: url(menu-icon2.png);
@@ -859,7 +862,7 @@ html {
 }
 
 .carousel-facelift {
-    min-height: 100vh;
+    min-height: 110vh;
     background-color: #282828;
     padding-bottom: 5rem !important;
 }
@@ -924,4 +927,23 @@ html {
     #pnlContatosClube span {
         color: brown;
         margin-left: 0.50rem;
+    }
+
+
+.footer-contatos{
+
+}
+
+.footer-contatos img{
+    width:30px;
+    height:30px;
+}
+
+.footer-contatos a{
+    cursor:pointer;
+}
+
+    .footer-contatos a:hover {
+        transform: scale(1.1) !important;
+        transition: all 0.5s;
     }

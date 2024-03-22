@@ -101,3 +101,16 @@ function onClickVoltarPaginaCarousel(totalItens) {
     $(`#item_caroulsel_${_indiceItem}`).addClass("active");
 
 }
+
+
+function onRedirectInsta() {
+
+}
+
+function onRedirectWpp() {
+
+}
+
+function onRedirectLinkedin() {
+
+}

@@ -13,9 +13,9 @@
         _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
     }
 
-    if (!_usuarioContext.HasImage() )
+    if (!_usuarioContext.HasImage())
     {
-       await _usuarioContext.RefreshImage();
+        await _usuarioContext.RefreshImage();
     }
 }
 <!DOCTYPE html>
@@ -71,8 +71,8 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="SobreNos">Sobre nós</a>
                         </li>
-                     @*    <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Administrador" asp-action="Index">Administrador</a>
+                        @*    <li class="nav-item">
+                        <a class="nav-link " asp-area="" asp-controller="Administrador" asp-action="Index">Administrador</a>
                         </li> *@
                     </ul>
                     <ul class="navbar-nav">
@@ -154,7 +154,7 @@ position: absolute; margin-left: 20px;" class="text-center">
             @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial", await _usuarioContext.GetNotificacoes())
         </div>
     }
-    <main role="main" class="pb-3">
+    <main role="main" class="">
         @RenderBody()
 
         <div class="c-loader-overlay">
@@ -175,9 +175,39 @@ position: absolute; margin-left: 20px;" class="text-center">
 
 
     <footer class="border-top footer text-muted">
-        <div class="container mb-5 mt-5">
-            &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+        <div class=" col-sm-12 d-sm-inline-flex ">
+
+            <div class="container col-sm-8 mb-4 p-3 mt-2 ps-5">
+                &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+                <br />
+                Desenvolvido por - <a href="https://www.instagram.com/ihc_digitalsolutions/"
+                                      class="link-redirect-orange ps-5" style="color: #FA8C05 ;">Igor H. M. Carvalho</a>
+            </div>
+
+
+
+            <div class="container col-sm-4 d-sm-flex footer-contatos justify-content-center  p-3 mb-1 mt-2">
+                <div class="col-sm-1 ">
+                    <a href="https://wa.me/5511998541298">
+                        <img src="~/imgs/wpp-icon-png.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.instagram.com/kraksports/">
+                        <img src="~/imgs/insta-icon1.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.linkedin.com/in/igor-carvalho-022b9818b/">
+                        <img src="~/imgs/linkedin-icon.png" />
+                    </a>
+                </div>
+
+            </div>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -194,7 +224,7 @@ position: absolute; margin-left: 20px;" class="text-center">
         let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
     </script>
 
-    <!--Scripts Notifications-->     
+    <!--Scripts Notifications-->
     <script src="~/js/notifications/notification.js"></script>
 
     <!--Agenda Evento-->
