@@ -18,6 +18,7 @@ namespace Ihc.CrackSports.WebApp.Configurations.DependenciasInjection
             services.AddTransient<IEventoService, EventoService>();          
             services.AddTransient<IColaboradorService, ColaboradorService>();          
             services.AddTransient<IRankingService, RankingService>();          
+            services.AddTransient<ICEPService, CEPService>();          
 
           
         }

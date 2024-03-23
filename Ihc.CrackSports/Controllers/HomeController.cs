@@ -27,19 +27,21 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubService _clubService;
         private readonly IColaboradorService _colaboradorService;
+        private readonly ICEPService _cepService;
 
         public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService, INotificationCommand notificationCommand,
-             IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
+             IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService, ICEPService cepService) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
             _logger = logger;
             _alunoService = alunoService;
             _clubService = clubService;
             _colaboradorService = colaboradorService;
+            _cepService = cepService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
-        {           
+        {
 
             if (User != null)
             {
@@ -54,7 +56,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             patrocinadores = patrocinadores.Where(x => x.OrdemApresentacao > 0);
 
             homeViewModel.InformarPatrocinadores(patrocinadores.Skip(0).Take(5));
-            
+
 
             return View(homeViewModel);
         }
@@ -74,7 +76,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-           
+
 
             if (ModelState.IsValid)
             {
@@ -119,6 +121,16 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+
+
+        [HttpGet]
+        public async Task<JsonResult> ObterDadosCEP(string CEP)
+        {
+            var result = await _cepService.GetEnderecoByCEPAsync(CEP);
+            return Json(result);
         }
     }
 }
