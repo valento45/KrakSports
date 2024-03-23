@@ -45,7 +45,11 @@ namespace Ihc.CrackSports.Core.Commands
             var response = new CadastroResponse();
 
             if (await _clubRepository.Excluir(idClub))
+            {
                 response.StatusCode = 200;
+                response.Message = "Cadastro excluído com sucesso!";
+                response.Id = idClub;
+            }
 
             return response;
         }

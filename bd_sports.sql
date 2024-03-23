@@ -44,8 +44,10 @@ CREATE DATABASE bd_sports
 		imagem_base64 varchar,
 		is_verificado boolean,
 		data_fundacao timestamp null,
-		nome_presidente varchar null
+		nome_presidente varchar null,
+		sobre_o_clube varchar
 	);		
+
 
 
 	create table if not exists sys.aluno_tb(
@@ -194,7 +196,8 @@ CREATE DATABASE bd_sports
 	
 	
 --Tornar usuario administrador
---insert into if not exists sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
+--insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
+
 
 --Criar Role usuario Club
 --insert into sys.usuario_claim_tb(id_usuario, claim) values (1, 'club');
@@ -222,11 +225,11 @@ CREATE DATABASE bd_sports
 	);
 
 
-select  atl.id_aluno, atl.nome, cl.nome_fantasia as nome_clube, atl.foto_base64, sum(aevt.gols_marcados) as gols_marcados from sys.agenda_evento_tb as evt
-inner join sys.atleta_evento_tb as  aevt ON evt.id_evento = aevt.id_evento
-inner join sys.aluno_tb as atl ON atl.id_aluno = aevt.id_aluno
-inner join sys.club_tb as cl on cl.id_club = atl.id_club
-where evt.data_hora between to_timestamp('01-01-2023','dd-MM-yyyy') AND to_timestamp('01-01-2025','dd-MM-yyyy')
-group by atl.id_aluno, atl.nome, cl.nome_fantasia 
-order by gols_marcados desc
-limit 3
+--select  atl.id_aluno, atl.nome, cl.nome_fantasia as nome_clube, atl.foto_base64, sum(aevt.gols_marcados) as gols_marcados from sys.agenda_evento_tb as evt
+--inner join sys.atleta_evento_tb as  aevt ON evt.id_evento = aevt.id_evento
+--inner join sys.aluno_tb as atl ON atl.id_aluno = aevt.id_aluno
+--inner join sys.club_tb as cl on cl.id_club = atl.id_club
+--where evt.data_hora between to_timestamp('01-01-2023','dd-MM-yyyy') AND to_timestamp('01-01-2025','dd-MM-yyyy')
+--group by atl.id_aluno, atl.nome, cl.nome_fantasia 
+--order by gols_marcados desc
+--limit 3

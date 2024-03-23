@@ -1,4 +1,4 @@
-﻿ $(document).ready(() => {
+﻿$(document).ready(() => {
 
 
 });
@@ -35,7 +35,7 @@ function onClickMenuError(erro) {
 function onClickClubes(e) {
     activeInactiveButton(e);
 
-
+    util.ajax.get("../Administrador/ClubesAdmin", null, onClickMenuSucesso, onClickMenuError);
 }
 
 function onClickAtletas(e) {
@@ -70,6 +70,14 @@ function hideTabs() {
     $("#tabSolicitacoes").removeClass("active");
     $("#tabRendimentos").removeClass("active");
     $("#tabInativos").removeClass("active");
+
+
+    $(".tab-clubes-adm").addClass("d-none");
+    $(".clubes-adm").removeClass("active");
+
+    $(".message-success").addClass("d-none");
+    $(".message-warning-pnl").addClass("d-none");
+
 }
 
 function onClickTab(option) {
@@ -85,9 +93,61 @@ function onClickDetalhesPatrocinador(e) {
 
     util.ajax.post("../Administrador/DetalhesPatrocinadorPartialView", e,
         onClickMenuSucesso,
-        onClickMenuError);     
+        onClickMenuError);
 
 }
 
 
+function aceitarSolicitacaoClube(clube) {
+
+
+
+    var idClube = clube.Id;
+
+    util.ajax.post("../Administrador/AceitarClube", idClube,
+        onClickOperacaoSucesso,
+        onClickOperacaoErro);
+}
+
+function removerSolicitacaoClube(clube) {
+    var idClube = clube.Id;
+
+    util.ajax.post("../Administrador/RemoverClube", idClube,
+        onClickOperacaoSucesso,
+        onClickOperacaoErro);
+}
+
+
+function onClickOperacaoSucesso(e) {
+
+    if (e) {
+
+        $(".message-success").removeClass("d-none");
+
+        if (e.Id) {
+            $(`#clube_adm_${e.id}`).remove();
+        }
+
+
+    } else {
+        $(".message-warning-text").text("Não foi possível concluir a operação! Por favor, tente mais tarde.");
+
+        $(".message-warning").removeClass("d-none");
+    }
+
+}
+
+function onClickOperacaoErro(e) {
+
+    if (e) {
+
+        $(".message-warning-text").text(e.message);
+
+        $(".message-warning").removeClass("d-none");
+    } else {
+        $(".message-warning").removeClass("d-none");
+    }
+
+    
+}
 

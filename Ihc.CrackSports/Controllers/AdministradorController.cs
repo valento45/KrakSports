@@ -2,9 +2,13 @@
 using Ihc.CrackSports.Core.Authorization.Claims;
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
+using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Colaborador;
 using Ihc.CrackSports.Core.Objetos.Competicoes;
 using Ihc.CrackSports.Core.Services.Interfaces;
+using Ihc.CrackSports.Core.Utils.Paginacoes;
+using Ihc.CrackSports.Core.ViewModel.Admin.ClubeAdm;
+using Ihc.CrackSports.Core.ViewModel.Base;
 using Ihc.CrackSports.Core.ViewModel.Colaborador;
 using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
@@ -60,7 +64,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 }
 
                 PatrocinadoresAdminViewModel result = new PatrocinadoresAdminViewModel() { PageSize = 6 };
-                
+
                 result.InformarAtivos(await result.InicializarPaginacao(await _colaboradorService.GetAllAtivos()));
                 result.InformarSolicitacoes(await result.InicializarPaginacao(await _colaboradorService.GetAllPendentes()));
                 result.InformarInativos(await result.InicializarPaginacao(await _colaboradorService.GetAllInativos()));
@@ -98,5 +102,49 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> ClubesAdmin()
+        {
+            var todosClubes = await _clubService.ObterTodos();
+
+            if (todosClubes?.Any() ?? false)
+            {
+                var paginacao = new Paginacao<Club>(todosClubes.AsQueryable(), 1, 10);
+                var result = new PaginacaoBaseViewModel<Club>(paginacao);
+
+                await result.Refresh();
+
+
+                ClubePaginacaoAdminViewModel clubePaginacaoAdminViewModel = new ClubePaginacaoAdminViewModel(result);
+
+                return View(clubePaginacaoAdminViewModel);
+            }
+
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> AceitarClube([FromBody] long idClube)
+        {
+
+            var clube = await _clubService.ObterById(idClube);
+
+            if (clube != null)
+            {
+                clube.IsVerificado = true;
+
+                return Json(await _clubService.Salvar(clube));
+            }
+            return Json(false);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> RemoverClube([FromBody]  long idClube)
+        {
+            var result = await _clubService.Excluir(idClube);
+            return Json(result);
+        }
     }
 }

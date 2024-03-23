@@ -51,22 +51,24 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Atualizar(Club club)
         {
-            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
+            string query = "update sys.club_tb set nome_fantasia = @nome_fantasia, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
                 " data_fundacao = @data_fundacao, nome_presidente = @nome_presidente, sobre_o_clube = @sobre_o_clube," +
                 " is_verificado = @is_verificado where id_club = @id_club";
 
-            return await base.ExecuteAsync(query, new
-            {
-                id_club = club.Id,
-                nome = club.Nome,
-                cidade = club.Endereco.Cidade,
-                uf = club.Endereco.UF,
-                imagem_base64 = club.ImagemBase64,
-                data_fundacao = club.DataFundacao,
-                nome_presidente = club.NomePresidente,
-                sobre_o_clube = club.SobreOClube,
-                is_verificado = club.IsVerificado
-            });
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+
+            cmd.Parameters.AddWithValue(@"id_club", club.Id);
+            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
+            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
+            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
+            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
+            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
+            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
+            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
+            cmd.Parameters.AddWithValue(@"is_verificado", club?.IsVerificado ?? false);
+
+            return await base.ExecuteCommand(cmd);
         }
 
         public async Task<bool> Excluir(long idClub)

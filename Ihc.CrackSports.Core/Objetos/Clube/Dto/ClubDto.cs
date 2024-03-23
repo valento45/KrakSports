@@ -13,6 +13,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public string razao_social { get; set; }
         public long cpf_cnpj { get; set; }
         public bool is_pj { get; set; }
+        public bool is_verificado { get; set; }
         public string endereco { get; set; }
         public int numero { get; set; }
         public string cidade { get; set; }
@@ -47,6 +48,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
             club.IdUsuario = id_usuario;
             club.TipoUsuario = Enums.TipoUsuario.Club;
             club.SobreOClube = sobre_o_clube;
+            club.IsVerificado = is_verificado;
 
             return club;
         }
