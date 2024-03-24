@@ -102,7 +102,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         }
                     }
                     else
+                    {
                         model.Message = "Usuário informado já existe !";
+                        return View("Partial/Club/CadastroClubPartial", model);
+                    }
                 }
 
                 if (model.File != null)

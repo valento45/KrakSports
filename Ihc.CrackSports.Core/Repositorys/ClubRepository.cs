@@ -24,19 +24,20 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<bool> Incluir(Club club)
         {
             string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario, data_fundacao, nome_presidente, " +
-                "is_verificado)" +
-                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente, @is_verificado) returning id_club;;";
+                "is_verificado, sobre_o_clube)" +
+                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente, @is_verificado, @sobre_o_clube) returning id_club;;";
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
-            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
-            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
-            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
-            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
             cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
-            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
-            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? null);
-            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? null);
+            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome ?? "");
+            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade ?? "");
+            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF ?? "");
+            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
             cmd.Parameters.AddWithValue(@"is_verificado", club?.IsVerificado ?? false);
+            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? new DateTime());
+            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
+            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
+            
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
