@@ -81,12 +81,18 @@ function criarConta() {
 }
 
 function cadastroSuccess(e) {
-    var newDoc = document.open("text/html", "replace");
-    newDoc.write(e);
-    newDoc.close();
+
+    if (e.message) {
+        alert(e.message);
+    }
+    else {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(e);
+        newDoc.close();
+    }
 }
 function cadastroError(error) {
-    alert("Erro ao cadastrar !")
+    alert(error.responseText);
 
 }
 

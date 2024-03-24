@@ -6,6 +6,13 @@
     <h3 class="text-semi-bold-orange mt-5">Cadastro de Club</h3>
     <hr />
 
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="message-warning">
+            <h4 class="text-semi-bold-orange mt-3">@Model.Message</h4>
+        </div>
+    }
+
     <div class="mt-5 w-100 ">
         <form asp-action="Cadastro" asp-controller="Club" method="post" enctype="multipart/form-data"
               class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 3%;">

@@ -49,13 +49,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Cadastro(long idUsuario)
         {
+            ClubViewModel model = new ClubViewModel();
             if (idUsuario <= 0)
-                throw new ArgumentNullException("Usuário inválido !");
+                model.Message = "Usuário inválido !";
 
             await base.RefreshImageUser(User);
             await base.RefreshNotifications(User);
 
-            ClubViewModel model = new ClubViewModel();
+            
 
             model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
             model.DadosUsuario = await _usuarioService.GetById(idUsuario);
@@ -101,7 +102,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         }
                     }
                     else
-                        throw new Exception("Usuário informado já existe !");
+                        model.Message = "Usuário informado já existe !";
                 }
 
                 if (model.File != null)
@@ -124,7 +125,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 					
                 }
                 else
-                    throw new Exception($"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}");
+                    model.Message = $"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}";
 
             }
 
