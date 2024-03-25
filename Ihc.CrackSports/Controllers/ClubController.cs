@@ -190,7 +190,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
             ClubViewModel result = await _clubApplication.GetClubViewModelByIdClube(idClub);
             result.Atletas.CanUpdate = false;
 
-            result.DadosUsuario = await _usuarioService.GetById(result.DadosClub.IdUsuario);
+            if (result.DadosClub?.IdUsuario > 0)
+                result.DadosUsuario = await _usuarioService.GetById(result.DadosClub.IdUsuario);
 
             return View(result);
         }
