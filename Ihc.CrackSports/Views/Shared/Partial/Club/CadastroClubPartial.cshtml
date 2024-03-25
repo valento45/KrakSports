@@ -60,6 +60,18 @@
                         <label id="txtNomePresidenteLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomePresidente">Presidente do clube*</label>
                     </div>
 
+                    <!--Celular para contato-->
+                    <div class="form-outline  ag-field-content g-width-5">
+                        <input asp-for="DadosClub.Celular" type="text" id="txtCelularClube" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="(00)00000-0000" minLenght="6" autocomplete="off" required />
+                        <label id="txtCelularClubeLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelularClube">Celular*</label>
+                    </div>
+
+                    <div class="form-outline  ag-field-content g-width-10">
+                        <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                        <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
+                    </div>
+
+
                     <div class="d-inline-flex g-width-10">
                         <div class="form-outline ag-field-content g-width-10">
                             <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
@@ -72,19 +84,16 @@
                         </div>
                     </div>
 
+
+                    <div class=" form-outline ag-field-content g-width-10 mb-5">
+                        <textarea asp-for="DadosClub.SobreOClube" id="txtMensagem" class="mt-5 txt-max-input form-control ag-field-input ag-input-color-light-full" placeholder="Descreva sobre o Clube..." style="min-height:100px; padding: 20px;"></textarea>
+                        <label id="txtMensagemLabel" class="form-label text-semi-bold-light ag-field-label" for="txtMensagem">Sobre o Clube (Opcional)</label>
+                        <span id="lblLimiteCaractere" class="lblLimiteCaractere">Limite de caracteres 3000</span>
+                    </div>
+
                     <div id="pnlDadosUsuarioClub" class="mt-5">
                         <h5 class="text-semi-bold-orange ">Dados de login</h5>
-                        <div class="form-outline  ag-field-content g-width-10 mt-5">
-                            <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
-                            <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
-                        </div>
-
-                        <div class="form-outline ag-field-content g-width-10 mb-5 ">
-                            <textarea asp-for="DadosClub.SobreOClube" id="txtMensagem" class="txt-max-input form-control ag-field-input ag-input-color-light-full" placeholder="Descreva sobre o Clube..." style="min-height:100px; padding: 20px;"></textarea>
-                            <label id="txtMensagemLabel" class=" form-label text-semi-bold-light ag-field-label" for="txtMensagem">Sobre o Clube (Opcional)</label>
-                            <span id="lblLimiteCaractere" class="lblLimiteCaractere">Limite de caracteres 3000</span>
-                        </div>
-
+                
 
                         <div class="form-outline  ag-field-content g-width-10 ">
                             <input asp-for="DadosUsuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />

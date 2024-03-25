@@ -24,6 +24,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public string nome_presidente { get; set; }
         public long id_usuario { get; set; }
         public string sobre_o_clube { get; set; }
+        public string celular { get; set; }
 
         public Club ToClub()
         {
@@ -49,6 +50,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
             club.TipoUsuario = Enums.TipoUsuario.Club;
             club.SobreOClube = sobre_o_clube;
             club.IsVerificado = is_verificado;
+            club.Celular = celular;
 
             return club;
         }

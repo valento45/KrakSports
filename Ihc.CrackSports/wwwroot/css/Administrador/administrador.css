@@ -40,3 +40,26 @@
     background-color: #FA8C05 !important;
     border-radius: 20px !important;
 }
+
+
+.clube-detalhes-adm{
+
+}
+
+
+.clube-detalhes-adm ul{
+    list-style: none;
+}
+
+
+    .clube-detalhes-adm h5 {
+        color: #FA8C05;
+        font-weight: bold;
+    }
+
+
+
+    .clube-detalhes-adm span {
+        font-weight: bold;
+        color: black;
+    }

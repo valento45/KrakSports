@@ -162,5 +162,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             return Json(new Exception("Não foi possível excluir o Clube! Por favor, tente mais tarde."));
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DetalhesClubePartialView([FromBody] Club club)
+        {
+            return View("Partial/_DetalhesClubeAdminPartial", club);
+        }
     }
 }

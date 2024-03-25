@@ -45,7 +45,8 @@ CREATE DATABASE bd_sports
 		is_verificado boolean,
 		data_fundacao timestamp null,
 		nome_presidente varchar null,
-		sobre_o_clube varchar
+		sobre_o_clube varchar,
+		celular varchar
 	);		
 
 

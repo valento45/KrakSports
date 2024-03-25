@@ -32,5 +32,6 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
         public bool IsVerificado { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
 
+        public string Celular { get; set; }
     }
 }

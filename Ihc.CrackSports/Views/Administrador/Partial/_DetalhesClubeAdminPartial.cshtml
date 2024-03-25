@@ -1,0 +1,112 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Clube;
+@using Ihc.CrackSports.Core.Services.Interfaces;
+@inject IUsuarioService _usuarioService;
+@model Club
+
+@{
+    Layout = null;
+}
+
+
+<div class="mt-5 ">
+    <div class="ms-5 mx-5">
+        <h3 class="text-bold-orange ">Dados do Clube</h3>
+        <hr />
+    </div>
+
+    <form id="pnlDadosClubeAdmin" class="form-control mt-5 g-width-10 g-sm-width-10 col-sm-12 " method="post" asp-controller="Administrador" asp-action="AtualizarDadosPatrocinador">
+
+        <div class="mt-2">
+            <div class="mt-2">
+                <a onclick="onClickClubes(this)" class="btn btn-voltar mx-5" style="border-bottom: 5px solid; border-bottom-color: brown;">Voltar para tela de clubes</a>
+            </div>
+
+            <div class="mt-5 d-block d-sm-inline-flex g-width-10">
+                <div class="d-flex mb-5 form-load-image ms-5 mt-4" style="text-align: center;">
+                    <input type="file" id="file" hidden />
+                    <textarea id="output" class="d-none"></textarea>
+
+                    <div class="row g-width-5 " style="position: relative;">
+                        <div class="justify-content-center">
+
+                            @if (!string.IsNullOrEmpty(Model.ImagemBase64))
+                            {
+                                var imagem = String.Format("data:image/png;base64,{0}", Model.ImagemBase64);
+                                <img src="@imagem" class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px; border-radius: 70px;" />
+                            }
+                            else
+                            {
+                                <img class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px;" />
+                            }
+                            @* <label class="btn btn-block btn-confirm-radius mt-2" for="file" style="width: 200px;">Carregar imagem</label> *@
+                        </div>
+                    </div>
+                </div>
+
+                <!--Inicio FORMULARIO-->
+                <div class="form-small g-width-10 clube-detalhes-adm ms-5">
+                    <h3 class="text-semi-bold-orange mb-5 ">Dados gerais do Clube</h3>
+
+                    <ul>
+                        <li>
+                           
+
+                            <div class="d-sm-block mb-3">
+                                <h5>Nome do Clube: </h5>
+                                <span>@Model.Nome</span>
+                            </div>
+
+                            <div class="d-sm-block mb-3">
+                                <h5>Data de fundação: </h5>
+                                <span>@Model.DataFundacao.ToString("dd/MM/yyyy")</span>
+                            </div>
+
+                            <div class="d-sm-block mb-3">
+                                <h5>Presidente: </h5>
+                                <span>@Model.NomePresidente</span>
+                            </div>
+
+                            <div class="d-sm-block mb-3">
+                                <h5>Celular: </h5>
+                                <span>@Model.Celular</span>
+                            </div>
+
+
+                        </li>
+
+                        <li>
+                           
+                            @if (Model?.IdUsuario > 0)
+                            {
+                                var user = await _usuarioService.GetById(Model.IdUsuario);
+
+                                <div class="d-sm-block mb-3">
+                                    <h5>Login: </h5>
+                                    <span>@user.UserName</span>
+                                </div>
+
+                                <div class="d-sm-block mb-3">
+                                    <h5>Senha: </h5>
+                                    <span style="word-wrap: break-word;">@user.PasswordHash</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mt-5 mb-5 message-warning message-warning-pnl d-none">
+                                    <h4 class="message-warning-text text-semi-bold-orange mt-3">Ocorreu um erro na criação de usuário, solicite ao administrador.</h4>
+                                </div>
+                            }
+
+                        </li>
+                    </ul>
+
+                </div>
+
+
+
+
+            </div>
+            <!--FIM FORMULARIO-->
+        </div>
+    </form>
+</div>

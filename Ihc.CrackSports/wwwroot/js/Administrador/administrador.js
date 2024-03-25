@@ -19,6 +19,8 @@ function onClickPatrocinadores(e) {
 
 }
 
+
+
 function onClickMenuSucesso(result) {
     if (result) {
         $("#mainMenuContent").empty();
@@ -98,6 +100,14 @@ function onClickDetalhesPatrocinador(e) {
 
 }
 
+
+function onClickDetalhesClube(e) {
+
+    util.ajax.post("../Administrador/DetalhesClubePartialView", e,
+        onClickMenuSucesso,
+        onClickMenuError);
+
+}
 
 function aceitarSolicitacaoClube(clube) {
 

@@ -36,7 +36,7 @@ builder.Services.AddAuthentication("cookies")
 #endregion
 
 #region Config SignalR
-builder.Services.AddSignalR();
+//builder.Services.AddSignalR();
 
 #endregion
 

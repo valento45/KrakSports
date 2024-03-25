@@ -24,8 +24,9 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<bool> Incluir(Club club)
         {
             string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario, data_fundacao, nome_presidente, " +
-                "is_verificado, sobre_o_clube)" +
-                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente, @is_verificado, @sobre_o_clube) returning id_club;;";
+                "is_verificado, sobre_o_clube, celular)" +
+                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente, @is_verificado," +
+                " @sobre_o_clube, @celular) returning id_club;;";
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
             cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
@@ -37,6 +38,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? new DateTime());
             cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
             cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
+            cmd.Parameters.AddWithValue(@"celular", club?.Celular ?? "");
             
 
             var result = await base.ExecuteScalarAsync(cmd);
@@ -54,7 +56,7 @@ namespace Ihc.CrackSports.Core.Repositorys
         {
             string query = "update sys.club_tb set nome_fantasia = @nome_fantasia, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
                 " data_fundacao = @data_fundacao, nome_presidente = @nome_presidente, sobre_o_clube = @sobre_o_clube," +
-                " is_verificado = @is_verificado where id_club = @id_club";
+                " is_verificado = @is_verificado, celular = @celular where id_club = @id_club";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
@@ -68,6 +70,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
             cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
             cmd.Parameters.AddWithValue(@"is_verificado", club?.IsVerificado ?? false);
+            cmd.Parameters.AddWithValue(@"celular", club?.Celular ?? "");
 
             return await base.ExecuteCommand(cmd);
         }
