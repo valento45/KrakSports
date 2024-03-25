@@ -236,8 +236,3 @@ CREATE DATABASE bd_sports
 --limit 3
 
 
-select us.login, cl.claim from sys.usuario_tb as us
-inner join sys.usuario_claim_tb as cl on us.id_usuario = cl.id_usuario 
-where cl.claim like 'adm'
-
-select * from sys.usuario_claim_tb

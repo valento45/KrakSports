@@ -132,5 +132,10 @@ namespace Ihc.CrackSports.Core.Authorization.Context
                 }
             }
         }
+
+        public void Clear()
+        {
+            _httpContextAccessor.HttpContext.Session.Clear();
+        }
     }
 }

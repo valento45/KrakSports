@@ -93,7 +93,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> Logout()
         {
             if (HttpContext != null)
+            {
                 await HttpContext?.SignOutAsync("cookies");
+                _usuarioContext.Clear();
+            }
+
+
             return View("Login");
         }
 

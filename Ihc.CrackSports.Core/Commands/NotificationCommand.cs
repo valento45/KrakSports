@@ -251,13 +251,14 @@ namespace Ihc.CrackSports.Core.Commands
         {
 
             var administradores = await _usuarioCommand.GetAllAdministradores();
+
             var message = $"O Clube {club.Nome} se cadastrou com sucesso. Vá ao painel Administrativo para liberar o acesso.";
             foreach (var admin in administradores)
             {
                 var notification = await FillInstance(club, message);
                 notification.IdAdministrador = admin.Id;
                 notification.IdClube = club.Id;
-                notification.TipoUsuario = Objetos.Enums.TipoUsuario.Administrador;                
+                notification.TipoUsuario = TipoUsuario.Administrador;                
 
                 return await this.IncluirNotificacao(notification);
             }

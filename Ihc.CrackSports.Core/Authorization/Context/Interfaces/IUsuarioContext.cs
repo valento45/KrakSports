@@ -15,7 +15,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context.Interfaces
         public string GetImage();
         public bool HasImage();
 
-
+        public void Clear();
         public void SetNotificacoes(List<NotificationBase> notificacoes);
         public void SetNotificacoes(IEnumerable<NotificationBase> notificacoes);
         public Task<List<NotificationBase>> GetNotificacoes();
