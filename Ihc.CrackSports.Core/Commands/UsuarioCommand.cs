@@ -74,7 +74,7 @@ namespace Ihc.CrackSports.Core.Commands
             return new CadastroResponse { Message = await _usuarioRepository.GetMessage(), StatusCode = 500 };
         }
 
-        public async Task<Usuario> ObterPorUserName(string userName)
+        public async Task<Usuario?> ObterPorUserName(string userName)
         {
             return await _usuarioRepository.ObterPorUserName(userName);
                 
@@ -83,6 +83,16 @@ namespace Ihc.CrackSports.Core.Commands
         public async Task<Usuario> GetById(long id)
         {
             return await _usuarioRepository.GetById(id);
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllAdministradores()
+        {
+            return await _usuarioRepository.GetAllAdministradores();
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAll()
+        {
+            return await _usuarioRepository.GetAll();
         }
     }
 }

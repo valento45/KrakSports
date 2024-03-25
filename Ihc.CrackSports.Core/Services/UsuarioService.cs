@@ -58,5 +58,15 @@ namespace Ihc.CrackSports.Core.Services
         {
             return await _usuarioCommand.GetById(id);
         }
+
+        public async Task<IEnumerable<Usuario>> GetAllAdministradores()
+        {
+            return await _usuarioCommand.GetAllAdministradores();
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAll()
+        {
+            return await _usuarioCommand.GetAll();
+        }
     }
 }

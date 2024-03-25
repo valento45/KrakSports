@@ -23,6 +23,7 @@ namespace Ihc.CrackSports.Core.Commands
         public async Task<CadastroResponse> Salvar(Club club)
         {
             var response = new CadastroResponse();
+            response.Id = club.Id;
 
             if (club.Id > 0)
             {
@@ -34,8 +35,8 @@ namespace Ihc.CrackSports.Core.Commands
             {
                 if (await _clubRepository.Incluir(club))
                     response.StatusCode = 200;
-				response.IsInsert = true;
-			}
+                response.IsInsert = true;
+            }
 
             return response;
         }

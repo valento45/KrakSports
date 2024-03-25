@@ -38,6 +38,19 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
         {
             return User.Claims.Any(param => param.Value == Roles.ADMINISTRADOR);
         }
+        public static bool IsAluno(this ClaimsPrincipal User)
+        {
+            var result = User?.Claims?.Any(param => param.Value.Equals(Roles.ADMINISTRADOR)) ?? false;
+            if (result)
+                return false;
+
+
+            return User?.Claims.Any(param => param.Value == Roles.ALUNO) ?? false;
+        }
+        public static bool IsClub(this ClaimsPrincipal User)
+        {
+            return User?.Claims.Any(param => param.Value.Equals($"{Roles.CLUB}")) ?? false;
+        }
 
         public static int NovasNotificacoes()
         {
@@ -65,8 +78,8 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
         }
         public static string GetImageUser(IUsuarioContext httpContext)
         {
-            return httpContext?.GetImage() ?? "";           
-        
+            return httpContext?.GetImage() ?? "";
+
         }
 
         public static bool CanAccess(this ClaimsPrincipal User, string role)
@@ -102,14 +115,7 @@ namespace Ihc.CrackSports.Core.Authorization.Claims
             return User?.Claims.Any(param => param.Value.Equals($"{Roles.DELETE}-{role}")) ?? false;
 
         }
-        public static bool IsAluno(this ClaimsPrincipal User)
-        {
-            return User?.Claims.Any(param => param.Value.Equals($"{Roles.ALUNO}")) ?? false;
-        }
-        public static bool IsClub(this ClaimsPrincipal User)
-        {
-            return User?.Claims.Any(param => param.Value.Equals($"{Roles.CLUB}")) ?? false;
-        }
+
 
         public static bool CanRead(this ClaimsPrincipal User, string role)
         {

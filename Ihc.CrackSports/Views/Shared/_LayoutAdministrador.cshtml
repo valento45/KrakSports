@@ -12,7 +12,7 @@
     if (User.IsAuthenticated())
     {
         var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(request));
     }
 
     if (!_usuarioContext.HasImage())
@@ -69,7 +69,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white " onclick="onClickClubes(this)">
+                        <a id="btnClubesAdmin" href="#" class="nav-link text-white " onclick="onClickClubes(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                             <b> Clubes</b>
                         </a>

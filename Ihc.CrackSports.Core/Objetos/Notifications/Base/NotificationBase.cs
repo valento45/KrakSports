@@ -24,6 +24,7 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Base
         public TipoUsuario TipoUsuario { get; set; }
         public long IdAluno { get; set; }
         public long IdClube { get; set; }
+        public long IdAdministrador { get; set; }
         
 
 

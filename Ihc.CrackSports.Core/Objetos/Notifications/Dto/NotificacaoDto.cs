@@ -13,6 +13,7 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Dto
         public long id_notificacao { get; set; }
         public long id_aluno { get; set; }
         public long id_club { get; set; }
+        public long id_administrador { get; set; }
         public DateTime data_notificacao { get; set; }
         public bool is_visto { get; set; }
         public int tipo_usuario { get; set; }
@@ -34,7 +35,8 @@ namespace Ihc.CrackSports.Core.Objetos.Notifications.Dto
                 TipoUsuario = (TipoUsuario)tipo_usuario,
                 Notificacao = notificacao,
                 ImagemNotificacao = imagem_notificacao,
-                LinkRedirect = link_redirect
+                LinkRedirect = link_redirect,
+                IdAdministrador = id_administrador
             };
         }
     }

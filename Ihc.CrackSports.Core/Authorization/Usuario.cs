@@ -13,6 +13,8 @@ namespace Ihc.CrackSports.Core.Authorization
     {
         public IEnumerable<Claim> Claims { get; set; }
         public TipoUsuario TipoUsuario { get; set; }
+
+        public string ImagemBase64 { get; set; }
         public Usuario() : base()
         {
             Claims = new List<Claim>();

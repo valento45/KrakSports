@@ -26,14 +26,15 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> IncluirNotificacao(NotificationBase notification)
         {
-            string query = "insert into sys.notificacao_tb (id_aluno, id_club, data_notificacao, is_visto, " +
+            string query = "insert into sys.notificacao_tb (id_aluno, id_club, id_administrador, data_notificacao, is_visto, " +
                 "tipo_usuario, notificacao, imagem_notificacao, link_redirect)" +
-                " values (@id_aluno, @id_club, @data_notificacao, @is_visto, @tipo_usuario, @notificacao, @imagem_notificacao," +
+                " values (@id_aluno, @id_club, @id_administrador, @data_notificacao, @is_visto, @tipo_usuario, @notificacao, @imagem_notificacao," +
                 " @link_redirect) returning id_notificacao";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
             cmd.Parameters.AddWithValue(@"id_aluno", notification.IdAluno > 0 ? notification.IdAluno : DBNull.Value);
             cmd.Parameters.AddWithValue(@"id_club", notification.IdClube > 0 ? notification.IdClube : DBNull.Value);
+            cmd.Parameters.AddWithValue(@"id_administrador", notification.IdAdministrador > 0 ? notification.IdAdministrador : DBNull.Value);
             cmd.Parameters.AddWithValue(@"data_notificacao", notification.DataNotificacao);
             cmd.Parameters.AddWithValue(@"is_visto", notification.IsVisto);
             cmd.Parameters.AddWithValue(@"tipo_usuario", (int)notification.TipoUsuario);
@@ -48,7 +49,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> AtualizarNotificacao(NotificationBase notification)
         {
-            string query = "UPDATE sys.notificacao_tb set id_aluno = @id_aluno, id_club = @id_club, data_notificacao = @data_notificacao," +
+            string query = "UPDATE sys.notificacao_tb set id_aluno = @id_aluno, id_club = @id_club, id_administrador = @id_administrador, data_notificacao = @data_notificacao," +
                 " is_visto = @is_visto, tipo_usuario = @tipo_usuario, notificacao = @notificacao, imagem_notificacao = @imagem_notificacao," +
                 " link_redirect = @link_redirect where id_notificacao = @id_notificacao";
 
@@ -56,6 +57,7 @@ namespace Ihc.CrackSports.Core.Repositorys
             cmd.Parameters.AddWithValue(@"id_notificacao", notification.IdNotificacao);
             cmd.Parameters.AddWithValue(@"id_aluno", notification.IdAluno > 0 ? notification.IdAluno : DBNull.Value);
             cmd.Parameters.AddWithValue(@"id_club", notification.IdClube > 0 ? notification.IdClube : DBNull.Value);
+            cmd.Parameters.AddWithValue(@"id_administrador", notification.IdAdministrador > 0 ? notification.IdAdministrador : DBNull.Value);
             cmd.Parameters.AddWithValue(@"data_notificacao", notification.DataNotificacao);
             cmd.Parameters.AddWithValue(@"is_visto", notification.IsVisto);
             cmd.Parameters.AddWithValue(@"tipo_usuario", (int)notification.TipoUsuario);
@@ -87,7 +89,7 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             var result = await base.QueryAsync<NotificacaoDto>(query);
 
-            return result?.Select(x => x.ToNotificationBase()).ToList();
+            return result?.Select(x => x.ToNotificationBase())?.ToList() ?? new List<NotificationBase>();
         }
 
         public async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesClube(long idClube, int limite = 0)
@@ -99,7 +101,28 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             var result = await base.QueryAsync<NotificacaoDto>(query);
 
-            return result?.Select(x => x.ToNotificationBase()).ToList();
+            return result?.Select(x => x.ToNotificationBase())?.ToList() ?? new List<NotificationBase>();
+        }
+
+        public async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesAdministrador(long idUser, int limite = 0)
+        {
+            string query = $"select * from sys.notificacao_tb where id_administrador = {idUser}";
+
+            if (limite > 0)
+                query += $" LIMIT {limite}";
+
+            var result = await base.QueryAsync<NotificacaoDto>(query);
+
+            return result?.Select(x => x.ToNotificationBase())?.ToList() ?? new List<NotificationBase>();
+        }
+
+        public async Task<bool> ExcluirNotificacoesClube(long idClube)
+        {
+            string query = "delete from sys.notificacao_tb where tipo_usuario = 2 AND id_club = " + idClube;
+
+            var result = await base.ExecuteAsync(query);
+
+            return result;
         }
     }
 }

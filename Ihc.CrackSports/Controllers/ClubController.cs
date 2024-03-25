@@ -26,7 +26,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IAlunoService _alunoService;
         private readonly IClubApplication _clubApplication;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) 
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
             : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
         {
             _clubService = clubService;
@@ -56,7 +56,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             await base.RefreshImageUser(User);
             await base.RefreshNotifications(User);
 
-            
+
 
             model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
             model.DadosUsuario = await _usuarioService.GetById(idUsuario);
@@ -123,9 +123,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-					var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);
-					return View("Partial/MessagesInformation/_MessageInformation", message);
-					
+                    await _notificationCommand.NotificarAdministradoresClubeCadastrado(model.DadosClub);
+
+
+                    var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);
+                    return View("Partial/MessagesInformation/_MessageInformation", message);
                 }
                 else
                     model.Message = $"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}";

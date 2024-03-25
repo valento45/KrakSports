@@ -130,6 +130,7 @@ CREATE DATABASE bd_sports
 		id_notificacao serial not null primary key,
 		id_aluno bigint  null,
 		id_club bigint null,
+		id_administrador bigint null,
 		data_notificacao timestamp not null,
 		is_visto boolean null,
 		tipo_usuario integer not null,
@@ -233,3 +234,10 @@ CREATE DATABASE bd_sports
 --group by atl.id_aluno, atl.nome, cl.nome_fantasia 
 --order by gols_marcados desc
 --limit 3
+
+
+select us.login, cl.claim from sys.usuario_tb as us
+inner join sys.usuario_claim_tb as cl on us.id_usuario = cl.id_usuario 
+where cl.claim like 'adm'
+
+select * from sys.usuario_claim_tb

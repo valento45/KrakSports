@@ -10,6 +10,7 @@ namespace Ihc.CrackSports.Core.Objetos.Enums
     {
         Aluno = 0,
         Club = 1,
-        Administrador = 2
+        Administrador = 2,
+        Patrocinador = 3
     }
 }

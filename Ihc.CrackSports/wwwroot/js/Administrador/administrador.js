@@ -3,6 +3,7 @@
 
 });
 
+let messageSuccess = false;
 
 function onClickInicio(e) {
 
@@ -107,6 +108,8 @@ function aceitarSolicitacaoClube(clube) {
     util.ajax.post("../Administrador/AceitarClube", idClube,
         onClickOperacaoSucesso,
         onClickOperacaoErro);
+
+
 }
 
 function removerSolicitacaoClube(clube) {
@@ -121,12 +124,16 @@ function removerSolicitacaoClube(clube) {
 function onClickOperacaoSucesso(e) {
 
     if (e) {
+        if (e.stackTrace) {
+            $(".message-warning-text").text(e.message);
+            $(".message-warning").removeClass("d-none");
+            return;
+        }
+        else if (e.id) {        
+            $(`#clube_adm_${e.id}`).remove();
+        }       
 
         $(".message-success").removeClass("d-none");
-
-        if (e.Id) {
-            $(`#clube_adm_${e.id}`).remove();
-        }
 
 
     } else {
@@ -148,6 +155,6 @@ function onClickOperacaoErro(e) {
         $(".message-warning").removeClass("d-none");
     }
 
-    
+
 }
 

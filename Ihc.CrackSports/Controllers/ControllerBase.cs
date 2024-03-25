@@ -38,7 +38,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         #region Construtores        
 
-        public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
+        public ControllerBase(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager,
+            INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
         {
             _clubService = clubService;
             _alunoService = alunoService;
@@ -46,6 +47,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             _notificationCommand = notificationCommand;
             _usuarioContext = httpContextAccessor;
             _messageApplication = messageApplication;
+
         }
 
         #endregion
@@ -88,7 +90,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     {
                         var notificacaoRequest = new NotificationRequest(GetIdUsuarioLogado(), User.GetTipoUsuario());
 
-                        Roles.Notificacoes = await _notificationCommand.ObterTodasNotificacoes(notificacaoRequest);
+                        Roles.Notificacoes = await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(notificacaoRequest);
                     }
                 }
             }
@@ -165,12 +167,13 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             var aluno = await _alunoService.GetByIdUsuario(user.Id);
 
-            if (aluno != null && !string.IsNullOrEmpty(aluno.FotoAlunoBase64))
+            if (aluno != null)
             {
-                httpContextAccessor?.SetImage(aluno.FotoAlunoBase64);
+                if (!string.IsNullOrEmpty(aluno.FotoAlunoBase64))
+                    httpContextAccessor?.SetImage(aluno.FotoAlunoBase64);
 
 
-                var notificacoes = await _notificationCommand.ObterTodasNotificacoes(new NotificationRequest(user.Id, (int)TipoUsuario.Aluno));
+                var notificacoes = await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(new NotificationRequest(user.Id, (int)TipoUsuario.Aluno));
                 httpContextAccessor?.SetNotificacoes(notificacoes.ToList());
             }
         }
@@ -180,11 +183,25 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             var club = await _clubService.ObterByIdUsuario(user.Id);
 
-            if (club != null && !string.IsNullOrEmpty(club.ImagemBase64))
+            if (club != null)
             {
-                httpContextAccessor.SetImage(club.ImagemBase64);
+                if (!string.IsNullOrEmpty(club.ImagemBase64))
+                    httpContextAccessor.SetImage(club.ImagemBase64);
 
-                var notificacoes = await _notificationCommand.ObterTodasNotificacoes(new NotificationRequest(user.Id, (int)TipoUsuario.Club));
+                var notificacoes = await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(new NotificationRequest(user.Id, (int)TipoUsuario.Club));
+                httpContextAccessor?.SetNotificacoes(notificacoes.ToList());
+            }
+        }
+
+        protected async Task ConfiguraUserAdministrador(Usuario user, IUsuarioContext httpContextAccessor)
+        {
+
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(user.ImagemBase64))
+                    httpContextAccessor.SetImage(user.ImagemBase64);
+
+                var notificacoes = await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(new NotificationRequest(user.Id, (int)TipoUsuario.Administrador));
                 httpContextAccessor?.SetNotificacoes(notificacoes.ToList());
             }
         }
@@ -205,16 +222,19 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     identity.AddClaims(await _userManager.GetClaimsAsync(user));
 
 
-                    if (identity.HasClaim(x => x.Value == Roles.ALUNO))
+                    if (identity.HasClaim(x => x.Value == Roles.ADMINISTRADOR))
+                        await ConfiguraUserAdministrador(user, _usuarioContext);
+
+                    else if (identity.HasClaim(x => x.Value == Roles.ALUNO))
                         await ConfiguraUserAluno(user, _usuarioContext);
 
                     else if (identity.HasClaim(x => x.Value == Roles.CLUB))
                         await ConfiguraUserClub(user, _usuarioContext);
 
 
+
                     var userClaim = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync("cookies", userClaim);
-
 
                     return true;
                 }

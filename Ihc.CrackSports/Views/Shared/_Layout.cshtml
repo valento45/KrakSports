@@ -10,7 +10,7 @@
     if (User.IsAuthenticated())
     {
         var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(request));
     }
 
     if (!_usuarioContext.HasImage())

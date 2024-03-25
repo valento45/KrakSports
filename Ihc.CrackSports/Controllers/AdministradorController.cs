@@ -20,12 +20,14 @@ namespace Ihc.CrackSports.WebApp.Controllers
     public class AdministradorController : ControllerBase
     {
         private readonly IColaboradorService _colaboradorService;
+        private readonly IUsuarioService _usuarioService;
 
         public AdministradorController(IClubService clubService, IAlunoService alunoService, UserManager<Usuario> userManager, INotificationCommand notificationCommand,
-            IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService)
+            IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService, IUsuarioService usuarioService)
             : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
             _colaboradorService = colaboradorService;
+            _usuarioService = usuarioService;
         }
 
         public async Task<IActionResult> Index()
@@ -141,10 +143,24 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> RemoverClube([FromBody]  long idClube)
+        public async Task<JsonResult> RemoverClube([FromBody] long idClube)
         {
-            var result = await _clubService.Excluir(idClube);
-            return Json(result);
+            var clube = await _clubService.ObterById(idClube);
+
+            if (clube != null)
+            {
+                await _notificationCommand.ExcluirNotificacoesClube(idClube);
+                var result = await _clubService.Excluir(idClube);
+
+                if (result?.IsSuccessStatusCode ?? false)
+                {
+                    await _usuarioService.Excluir(clube.IdUsuario);                   
+
+                    return Json(result);
+                }
+            }
+
+            return Json(new Exception("Não foi possível excluir o Clube! Por favor, tente mais tarde."));
         }
     }
 }

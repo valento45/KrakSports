@@ -766,13 +766,27 @@ html {
     background-color: #FFC99D55;
 }
 
-
-.card-notification {
-    cursor: pointer;
-    border-radius: 50px;
-    padding: 15px;
-    width: 100% !important;
+.exclude-notification {
+    border-radius: 40px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    padding: 10px 0px 0px 15px;
+    margin-left: 21rem;
 }
+
+    .exclude-notification:hover{
+        background-color: brown;
+        color: white;
+    }
+
+    .card-notification {
+        cursor: pointer;
+        border-radius: 50px;
+        padding: 15px;
+        width: 100% !important;
+    }
 
     .card-notification:hover {
         background-color: beige !important;
