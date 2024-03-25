@@ -1,5 +1,5 @@
 ﻿$(document).ready(() => {
-
+    $("#campoArquivoClub").on('change', onChangeImageClub);
 });
 
 
@@ -7,7 +7,23 @@ function onClickCarregarImagemClub() {
     document.getElementById('campoArquivoClub').click();
 }
 
-function onChangeImageClub(e) {
+function onChangeImageClub({ target }) {
+
+    const file = target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+
+    var input = $("#imgClube");
+
+    reader.onload = () => {
+
+        $(input).attr('src', reader.result);
+        //output.value = reader.result;
+        //preview.src = reader.result;
+    };
+
     saveImageClub();
 }
 

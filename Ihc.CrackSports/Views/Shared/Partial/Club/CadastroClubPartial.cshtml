@@ -26,15 +26,15 @@
                 <div class="text-center mt-4">
                     @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
                     {
-                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img id="imgClube" class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     else
                     {
                         var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
-                        <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img id="imgClube" class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     <br>
-                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImageClub()" />
+                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" />
                     <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagemClub()"
                             style="background-color: ghostwhite; color: brown;">
                         Carregar

@@ -16,7 +16,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube
     {
         public string ImagemBase64 { get; set; }
         public long IdUsuario { get; set; }
-        public DateTime DataFundacao { get; set; }
+        public DateTime DataFundacao { get; set; } = DateTime.Now;
         public string NomePresidente { get; set; }
         public string SobreOClube { get; set; }
 
