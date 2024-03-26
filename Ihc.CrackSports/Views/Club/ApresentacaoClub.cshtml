@@ -55,7 +55,7 @@
             </div>
         </div>
 
-        <div id="pnlOpcoes" class="g-width-8 ms-3">
+        <div id="pnlOpcoes" class="g-width-8 ms-3 pnl-table-red">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <a id="tabSobre" class="nav-link active" href="#" onclick="onClickTabSobre()">Sobre o clube</a>
@@ -85,7 +85,7 @@
                 <div class="d-flex">
                     <p>Email: </p>
                     <span style="max-width: 600px; ">
-                        @Model.DadosUsuario.Email
+                        @Model.DadosUsuario?.Email
                     </span>
                 </div>
 
