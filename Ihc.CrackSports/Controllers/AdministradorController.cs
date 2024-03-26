@@ -167,6 +167,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> DetalhesClubePartialView([FromBody] Club club)
         {
+
+
+
             return View("Partial/_DetalhesClubeAdminPartial", club);
         }
     }

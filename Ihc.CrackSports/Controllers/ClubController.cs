@@ -78,7 +78,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
             model.DadosClub = await _clubService.ObterById(idClub) ?? throw new ArgumentNullException("Clube inválido !");
-            model.DadosUsuario = new Usuario();
+
+            if (model.DadosClub?.IdUsuario > 0 )
+                model.DadosUsuario = await _usuarioService?.GetById(model.DadosClub.IdUsuario);
+            else
+                model.DadosUsuario = new Usuario();
 
             return View("Partial/Club/CadastroClubPartial", model);
         }
@@ -121,7 +125,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                             model.DadosClub.IdUsuario = user.Id;
                         }
                     }
-                    else
+                    else if (model.isInsert())
                     {
                         model.Message = "Usuário informado já existe !";
                         return View("Partial/Club/CadastroClubPartial", model);

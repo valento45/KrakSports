@@ -55,10 +55,13 @@ namespace Ihc.CrackSports.Core.Commands
         {
             var result = new List<NotificationBase>();
 
+            try
+            {
+                await IncluirSolicitacoesAlunosClube(result, await this.ObterTodasSolicitacoesDoClube(idClube));
+                await IncluirNotificacoesGenerics(result, await _notificacaoRepository.ObterTodasNotificacoesClube(idClube));
 
-            await IncluirSolicitacoesAlunosClube(result, await this.ObterTodasSolicitacoesDoClube(idClube));
-            await IncluirNotificacoesGenerics(result, await _notificacaoRepository.ObterTodasNotificacoesClube(idClube));
-
+            }
+            catch { }
 
             return result.OrderByDescending(x => x.DataNotificacao);
         }
@@ -153,13 +156,15 @@ namespace Ihc.CrackSports.Core.Commands
                 {
                     var club = await _clubCommand.ObterByIdUsuario(request.IdUsuario);
 
-                    if (club?.Id <= 0)
+                    if (club?.Id > 0)
+                    {
+                        var result = await ObterTodasNotificacoesClube(club.Id);
+                        _usuarioContext.SetNotificacoes(result.ToList());
+
+                        return result;
+                    }
+                    else
                         return new List<NotificationBase>();
-
-                    var result = await ObterTodasNotificacoesClube(club.Id);
-                    _usuarioContext.SetNotificacoes(result.ToList());
-
-                    return result;
                 }
             }
             else if (request.TipoUsuario == TipoUsuario.Aluno)
@@ -258,7 +263,7 @@ namespace Ihc.CrackSports.Core.Commands
                 var notification = await FillInstance(club, message);
                 notification.IdAdministrador = admin.Id;
                 notification.IdClube = club.Id;
-                notification.TipoUsuario = TipoUsuario.Administrador;                
+                notification.TipoUsuario = TipoUsuario.Administrador;
 
                 return await this.IncluirNotificacao(notification);
             }
