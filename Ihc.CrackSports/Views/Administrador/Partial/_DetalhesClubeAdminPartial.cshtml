@@ -15,11 +15,13 @@
     </div>
 
     <form id="pnlDadosClubeAdmin" class=" mt-5 g-width-10 g-sm-width-10 col-sm-12 " style=""
-    method="post" asp-controller="Administrador" asp-action="AtualizarDadosPatrocinador">
+          method="post" asp-controller="Administrador" asp-action="AtualizarDadosPatrocinador">
+
+          <input id="inputIdClubeDetalhes" type="hidden" asp-for="@Model.Id"/>
 
         <div class="mt-2">
             <div class="mt-2">
-                <a onclick="onClickClubes(this)" class="btn btn-voltar mx-5" style="border-bottom: 5px solid; border-bottom-color: brown;">Voltar para tela de clubes</a>
+                <a onclick="onClickClubes('btnClubesAdmin')" class="btn btn-voltar mx-5" style="border-bottom: 5px solid; border-bottom-color: brown;">Voltar para tela de clubes</a>
             </div>
 
             <div class="mt-5 d-block d-sm-inline-flex g-width-10">
@@ -45,7 +47,7 @@
                 </div>
 
                 <!--Inicio FORMULARIO-->
-                <div class="form-small g-width-10 clube-detalhes-adm ms-5">                   
+                <div class="form-small g-width-10 clube-detalhes-adm ms-5">
 
 
                     <div class="col-sm-12 col-lg-12 d-sm-inline-flex">
@@ -80,12 +82,11 @@
 
 
                         <div class="col-sm-6 col-lg-6">
+                            <h3 class="text-semi-bold-orange mb-5">Dados de usuário</h3>
                             @if (Model?.IdUsuario > 0)
                             {
                                 var user = await _usuarioService.GetById(Model.IdUsuario);
-
-
-                                <h3 class="text-semi-bold-orange mb-5">Dados de usuário</h3>
+                                
                                 <div class="d-sm-block mb-3">
                                     <h5>Email: </h5>
                                     <span>@user.Email</span>
@@ -102,13 +103,14 @@
                                 </div>
                             }
                             else
-                            {
-                                <h3 class="text-orange-light-normal">Dados de usuário</h3>
-
-
+                            {                            
                                 <div class="mt-5 mb-5 message-warning message-warning-pnl">
-                                    <h5 class="message-warning-text text-semi-bold-orange mt-3">Dados de usuário não foram salvas corretamente, solicite diretamente ao desenvolvedor.</h5>
+                                    <h5 class="message-warning-text text-semi-bold-orange mt-3">Dados de usuário não foram salvas corretamente, atualize as informações.</h5>
                                 </div>
+
+                                <button  type="button" class="btn  btn-block btn-confirm-radius mb-4" onclick="criarUsuarioRedirectAdmin()">
+                                    Atualizar informações
+                                </button>
                             }
 
                         </div>

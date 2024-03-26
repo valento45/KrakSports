@@ -64,6 +64,26 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return View("Partial/Club/CadastroClubPartial", model);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> CadastroClubSemUsuario(long idClub)
+        {
+            ClubViewModel model = new ClubViewModel();
+            if (idClub <= 0)
+                model.Message = "Clube inválido !";
+
+            await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);
+
+
+
+            model.DadosClub = await _clubService.ObterById(idClub) ?? throw new ArgumentNullException("Clube inválido !");
+            model.DadosUsuario = new Usuario();
+
+            return View("Partial/Club/CadastroClubPartial", model);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> Cadastro(ClubViewModel model)
         {
@@ -77,7 +97,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                             return View("Unauthorized");
                 }
 
-                else
+                if (model.DadosUsuario?.Id <= 0)
                 {
                     var user = await _userManager.FindByNameAsync(model.DadosUsuario.UserName);
 
@@ -123,7 +143,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    await _notificationCommand.NotificarAdministradoresClubeCadastrado(model.DadosClub);
+                    if (model.isInsert())
+                        await _notificationCommand.NotificarAdministradoresClubeCadastrado(model.DadosClub);
 
 
                     var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);

@@ -56,7 +56,7 @@ namespace Ihc.CrackSports.Core.Repositorys
         {
             string query = "update sys.club_tb set nome_fantasia = @nome_fantasia, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
                 " data_fundacao = @data_fundacao, nome_presidente = @nome_presidente, sobre_o_clube = @sobre_o_clube," +
-                " is_verificado = @is_verificado, celular = @celular where id_club = @id_club";
+                " is_verificado = @is_verificado, celular = @celular, id_usuario = @id_usuario where id_club = @id_club";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 

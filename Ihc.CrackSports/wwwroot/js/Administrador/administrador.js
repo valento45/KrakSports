@@ -36,9 +36,14 @@ function onClickMenuError(erro) {
 }
 
 function onClickClubes(e) {
-    activeInactiveButton(e);
+
+
+    var obj = $(`#${e}`);
+    activeInactiveButton(obj);
 
     util.ajax.get("../Administrador/ClubesAdmin", null, onClickMenuSucesso, onClickMenuError);
+
+    
 }
 
 function onClickAtletas(e) {
@@ -168,3 +173,15 @@ function onClickOperacaoErro(e) {
 
 }
 
+
+
+function criarUsuarioRedirectAdmin(e) {
+    var idClub = $("#inputIdClubeDetalhes").val();
+
+    if (idClub) {
+        var redirectUrl = `../Club/CadastroClubSemUsuario?idClub=${idClub}`;
+        window.location.href = redirectUrl;
+    } else {
+        alert("Não foi possível obter o código do Clube! Contate o desenvolvedor.");
+    }
+}
