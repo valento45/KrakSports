@@ -11,8 +11,7 @@
 
         @foreach (var obj in Model)
         {
-            <div id="clube_adm_@obj.Id" class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;"
-                 onclick="onClickDetalhesClube(@JsonConvert.SerializeObject(obj))">
+            <div id="clube_adm_@obj.Id" class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
                 <div class="d-inline-flex">
 
                     @if (!string.IsNullOrEmpty(obj.ImagemBase64))
@@ -25,7 +24,7 @@
                         <img class="mt-1" src="~/imgs/sem_imagem.png" alt="money" style="width: 50px; height: 60px;" />
                     }
                     <div class="row ms-1">
-                        <div>
+                        <div onclick="onClickDetalhesClube(@JsonConvert.SerializeObject(obj))">
                             <h5 style="font-weight: bold; max-height: 48px;">@obj.Nome</h5>
                             <p class="m-0" style="max-height: 48px;">@obj.NomePresidente
                                 <span class="btn-voltar" style="color:brown; font-weight: bold;"

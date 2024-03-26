@@ -76,17 +76,24 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
+            Exception exception;
 
-
-            if (ModelState.IsValid)
+            if (model.PreenchidoCorretamente())
             {
                 if (await base.Autenticar(model))
                     return RedirectToAction("Index");
                 else
-                    return View();
+                {
+                    exception = new Exception("Usuário ou senha inválido(s), por favor verifique.");
+                    return Json(exception);
+                }
 
             }
-            return View();
+            else
+            {
+                exception = new Exception("Preencha os campos corretamente");
+                return Json(exception);
+            }
         }
 
         [HttpGet]

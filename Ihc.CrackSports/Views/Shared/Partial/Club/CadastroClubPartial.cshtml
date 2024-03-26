@@ -97,8 +97,15 @@
                 
 
                         <div class="form-outline  ag-field-content g-width-10 ">
+                            @if(Model?.DadosClub?.IdUsuario > 0)
+                            {
+                                <input asp-for="DadosUsuario.UserName" disabled type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                                <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+
+                            }else{
                             <input asp-for="DadosUsuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+                            }
                         </div>
 
                         <div class="form-outline  ag-field-content g-width-7">

@@ -14,6 +14,7 @@ using Ihc.CrackSports.WebApp.Application.Interfaces;
 using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ihc.CrackSports.WebApp.Controllers
 {
@@ -30,6 +31,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
             _usuarioService = usuarioService;
         }
 
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
@@ -42,6 +45,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         }
 
+        [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Home()
         {
             if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
@@ -54,6 +59,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Patrocinadores()
         {
@@ -79,31 +85,40 @@ namespace Ihc.CrackSports.WebApp.Controllers
         }
 
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DetalhesPatrocinadorPartialView([FromBody] Patrocinador patrocinador)
         {
             return View("Partial/_DetalhesPatrocinadorAdminPartial", patrocinador);
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AtualizarDadosPatrocinador(Patrocinador patrocinador)
         {
-            var result = await _colaboradorService.AtualizarPatrocinador(patrocinador);
 
-            if (result)
+            if ((User?.IsAuthenticated() ?? false) && User.IsAdm())
             {
-                var msgResponse = new MessageInformationViewModel(TipoMessage.Alteracao);
-                msgResponse.InformarMessage("O cadastro do patrocinador foi atualizado com sucesso.");
 
-                return View("Partial/MessagesInformation/_MessageInformation", msgResponse);
+
+
+                var result = await _colaboradorService.AtualizarPatrocinador(patrocinador);
+
+                if (result)
+                {
+                    var msgResponse = new MessageInformationViewModel(TipoMessage.Alteracao);
+                    msgResponse.InformarMessage("O cadastro do patrocinador foi atualizado com sucesso.");
+
+                    return View("Partial/MessagesInformation/_MessageInformation", msgResponse);
+                }
+                else
+                    throw new Exception("Erro ao salvar dados do patrocinador");
             }
             else
-                throw new Exception("Erro ao salvar dados do patrocinador");
+                return View("Unauthorized");
         }
 
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> ClubesAdmin()
         {
@@ -125,7 +140,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<JsonResult> AceitarClube([FromBody] long idClube)
         {
@@ -141,7 +156,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return Json(false);
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<JsonResult> RemoverClube([FromBody] long idClube)
         {
@@ -154,7 +169,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (result?.IsSuccessStatusCode ?? false)
                 {
-                    await _usuarioService.Excluir(clube.IdUsuario);                   
+                    await _usuarioService.Excluir(clube.IdUsuario);
 
                     return Json(result);
                 }
@@ -163,7 +178,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             return Json(new Exception("Não foi possível excluir o Clube! Por favor, tente mais tarde."));
         }
 
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DetalhesClubePartialView([FromBody] Club club)
         {

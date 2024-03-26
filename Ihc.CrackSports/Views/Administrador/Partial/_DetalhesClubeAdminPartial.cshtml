@@ -35,13 +35,12 @@
                             @if (!string.IsNullOrEmpty(Model.ImagemBase64))
                             {
                                 var imagem = String.Format("data:image/png;base64,{0}", Model.ImagemBase64);
-                                <img src="@imagem" class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px; border-radius: 70px;" />
+                                <img src="@imagem" class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:150px; border-radius: 100px;" />
                             }
                             else
                             {
                                 <img class="mt-1" alt="Prévia da imagem" id="preview" style="height:150px; width:200px;" />
                             }
-                            @* <label class="btn btn-block btn-confirm-radius mt-2" for="file" style="width: 200px;">Carregar imagem</label> *@
                         </div>
                     </div>
                 </div>
@@ -53,6 +52,11 @@
                     <div class="col-sm-12 col-lg-12 d-sm-inline-flex">
                         <div class="col-sm-6 col-lg-6">
                             <h3 class="text-semi-bold-orange mb-5">Dados gerais</h3>
+                            <div class="d-sm-block mb-3">
+                                <h5>Código: </h5>
+                                <span>@Model.Id</span>
+                            </div>
+
                             <div class="d-sm-block mb-3">
                                 <h5>Nome do Clube: </h5>
                                 <span>@Model.Nome</span>
@@ -86,7 +90,12 @@
                             @if (Model?.IdUsuario > 0)
                             {
                                 var user = await _usuarioService.GetById(Model.IdUsuario);
-                                
+
+                                <div class="d-sm-block mb-3">
+                                    <h5>ID Usuário: </h5>
+                                    <span>@user.Id</span>
+                                </div>
+
                                 <div class="d-sm-block mb-3">
                                     <h5>Email: </h5>
                                     <span>@user.Email</span>

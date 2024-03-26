@@ -46,52 +46,63 @@
         </nav>
     </header>
 
-    <div class=" container-fluid" style="padding-left: 10%; max-width: 900px; position: fixed;">
-        <h3 class="mt-5 text-semi-bold-light top-form-login">Acesse sua conta</h3>
-        <form class="col-9 col-sm-4 col-lg-4 mt-5 ">
-            <!-- Email input -->
-            <div class="form-outline mb-4 ag-field-content ">
-                
-                <input type="text" id="txtUserNameLogin" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
-                <label class="form-label ag-field-label" for="form2Example1">Usuário ou e-mail</label>
-            </div>
 
-            <!-- Password input -->
-            <div class="form-outline mb-4 ag-field-content ">
-                
-                <input type="password" id="txtSenhaLogin" class="form-control ag-field-input ag-input-color-orange-full" required />
-                <label class="form-label ag-field-label" for="form2Example2">Senha</label>
-            </div>
+    <div class="d-sm-block">
+        <div class=" container-fluid" style="padding-left: 10%; max-width: 900px; position: fixed;">
+            <h3 class="mt-5 text-semi-bold-light top-form-login">Acesse sua conta</h3>
+            <form class="col-9 col-sm-4 col-lg-4 mt-5 ">
+                <!-- Email input -->
+                <div class="form-outline mb-4 ag-field-content ">
 
-            <!-- 2 column grid layout for inline styling -->
-            <div class="row mb-4">
-                <div class="col d-flex ">
-                    <!-- Checkbox -->
-                    <div class="form-check">
-                        <label class="form-check-label" for="chkLembrarMe"> Lembrar-me </label>
-                        <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="chkLembrarMe" checked />
+                    <input type="text" id="txtUserNameLogin" class="form-control ag-field-input ag-input-color-orange-full" autocomplete="off" required />
+                    <label class="form-label ag-field-label" for="form2Example1">Usuário ou e-mail</label>
+                </div>
 
+                <!-- Password input -->
+                <div class="form-outline mb-4 ag-field-content ">
+
+                    <input type="password" id="txtSenhaLogin" class="form-control ag-field-input ag-input-color-orange-full" required />
+                    <label class="form-label ag-field-label" for="form2Example2">Senha</label>
+                </div>
+
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                    <div class="col d-flex ">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <label class="form-check-label" for="chkLembrarMe"> Lembrar-me </label>
+                            <input class="form-check-input form-checkbox-input" type="checkbox" value="" id="chkLembrarMe" checked />
+
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <!-- Simple link -->
+                        <a href="#!" class="link-redirect-orange link-redirection-simple">Esqueceu sua senha ?</a>
                     </div>
                 </div>
 
-                <div class="col">
-                    <!-- Simple link -->
-                    <a href="#!" class="link-redirect-orange link-redirection-simple">Esqueceu sua senha ?</a>
+                <!-- Submit button -->
+                <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-4">Acessar</button>
+
+
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>Não tem uma conta ? <a href="#!" id="lblCriarConta" class="link-redirect-orange link-redirection-simple" onclick="redirectCadastro()">Crie agora</a></p>
                 </div>
-            </div>
-
-            <!-- Submit button -->
-            <button id="btnLogar" type="button" class="btn  btn-block btn-confirm-radius mb-4">Acessar</button>
+            </form>
+        </div>
 
 
-            <!-- Register buttons -->
-            <div class="text-center">
-                <p>Não tem uma conta ? <a href="#!" id="lblCriarConta" class="link-redirect-orange link-redirection-simple" onclick="redirectCadastro()">Crie agora</a></p>
-            </div>
-        </form>
+        <div id="pnlMsgTryLogin" class="message-warning d-none" style="height: unset !important;">
+            <h4 id="msgTryLoginUser" class="text-semi-bold-orange mt-3">Usuário ou senha inválidos</h4>
+        </div>
     </div>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/UtilAjax.js" asp-append-version="true"></script>
-    <script src="~/js/Usuario/login.js" asp-append-version="true"></script>   
+    <script src="~/js/Usuario/login.js" asp-append-version="true"></script>
 </body>
 </html>

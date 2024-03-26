@@ -17,6 +17,9 @@ namespace Ihc.CrackSports.WebApp.Models.Clube
 
         public ClubViewModel()
         {
+            
+            DadosClub = new Club();
+            DadosUsuario = new Usuario();
             Atletas = new PaginacaoAlunoViewModel();
         }
 

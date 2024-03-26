@@ -25,6 +25,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IAlunoService _alunoService;
         private readonly IClubApplication _clubApplication;
+        private bool _isInsert;
 
         public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
             : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
@@ -50,6 +51,19 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> Cadastro(long idUsuario)
         {
             ClubViewModel model = new ClubViewModel();
+            model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
+
+
+            if (User.IsAuthenticated())
+            {
+                if (model.DadosClub.IdUsuario!= long.Parse(User.GetIdentificador()))
+                    if (!base.CanRead(User, Roles.CLUB))
+                        return View("Unauthorized");
+            }
+            else
+                return View("Unauthorized");
+
+
             if (idUsuario <= 0)
                 model.Message = "Usuário inválido !";
 
@@ -58,7 +72,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
 
-            model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
+            
             model.DadosUsuario = await _usuarioService.GetById(idUsuario);
 
             return View("Partial/Club/CadastroClubPartial", model);
@@ -68,16 +82,19 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> CadastroClubSemUsuario(long idClub)
         {
+
             ClubViewModel model = new ClubViewModel();
             if (idClub <= 0)
                 model.Message = "Clube inválido !";
 
+            if(!User.IsAuthenticated() || !User.IsAdm())
+                return View("Unauthorized");
+
+            model.DadosClub = await _clubService.ObterById(idClub) ?? throw new ArgumentNullException("Clube inválido !");        
+
+
             await base.RefreshImageUser(User);
-            await base.RefreshNotifications(User);
-
-
-
-            model.DadosClub = await _clubService.ObterById(idClub) ?? throw new ArgumentNullException("Clube inválido !");
+            await base.RefreshNotifications(User);           
 
             if (model.DadosClub?.IdUsuario > 0 )
                 model.DadosUsuario = await _usuarioService?.GetById(model.DadosClub.IdUsuario);
@@ -93,8 +110,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             if (model != null)
             {
-
-                if (!model.isInsert())
+                _isInsert = model.isInsert();
+                if (!_isInsert)
                 {
                     if (model.DadosUsuario.Id != long.Parse(User.GetIdentificador()))
                         if (!base.CanUpdate(User, Roles.CLUB))
@@ -125,7 +142,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                             model.DadosClub.IdUsuario = user.Id;
                         }
                     }
-                    else if (model.isInsert())
+                    else if (_isInsert)
                     {
                         model.Message = "Usuário informado já existe !";
                         return View("Partial/Club/CadastroClubPartial", model);
@@ -147,7 +164,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-                    if (model.isInsert())
+                    if (_isInsert)
                         await _notificationCommand.NotificarAdministradoresClubeCadastrado(model.DadosClub);
 
 

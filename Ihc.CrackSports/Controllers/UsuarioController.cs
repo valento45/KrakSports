@@ -127,6 +127,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         {
                             viewModel.TipoUsuario = TipoUsuario.Club;
                             viewModel.ClubViewModel = await _clubApplication.GetClubViewModel(idUsuario);
+
+                            if (!viewModel.IsValidoUsuario())
+                                viewModel.DadosUsuario = await _usuarioService.GetById(idUsuario);
+
                         }
                         return View(viewModel);
                     }
