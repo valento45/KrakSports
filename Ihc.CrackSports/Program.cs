@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddInjecaoDependencias(builder.Configuration);
 
+
 #region Config Identity Core
 
 //Configurando session
