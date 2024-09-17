@@ -60,8 +60,14 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Excluir(long id)
         {
-            string query = $"delete from sys.usuario_tb where id_usuario = {id}";
-            return await base.ExecuteAsync(query);
+
+            string query = $"delete from sys.usuario_claim_tb where id_usuario = {id}";
+
+            if (await base.ExecuteAsync(query))
+                return await base.ExecuteAsync($"delete from sys.usuario_tb where id_usuario = {id}");
+
+            return false;
+
         }
 
         public async Task<string> GetMessage()
@@ -91,6 +97,25 @@ namespace Ihc.CrackSports.Core.Repositorys
                 return obj.FirstOrDefault();
             else
                 return null;
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAll()
+        {
+            string query = $"select id_usuario as Id, login as UserName, senha as PasswordHash, email as Email " +
+                $"from sys.usuario_tb";
+
+            return await base.QueryAsync<Usuario>(query) ?? new List<Usuario>();
+
+
+        }
+
+        public async Task<IEnumerable<Usuario>> GetAllAdministradores()
+        {
+            string query = $"select us.id_usuario as Id, us.login as UserName, us.senha as PasswordHash, us.email as Email, us.login, cl.claim from sys.usuario_tb as us " +
+                $" inner join sys.usuario_claim_tb as cl on us.id_usuario = cl.id_usuario " +
+                $" where cl.claim like 'adm' ";
+
+            return await base.QueryAsync<Usuario>(query) ?? new List<Usuario>();
         }
     }
 }

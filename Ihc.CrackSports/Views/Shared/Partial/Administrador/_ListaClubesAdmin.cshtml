@@ -1,0 +1,57 @@
+﻿@using Ihc.CrackSports.Core.Objetos.Clube;
+@using Newtonsoft.Json;
+@model IEnumerable<Club>
+
+
+@if (Model?.Any() ?? false)
+{
+
+    <div class=" mt-5 mb-5 cards-index row-i d-block d-md-inline-flex d-sm-inline-flex" style="display:flex !important; max-width: 90%; flex-wrap: wrap;justify-content: unset; ">
+
+
+        @foreach (var obj in Model)
+        {
+            <div id="clube_adm_@obj.Id" class="card-i " style="height: 180px; max-width: 300px; display: grid; position: relative; min-width: 266.688px;">
+                <div class="d-inline-flex">
+
+                    @if (!string.IsNullOrEmpty(obj.ImagemBase64))
+                    {
+                        var imagem = String.Format("data:image/png;base64,{0}", obj.ImagemBase64);
+                        <img class="mt-1" src="@imagem" alt="money" style="width: 50px; height: 60px;" />
+                    }
+                    else
+                    {
+                        <img class="mt-1" src="~/imgs/sem_imagem.png" alt="money" style="width: 50px; height: 60px;" />
+                    }
+                    <div class="row ms-1">
+                        <div onclick="onClickDetalhesClube(@JsonConvert.SerializeObject(obj))">
+                            <h5 style="font-weight: bold; max-height: 48px;">@obj.Nome</h5>
+                            <p class="m-0" style="max-height: 48px;">@obj.NomePresidente
+                                <span class="btn-voltar" style="color:brown; font-weight: bold;"
+                                      onclick="onClickDetalhesClube(@JsonConvert.SerializeObject(obj))">...ver mais</span>
+                                </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-inline-flex" style="position: absolute; margin-top: 137px; margin-left: 30px;">
+
+                    @if (!obj.IsVerificado)
+                    {
+                        <a class="btn btn-confirm-radius" onclick="aceitarSolicitacaoClube(@JsonConvert.SerializeObject(obj))">Aceitar</a>
+                        <a class="btn  btn-voltar" onclick="removerSolicitacaoClube(@JsonConvert.SerializeObject(obj))">Excluir</a>
+                    }
+                    else
+                    {
+                        <a class="btn  btn-voltar" onclick="removerSolicitacaoClube(@JsonConvert.SerializeObject(obj))">Excluir</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="message-warning">
+        <h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum registro para o filtro informado !</h4>
+    </div>
+}

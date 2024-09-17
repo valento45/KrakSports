@@ -7,10 +7,12 @@
 @inject INotificationCommand _notificationCommand
 @{
 
+    ViewData["Title"] = "Administrativo KrakSports";
+
     if (User.IsAuthenticated())
     {
         var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(request));
     }
 
     if (!_usuarioContext.HasImage())
@@ -23,7 +25,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Ihc.CrackSports</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/image-css.css" asp-append-version="true" />
@@ -67,13 +69,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white d-none" onclick="onClickClubes(this)">
+                        <a id="btnClubesAdmin" href="#" class="nav-link text-white " onclick="onClickClubes('btnClubesAdmin')">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
                             <b> Clubes</b>
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="nav-link text-white d-none" onclick="onClickAtletas(this)">
+                        <a href="#" class="nav-link text-white" onclick="onClickAtletas(this)">
                             <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
                             <b>Atletas</b>
                         </a>
@@ -100,6 +102,8 @@
                 </div>
             </div>
         </header>
+
+
         <main id="mainMenuContent" role="main" class="pb-3 ms-1" style="width: 100%; background-color: ghostwhite;">
             @RenderBody()
 
@@ -107,10 +111,40 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted ">
-        <div class="container mb-5 mt-5 ">
-            &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+    <footer class="border-top footer text-muted">
+        <div class=" col-sm-12 d-sm-inline-flex ">
+
+            <div class="container col-sm-8 mb-4 p-3 mt-2 ps-5">
+                &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+                <br />
+                Desenvolvido por - <a href="https://www.instagram.com/ihc_digitalsolutions/" target="_blank"
+                                      class="link-redirect-orange ps-5" style="color: #FA8C05 ;">Igor H. M. Carvalho</a>
+            </div>
+
+
+
+            <div class="container d-inline-flex col-sm-4 d-sm-flex footer-contatos justify-content-center  p-3 mb-1 mt-2">
+                <div class="col-sm-1 ">
+                    <a href="https://wa.me/5511998541298" target="_blank">
+                        <img src="~/imgs/wpp-icon-png.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.instagram.com/kraksports/" target="_blank">
+                        <img src="~/imgs/insta-icon-.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.linkedin.com/in/igor-carvalho-022b9818b/" target="_blank">
+                        <img src="~/imgs/linkedin-icon.png" />
+                    </a>
+                </div>
+
+            </div>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

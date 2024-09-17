@@ -10,12 +10,12 @@
     if (User.IsAuthenticated())
     {
         var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-        _usuarioContext.SetNotificacoes(await _notificationCommand.ObterTodasNotificacoes(request));
+        _usuarioContext.SetNotificacoes(await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(request));
     }
 
-    if (!_usuarioContext.HasImage() )
+    if (!_usuarioContext.HasImage())
     {
-       await _usuarioContext.RefreshImage();
+        await _usuarioContext.RefreshImage();
     }
 }
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Ihc.CrackSports</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/image-css.css" asp-append-version="true" />
@@ -49,7 +49,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between link-redirect-orange">
                     <ul class="navbar-nav flex-grow-1 ">
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Início</a>
+                            <a class="nav-link " asp-area="" asp-controller="Colaborador" asp-action="SejaUmColaborador">#Jogue junto</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Club" asp-action="VerClubs">Clubes</a>
@@ -71,9 +71,6 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="SobreNos">Sobre nós</a>
                         </li>
-                     @*    <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Administrador" asp-action="Index">Administrador</a>
-                        </li> *@
                     </ul>
                     <ul class="navbar-nav">
 
@@ -154,30 +151,52 @@ position: absolute; margin-left: 20px;" class="text-center">
             @await Html.PartialAsync("Partial/Notificacoes/_NotificacoesPartial", await _usuarioContext.GetNotificacoes())
         </div>
     }
-    <main role="main" class="pb-3">
+    <main role="main" class="">
         @RenderBody()
 
         <div class="c-loader-overlay">
             <div class="c-loader" id="c-loader">
                 <img src="~/img/loader.svg" width="250" alt="" />
-                @*<svg x="0px" y="0px" viewBox="0 0 242 234" style="enable-background:new 0 0 242 234;" xml:space="preserve">
-                <polygon fill="#fff" points="174,171.3 129.1,63.7 129,63.7 112,63.7 111.9,63.7 67,171.3 84.1,171.3 120.5,84.2 156.9,171.3 ">
-                <animate id="animation1"
-                attributeName="opacity"
-                from="0" to="1" dur="1s"
-                begin="0s;animation2.end" />
 
-                </polygon>
-                </svg>*@
             </div>
         </div>
     </main>
 
 
     <footer class="border-top footer text-muted">
-        <div class="container mb-5 mt-5">
-            &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+        <div class=" col-sm-12 d-sm-inline-flex ">
+
+            <div class="container col-sm-8 mb-4 p-3 mt-2 ps-5">
+                &copy; 2023 &nbsp; Krak Sports - Associação de clubs de futebol - <a asp-area="" asp-controller="Home" asp-action="Privacy" class="link-redirect-orange" style="color: #FA8C05 ;">Políticas de privacidade</a>
+                <br />
+                Desenvolvido por - <a href="https://www.instagram.com/ihc_digitalsolutions/" target="_blank"
+                                      class="link-redirect-orange ps-5" style="color: #FA8C05 ;">Igor H. M. Carvalho</a>
+            </div>
+
+
+
+            <div class="container d-inline-flex col-sm-4 d-sm-flex footer-contatos justify-content-center  p-3 mb-1 mt-2">
+                <div class="col-sm-1 ">
+                    <a href="https://wa.me/5511998541298" target="_blank">
+                        <img src="~/imgs/wpp-icon-png.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.instagram.com/kraksports/" target="_blank">
+                        <img src="~/imgs/insta-icon-.png" />
+                    </a>
+                </div>
+
+                <div class="col-sm-1 ">
+                    <a href="https://www.linkedin.com/in/igor-carvalho-022b9818b/" target="_blank">
+                        <img src="~/imgs/linkedin-icon.png" />
+                    </a>
+                </div>
+
+            </div>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -194,7 +213,7 @@ position: absolute; margin-left: 20px;" class="text-center">
         let _userLogado = +@User?.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)?.Value;
     </script>
 
-    <!--Scripts Notifications-->     
+    <!--Scripts Notifications-->
     <script src="~/js/notifications/notification.js"></script>
 
     <!--Agenda Evento-->

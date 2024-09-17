@@ -83,27 +83,47 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             return PartialView("Partial/AgendaEventos/_EventosPartial", result);
         }
+
+
         [HttpGet]
         public async Task<IActionResult> ConfimarExclusaoEvento(long idEvento)
         {
-            var evento = await _eventoApplication.GetEventoById(idEvento);
 
-            return View("Partial/AgendaEventos/Partial/_ModalConfirmExclusaoEvento", evento);
+            if ((User?.IsAuthenticated() ?? false) && (User.IsAdm()))
+            {
+                var evento = await _eventoApplication.GetEventoById(idEvento);
+                return View("Partial/AgendaEventos/Partial/_ModalConfirmExclusaoEvento", evento);
+            }
+            else
+                return View("Unauthorized");
+
+
         }
 
         [HttpPost]
         public async Task<IActionResult> ConfimarExclusaoEvento([FromBody] Evento evento)
         {
-            var result = await _eventoApplication.ExcluirEvento(evento.IdEvento);
 
-            return Ok(result);
+            if ((User?.IsAuthenticated() ?? false) && (User.IsAdm()))
+            {
+
+                var result = await _eventoApplication.ExcluirEvento(evento.IdEvento);
+
+                return Ok(result);
+            }
+            else
+                return View("Unauthorized");
         }
 
         [HttpGet]
         public async Task<IActionResult> LancarResultado(long idEvento)
         {
+
+            if(!User.IsAuthenticated() || !User.IsAdm())
+                return View("Unauthorized");
+
             var evento = await _eventoApplication.GetEventoById(idEvento);
-            
+
             evento.Clube1.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube1.Id));
             evento.Clube2.InformarAtletas(await _alunoService.ObterAlunosPorClub(evento.Clube2.Id));
 
@@ -118,16 +138,25 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpPost]
         public async Task<JsonResult> AdicionarGol([FromBody] AtletaEventoGolsViewModel model)
         {
+
+            if (!User.IsAuthenticated() || !User.IsAdm())
+                return Json(new Exception("Você não possui permissão para prosseguir."));
+
+
+
             var obj = new AtletaEvento(model.Aluno, model.Evento.IdEvento, model.Gols);
-
             var result = await _eventoApplication.LancarPlacarEvento(obj);
-
             return Json(result);
         }
 
         [HttpPost]
         public async Task<JsonResult> RemoverGol([FromBody] long idLancamento)
         {
+
+            if (!User.IsAuthenticated() || !User.IsAdm())
+                return Json(new Exception("Você não possui permissão para prosseguir."));
+
+
             var result = await _eventoApplication.ExcluirLancamentoPlacar(idLancamento);
 
             return Json(result);
@@ -148,7 +177,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             var idUser = base.GetIdUsuarioLogado();
             var clube = await _clubService.ObterByIdUsuario(idUser);
 
-            if (clube == null)
+            if (clube == null || !User.IsAuthenticated() || User.GetIdentificador() != clube.IdUsuario.ToString())
                 return Unauthorized();
 
 

@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Authorization\Claims\Base\" />
+    <Folder Include="Requests\CepService\" />
   </ItemGroup>
 
 </Project>

@@ -27,6 +27,7 @@ function onKeyUpTextMensagem(e) {
         $lblLimite.text('Limite de caracteres ' + limiteCaractereMensagem);
     }
 }
+
 function onChangePessoaJuridica(e) {
     var isChecked = $("#rdbPessoaJuridica").is(":checked");
 

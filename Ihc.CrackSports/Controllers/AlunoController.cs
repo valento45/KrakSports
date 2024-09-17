@@ -47,6 +47,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
 		[HttpPost]
 		public async Task<IActionResult> DadosAluno(DadosAlunoViewModel request)
 		{
+
+
+
 			request.Clubs = await _clubService.ObterByNome(string.Empty, 0);
 
 			if (request.File != null)

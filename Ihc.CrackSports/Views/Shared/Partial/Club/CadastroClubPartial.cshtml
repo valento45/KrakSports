@@ -6,28 +6,38 @@
     <h3 class="text-semi-bold-orange mt-5">Cadastro de Club</h3>
     <hr />
 
-    <div class="mt-5 w-100 ">
+    @if (!string.IsNullOrEmpty(Model.Message))
+    {
+        <div class="message-warning">
+            <h4 class="text-semi-bold-orange mt-3">@Model.Message</h4>
+        </div>
+    }
+
+    <div class="mt-5 mb-5 w-100 ">
         <form asp-action="Cadastro" asp-controller="Club" method="post" enctype="multipart/form-data"
               class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 3%;">
 
             <input asp-for="DadosClub.Id" class="d-none" />
+            <input asp-for="DadosClub.IdUsuario" class="d-none" />
             <input asp-for="DadosUsuario.Id" class="d-none" />
             <input asp-for="DadosClub.ImagemBase64" class="d-none" />
+            <input asp-for="DadosClub.IsVerificado" class="d-none" />
+            
 
             <div class="d-block d-md-inline-flex g-width-10">
                 <!--Panel Imagem Club-->
                 <div class="text-center mt-4">
                     @if (Model?.DadosClub == null || string.IsNullOrEmpty(Model.DadosClub.ImagemBase64))
                     {
-                        <img class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img id="imgClube" class="mt-4" src="~/imgs/sem_imagem.png" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     else
                     {
                         var imagem = String.Format("data:image/png;base64,{0}", Model.DadosClub.ImagemBase64);
-                        <img class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
+                        <img id="imgClube" class="mt-4" src="@imagem" style="width: 150px;  height: 150px;  border-radius: 90px; box-shadow: 0px 0px 1px 1px #00000055;" alt="imagem club" />
                     }
                     <br>
-                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" onchange="onChangeImageClub()" />
+                    <input id="campoArquivoClub" class="btn  btn-block btn-confirm-radius mt-2 d-none" asp-for="File" size="100" />
                     <button id="btnCarregarImagemClub" class="btn  btn-block btn-confirm-radius mt-3" type="button" onclick="onClickCarregarImagemClub()"
                             style="background-color: ghostwhite; color: brown;">
                         Carregar
@@ -53,6 +63,18 @@
                         <label id="txtNomePresidenteLabel" class="form-label text-semi-bold-light ag-field-label" for="txtNomePresidente">Presidente do clube*</label>
                     </div>
 
+                    <!--Celular para contato-->
+                    <div class="form-outline  ag-field-content g-width-5">
+                        <input asp-for="DadosClub.Celular" type="text" id="txtCelularClube" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" data-mask="(00)00000-0000" minLenght="6" autocomplete="off" required />
+                        <label id="txtCelularClubeLabel" class="form-label text-semi-bold-light ag-field-label" for="txtCelularClube">Celular*</label>
+                    </div>
+
+                    <div class="form-outline  ag-field-content g-width-10">
+                        <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off"/>
+                        <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email</label>
+                    </div>
+
+
                     <div class="d-inline-flex g-width-10">
                         <div class="form-outline ag-field-content g-width-10">
                             <input asp-for="DadosClub.Endereco.Cidade" type="text" id="txtNomeAluno" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
@@ -65,20 +87,34 @@
                         </div>
                     </div>
 
+
+                    <div class=" form-outline ag-field-content g-width-10 mb-5">
+                        <textarea asp-for="DadosClub.SobreOClube" id="txtMensagem" class="mt-5 txt-max-input form-control ag-field-input ag-input-color-light-full" placeholder="Descreva sobre o Clube..." style="min-height:100px; padding: 20px;"></textarea>
+                        <label id="txtMensagemLabel" class="form-label text-semi-bold-light ag-field-label" for="txtMensagem">Sobre o Clube (Opcional)</label>
+                        <span id="lblLimiteCaractere" class="lblLimiteCaractere">Limite de caracteres 3000</span>
+                    </div>
+
                     <div id="pnlDadosUsuarioClub" class="mt-5">
                         <h5 class="text-semi-bold-orange ">Dados de login</h5>
-                        <div class="form-outline  ag-field-content g-width-10 mt-5">
-                            <input asp-for="DadosUsuario.Email" type="text" id="txtEmail" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
-                            <label id="txtEmailLabel" class="form-label text-semi-bold-light ag-field-label" for="txtEmail">Email*</label>
-                        </div>
+                
+
                         <div class="form-outline  ag-field-content g-width-10 ">
+                            @if(Model?.DadosClub?.IdUsuario > 0)
+                            {
+                                <input asp-for="DadosUsuario.UserName" disabled type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
+                                <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+
+                            }else{
                             <input asp-for="DadosUsuario.UserName" type="text" id="txtUsuario" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtUsuarioLabel" class="form-label text-semi-bold-light ag-field-label" for="txtUsuario">Usuário*</label>
+                            }
                         </div>
+
                         <div class="form-outline  ag-field-content g-width-7">
                             <input asp-for="DadosUsuario.PasswordHash" type="password" id="txtSenhaClub" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtSenhaClubLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha*</label>
                         </div>
+
                         <div class="form-outline mb-1 ag-field-content g-width-10 ">
                             <input type="password" id="txtConfirmaSenha" class="form-control ag-field-input ag-input-color-light-full g-width-7 valida-campos-obrigatorios" autocomplete="off" required />
                             <label id="txtConfirmaSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmaSenha">Confirmar Senha*</label>
@@ -107,4 +143,5 @@
 
 @section Scripts{
     <script src="~/js/Club/club.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/Componentes/maxInputsComponent.js" type="text/javascript" asp-append-version="true"></script>
 }

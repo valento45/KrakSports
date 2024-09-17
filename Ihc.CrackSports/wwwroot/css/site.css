@@ -80,6 +80,10 @@ html {
         transition: all 0.5s;
     }
 
+.navbar {
+    padding-bottom: 0.4rem !important;
+    padding-top: 0.4rem !important;
+}
 
 .img-icon-nav {
     width: 35px;
@@ -679,13 +683,19 @@ html {
         transform: translateY(-5px);
     }
 
-
+.card-item-admin {
+    min-width: 80vw;
+}
 
 .club-apresentacao {
 }
 
     .club-apresentacao b {
         color: #FA8C05;
+    }
+
+    .club-apresentacao .pnl-table-red {
+        
     }
 
     .club-apresentacao li a {
@@ -762,6 +772,20 @@ html {
     background-color: #FFC99D55;
 }
 
+.exclude-notification {
+    border-radius: 40px;
+    font-weight: bold;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    padding: 10px 0px 0px 15px;
+    margin-left: 21rem;
+}
+
+    .exclude-notification:hover {
+        background-color: brown;
+        color: white;
+    }
 
 .card-notification {
     cursor: pointer;
@@ -859,19 +883,18 @@ html {
 }
 
 .carousel-facelift {
-    min-height: 100vh;
+    min-height: 110vh;
     background-color: #282828;
     padding-bottom: 5rem !important;
-    
 }
-    .carousel-facelift p{
+
+    .carousel-facelift p {
         color: white;
-        
     }
 
-.center-caroulsel{
+.center-caroulsel {
     padding-top: 12% !important;
-    text-align:center;
+    text-align: center;
 }
 
 .center-text {
@@ -883,7 +906,7 @@ html {
     text-align: center;
 }
 
-    .carousel-item span{
+    .carousel-item span {
         font-size: 16px;
         font-weight: bold;
     }
@@ -892,8 +915,55 @@ html {
         transition: all 0.5s;
     }
 
-    .carousel-item:hover{
+    .carousel-item:hover {
         transform: scale(1.03);
         transition: all 0.5s;
         cursor: pointer;
     }
+
+
+
+.message-warning {
+    height: 100px;
+    width: 100%;
+    background-color: beige;
+    text-align-last: center;
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+
+
+#pnlContatosClube {
+    padding: 1.5rem;
+}
+
+    #pnlContatosClube p {
+        color: #FA8C05;
+        font-weight: bold;
+    }
+
+    #pnlContatosClube span {
+        color: brown;
+        margin-left: 0.50rem;
+    }
+
+
+.footer-contatos {
+}
+
+    .footer-contatos img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .footer-contatos a {
+        cursor: pointer;
+    }
+
+        .footer-contatos a:hover {
+            transform: scale(1.1) !important;
+            transition: all 0.5s;
+        }

@@ -25,13 +25,13 @@ namespace Ihc.CrackSports.Core.Authorization.Context
         private readonly IClubService _clubService;
 
 
-        public UsuarioContext(IHttpContextAccessor httpContextAccessor, IAlunoService alunoService, IClubService clubService )
+        public UsuarioContext(IHttpContextAccessor httpContextAccessor, IAlunoService alunoService, IClubService clubService)
         {
             _httpContextAccessor = httpContextAccessor;
             _alunoService = alunoService;
             _clubService = clubService;
-      
-            
+
+
         }
 
 
@@ -69,7 +69,7 @@ namespace Ihc.CrackSports.Core.Authorization.Context
             _httpContextAccessor.HttpContext.Session.Set("notificacoes", bytes);
         }
 
-        public async Task< List<NotificationBase>> GetNotificacoes()
+        public async Task<List<NotificationBase>> GetNotificacoes()
         {
             byte[] bytes;
             _httpContextAccessor.HttpContext.Session.TryGetValue("notificacoes", out bytes);
@@ -119,16 +119,23 @@ namespace Ihc.CrackSports.Core.Authorization.Context
                         {
                             var aluno = await _alunoService.GetByIdUsuario(long.Parse(_httpContextAccessor.HttpContext.User.GetIdentificador()));
 
-                            this.SetImage(aluno.FotoAlunoBase64);
+                            if (aluno != null)
+                                this.SetImage(aluno.FotoAlunoBase64);
                         }
                         else if (_httpContextAccessor.HttpContext.User.IsClub())
                         {
                             var club = await _clubService.ObterByIdUsuario(long.Parse(_httpContextAccessor.HttpContext.User.GetIdentificador()));
-                            this.SetImage(club.ImagemBase64);
+                            if (club != null)
+                                this.SetImage(club.ImagemBase64);
                         }
                     }
                 }
             }
+        }
+
+        public void Clear()
+        {
+            _httpContextAccessor.HttpContext.Session.Clear();
         }
     }
 }

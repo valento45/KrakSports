@@ -27,5 +27,13 @@ namespace Ihc.CrackSports.Core.Objetos.Base.Pessoas
 
         [JsonProperty("complemento")]
         public string Complemento { get; set; }
+
+
+
+        public override string ToString()
+        {
+            string result = $"{Logradouro}, {Numero} - {Cidade}/{UF}";
+            return result;
+        }
     }
 }

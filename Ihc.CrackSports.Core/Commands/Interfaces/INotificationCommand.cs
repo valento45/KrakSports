@@ -20,7 +20,7 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
 
 
         Task<IEnumerable<SolicitacaoAlunoClub>> ObterTodasSolicitacoesDoClube(long idClube);
-        Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes( NotificationRequest request);
+        Task<IEnumerable<NotificationBase>> ObtemESetaNoContextoTodasNotificacoes( NotificationRequest request);
         Task<SolicitacaoAlunoClub> ObterSolicitacaoAlunoById( long idSolicitacao);
 
 
@@ -34,5 +34,10 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         Task<bool> IncluirNotificacao(NotificationBase notification);
 
         Task<bool> AtualizarNotificacao(NotificationBase notification);
+
+        Task<bool> NotificarAdministradoresClubeCadastrado(Club club);
+
+
+        Task<bool> ExcluirNotificacoesClube(long idClube);
     }
 }

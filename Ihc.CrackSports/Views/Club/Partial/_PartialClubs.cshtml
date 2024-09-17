@@ -5,24 +5,34 @@
 
 <div class="mt-5 ">
     <div class="row-card" style=" display: flex;  flex-wrap: wrap;">
-       @{
+        @{
             var clubs = ViewBag.paginacao.ClubsPaginacao.ObterListaPaginada();
-       }
-        @foreach (var club in clubs)
+        }
+        @if (clubs.Count > 0)
         {
-            <div class="card-club " onclick="redirectApresentacaoClube(@club.Id)">
-                @if (!string.IsNullOrEmpty(club.ImagemBase64))
-                {
-                    var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);
-                    <img class="image-club" src="@imagem" alt="club" />
-                }
-                else
-                {
-                    <img class="image-club" src="~/imgs/sem_imagem.png" alt="club" />
-                }
-                <h5 style="word-wrap: break-word;"><b>@club.Nome</b></h5>
+            @foreach (var club in clubs)
+            {
+                <div class="card-club " onclick="redirectApresentacaoClube(@club.Id)">
+                    @if (!string.IsNullOrEmpty(club.ImagemBase64))
+                    {
+                        var imagem = String.Format("data:image/png;base64,{0}", club.ImagemBase64);
+                        <img class="image-club" src="@imagem" alt="club" />
+                    }
+                    else
+                    {
+                        <img class="image-club" src="~/imgs/sem_imagem.png" alt="club" />
+                    }
+                    <h6 style="word-wrap: break-word; text-align: center;"><b>@club.Nome</b></h6>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="message-warning">
+                <h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum registro !</h4>
             </div>
         }
+
 
     </div>
 

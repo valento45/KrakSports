@@ -12,8 +12,14 @@ namespace Ihc.CrackSports.WebApp.Models.Clube
         public bool isInsert() => DadosClub?.Id <= 0;
         public PaginacaoAlunoViewModel Atletas { get; set; }
 
+
+        public string Message { get; set; }
+
         public ClubViewModel()
         {
+            
+            DadosClub = new Club();
+            DadosUsuario = new Usuario();
             Atletas = new PaginacaoAlunoViewModel();
         }
 

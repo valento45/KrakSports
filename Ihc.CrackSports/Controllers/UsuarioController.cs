@@ -26,9 +26,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IClubApplication _clubApplication;
 
         public UsuarioController(IUsuarioService usuarioService, UserManager<Usuario> user, IAlunoService alunoService, IClubService clubService,
-            IAlunoApplication alunoApplication, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication ) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
+            IAlunoApplication alunoApplication, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
         {
-            _usuarioService = usuarioService;           
+            _usuarioService = usuarioService;
             _alunoApplication = alunoApplication;
             _clubApplication = clubApplication;
         }
@@ -86,11 +86,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     return View("SuccessCadastro", user);
                 }
                 else
-                    throw new Exception("Ocorreu um erro ao cadastrar o usuário");
+                    return Json(new Exception("Não foi possível cadastrar o usuário! Por favor, tente novamente mais tarde."));
 
             }
             else
-                throw new Exception("O usuário informado já existe");
+                return Json(new Exception("O usuário informado já existe"));
 
         }
 
@@ -127,6 +127,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
                         {
                             viewModel.TipoUsuario = TipoUsuario.Club;
                             viewModel.ClubViewModel = await _clubApplication.GetClubViewModel(idUsuario);
+
+                            if (!viewModel.IsValidoUsuario())
+                                viewModel.DadosUsuario = await _usuarioService.GetById(idUsuario);
+
                         }
                         return View(viewModel);
                     }

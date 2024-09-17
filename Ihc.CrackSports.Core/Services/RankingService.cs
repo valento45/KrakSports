@@ -61,7 +61,10 @@ namespace Ihc.CrackSports.Core.Services
 
 
 
-            return await _rankingCommand.GetRankingExibicao(periodo ?? new Periodo());
+            var rankingViewModel = await _rankingCommand.GetRankingExibicao(periodo ?? new Periodo());
+            rankingViewModel.Periodo = ((int)periodoRanking).ToString();
+
+            return rankingViewModel;
         }
     }
 }

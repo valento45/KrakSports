@@ -17,5 +17,8 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
         Task<Usuario?> ObterPorUserName(string userName);
         Task<Usuario> GetById(long id);
         Task<string> GetMessage();
+
+        Task<IEnumerable<Usuario>> GetAll();
+        Task<IEnumerable<Usuario>> GetAllAdministradores();
     }
 }

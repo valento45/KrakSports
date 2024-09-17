@@ -2,12 +2,14 @@
 @model Usuario
 
 <div class="container justify-content-center mt-5 mb-5" style="background-color: darkseagreen; box-shadow: 1px 1px 50px 1px #00000066;">
-	<div class="d-inline-flex" style="height: 100px; width:100%; background-color: darkseagreen; align-items: center;">
-		<img class="ms-2" src="~/imgs/confirm-icon1.png" style="width: 70px; height: 70px;" />
-		<p class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">Seja bem vindo, @Model.UserName</p>
-		<br />
-		<h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">
-			Seu usuário foi cadastrado com sucesso ! 
-		</h4>
-	</div>
+    <div class="d-sm-inline-flex d-inline-flex pb-5 mt-3" style="width:100%; background-color: darkseagreen; align-items: center;">
+        <div class="col-sm-3 col-lg-3">
+            <img class="" src="~/imgs/confirm-icon1.png" style="width: 50px; height: 50px;" />
+        </div>
+        <div class="col-sm-8 col-lg-8">
+            <h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; ">
+                @Model.UserName, seu usuário foi cadastrado com sucesso !
+            </h4>
+        </div>
+    </div>
 </div>

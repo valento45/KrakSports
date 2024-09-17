@@ -26,8 +26,8 @@ function continuarCadastro() {
 }
 
 function validarCampos() {
-    return $("#txtNomeResponsavel").val() != '' && $("#txtDocumentoResponsavel").val() != '' &&
-        $("#txtCelularResponsavel").val() != '' && $("#txtNomeAluno").val() != '' && $("#txtDocumentoAluno").val() != '' && $("#txtDataNascAluno").val() != '' &&
+    return $("#txtNomeResponsavel").val() != '' && 
+        $("#txtCelularResponsavel").val() != '' && $("#txtNomeAluno").val() != ''  && $("#txtDataNascAluno").val() != '' &&
         $("#txtCep").val() != '' && $("#txtUsuario").val() != '' && $("#txtSenha").val() != '';
 }
 
@@ -75,18 +75,24 @@ function criarConta() {
         util.ajax.post("../Usuario/Cadastro", model, cadastroSuccess, cadastroError);
 
     } else {
-        alert("Verifique o preenchimento dos campos obrigatórios !");
+        alert(" Verifique o preenchimento dos campos obrigatórios !");
     }
 
 }
 
 function cadastroSuccess(e) {
-    var newDoc = document.open("text/html", "replace");
-    newDoc.write(e);
-    newDoc.close();
+
+    if (e.message) {
+        alert(e.message);
+    }
+    else {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(e);
+        newDoc.close();
+    }
 }
 function cadastroError(error) {
-    alert("Erro ao cadastrar !")
+    alert(error.responseText);
 
 }
 

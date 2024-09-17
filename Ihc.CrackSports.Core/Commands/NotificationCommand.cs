@@ -2,6 +2,7 @@
 using Ihc.CrackSports.Core.Authorization.Context.Interfaces;
 using Ihc.CrackSports.Core.Commands.Interfaces;
 using Ihc.CrackSports.Core.Objetos.Clube;
+using Ihc.CrackSports.Core.Objetos.Enums;
 using Ihc.CrackSports.Core.Objetos.Notifications.Base;
 using Ihc.CrackSports.Core.Repositorys.Interfaces;
 using Ihc.CrackSports.Core.Requests.Clube.Solicitacoes;
@@ -22,15 +23,17 @@ namespace Ihc.CrackSports.Core.Commands
         private readonly IAlunoCommand _alunoCommand;
         private readonly IUsuarioContext _usuarioContext;
         private readonly INotificacaoRepository _notificacaoRepository;
+        private readonly IUsuarioCommand _usuarioCommand;
 
         public NotificationCommand(ISolicitacaoClubAlunoRepository solicitacaoClubAlunoRepository, IClubCommand clubCommand, IAlunoCommand alunoCommand,
-            IUsuarioContext usuarioContext, INotificacaoRepository notificacaoRepository)
+            IUsuarioContext usuarioContext, INotificacaoRepository notificacaoRepository, IUsuarioCommand usuarioCommand)
         {
             _solicitacaoClubAlunoRepository = solicitacaoClubAlunoRepository;
             _clubCommand = clubCommand;
             _alunoCommand = alunoCommand;
             _usuarioContext = usuarioContext;
             _notificacaoRepository = notificacaoRepository;
+            _usuarioCommand = usuarioCommand;
         }
 
 
@@ -42,15 +45,23 @@ namespace Ihc.CrackSports.Core.Commands
             var result = await _notificacaoRepository.ObterTodasNotificacoesAluno(idAluno);
             return result.OrderByDescending(x => x.DataNotificacao);
         }
+        private async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesAdministrador(long idUser)
+        {
+            var result = await _notificacaoRepository.ObterTodasNotificacoesAdministrador(idUser);
+            return result.OrderByDescending(x => x.DataNotificacao);
+        }
 
         private async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoesClube(long idClube)
         {
             var result = new List<NotificationBase>();
 
+            try
+            {
+                await IncluirSolicitacoesAlunosClube(result, await this.ObterTodasSolicitacoesDoClube(idClube));
+                await IncluirNotificacoesGenerics(result, await _notificacaoRepository.ObterTodasNotificacoesClube(idClube));
 
-            await IncluirSolicitacoesAlunosClube(result, await this.ObterTodasSolicitacoesDoClube(idClube));
-            await IncluirNotificacoesGenerics(result, await _notificacaoRepository.ObterTodasNotificacoesClube(idClube));
-
+            }
+            catch { }
 
             return result.OrderByDescending(x => x.DataNotificacao);
         }
@@ -58,7 +69,7 @@ namespace Ihc.CrackSports.Core.Commands
 
         private async Task IncluirSolicitacoesAlunosClube(List<NotificationBase> include, IEnumerable<SolicitacaoAlunoClub> reference)
         {
-            if(include ==  null) include = new List<NotificationBase>();
+            if (include == null) include = new List<NotificationBase>();
 
             foreach (var obj in reference)
             {
@@ -137,24 +148,26 @@ namespace Ihc.CrackSports.Core.Commands
 
 
 
-        public async Task<IEnumerable<NotificationBase>> ObterTodasNotificacoes(NotificationRequest request)
+        public async Task<IEnumerable<NotificationBase>> ObtemESetaNoContextoTodasNotificacoes(NotificationRequest request)
         {
-            if (request.TipoUsuario == Objetos.Enums.TipoUsuario.Club)
+            if (request.TipoUsuario == TipoUsuario.Club)
             {
                 if (request.IdUsuario > 0)
                 {
                     var club = await _clubCommand.ObterByIdUsuario(request.IdUsuario);
 
-                    if (club?.Id <= 0)
+                    if (club?.Id > 0)
+                    {
+                        var result = await ObterTodasNotificacoesClube(club.Id);
+                        _usuarioContext.SetNotificacoes(result.ToList());
+
+                        return result;
+                    }
+                    else
                         return new List<NotificationBase>();
-
-                    var result = await ObterTodasNotificacoesClube(club.Id);
-                    _usuarioContext.SetNotificacoes(result.ToList());
-
-                    return result;
                 }
             }
-            else if (request.TipoUsuario == Objetos.Enums.TipoUsuario.Aluno)
+            else if (request.TipoUsuario == TipoUsuario.Aluno)
             {
                 var aluno = await _alunoCommand.GetByIdUsuario(request.IdUsuario);
                 var result = await this.ObterTodasNotificacoesAluno(aluno.Id);
@@ -162,6 +175,13 @@ namespace Ihc.CrackSports.Core.Commands
 
                 return result;
 
+            }
+            else if (request.TipoUsuario == TipoUsuario.Administrador)
+            {
+                var result = await this.ObterTodasNotificacoesAdministrador(request.IdUsuario);
+                _usuarioContext.SetNotificacoes(result.ToList());
+
+                return result;
             }
 
             return new List<NotificationBase>();
@@ -199,6 +219,23 @@ namespace Ihc.CrackSports.Core.Commands
 
         }
 
+
+        private async Task<NotificationBase> FillInstance(Club club, string message)
+        {
+            var notification = new NotificationBase();
+
+            notification.Notificacao = message;
+            notification.DataNotificacao = notification.DataNotificacao <= new DateTime() ? DateTime.Now : notification.DataNotificacao;
+            notification.Notificacao = message;
+            notification.ImagemNotificacao = club.ImagemBase64;
+            notification.LinkRedirect = $"../Club/ApresentacaoClub?idClub={club.Id}";
+            notification.Tipo = Objetos.Notifications.TipoNotificacao.Outros;
+
+            return notification;
+
+        }
+
+
         public async Task<bool> IncluirNotificacao(NotificationBase notification)
         {
             if (notification == null)
@@ -213,6 +250,29 @@ namespace Ihc.CrackSports.Core.Commands
                 return false;
 
             return await _notificacaoRepository.AtualizarNotificacao(notification);
+        }
+
+        public async Task<bool> NotificarAdministradoresClubeCadastrado(Club club)
+        {
+
+            var administradores = await _usuarioCommand.GetAllAdministradores();
+
+            var message = $"O Clube {club.Nome} se cadastrou com sucesso. Vá ao painel Administrativo para liberar o acesso.";
+            foreach (var admin in administradores)
+            {
+                var notification = await FillInstance(club, message);
+                notification.IdAdministrador = admin.Id;
+                notification.IdClube = club.Id;
+                notification.TipoUsuario = TipoUsuario.Administrador;
+
+                return await this.IncluirNotificacao(notification);
+            }
+            return false;
+        }
+
+        public async Task<bool> ExcluirNotificacoesClube(long idClube)
+        {
+            return await _notificacaoRepository.ExcluirNotificacoesClube(idClube);
         }
     }
 }

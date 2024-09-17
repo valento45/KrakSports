@@ -16,5 +16,7 @@ namespace Ihc.CrackSports.Core.Services.Interfaces
         Task<CadastroResponse> Excluir(long idAluno);
         Task<Usuario> ObterPorUserName(string userName);
         Task<Usuario> GetById(long id);
+        Task<IEnumerable<Usuario>> GetAllAdministradores();
+        Task<IEnumerable<Usuario>> GetAll();
     }
 }

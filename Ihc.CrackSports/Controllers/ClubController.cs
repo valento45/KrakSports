@@ -25,8 +25,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IUsuarioService _usuarioService;
         private readonly IAlunoService _alunoService;
         private readonly IClubApplication _clubApplication;
+        private bool _isInsert;
 
-        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication) 
+        public ClubController(IClubService clubService, UserManager<Usuario> user, IUsuarioService usuarioService, IAlunoService alunoService, IClubApplication clubApplication, INotificationCommand notificationCommand, IUsuarioContext httpContextAccessor, IMessageApplication messageApplication)
             : base(clubService, alunoService, user, notificationCommand, httpContextAccessor, messageApplication)
         {
             _clubService = clubService;
@@ -49,34 +50,75 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Cadastro(long idUsuario)
         {
+            ClubViewModel model = new ClubViewModel();
+            model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
+
+
+            if (User.IsAuthenticated())
+            {
+                if (model.DadosClub.IdUsuario!= long.Parse(User.GetIdentificador()))
+                    if (!base.CanRead(User, Roles.CLUB))
+                        return View("Unauthorized");
+            }
+            else
+                return View("Unauthorized");
+
+
             if (idUsuario <= 0)
-                throw new ArgumentNullException("Usuário inválido !");
+                model.Message = "Usuário inválido !";
 
             await base.RefreshImageUser(User);
             await base.RefreshNotifications(User);
 
-            ClubViewModel model = new ClubViewModel();
 
-            model.DadosClub = await _clubService.ObterByIdUsuario(idUsuario) ?? throw new ArgumentNullException("Usuário inválido !");
+
+            
             model.DadosUsuario = await _usuarioService.GetById(idUsuario);
 
             return View("Partial/Club/CadastroClubPartial", model);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CadastroClubSemUsuario(long idClub)
+        {
+
+            ClubViewModel model = new ClubViewModel();
+            if (idClub <= 0)
+                model.Message = "Clube inválido !";
+
+            if(!User.IsAuthenticated() || !User.IsAdm())
+                return View("Unauthorized");
+
+            model.DadosClub = await _clubService.ObterById(idClub) ?? throw new ArgumentNullException("Clube inválido !");        
+
+
+            await base.RefreshImageUser(User);
+            await base.RefreshNotifications(User);           
+
+            if (model.DadosClub?.IdUsuario > 0 )
+                model.DadosUsuario = await _usuarioService?.GetById(model.DadosClub.IdUsuario);
+            else
+                model.DadosUsuario = new Usuario();
+
+            return View("Partial/Club/CadastroClubPartial", model);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Cadastro(ClubViewModel model)
         {
             if (model != null)
             {
-
-                if (!model.isInsert())
+                _isInsert = model.isInsert();
+                if (!_isInsert)
                 {
                     if (model.DadosUsuario.Id != long.Parse(User.GetIdentificador()))
                         if (!base.CanUpdate(User, Roles.CLUB))
                             return View("Unauthorized");
                 }
 
-                else
+                if (model.DadosUsuario?.Id <= 0)
                 {
                     var user = await _userManager.FindByNameAsync(model.DadosUsuario.UserName);
 
@@ -100,8 +142,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
                             model.DadosClub.IdUsuario = user.Id;
                         }
                     }
-                    else
-                        throw new Exception("Usuário informado já existe !");
+                    else if (_isInsert)
+                    {
+                        model.Message = "Usuário informado já existe !";
+                        return View("Partial/Club/CadastroClubPartial", model);
+                    }
                 }
 
                 if (model.File != null)
@@ -119,12 +164,15 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (result.IsSuccessStatusCode)
                 {
-					var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);
-					return View("Partial/MessagesInformation/_MessageInformation", message);
-					
+                    if (_isInsert)
+                        await _notificationCommand.NotificarAdministradoresClubeCadastrado(model.DadosClub);
+
+
+                    var message = await _messageApplication.GetMessage(model.DadosClub, result.IsInsert ? TipoMessage.Insercao : TipoMessage.Alteracao);
+                    return View("Partial/MessagesInformation/_MessageInformation", message);
                 }
                 else
-                    throw new Exception($"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}");
+                    model.Message = $"Erro ao salvar dados do club. Codigo {result.StatusCode} - {result.Message}";
 
             }
 
@@ -157,7 +205,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         {
             await base.RefreshNotifications(User);
 
-            var clubes = await _clubService.ObterTodos(limite);
+            var clubes = await _clubService.ObterTodos(limite, true);
             var result = new PaginacaoClubViewModel(new Paginacao<Club>(clubes?.AsQueryable(), 1, 10));
 
             ViewBag.paginacao = result;
@@ -184,6 +232,9 @@ namespace Ihc.CrackSports.WebApp.Controllers
             ClubViewModel result = await _clubApplication.GetClubViewModelByIdClube(idClub);
             result.Atletas.CanUpdate = false;
 
+            if (result.DadosClub?.IdUsuario > 0)
+                result.DadosUsuario = await _usuarioService.GetById(result.DadosClub.IdUsuario);
+
             return View(result);
         }
 
@@ -192,8 +243,18 @@ namespace Ihc.CrackSports.WebApp.Controllers
         [HttpGet]
         public async Task<PartialViewResult> SelecionarClubePartial()
         {
-            var result = await _clubService.ObterTodos();
+            var result = await _clubService.ObterTodos(0, true);
             return PartialView("Partial/Club/_ModalSelecionarClube", result);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> VerSolicitacaoClube(long idClub)
+        {
+            return View("_DetalhesClubeAdminPartial");
+        }
+
+
+
     }
 }

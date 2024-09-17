@@ -3,6 +3,7 @@ using Ihc.CrackSports.Core.Objetos.Alunos;
 using Ihc.CrackSports.Core.Objetos.Clube;
 using Ihc.CrackSports.Core.Objetos.Enums;
 using Ihc.CrackSports.WebApp.Models.Clube;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Ihc.CrackSports.WebApp.Models.Usuarios
 {
@@ -47,6 +48,12 @@ namespace Ihc.CrackSports.WebApp.Models.Usuarios
 		public void InformarClub(Club club)
         {
             DadosClub = club;
+        }
+
+        public bool IsValidoUsuario()
+        {
+            return this.DadosUsuario != null && !string.IsNullOrEmpty(this.DadosUsuario.UserName) && !string.IsNullOrEmpty(this.DadosUsuario.PasswordHash)
+                && this.DadosUsuario.Id > 0;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿$(document).ready(() => {
-
+    $("#campoArquivoClub").on('change', onChangeImageClub);
 });
 
 
@@ -7,7 +7,23 @@ function onClickCarregarImagemClub() {
     document.getElementById('campoArquivoClub').click();
 }
 
-function onChangeImageClub(e) {
+function onChangeImageClub({ target }) {
+
+    const file = target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+
+    var input = $("#imgClube");
+
+    reader.onload = () => {
+
+        $(input).attr('src', reader.result);
+        //output.value = reader.result;
+        //preview.src = reader.result;
+    };
+
     saveImageClub();
 }
 
@@ -73,3 +89,55 @@ function onClickTabContatos() {
     $("#pnlContatosClube").removeClass("d-none");
     $("#tabContatos").addClass("active");
 }
+
+
+function aceitarSolicitacaoClube(clube) {
+
+
+
+    var idClube = clube.Id;
+
+    util.ajax.post("../Administrador/AceitarClube", idClube,
+        onClickOperacaoSucesso,
+        onClickOperacaoErro);
+}
+
+function removerSolicitacaoClube(clube) {
+    var idClube = clube.Id;
+
+    util.ajax.post("../Administrador/RemoverClube", idClube,
+        onClickOperacaoSucesso,
+        onClickOperacaoErro);
+}
+
+
+function onClickOperacaoSucesso(e) {
+
+    if (e) {
+
+        $(".message-success").removeClass("d-none");
+        $("#pnlAdministrativoAceiteClube").remove();
+
+
+    } else {
+        $(".message-warning-text").text("Não foi possível concluir a operação! Por favor, tente mais tarde.");
+
+        $(".message-warning").removeClass("d-none");
+    }
+
+}
+
+function onClickOperacaoErro(e) {
+
+    if (e) {
+
+        $(".message-warning-text").text(e.message);
+
+        $(".message-warning").removeClass("d-none");
+    } else {
+        $(".message-warning").removeClass("d-none");
+    }
+
+
+}
+

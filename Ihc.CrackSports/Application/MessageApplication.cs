@@ -53,7 +53,7 @@ namespace Ihc.CrackSports.WebApp.Application
             if (!result.Sucesso)
                 result.InformarMessage($"Erro ao salvar o Clube ! Por favor, tente mais tarde.");
             else
-                result.InformarMessage($"Clube {result.ObterAcao(tipo)} {(result.Tipo == TipoMessage.Insercao ? "Você já pode efetuar seu login." : "")}");
+                result.InformarMessage($"Clube {result.ObterAcao(tipo)} {(result.Tipo == TipoMessage.Insercao ? "Você já pode efetuar seu login, porém estará sujeito(a) a uma aprovação pelo Admnistrador antes de desfrutar de todos benefícios." : "")}");
 
 
             return Task.FromResult(result);

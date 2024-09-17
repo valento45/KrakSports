@@ -23,17 +23,23 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Incluir(Club club)
         {
-            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario, data_fundacao, nome_presidente)" +
-                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente) returning id_club;;";
+            string query = "insert into sys.club_tb (nome_fantasia, cidade, uf, imagem_base64, id_usuario, data_fundacao, nome_presidente, " +
+                "is_verificado, sobre_o_clube, celular)" +
+                " values (@nome_fantasia, @cidade, @uf, @imagem_base64, @id_usuario, @data_fundacao, @nome_presidente, @is_verificado," +
+                " @sobre_o_clube, @celular) returning id_club;;";
             NpgsqlCommand cmd = new NpgsqlCommand(query);
 
-            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
-            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
-            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
-            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
             cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
-            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
-            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? null);
+            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome ?? "");
+            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade ?? "");
+            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF ?? "");
+            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"is_verificado", club?.IsVerificado ?? false);
+            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? new DateTime());
+            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
+            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
+            cmd.Parameters.AddWithValue(@"celular", club?.Celular ?? "");
+            
 
             var result = await base.ExecuteScalarAsync(cmd);
             long codigo;
@@ -48,18 +54,25 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Atualizar(Club club)
         {
-            string query = "update sys.club_tb set nome_fantasia = @nome, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64, data_fundacao = @data_fundacao, nome_presidente = @nome_presidente where id_club = @id_club";
+            string query = "update sys.club_tb set nome_fantasia = @nome_fantasia, cidade = @cidade, uf = @uf, imagem_base64 = @imagem_base64," +
+                " data_fundacao = @data_fundacao, nome_presidente = @nome_presidente, sobre_o_clube = @sobre_o_clube," +
+                " is_verificado = @is_verificado, celular = @celular, id_usuario = @id_usuario where id_club = @id_club";
 
-            return await base.ExecuteAsync(query, new
-            {
-                id_club = club.Id,
-                nome = club.Nome,
-                cidade = club.Endereco.Cidade,
-                uf = club.Endereco.UF,
-                imagem_base64 = club.ImagemBase64,
-                data_fundacao = club.DataFundacao,
-                nome_presidente = club.NomePresidente
-            });
+            NpgsqlCommand cmd = new NpgsqlCommand(query);
+
+            cmd.Parameters.AddWithValue(@"id_club", club.Id);
+            cmd.Parameters.AddWithValue(@"nome_fantasia", club.Nome);
+            cmd.Parameters.AddWithValue(@"cidade", club.Endereco.Cidade);
+            cmd.Parameters.AddWithValue(@"uf", club.Endereco.UF);
+            cmd.Parameters.AddWithValue(@"imagem_base64", club.ImagemBase64 ?? "");
+            cmd.Parameters.AddWithValue(@"id_usuario", club?.IdUsuario ?? null);
+            cmd.Parameters.AddWithValue(@"data_fundacao", club?.DataFundacao ?? null);
+            cmd.Parameters.AddWithValue(@"nome_presidente", club?.NomePresidente ?? "");
+            cmd.Parameters.AddWithValue(@"sobre_o_clube", club?.SobreOClube ?? "");
+            cmd.Parameters.AddWithValue(@"is_verificado", club?.IsVerificado ?? false);
+            cmd.Parameters.AddWithValue(@"celular", club?.Celular ?? "");
+
+            return await base.ExecuteCommand(cmd);
         }
 
         public async Task<bool> Excluir(long idClub)
@@ -120,9 +133,13 @@ namespace Ihc.CrackSports.Core.Repositorys
             return result;
         }
 
-        public async Task<IEnumerable<Club>> ObterTodos(int limite)
+        public async Task<IEnumerable<Club>> ObterTodos(int limite, bool exibeSomenteAtivos = false)
         {
             string query = "select * from sys.club_tb";
+
+            if (exibeSomenteAtivos)
+                query += " where is_verificado = true";
+
             if (limite > 0)
                 query += " limit " + limite;
 

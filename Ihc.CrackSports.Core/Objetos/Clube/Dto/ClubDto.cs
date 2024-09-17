@@ -13,6 +13,7 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public string razao_social { get; set; }
         public long cpf_cnpj { get; set; }
         public bool is_pj { get; set; }
+        public bool is_verificado { get; set; }
         public string endereco { get; set; }
         public int numero { get; set; }
         public string cidade { get; set; }
@@ -22,6 +23,8 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
         public DateTime data_fundacao { get; set; }
         public string nome_presidente { get; set; }
         public long id_usuario { get; set; }
+        public string sobre_o_clube { get; set; }
+        public string celular { get; set; }
 
         public Club ToClub()
         {
@@ -45,6 +48,9 @@ namespace Ihc.CrackSports.Core.Objetos.Clube.Dto
             club.NomePresidente = nome_presidente;
             club.IdUsuario = id_usuario;
             club.TipoUsuario = Enums.TipoUsuario.Club;
+            club.SobreOClube = sobre_o_clube;
+            club.IsVerificado = is_verificado;
+            club.Celular = celular;
 
             return club;
         }

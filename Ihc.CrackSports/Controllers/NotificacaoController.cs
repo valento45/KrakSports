@@ -32,7 +32,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             if (User.IsAuthenticated())
             {
                 var request = new NotificationRequest(long.Parse(User.GetIdentificador()), User.GetTipoUsuario());
-                var notifications = await _notificationCommand.ObterTodasNotificacoes(request);
+                var notifications = await _notificationCommand.ObtemESetaNoContextoTodasNotificacoes(request);
 
                 result = notifications.ToList();
             }

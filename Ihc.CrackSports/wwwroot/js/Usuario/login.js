@@ -3,20 +3,6 @@
     $("#btnLogar").on("click", onClickLogar);
 });
 
-//function onFocusOutCamposObrigatorios(e) {
-
-//    var campo = $(`#${e.currentTarget.id}`);
-//    var label = $(`#${e.currentTarget.id}Label`);
-
-//    if (!campo.val()) {
-//        label.addClass("campos-invalidos");
-//        campo.addClass("campos-invalidos");
-//    }
-//    else {
-//        label.removeClass("campos-invalidos");
-//        campo.removeClass("campos-invalidos");
-//    }
-//}
 
 function onClickLogar() {
 
@@ -29,16 +15,21 @@ function onClickLogar() {
 }
 
 function loginSucesso(e) {
-   
+    $("#pnlMsgTryLogin").addClass("d-none");
 
-    /*   window.location.href = "../Home/About";*/
-    var newDoc = document.open("text/html", "replace");
-    newDoc.write(e);
-    newDoc.close();
+    if (e.message) {
+
+        $("#msgTryLoginUser").text(e.message);
+        $("#pnlMsgTryLogin").removeClass("d-none");
+    } else {
+        var newDoc = document.open("text/html", "replace");
+        newDoc.write(e);
+        newDoc.close();
+    }
 }
 
 function loginErro(e) {
-    alert("login erro !!!!!!!!!!!!!!!!!!!");
+    alert("O processo demorou mais que o esperado e por isso foi cancelado. Por favor, tente mais tarde");
 }
 
 function redirectCadastro() {
