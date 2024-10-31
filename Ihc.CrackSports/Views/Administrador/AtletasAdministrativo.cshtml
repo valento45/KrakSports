@@ -1,0 +1,79 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@model PaginacaoAlunoViewModel
+
+@{
+    Layout = null;
+}
+
+
+
+<div class="mt-5 ms-5 mx-5">
+
+    <h3 class="text-bold-orange">Monitor de Atletas</h3>
+    <hr />
+
+
+    <div class="message-success container justify-content-center d-none" style="background-color: darkseagreen; box-shadow: 1px 1px 50px 1px #00000066;">
+        <div class="d-sm-inline-flex col-sm-12 p-1 mt-3 mb-3" style=" background-color: darkseagreen; align-items: center;">
+            <img class="col-sm-3 ms-2" src="/imgs/confirm-icon1.png" style="width: 50px; height: 50px;">
+
+            <div class="row col-sm-8 text-center">
+                <h4 class="text-semi-bold-orange ms-5" style="color: ghostwhite; text-wrap: wrap;">
+                    Operação realizada com sucesso
+                </h4>
+                <br>
+                <div class="ms-5" style="color:white;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="message-warning message-warning-pnl d-none">
+        <h4 class="message-warning-text text-semi-bold-orange mt-3">Não foi possível concluir a operação! Por favor, tente mais tarde</h4>
+    </div>
+
+
+    <div id="dgvClubes" class="">
+        <div class="d-block d-md-inline-flex mt-5 g-width-10 club-apresentacao">
+
+            <div id="pnlOpcoes" class="g-width-8 ms-3">
+
+                <ul class="nav nav-tabs">
+
+                    <li class="nav-item">
+                        <a id="tabAlunosNovos" class="nav-link nav-link-adm tab-control active clubes-adm " href="#" onclick="onClickTab('AlunosNovos')">Novas Solicitações </a>
+                    </li>
+
+                    <li  class="nav-item">
+                        <a id="tabAlunosGeral" class="nav-link nav-link-adm tab-control clubes-adm" href="#" onclick="onClickTab('AlunosGeral')">Ativos</a>
+                    </li>
+
+                </ul>
+
+                @if (Model != null)
+                {
+
+                    <div id="pnlAlunosNovos" class="mt-5 pnl-tab-control tab-clubes-adm" style="min-height: 150px;">
+                        @await Html.PartialAsync("Partial/Administrador/_ListaAlunosAdministrativo", Model)
+                    </div>
+
+                    <div id="pnlAlunosGeral" class="d-none mt-5 pnl-tab-control tab-clubes-adm" style="min-height: 150px;">
+
+                        @await Html.PartialAsync("Partial/Administrador/_ListaAlunosAdministrativo", Model)
+
+                    </div>
+                }
+                else
+                {
+                    <div class="message-warning mt-5 mb-5">
+                        <h4 class="text-semi-bold-orange mt-3">Não foi encontrado nenhum registro !</h4>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

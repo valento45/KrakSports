@@ -1,0 +1,15 @@
+﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@model PaginacaoAlunoViewModel
+
+@{
+    Layout = "";
+}
+
+<div id="" class="" style="min-height: 150px;">
+    <div style=" margin-left: 20px;">
+        <!--Dados atletas-->
+        @await Html.PartialAsync("Partial/Administrador/_AtletasAdminPartial", Model)
+        <!--FIM Dados atletas-->
+    </div>
+
+</div>

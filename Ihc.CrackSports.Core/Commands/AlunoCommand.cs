@@ -121,5 +121,10 @@ namespace Ihc.CrackSports.Core.Commands
         {
             return await _alunoRepository.AtualizarCamisa(aluno);
         }
+
+        public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)
+        {
+            return await _alunoRepository.ObterTodosAluno(limite);
+        }
     }
 }

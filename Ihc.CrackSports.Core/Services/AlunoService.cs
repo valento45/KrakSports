@@ -114,5 +114,10 @@ namespace Ihc.CrackSports.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)
+        {
+            return await _alunoCommand.ObterTodosAluno(limite);
+        }
     }
 }

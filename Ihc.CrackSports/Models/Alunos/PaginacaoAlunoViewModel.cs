@@ -11,11 +11,22 @@ namespace Ihc.CrackSports.WebApp.Models.Alunos
     public class PaginacaoAlunoViewModel
     {
         public bool NextPage { get; set; }
-        public bool PreviousPage { get; set; }  
-        public bool FirstPage { get;set; }
+        public bool PreviousPage { get; set; }
+        public bool FirstPage { get; set; }
         public bool LastPage { get; set; }
         public bool CanUpdate { get; set; } = true;
         public Paginacao<Aluno> AlunosPaginado { get; private set; }
+
+        public PaginacaoAlunoViewModel()
+        {
+
+        }
+        public PaginacaoAlunoViewModel(IEnumerable<Aluno> alunos)
+        {
+            AlunosPaginado = new Paginacao<Aluno>(alunos.AsQueryable(), 1, 10);
+
+            Refresh();
+        }
 
         public void Refresh()
         {
@@ -31,7 +42,9 @@ namespace Ihc.CrackSports.WebApp.Models.Alunos
                 AlunosPaginado.PrimeiraPagina();
 
             else if (LastPage)
-                AlunosPaginado.UltimaPagina();            
+                AlunosPaginado.UltimaPagina();
+            else
+                AlunosPaginado.PrimeiraPagina();
         }
 
         public List<Aluno> ObterListaPaginada() => AlunosPaginado.ObterListaPaginada();

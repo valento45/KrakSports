@@ -43,13 +43,14 @@ function onClickClubes(e) {
 
     util.ajax.get("../Administrador/ClubesAdmin", null, onClickMenuSucesso, onClickMenuError);
 
-    
+
 }
 
 function onClickAtletas(e) {
     activeInactiveButton(e);
 
 
+    util.ajax.get("../Administrador/AtletasAdministrativo", null, onClickMenuSucesso, onClickMenuError);
 }
 
 function onClickConfiguracoes(e) {
@@ -73,16 +74,19 @@ function hideTabs() {
     $("#pnlSolicitacoes").addClass("d-none");
     $("#pnlRendimentos").addClass("d-none");
     $("#pnlInativos").addClass("d-none");
-
     $("#tabPatrocinadoresAtivos").removeClass("active");
     $("#tabSolicitacoes").removeClass("active");
     $("#tabRendimentos").removeClass("active");
     $("#tabInativos").removeClass("active");
 
 
+
+    $(".tab-control").removeClass("active");
+    $(".pnl-tab-control").addClass("d-none");
+
+
     $(".tab-clubes-adm").addClass("d-none");
     $(".clubes-adm").removeClass("active");
-
     $(".message-success").addClass("d-none");
     $(".message-warning-pnl").addClass("d-none");
 
@@ -144,9 +148,9 @@ function onClickOperacaoSucesso(e) {
             $(".message-warning").removeClass("d-none");
             return;
         }
-        else if (e.id) {        
+        else if (e.id) {
             $(`#clube_adm_${e.id}`).remove();
-        }       
+        }
 
         $(".message-success").removeClass("d-none");
 
@@ -184,4 +188,15 @@ function criarUsuarioRedirectAdmin(e) {
     } else {
         alert("Não foi possível obter o código do Clube! Contate o desenvolvedor.");
     }
+}
+
+
+function onClickAlterarAluno(idAluno) {
+
+    redirectDadosAluno(idAluno);
+
+}
+
+function configurarDadosUsuario(idAluno) {
+
 }

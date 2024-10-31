@@ -15,6 +15,8 @@ using Ihc.CrackSports.WebApp.Models.MessagesViewModel.Information;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Ihc.CrackSports.Core.Objetos.Alunos;
+using Ihc.CrackSports.WebApp.Models.Alunos;
 
 namespace Ihc.CrackSports.WebApp.Controllers
 {
@@ -135,6 +137,21 @@ namespace Ihc.CrackSports.WebApp.Controllers
                 ClubePaginacaoAdminViewModel clubePaginacaoAdminViewModel = new ClubePaginacaoAdminViewModel(result);
 
                 return View(clubePaginacaoAdminViewModel);
+            }
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AtletasAdministrativo()
+        {
+            var todosAlunos = await _alunoService.ObterTodosAluno();
+
+            if (todosAlunos?.Any() ?? false)
+            {
+                PaginacaoAlunoViewModel paginacaoControl = new PaginacaoAlunoViewModel(todosAlunos);         
+                return View(paginacaoControl);
             }
 
             return View();
