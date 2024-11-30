@@ -41,6 +41,19 @@ builder.Services.AddAuthentication("cookies")
 
 #endregion
 
+
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001); // HTTP
+    options.ListenAnyIP(5002, listenOptions =>
+    {
+        listenOptions.UseHttps(); // HTTPS
+    });
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

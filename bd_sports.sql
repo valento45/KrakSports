@@ -195,10 +195,21 @@ CREATE DATABASE bd_sports
 	
 	
 	
+	create table if not exists sys.atleta_evento_tb(
+		id_lancamento serial not null primary key,
+		id_evento integer not null,
+		id_aluno integer not null,
+		id_clube integer not null,
+		gols_marcados integer not null,
+		constraint id_aluno_fk foreign key(id_aluno)
+		references sys.aluno_tb(id_aluno),
+		constraint id_clube_fk foreign key (id_clube)
+		references sys.club_tb(id_club)	
+	);
 	
 	
 --Tornar usuario administrador
---insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm')
+--insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm');
 
 
 --Criar Role usuario Club
@@ -214,17 +225,6 @@ CREATE DATABASE bd_sports
 	
 	--drop table sys.atleta_evento_tb
 	
-	create table if not exists sys.atleta_evento_tb(
-		id_lancamento serial not null primary key,
-		id_evento integer not null,
-		id_aluno integer not null,
-		id_clube integer not null,
-		gols_marcados integer not null,
-		constraint id_aluno_fk foreign key(id_aluno)
-		references sys.aluno_tb(id_aluno),
-		constraint id_clube_fk foreign key (id_clube)
-		references sys.club_tb(id_club)	
-	);
 
 
 --select  atl.id_aluno, atl.nome, cl.nome_fantasia as nome_clube, atl.foto_base64, sum(aevt.gols_marcados) as gols_marcados from sys.agenda_evento_tb as evt

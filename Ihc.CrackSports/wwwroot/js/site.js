@@ -114,3 +114,9 @@ function onRedirectWpp() {
 function onRedirectLinkedin() {
 
 }
+
+
+
+function onGotToBack() {
+    history.back();
+}
