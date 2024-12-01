@@ -32,7 +32,7 @@ inner join sys.club_tb as cl on cl.id_club = atl.id_club";
             query += @" group by atl.id_aluno, atl.nome, cl.nome_fantasia order by gols_marcados desc limit 3";
 
 
-            var result = await base.QueryAsync<RankingAtletaDto>(query);
+            var result = await base.QueryAsync<RankingAtletaDto>(query) ?? new List<RankingAtletaDto>();
 
             return result.Select(x => x.ToObjeto()).ToList();
         }

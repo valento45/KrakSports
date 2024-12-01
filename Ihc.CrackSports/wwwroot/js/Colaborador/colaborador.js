@@ -41,9 +41,18 @@ function onChangePessoaJuridica(e) {
 
 function criarSolicitacao() {
     var patrocinador = new Object();
+    patrocinador.IdPatrocinador = 0;
     patrocinador.NomeOuRazaoSocial = $("#txtNomeRazaoSocial").val();
     patrocinador.Email = $("#txtEmail").val();
-    patrocinador.CpfCnpj = $("#txtCpfCnpj").val();
+
+
+    var valCpfInput = $("#txtCpfCnpj").val();
+
+    if (valCpfInput !== "")
+        patrocinador.CpfCnpj = $("#txtCpfCnpj").val();
+    else
+        patrocinador.CpfCnpj = 0;
+
     patrocinador.Telefone = $("#txtTelefone").val();
     patrocinador.Celular = $("#txtCelular").val();
     patrocinador.LinkInstagram = $("#txtInstagram").val();
@@ -64,8 +73,7 @@ function enviarSolicitacao() {
 }
 
 function novoPatrocinadorSucesso(e) {
-
-    alert("SUCESSO ao cadastrar patrocinador")
+    
     document.open();
     document.write(e);
     document.close();
