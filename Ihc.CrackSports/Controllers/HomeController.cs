@@ -29,6 +29,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
         private readonly IColaboradorService _colaboradorService;
         private readonly ICEPService _cepService;
 
+
         public HomeController(ILogger<HomeController> logger, UserManager<Usuario> userManager, IAlunoService alunoService, IClubService clubService, INotificationCommand notificationCommand,
              IUsuarioContext httpContextAccessor, IMessageApplication messageApplication, IColaboradorService colaboradorService, ICEPService cepService) : base(clubService, alunoService, userManager, notificationCommand, httpContextAccessor, messageApplication)
         {
@@ -37,6 +38,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
             _clubService = clubService;
             _colaboradorService = colaboradorService;
             _cepService = cepService;
+        
         }
 
         [HttpGet]
@@ -80,6 +82,10 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             if (model.PreenchidoCorretamente())
             {
+
+              
+
+
                 if (await base.Autenticar(model))
                     return RedirectToAction("Index");
                 else

@@ -31,3 +31,32 @@ function onChangeCEPSuccess(result) {
 function onChangeCEPError(error) {
     
 }
+
+
+
+var atletaModal = {};
+
+function onClickConfirmarExclusao() {
+
+    util.ajax.get(`../Administrador/ExcluirAtleta?idAtleta=${atletaModal.Id}`, null,
+        (result) => {
+         /*   window.location.reload();*/
+
+            document.write(result);
+        },
+
+        (error) => {
+            alert("Não foi possível efetuar exclusão do produto, tente mais tarde.")
+        });
+}
+
+
+function onClickExcluirAtleta(atleta) {
+    atletaModal = atleta;
+
+
+
+
+
+    $("#modalBodyExclude").text(`Deseja excluir o atleta ${atleta.Nome}?`);
+}

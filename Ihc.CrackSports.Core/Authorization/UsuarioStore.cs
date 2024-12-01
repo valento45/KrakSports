@@ -207,7 +207,8 @@ namespace Ihc.CrackSports.Core.Authorization
 
         public Task<IList<Usuario>> GetUsersForClaimAsync(Claim claim, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var result = new List<Usuario>();
+            return Task.FromResult((IList<Usuario>)result);
         }
     }
 }

@@ -207,12 +207,12 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
 
         [Authorize]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> ExcluirAtleta(int idAtleta)
         {
 
             if (await base._alunoService.ExcluirAluno(idAtleta))
-                return RedirectToAction(nameof(Index));
+                return View("SucessoMessage");
 
             else
                 return NoContent();
@@ -242,12 +242,33 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> SalvarDadosUsuario(Usuario usuario)
         {
 
-            var result = await _usuarioService.AtualizarUsuario(usuario);
+            var user = await base._userManager.FindByIdAsync(usuario.Id.ToString());
 
-            if (result)
+            if(user == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            // Gerar token para resetar a senha
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Resetar a senha
+            var resultado = await _userManager.ResetPasswordAsync(user, token, usuario.PasswordHash);
+
+            if (resultado.Succeeded)
+            {
+                await _userManager.UpdateAsync(user);
                 return View("SucessoMessage");
+            }
             else
                 return BadRequest();
+
+            //var result = await _usuarioService.AtualizarUsuario(usuario);
+
+            //if (result)
+            //    return View("SucessoMessage");
+            //else
+            //    return BadRequest();
         }
 
     }

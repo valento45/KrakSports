@@ -27,7 +27,21 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IUsuarioContext, UsuarioContext>();
 
-builder.Services.AddIdentityCore<Usuario>(options => { });
+builder.Services.AddIdentityCore<Usuario>(options => {
+    // Configurar política de senha
+    options.Password.RequireDigit = false;           
+    options.Password.RequiredLength = 5;           
+    options.Password.RequireNonAlphanumeric = false; 
+    options.Password.RequireUppercase = false;      
+    options.Password.RequireLowercase = false;      
+    options.Password.RequiredUniqueChars = 2;      
+
+})	.AddDefaultTokenProviders();
+
+
+
+
+
 builder.Services.AddScoped<IUserStore<Usuario>, UsuarioStore>();
 
 builder.Services.AddAuthentication("cookies")

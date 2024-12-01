@@ -9,6 +9,7 @@ CREATE DATABASE bd_sports
     AUTHORIZATION postgres;
 	
 --select * from sys.usuario_tb
+
 	create table if not exists sys.usuario_tb
 	(
 		id_usuario serial not null primary key,
@@ -211,7 +212,7 @@ CREATE DATABASE bd_sports
 	--select * from sys.usuario_tb
 	
 --Tornar usuario administrador
---insert into sys.usuario_claim_tb (id_usuario, claim) values (5, 'adm');
+--insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm');
 
 
 --Criar Role usuario Club

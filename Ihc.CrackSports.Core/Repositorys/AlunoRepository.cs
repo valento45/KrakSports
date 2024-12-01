@@ -101,11 +101,11 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> AtualizarDadosGerais(Aluno aluno)
         {
-            string query = "update sys.aluno_tb set nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +                
+            string query = "update sys.aluno_tb set nome = @nome, documento = @documento, cpf_cnpj = @cpf_cnpj, data_nascimento = @data_nascimento, " +
                "foto_base64 = @foto_base64, posicao_jogador = @posicao_jogador where id_aluno = @id_aluno;";
 
             NpgsqlCommand cmd = new NpgsqlCommand(query);
-            cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);            
+            cmd.Parameters.AddWithValue(@"id_aluno", aluno.Id);
             cmd.Parameters.AddWithValue(@"nome", aluno?.Nome ?? "");
             cmd.Parameters.AddWithValue(@"documento", aluno?.Documento ?? "");
             cmd.Parameters.AddWithValue(@"cpf_cnpj", aluno?.CpfCnpj ?? 0);
@@ -138,7 +138,14 @@ namespace Ihc.CrackSports.Core.Repositorys
 
         public async Task<bool> Excluir(long idAluno)
         {
-            string query = "delete from sys.aluno_tb where id_aluno = " + idAluno;
+
+            string query = "delete from sys.responsavel_aluno_tb where id_aluno = " + idAluno;
+            await base.ExecuteAsync(query);
+            
+            query = "delete from sys.solicitacao_aluno_club_tb where id_aluno = " + idAluno;
+            await base.ExecuteAsync(query);
+
+            query = "delete from sys.aluno_tb where id_aluno = " + idAluno;
             return await base.ExecuteAsync(query);
         }
 
@@ -177,13 +184,13 @@ namespace Ihc.CrackSports.Core.Repositorys
         public async Task<IEnumerable<Aluno>> ObterAlunosByIdClub(long idClub)
         {
             var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb where id_club = {idClub}");
-            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome); 
+            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome);
         }
 
         public async Task<IEnumerable<Aluno>> ObterTodosAluno(int limite = 0)
         {
             var result = await base.QueryAsync<AlunoDto>($"select  * from sys.aluno_tb" + (limite > 0 ? $" limit {limite}" : ""));
-            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome); 
+            return result.Select(x => x.ToAluno()).OrderBy(x => x.Nome);
         }
 
         public async Task<Aluno?> ObterAlunoByIdUsuario(long idUser)

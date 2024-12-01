@@ -203,6 +203,7 @@ html {
     .btn-voltar:hover {
         color: #F9D19F !important;
         border-color: #F9D19F !important;
+        cursor: pointer !important;
     }
 
 .btn-voltar-radius {

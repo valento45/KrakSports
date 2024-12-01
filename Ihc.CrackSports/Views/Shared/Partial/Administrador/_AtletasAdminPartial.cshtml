@@ -1,5 +1,29 @@
 ﻿@using Ihc.CrackSports.WebApp.Models.Alunos;
+@using Newtonsoft.Json;
 @model PaginacaoAlunoViewModel
+
+
+
+<div class="modal fade" id="modalConfirmaExclusao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalConfirmaExclusaoLabel" aria-hidden="true" style="align-content: center;">
+    <div class="modal-dialog" style="max-width: 40%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-normal" id="modalConfirmaExclusaoLabel">Confirmar exclusão do Atleta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex">
+                <img id="imgExclusao" class="img-medium" src="" />
+                <span id="modalBodyExclude" class="ms-2 text-normal" style="align-content: center;">
+
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn  btn-block btn-confirm-radius" data-bs-dismiss="modal" onclick="onClickConfirmarExclusao()">Confirmar</button>
+                <a class=" btn-voltar mx-5" data-bs-dismiss="modal">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="row g-width-10 table-brown">
 
@@ -66,7 +90,15 @@
                                 </div>
                                 <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Remover atleta do Club."
                                      style="height: 40px; width: 40px; margin-right: 10px;">
-                                    <a asp-controller="Administrador" asp-action="ExcluirAtleta" asp-route-idAtleta="@obj.Id" id="btnExcluirAtleta" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
+
+                                    @*  <a asp-controller="Administrador" asp-action="ExcluirAtleta" asp-route-idAtleta="@obj.Id" id="btnExcluirAtleta" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+                        <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a> *@
+
+                                    <a data-bs-toggle="modal" data-bs-target="#modalConfirmaExclusao" onclick="onClickExcluirAtleta(@JsonConvert.SerializeObject(obj))"
+                                       class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;" data-toggle="tooltip" data-placement="top" title="Excluir atleta">
+                                        <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" />
+                                    </a>
+
                                 </div>
                             }
                         </td>

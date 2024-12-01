@@ -33,5 +33,33 @@ namespace Ihc.CrackSports.Core.Authorization
             return PasswordHash == password;    
         }
 
+
+
+
+        public Usuario Copy()
+        {
+            return new Usuario
+            {
+                AccessFailedCount = AccessFailedCount,
+                Claims = Claims,
+                ConcurrencyStamp = ConcurrencyStamp,
+                Email = Email,
+                EmailConfirmed = EmailConfirmed,
+                Id = Id,
+                ImagemBase64 = ImagemBase64,
+                LockoutEnabled = LockoutEnabled,
+                LockoutEnd = LockoutEnd,
+                PasswordHash = PasswordHash,
+                NormalizedEmail = NormalizedEmail,
+                NormalizedUserName = NormalizedUserName,
+                PhoneNumber = PhoneNumber,
+                PhoneNumberConfirmed = PhoneNumberConfirmed,
+                SecurityStamp = SecurityStamp,
+                TipoUsuario = TipoUsuario,
+                TwoFactorEnabled = TwoFactorEnabled,
+                UserName = UserName
+                
+            };
+        }
     }
 }
