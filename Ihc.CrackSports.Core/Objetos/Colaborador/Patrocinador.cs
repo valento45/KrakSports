@@ -99,6 +99,21 @@ namespace Ihc.CrackSports.Core.Objetos.Colaborador
             }
         }
 
+
+        public string ObterUrlDisponivel()
+        {
+            if(!string.IsNullOrEmpty(LinkSite))
+                return LinkSite;
+
+            if (!string.IsNullOrEmpty(LinkInstagram))
+                return LinkInstagram;
+
+            if (!string.IsNullOrEmpty(LinkLinkedin))
+                return LinkLinkedin;
+
+            return string.Empty;
+        }
+
     }
 
     public enum StatusPatrocinador : int

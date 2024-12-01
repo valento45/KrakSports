@@ -70,7 +70,7 @@
         <div class="center-caroulsel">
             @foreach (var patrocinador in Model.Patrocinadores)
             {
-                <a href="@patrocinador.LinkSite" class="col-lg-2 carousel-index ms-1">
+                <a href="@patrocinador.ObterUrlDisponivel()" class="col-lg-2 carousel-index ms-1" target="_blank">
 
                     <div class="p-1 text-center patrocinador-group" style="display: inline-grid;    place-content: center;">
                         <img src="@patrocinador.LogoTipoBase64" />
