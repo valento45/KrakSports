@@ -18,11 +18,14 @@
                     <!--Btn Excluir Agenda Evento (Exibir apenas para usuário Administrador)-->
                     @* @if ((User?.IsAuthenticated() ?? false) && User.IsAdm()) *@
 
-                    <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Excluir agenda do Evento">
-                        <a class="layout-orange-full-btn tooltip-arrow" onclick="onClickExcluirAgendaEvento(@evt.IdEvento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
-                            <img src="~/imgs/delete.png" style="width: 30px; height: 30px;" />
-                        </a>
-                    </div>
+                    @if (User?.IsAdm() ?? false)
+                    {
+                        <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Excluir agenda do Evento">
+                            <a class="layout-orange-full-btn tooltip-arrow" onclick="onClickExcluirAgendaEvento(@evt.IdEvento)" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;">
+                                <img src="~/imgs/delete.png" style="width: 30px; height: 30px;" />
+                            </a>
+                        </div>
+                    }
 
                 </div>
 
@@ -66,10 +69,12 @@
                     <span class="mb-1" style="text-align-last: center;"><b>Observações:</b> @evt.Observacoes</span>
                 }
 
-
-                <div class="mb-1 col-lg-12">
-                    <a class="btn  btn-block btn-confirm-radius-escuro mt-2" onclick="lancarResultado(@(JsonConvert.SerializeObject(evt)))">Lançar resultado</a>
-                </div>
+                @if (User?.IsAdm() ?? false)
+                {
+                    <div class="mb-1 col-lg-12">
+                        <a class="btn  btn-block btn-confirm-radius-escuro mt-2" onclick="lancarResultado(@(JsonConvert.SerializeObject(evt)))">Lançar resultado</a>
+                    </div>
+                }
             </div>
 
             <hr class="mt-3" />

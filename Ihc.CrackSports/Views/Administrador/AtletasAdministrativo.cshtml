@@ -5,9 +5,51 @@
     Layout = null;
 }
 
+<div class="modal fade" id="modalConfirmaExclusao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalConfirmaExclusaoLabel" aria-hidden="true"
+     style="background-color: #00000099;">
+
+    <div class="modal-dialog" style=" margin-top: 30vh;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalConfirmaExclusaoLabel">Confirmar exclusão do Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="modalBodyExclude" class="ms-2 text-normal" style="align-content: center;">
+
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn  btn-block btn-confirm-radius" data-bs-dismiss="modal" onclick="onClickConfirmarExclusao()">Confirmar</button>
+                <a class=" btn-voltar mx-5" data-bs-dismiss="modal">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="modal fade" id="modalConfirmaExclusao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalConfirmaExclusaoLabel" aria-hidden="true" style="align-content: center;">
+    <div class="modal-dialog" style="max-width: 50%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-normal" id="modalConfirmaExclusaoLabel">Confirmar exclusão do Atleta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex">
+                <img id="imgExclusao" class="img-medium" src="" />
+                <span id="modalBodyExclude" class="ms-2 text-normal" style="align-content: center;">
+
+                </span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class=" btn  btn-block btn-confirm-radius" data-bs-dismiss="modal" onclick="onClickConfirmarExclusao()">Confirmar</button>
+                <a class=" btn-voltar mx-5" data-bs-dismiss="modal">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div> *@
 
 
-<div class="mt-5 ms-5 mx-5">
+<div class="my-5 mx-2">
 
     <h3 class="text-bold-orange">Monitor de Atletas</h3>
     <hr />
@@ -42,12 +84,10 @@
                 <ul class="nav nav-tabs">
 
                     <li class="nav-item">
-                        <a id="tabAlunosNovos" class="nav-link nav-link-adm tab-control active clubes-adm " href="#" onclick="onClickTab('AlunosNovos')">Novas Solicitações </a>
+                        <a id="tabAlunosNovos" class="nav-link nav-link-adm tab-control active clubes-adm " href="#" onclick="onClickTab('AlunosNovos')">Todos</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a id="tabAlunosGeral" class="nav-link nav-link-adm tab-control clubes-adm" href="#" onclick="onClickTab('AlunosGeral')">Ativos</a>
-                    </li>
+                    
 
                 </ul>
 
@@ -58,11 +98,7 @@
                         @await Html.PartialAsync("Partial/Administrador/_ListaAlunosAdministrativo", Model)
                     </div>
 
-                    <div id="pnlAlunosGeral" class="d-none mt-5 pnl-tab-control tab-clubes-adm" style="min-height: 150px;">
-
-                        @await Html.PartialAsync("Partial/Administrador/_ListaAlunosAdministrativo", Model)
-
-                    </div>
+                   
                 }
                 else
                 {

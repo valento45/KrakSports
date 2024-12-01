@@ -18,11 +18,7 @@ html {
     font-size: 14px;
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
+
 
 html {
     position: relative;
@@ -383,11 +379,7 @@ html {
     transform: translate3d(0,-120%,0)
 }
 
-@media only screen and (min-width: 768px) {
-    .ag-field-input:focus ~ .ag-field-label {
-        line-height: 2rem
-    }
-}
+
 
 
 .ag-field-input {
@@ -672,6 +664,116 @@ html {
     height: 64px;
     border-radius: 50px;
 }
+.lbl-error {
+    color: red !important;
+    font-size: 0.85rem !important;
+}
+
+.carousel-index img {
+    width: 150px;
+    height: 130px;
+    border-radius: 70px;
+    /*box-shadow: 1px 1px 50px 1px #FFFFFF !important;*/
+}
+
+.carousel-index span {
+    /*color: #F9D19F;*/
+    color: white;
+    text-decoration: none !important;
+}
+
+.patrocinador-group:hover {
+    transform: scale(1.03);
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.carousel-facelift {
+    min-height: 110vh;
+    background-color: #282828;
+    padding-bottom: 5rem !important;
+}
+
+    .carousel-facelift p {
+        color: white;
+    }
+
+.center-caroulsel {
+    padding-top: 12% !important;
+    text-align: center;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.carousel-item {
+    display: grid;
+    text-align: center;
+}
+
+    .carousel-item span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .carousel-item:active {
+        transition: all 0.5s;
+    }
+
+    .carousel-item:hover {
+        transform: scale(1.03);
+        transition: all 0.5s;
+        cursor: pointer;
+    }
+
+
+
+.message-warning {
+    height: 100px;
+    width: 100%;
+    background-color: beige;
+    text-align-last: center;
+    padding: 10px;
+    text-align: center;
+}
+
+
+
+
+
+#pnlContatosClube {
+    padding: 1.5rem;
+}
+
+    #pnlContatosClube p {
+        color: #FA8C05;
+        font-weight: bold;
+    }
+
+    #pnlContatosClube span {
+        color: brown;
+        margin-left: 0.50rem;
+    }
+
+
+.footer-contatos {
+}
+
+    .footer-contatos img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .footer-contatos a {
+        cursor: pointer;
+    }
+
+        .footer-contatos a:hover {
+            transform: scale(1.1) !important;
+            transition: all 0.5s;
+        }
+
 
 .paginacao-icon {
     max-width: 50px;
@@ -823,26 +925,8 @@ html {
         background-color: #F9D19F !important;
     }
 
-@media only screen and (max-width: 600px) {
-    .bar-notifications {
-        padding: 0px;
-        margin: 0px;
-        width: 100%;
-        display: block;
-        background-color: brown;
-        border-radius: 15px;
-        position: absolute;
-        max-height: 80vh;
-        color: ghostwhite;
-        margin-top: 5.5vh !important;
-    }
 
-    .g-sm-width-10 {
-        width: 100%;
-    }
-}
-
-@media only screen and (max-width: 1200px) and (min-width: 601px) {
+@media only screen and (max-width: 1800px) and (min-width: 601px) {
     .bar-notifications {
         padding: 0px;
         margin: 0px;
@@ -861,118 +945,55 @@ html {
         display: block !important;
         text-align: -webkit-center !important;
     }
-}
 
-
-
-
-
-.lbl-error {
-    color: red !important;
-    font-size: 0.85rem !important;
-}
-
-.carousel-index img {
-    width: 150px;
-    height: 130px;
-    border-radius: 70px;
-    /*box-shadow: 1px 1px 50px 1px #FFFFFF !important;*/
-}
-
-.carousel-index span {
-    /*color: #F9D19F;*/
-    color: white;
-    text-decoration: none !important;
-}
-
-.patrocinador-group:hover {
-    transform: scale(1.03);
-    transition: all 0.5s;
-    cursor: pointer;
-}
-
-.carousel-facelift {
-    min-height: 110vh;
-    background-color: #282828;
-    padding-bottom: 5rem !important;
-}
-
-    .carousel-facelift p {
-        color: white;
+    .mobile {
+        display: none !important;
     }
-
-.center-caroulsel {
-    padding-top: 12% !important;
-    text-align: center;
 }
 
-.center-text {
-    text-align: center;
-}
+@media only screen and (min-width: 768px) {
 
-.carousel-item {
-    display: grid;
-    text-align: center;
-}
 
-    .carousel-item span {
+    html {
         font-size: 16px;
-        font-weight: bold;
     }
 
-    .carousel-item:active {
-        transition: all 0.5s;
+    .ag-field-input:focus ~ .ag-field-label {
+        line-height: 2rem
+    }
+    .mobile {
+        display: none !important;
+    }
+   
+}
+
+
+@media only screen and (max-width: 600px) {
+    .bar-notifications {
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+        display: block;
+        background-color: brown;
+        border-radius: 15px;
+        position: absolute;
+        max-height: 80vh;
+        color: ghostwhite;
+        margin-top: 5.5vh !important;
     }
 
-    .carousel-item:hover {
-        transform: scale(1.03);
-        transition: all 0.5s;
-        cursor: pointer;
+    .g-sm-width-10 {
+        width: 100%;
     }
 
 
-
-.message-warning {
-    height: 100px;
-    width: 100%;
-    background-color: beige;
-    text-align-last: center;
-    padding: 10px;
-    text-align: center;
+    .desktop{
+        display: none !important;
+    }
 }
 
 
 
 
 
-#pnlContatosClube {
-    padding: 1.5rem;
-}
 
-    #pnlContatosClube p {
-        color: #FA8C05;
-        font-weight: bold;
-    }
-
-    #pnlContatosClube span {
-        color: brown;
-        margin-left: 0.50rem;
-    }
-
-
-.footer-contatos {
-}
-
-    .footer-contatos img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .footer-contatos a {
-        cursor: pointer;
-    }
-
-        .footer-contatos a:hover {
-            transform: scale(1.1) !important;
-            transition: all 0.5s;
-        }
