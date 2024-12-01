@@ -212,7 +212,8 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             if (user != null)
             {
-                if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
+                //if (await _userManager.CheckPasswordAsync(user, Security.Encrypt(model.PasswordHash)))
+                if (user.CheckPassword(Security.Encrypt(model.PasswordHash)))
                 {
                     var identity = new ClaimsIdentity("cookies");
 

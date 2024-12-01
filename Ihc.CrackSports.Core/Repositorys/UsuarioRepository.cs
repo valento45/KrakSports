@@ -117,5 +117,19 @@ namespace Ihc.CrackSports.Core.Repositorys
 
             return await base.QueryAsync<Usuario>(query) ?? new List<Usuario>();
         }
+
+        public async Task<bool> AtualizarUsuario(Usuario usuario)
+        {
+            string query = "UPDATE sys.usuario_tb" +
+                $" SET " +
+                $" senha = '{Ihc.CrackSports.Core.Security.Security.Encrypt(usuario.PasswordHash)}'" +
+                $" WHERE id_usuario = {usuario.Id}";
+
+
+
+
+            return await base.ExecuteAsync(query);
+
+        }
     }
 }

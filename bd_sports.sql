@@ -8,7 +8,7 @@ CREATE DATABASE bd_sports
 	CREATE SCHEMA if not exists sys
     AUTHORIZATION postgres;
 	
-
+--select * from sys.usuario_tb
 	create table if not exists sys.usuario_tb
 	(
 		id_usuario serial not null primary key,
@@ -18,7 +18,7 @@ CREATE DATABASE bd_sports
 		email varchar(300)		,
 		tipo_usuario integer default 0
 	);	
-	
+
 
 
 	create table if not exists sys.usuario_claim_tb(
@@ -28,7 +28,7 @@ CREATE DATABASE bd_sports
 		references sys.usuario_tb(id_usuario)
 	);
 	
-	
+	--select * from sys.club_tb
 	create table if not exists sys.club_tb(
 		id_club serial not null primary key,
 		id_usuario bigint null,
@@ -208,8 +208,10 @@ CREATE DATABASE bd_sports
 	);
 	
 	
+	--select * from sys.usuario_tb
+	
 --Tornar usuario administrador
---insert into sys.usuario_claim_tb (id_usuario, claim) values (1, 'adm');
+--insert into sys.usuario_claim_tb (id_usuario, claim) values (5, 'adm');
 
 
 --Criar Role usuario Club

@@ -17,5 +17,6 @@ namespace Ihc.CrackSports.Core.Commands.Interfaces
         Task<Usuario> GetById(long id);
         Task<IEnumerable<Usuario>> GetAllAdministradores();
         Task<IEnumerable<Usuario>> GetAll();
+        Task<bool> AtualizarUsuario(Usuario usuario);
     }
 }

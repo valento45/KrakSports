@@ -863,6 +863,14 @@ html {
 }
 
 
+
+
+
+.lbl-error {
+    color: red !important;
+    font-size: 0.85rem !important;
+}
+
 .carousel-index img {
     width: 150px;
     height: 130px;

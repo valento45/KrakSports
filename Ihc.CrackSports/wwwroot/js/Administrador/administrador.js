@@ -198,5 +198,14 @@ function onClickAlterarAluno(idAluno) {
 }
 
 function configurarDadosUsuario(idAluno) {
+    var url = `../Aluno/AtualizarDadosUsuarioAluno?idAluno=${idAluno}`;
 
+
+    util.ajax.post(url, null,
+        (result) => {
+
+        },
+        (error) => {
+            console.log(error);
+        });
 }

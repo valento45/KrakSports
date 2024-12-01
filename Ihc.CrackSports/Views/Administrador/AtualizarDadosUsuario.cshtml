@@ -1,0 +1,61 @@
+﻿@using Ihc.CrackSports.Core.Authorization;
+@model Usuario
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Atualizar usuário";
+}
+
+
+
+
+<div class="mt-5 container">
+
+    <form class="form-group form-control layout-light-full radius-form" style="border-color: brown; padding: 5%;" asp-controller="Administrador" asp-action="SalvarDadosUsuario">
+
+        <input asp-for="Id" type="hidden" />
+        <input asp-for="NormalizedEmail" type="hidden" />
+        <input asp-for="Email" type="hidden" />
+        <input asp-for="TipoUsuario" type="hidden" />
+
+        <h5 class="text-semi-bold-orange mt-5">Dados do usuário</h5>
+
+        <div class="form-outline  mt-5 ag-field-content g-width-10">
+
+            <input asp-for="UserName" type="text" id="txtLogin" class="form-control ag-field-input ag-input-color-light-full valida-campos-obrigatorios"
+            autocomplete="off" minLenght="4" disabled="disabled" required />
+            <label id="txtLoginLabel" class="form-label text-semi-bold-light ag-field-label" for="txtLogin">Login*</label>
+        </div>
+
+        <div class="d-inline-flex g-width-10">
+            <div class="form-outline  ag-field-content g-width-5">
+
+                <input onblur="onLeaveValidarSenhas()" asp-for="PasswordHash" type="password" id="txtSenha" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                <label id="txtSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtSenha">Senha</label>
+            </div>
+
+
+            <div class="form-outline  ag-field-content g-width-5 ms-3">
+                <input onblur="onLeaveValidarSenhas()" asp-for="PasswordHash" type="password" id="txtConfirmarSenha" class="form-control ag-field-input ag-input-color-light-full w-10" autocomplete="off" required />
+                <label id="txtConfirmarSenhaLabel" class="form-label text-semi-bold-light ag-field-label" for="txtConfirmarSenha">Confirmar Senha</label>
+            </div>
+        </div>
+
+        <span id="lblErroUsuario" class="lbl-error d-none"></span>
+
+
+
+        <div class="mx-4 mt-5">
+            <button id="btnSalvarUsuario" class="btn  btn-block btn-confirm-radius" type="submit" disabled="disabled">Salvar</button>
+            <a id="" class=" btn-voltar mx-3" onclick="onGotToBack()">Voltar</a>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/Usuario/atualizarUsuario.js" asp-append-version="true"></script>
+}

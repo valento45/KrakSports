@@ -105,7 +105,8 @@
 
 
                 <div class="form-outline  ag-field-content g-width-5">
-                    <button id="" class="btn  btn-block btn-confirm-radius" type="button" onclick="configurarDadosUsuario(@Model.DadosAluno.Id)">Configurar usuário</button>
+                    <a id="" class="btn  btn-block btn-confirm-radius"
+                    asp-controller="Administrador" asp-action="AtualizarDadosUsuarioAluno" asp-route-idAluno="@Model.DadosAluno.Id">Configurações do usuário</a>
                 </div>
 
 

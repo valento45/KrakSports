@@ -94,5 +94,10 @@ namespace Ihc.CrackSports.Core.Commands
         {
             return await _usuarioRepository.GetAll();
         }
+
+        public async Task<bool> AtualizarUsuario(Usuario usuario)
+        {
+            return await _usuarioRepository.AtualizarUsuario(usuario);
+        }
     }
 }

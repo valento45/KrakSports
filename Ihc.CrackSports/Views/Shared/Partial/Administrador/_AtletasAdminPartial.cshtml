@@ -66,7 +66,7 @@
                                 </div>
                                 <div class=" tooltip-arrow" data-toggle="tooltip" data-placement="right" title="Remover atleta do Club."
                                      style="height: 40px; width: 40px; margin-right: 10px;">
-                                    <a class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
+                                    <a asp-controller="Administrador" asp-action="ExcluirAtleta" asp-route-idAtleta="@obj.Id" id="btnExcluirAtleta" class="layout-orange-full-btn" style="height: 50px; width: 50px; padding: 10px; cursor: pointer;"> <img src="~/imgs/excluir.png" style="width: 30px; height: 30px;" /></a>
                                 </div>
                             }
                         </td>

@@ -20,5 +20,10 @@ namespace Ihc.CrackSports.Core.Repositorys.Interfaces
 
         Task<IEnumerable<Usuario>> GetAll();
         Task<IEnumerable<Usuario>> GetAllAdministradores();
+
+
+
+
+        Task<bool> AtualizarUsuario(Usuario usuario);
     }
 }

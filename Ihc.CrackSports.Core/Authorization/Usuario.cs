@@ -26,5 +26,12 @@ namespace Ihc.CrackSports.Core.Authorization
         }
 
 
+
+        public bool CheckPassword(string password)
+        {
+
+            return PasswordHash == password;    
+        }
+
     }
 }

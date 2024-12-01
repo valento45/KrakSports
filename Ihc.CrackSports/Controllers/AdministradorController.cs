@@ -150,7 +150,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
             if (todosAlunos?.Any() ?? false)
             {
-                PaginacaoAlunoViewModel paginacaoControl = new PaginacaoAlunoViewModel(todosAlunos);         
+                PaginacaoAlunoViewModel paginacaoControl = new PaginacaoAlunoViewModel(todosAlunos);
                 return View(paginacaoControl);
             }
 
@@ -200,9 +200,55 @@ namespace Ihc.CrackSports.WebApp.Controllers
         public async Task<IActionResult> DetalhesClubePartialView([FromBody] Club club)
         {
 
-
-
             return View("Partial/_DetalhesClubeAdminPartial", club);
         }
+
+
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ExcluirAtleta(int idAtleta)
+        {
+
+            if (await base._alunoService.ExcluirAluno(idAtleta))
+                return RedirectToAction(nameof(Index));
+
+            else
+                return NoContent();
+        }
+
+
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AtualizarDadosUsuarioAluno(int idAluno)
+        {
+
+
+            var aluno = await base._alunoService.GetById(idAluno);
+
+
+            var usuario = await  _usuarioService.GetById(aluno.IdUsuario);
+
+
+
+            return View("AtualizarDadosUsuario", usuario);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> SalvarDadosUsuario(Usuario usuario)
+        {
+
+            var result = await _usuarioService.AtualizarUsuario(usuario);
+
+            if (result)
+                return View("SucessoMessage");
+            else
+                return BadRequest();
+        }
+
     }
 }
