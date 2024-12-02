@@ -75,7 +75,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     TipoUsuario = TipoUsuario.Aluno
                 };
 
-                var result = await _userManager.CreateAsync(user, Security.Encrypt(user.PasswordHash));
+                var result = await _userManager.CreateAsync(user, user.PasswordHash);
 
                 if (result.Succeeded)
                 {

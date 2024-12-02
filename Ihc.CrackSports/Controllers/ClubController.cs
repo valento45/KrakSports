@@ -120,7 +120,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (model.DadosUsuario?.Id <= 0)
                 {
-                    var user = await _userManager.FindByNameAsync(model.DadosUsuario.UserName);
+                    var user = await _userManager.FindByIdAsync(model.DadosUsuario.UserName);
 
                     if (user == null)
                     {
@@ -133,11 +133,11 @@ namespace Ihc.CrackSports.WebApp.Controllers
                             TipoUsuario = Core.Objetos.Enums.TipoUsuario.Club
                         };
 
-                        var resultUser = await _userManager.CreateAsync(user, Security.Encrypt(user.PasswordHash));
+                        var resultUser = await _userManager.CreateAsync(user, user.PasswordHash);
 
                         if (resultUser.Succeeded)
                         {
-                            user = await _userManager.FindByNameAsync(model.DadosUsuario.UserName);
+                            user = await _userManager.FindByNameAsync(user.UserName);
                             await _userManager.AddClaimsAsync(user, new List<Claim> { new Claim(ClaimTypes.Role, Roles.CLUB) });
                             model.DadosClub.IdUsuario = user.Id;
                         }
@@ -146,6 +146,28 @@ namespace Ihc.CrackSports.WebApp.Controllers
                     {
                         model.Message = "Usuário informado já existe !";
                         return View("Partial/Club/CadastroClubPartial", model);
+                    }
+                }
+                else
+                {
+                    var user = await _userManager.FindByIdAsync(model.DadosClub.IdUsuario.ToString());
+
+
+
+                    if (user == null)
+                    {
+                        return NotFound("Usuário não encontrado.");
+                    }
+
+                    // Gerar token para resetar a senha
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                    // Resetar a senha
+                    var resultado = await _userManager.ResetPasswordAsync(user, token, model.DadosUsuario.PasswordHash);
+
+                    if (resultado.Succeeded)
+                    {
+                        await _userManager.UpdateAsync(user);                      
                     }
                 }
 
