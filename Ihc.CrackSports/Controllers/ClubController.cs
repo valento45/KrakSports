@@ -120,7 +120,7 @@ namespace Ihc.CrackSports.WebApp.Controllers
 
                 if (model.DadosUsuario?.Id <= 0)
                 {
-                    var user = await _userManager.FindByIdAsync(model.DadosUsuario.UserName);
+                    var user = await _userManager.FindByNameAsync(model.DadosUsuario.UserName);
 
                     if (user == null)
                     {
